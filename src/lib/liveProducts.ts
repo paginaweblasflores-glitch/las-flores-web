@@ -25,6 +25,9 @@ export function resolveDeliveryPrice(productName: string, fallbackPrice: string)
   ) {
     return "S/ 44.00";
   }
+  if (normalizedName.includes("cuy las flores") && !normalizedName.includes("deshuesado")) return "S/ 38.00";
+  if (normalizedName.includes("cuy las flores") && normalizedName.includes("deshuesado")) return "S/ 42.00";
+  if (normalizedName.includes("mixto")) return "S/ 52.00";
 
   return fallbackPrice;
 }
@@ -47,6 +50,27 @@ export function resolvePastaPriceOptions(productName: string) {
     return [
       { id: "pollo_grill", name: "Pollo al grill", price: 40 },
       { id: "lomo_saltado", name: "Lomo saltado", price: 44 },
+    ];
+  }
+
+  if (normalizedName.includes("cuy las flores") && !normalizedName.includes("deshuesado")) {
+    return [
+      { id: "medio_cuy", name: "Medio cuy", price: 38 },
+      { id: "cuy_entero", name: "Cuy entero", price: 68 },
+    ];
+  }
+
+  if (normalizedName.includes("cuy las flores") && normalizedName.includes("deshuesado")) {
+    return [
+      { id: "medio_cuy", name: "Medio cuy", price: 42 },
+      { id: "cuy_entero", name: "Cuy entero", price: 72 },
+    ];
+  }
+
+  if (normalizedName.includes("mixto")) {
+    return [
+      { id: "mixto_clasico", name: "Clásico", price: 52 },
+      { id: "mixto_deshuesado", name: "Deshuesado", price: 58 },
     ];
   }
 
@@ -127,24 +151,17 @@ export function resolveProductCustomOptions(productName: string, basePrice: numb
   const isMixtoDeshuesado = normalizedName.includes("mixto") && normalizedName.includes("deshuesado");
 
   if (isCuyLasFlores) {
-    return buildSizeCustomizationSection(basePrice, Math.round(basePrice * 1.79));
+    return buildSizeCustomizationSection(38, 68);
   }
 
   if (isCuyLasFloresDeshuesado) {
-    return buildSizeCustomizationSection(basePrice, Math.round(basePrice * 1.71));
+    return buildSizeCustomizationSection(42, 72);
   }
 
-  if (isMixto) {
-    return buildChoiceCustomizationSection("1. Tamaño", [
-      { id: "mixto_clasico", name: "Mixto clásico", price: basePrice },
-      { id: "mixto_deshuesado", name: "Mixto deshuesado", price: Math.round(basePrice * 1.12) },
-    ]);
-  }
-
-  if (isMixtoDeshuesado) {
-    return buildChoiceCustomizationSection("1. Tamaño", [
-      { id: "mixto_clasico", name: "Mixto clásico", price: Math.round(basePrice / 1.12) },
-      { id: "mixto_deshuesado", name: "Mixto deshuesado", price: basePrice },
+  if (isMixto || isMixtoDeshuesado) {
+    return buildChoiceCustomizationSection("1. Tipo", [
+      { id: "mixto_clasico", name: "Clásico", price: 52 },
+      { id: "mixto_deshuesado", name: "Deshuesado", price: 58 },
     ]);
   }
 

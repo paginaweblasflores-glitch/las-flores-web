@@ -78,6 +78,21 @@ describe("Pruebas Unitarias de Cálculo de Delivery", () => {
     ]);
   });
 
+  it("debe exponer los precios de cuy las flores, cuy deshuesado y mixto para mostrarlos en la carta", () => {
+    expect(resolvePastaPriceOptions("Cuy Las Flores")).toEqual([
+      { id: "medio_cuy", name: "Medio cuy", price: 38 },
+      { id: "cuy_entero", name: "Cuy entero", price: 68 },
+    ]);
+    expect(resolvePastaPriceOptions("Cuy Las Flores (Deshuesado)")).toEqual([
+      { id: "medio_cuy", name: "Medio cuy", price: 42 },
+      { id: "cuy_entero", name: "Cuy entero", price: 72 },
+    ]);
+    expect(resolvePastaPriceOptions("Mixto (Cuy + Chicharrón)")).toEqual([
+      { id: "mixto_clasico", name: "Clásico", price: 52 },
+      { id: "mixto_deshuesado", name: "Deshuesado", price: 58 },
+    ]);
+  });
+
   it("debe personalizar gran filet mignon con carbohidrato y ensalada", () => {
     const customOptions = resolveProductCustomOptions("Gran Filet Mignon", 80);
 
