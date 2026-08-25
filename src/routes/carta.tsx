@@ -4,7 +4,7 @@ import { SiteHeader } from "@/components/SiteHeader";
 import { categories as staticCategories } from "@/components/MenuModal";
 import { MenuModal } from "@/components/MenuModal";
 import { SiteFooter } from "@/components/site-footer";
-import { useLiveMenuCategories, Dish } from "@/lib/liveProducts";
+import { resolveDeliveryPrice, resolvePastaPriceOptions, useLiveMenuCategories, Dish } from "@/lib/liveProducts";
 import { CartSidebar } from "@/components/CartSidebar";
 import { useCart } from "@/context/CartContext";
 import { MobileCategoryFilter } from "@/components/MobileCategoryFilter";
@@ -176,6 +176,9 @@ function CartaPage() {
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
           >
             {active.dishes.map((dish, i) => {
+              const pastaPriceOptions = resolvePastaPriceOptions(dish.name);
+              const displayPrice = resolveDeliveryPrice(dish.name, dish.price);
+
               return (
                 <div
                   key={i}
@@ -202,13 +205,29 @@ function CartaPage() {
                       <h3 className="text-base font-serif leading-tight text-nogal group-hover:text-cochinilla transition-colors">
                         {dish.name}
                       </h3>
-                      <span className="text-adobe-new font-bold text-sm flex-shrink-0 tracking-wide bg-adobe-new/10 px-2 py-1 rounded-sm">
-                        {dish.price}
-                      </span>
+                      {pastaPriceOptions.length === 0 && (
+                        <span className="text-adobe-new font-bold text-sm flex-shrink-0 tracking-wide bg-adobe-new/10 px-2 py-1 rounded-sm">
+                          {displayPrice}
+                        </span>
+                      )}
                     </div>
                     <p className="text-nogal/70 text-xs flex-1 mb-4 leading-relaxed font-light">
                       {dish.description}
                     </p>
+                    {pastaPriceOptions.length > 0 && (
+                      <div className={`grid gap-2 border-t border-nogal/10 pt-4 ${pastaPriceOptions.length === 3 ? "grid-cols-3" : "grid-cols-2"}`}>
+                        {pastaPriceOptions.map((option) => (
+                          <div key={option.id} className="text-center min-w-0">
+                            <span className="block text-[10px] leading-tight text-nogal/70 min-h-[2rem]">
+                              {option.name}
+                            </span>
+                            <span className="block mt-1 text-sm font-bold text-adobe-new">
+                              S/ {option.price.toFixed(2)}
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+                    )}
                   </div>
                 </div>
               );

@@ -29,6 +29,30 @@ export function resolveDeliveryPrice(productName: string, fallbackPrice: string)
   return fallbackPrice;
 }
 
+export function resolvePastaPriceOptions(productName: string) {
+  const normalizedName = normalizeText(productName);
+
+  if (normalizedName.includes("espagueti") && normalizedName.includes("pesto")) {
+    return [
+      { id: "milanesa", name: "Milanesa", price: 42 },
+      { id: "pollo_grill", name: "Pollo al grill", price: 40 },
+      { id: "filet_mignon", name: "Filet mignon", price: 46 },
+    ];
+  }
+
+  if (
+    (normalizedName.includes("fetuchini") || normalizedName.includes("fetuccini") || normalizedName.includes("fettuccini")) &&
+    normalizedName.includes("huancaina")
+  ) {
+    return [
+      { id: "pollo_grill", name: "Pollo al grill", price: 40 },
+      { id: "lomo_saltado", name: "Lomo saltado", price: 44 },
+    ];
+  }
+
+  return [];
+}
+
 function buildSizeCustomizationSection(medioPrice: number, enteroPrice: number) {
   return [
     {

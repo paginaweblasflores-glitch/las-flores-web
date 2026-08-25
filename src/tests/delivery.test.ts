@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { calculateDistanceKm, calculateDeliveryCost, DELIVERY_CONFIG, RESTAURANT_LOCATION } from "../utils/deliveryUtils";
-import { resolveProductCustomOptions, resolveDeliveryPrice } from "../lib/liveProducts";
+import { resolveProductCustomOptions, resolveDeliveryPrice, resolvePastaPriceOptions } from "../lib/liveProducts";
 
 describe("Pruebas Unitarias de Cálculo de Delivery", () => {
   it("debe verificar la ubicación exacta del restaurante Las Flores en Ayacucho", () => {
@@ -64,6 +64,18 @@ describe("Pruebas Unitarias de Cálculo de Delivery", () => {
       ]),
     );
     expect(customOptions).toHaveLength(1);
+  });
+
+  it("debe exponer los precios de las pastas para mostrarlos en la carta", () => {
+    expect(resolvePastaPriceOptions("Espagueti al pesto")).toEqual([
+      { id: "milanesa", name: "Milanesa", price: 42 },
+      { id: "pollo_grill", name: "Pollo al grill", price: 40 },
+      { id: "filet_mignon", name: "Filet mignon", price: 46 },
+    ]);
+    expect(resolvePastaPriceOptions("Fetuccini a la huancaina")).toEqual([
+      { id: "pollo_grill", name: "Pollo al grill", price: 40 },
+      { id: "lomo_saltado", name: "Lomo saltado", price: 44 },
+    ]);
   });
 
   it("debe personalizar gran filet mignon con carbohidrato y ensalada", () => {
