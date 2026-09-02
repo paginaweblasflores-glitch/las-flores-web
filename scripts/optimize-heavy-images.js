@@ -29,8 +29,16 @@ async function optimizeDirectory(dirPath) {
 
         try {
           const buffer = await optimizeImage(fullPath);
-          fs.writeFileSync(fullPath, buffer);
-          console.log(`  -> New size: ${(buffer.length / 1024).toFixed(1)} KB (Saved ${((1 - buffer.length / stats.size) * 100).toFixed(1)}%)`);
+          const savings = 1 - buffer.length / stats.size;
+          // Si la ganancia es marginal (<15%), la imagen ya pasó por este mismo
+          // proceso antes: reescribirla solo perdería calidad por re-codificación
+          // sin bajar peso de verdad, así que la dejamos como está.
+          if (savings < 0.15) {
+            console.log(`  -> Ya está optimizada (solo ${(savings * 100).toFixed(1)}% de ganancia), se omite.`);
+          } else {
+            fs.writeFileSync(fullPath, buffer);
+            console.log(`  -> New size: ${(buffer.length / 1024).toFixed(1)} KB (Saved ${(savings * 100).toFixed(1)}%)`);
+          }
         } catch (err) {
           console.error(`  -> Failed to optimize ${fullPath}:`, err.message);
         }
