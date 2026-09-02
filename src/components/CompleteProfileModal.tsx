@@ -191,10 +191,10 @@ export function CompleteProfileModal({
           <div className="w-12 h-12 rounded-2xl bg-[#D4AF37]/15 text-[#D4AF37] flex items-center justify-center mx-auto mb-3 border border-[#D4AF37]/30 shadow-inner">
             <ShieldCheck size={24} />
           </div>
-          <h2 className="font-serif font-bold text-2xl tracking-wide text-white">
+          <h2 className="font-serif font-bold text-2xl text-white">
             Completa tu Perfil
           </h2>
-          <p className="text-xs text-[#FAF6ED]/75 mt-1.5 max-w-xs mx-auto leading-relaxed font-sans">
+          <p className="text-sm text-[#FAF6ED]/75 mt-1.5 max-w-xs mx-auto leading-relaxed">
             Ingresa tu número de WhatsApp para confirmar y coordinar tus entregas de delivery de forma segura.
           </p>
         </div>
@@ -204,7 +204,7 @@ export function CompleteProfileModal({
           
           {/* Nombre Completo */}
           <div>
-            <label className="block text-[11px] font-bold text-[#2C4A3E] uppercase tracking-wider mb-1.5">
+            <label className="block text-xs font-bold text-[#2C4A3E] uppercase tracking-[0.14em] mb-1.5">
               Nombre Completo *
             </label>
             <input
@@ -213,13 +213,13 @@ export function CompleteProfileModal({
               placeholder="Ej: María García"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="w-full px-4 py-3 rounded-xl border border-[#2C4A3E]/20 bg-white text-xs font-semibold text-[#1b2a24] focus:outline-none focus:ring-2 focus:ring-[#2C4A3E] transition-all shadow-xs"
+              className="w-full px-4 py-3 rounded-xl border border-[#2C4A3E]/20 bg-white text-base md:text-sm font-medium text-[#1b2a24] focus:outline-none focus:ring-2 focus:ring-[#2C4A3E] transition-all shadow-xs"
             />
           </div>
 
           {/* Correo Electrónico (BLOQUEADO SI YA TIENE CUENTA) */}
           <div>
-            <label className="block text-[11px] font-bold text-[#2C4A3E] uppercase tracking-wider mb-1.5 flex items-center gap-1.5">
+            <label className="block text-xs font-bold text-[#2C4A3E] uppercase tracking-[0.14em] mb-1.5 flex items-center gap-1.5">
               <Mail size={13} className="text-[#2C4A3E]/70" /> Correo Electrónico {initialEmail ? "(Asociado a tu cuenta)" : "*"}
             </label>
             <input
@@ -230,7 +230,7 @@ export function CompleteProfileModal({
               placeholder="tu@correo.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className={`w-full px-4 py-3 rounded-xl border text-xs font-semibold transition-all shadow-xs ${
+              className={`w-full px-4 py-3 rounded-xl border text-base md:text-sm font-medium transition-all shadow-xs ${
                 initialEmail
                   ? "bg-[#2C4A3E]/5 border-[#2C4A3E]/15 text-[#2C4A3E]/60 cursor-not-allowed"
                   : "bg-white border-[#2C4A3E]/20 text-[#1b2a24] focus:outline-none focus:ring-2 focus:ring-[#2C4A3E]"
@@ -240,7 +240,7 @@ export function CompleteProfileModal({
 
           {/* Celular / WhatsApp (OBLIGATORIO) */}
           <div>
-            <label className="block text-[11px] font-bold text-[#2C4A3E] uppercase tracking-wider mb-1.5 flex items-center gap-1.5">
+            <label className="block text-xs font-bold text-[#2C4A3E] uppercase tracking-[0.14em] mb-1.5 flex items-center gap-1.5">
               <Phone size={13} className="text-[#2C4A3E]" /> Celular / WhatsApp (Obligatorio) *
             </label>
             <input
@@ -251,20 +251,20 @@ export function CompleteProfileModal({
               placeholder="Ej: 980723422"
               value={phone}
               onChange={(e) => setPhone(e.target.value.replace(/\D/g, "").slice(0, 9))}
-              className="w-full px-4 py-3 rounded-xl border-2 border-[#2C4A3E]/30 bg-white text-xs font-bold text-[#1b2a24] focus:outline-none focus:ring-2 focus:ring-[#2C4A3E] focus:border-[#2C4A3E] transition-all shadow-xs"
+              className="w-full px-4 py-3 rounded-xl border-2 border-[#2C4A3E]/30 bg-white text-base md:text-sm font-bold text-[#1b2a24] focus:outline-none focus:ring-2 focus:ring-[#2C4A3E] focus:border-[#2C4A3E] transition-all shadow-xs"
             />
           </div>
 
           {/* Fecha de Nacimiento (OPCIONAL) */}
           <div>
-            <label className="block text-[11px] font-bold text-[#2C4A3E]/80 uppercase tracking-wider mb-1.5 flex items-center gap-1.5">
+            <label className="block text-xs font-bold text-[#2C4A3E]/80 uppercase tracking-[0.14em] mb-1.5 flex items-center gap-1.5">
               <Calendar size={13} className="text-[#2C4A3E]/70" /> Fecha de Nacimiento (Opcional)
             </label>
             <div className="grid grid-cols-3 gap-2">
               <select
                 value={day}
                 onChange={(e) => setDay(e.target.value)}
-                className="px-3 py-2.5 rounded-xl border border-[#2C4A3E]/20 bg-white text-xs font-semibold text-[#1b2a24] focus:outline-none focus:ring-2 focus:ring-[#2C4A3E] cursor-pointer shadow-xs"
+                className="px-3 py-2.5 rounded-xl border border-[#2C4A3E]/20 bg-white text-base md:text-sm font-medium text-[#1b2a24] focus:outline-none focus:ring-2 focus:ring-[#2C4A3E] cursor-pointer shadow-xs"
               >
                 <option value="">Día</option>
                 {DAYS.map((d) => (
@@ -277,7 +277,7 @@ export function CompleteProfileModal({
               <select
                 value={month}
                 onChange={(e) => setMonth(e.target.value)}
-                className="px-3 py-2.5 rounded-xl border border-[#2C4A3E]/20 bg-white text-xs font-semibold text-[#1b2a24] focus:outline-none focus:ring-2 focus:ring-[#2C4A3E] cursor-pointer shadow-xs"
+                className="px-3 py-2.5 rounded-xl border border-[#2C4A3E]/20 bg-white text-base md:text-sm font-medium text-[#1b2a24] focus:outline-none focus:ring-2 focus:ring-[#2C4A3E] cursor-pointer shadow-xs"
               >
                 <option value="">Mes</option>
                 {MONTHS.map((m) => (
@@ -290,7 +290,7 @@ export function CompleteProfileModal({
               <select
                 value={year}
                 onChange={(e) => setYear(e.target.value)}
-                className="px-3 py-2.5 rounded-xl border border-[#2C4A3E]/20 bg-white text-xs font-semibold text-[#1b2a24] focus:outline-none focus:ring-2 focus:ring-[#2C4A3E] cursor-pointer shadow-xs"
+                className="px-3 py-2.5 rounded-xl border border-[#2C4A3E]/20 bg-white text-base md:text-sm font-medium text-[#1b2a24] focus:outline-none focus:ring-2 focus:ring-[#2C4A3E] cursor-pointer shadow-xs"
               >
                 <option value="">Año</option>
                 {YEARS.map((y) => (
@@ -311,7 +311,7 @@ export function CompleteProfileModal({
           <button
             type="submit"
             disabled={saving}
-            className="w-full py-3.5 rounded-xl font-serif font-bold text-sm tracking-wide bg-[#2C4A3E] text-[#FAF6ED] hover:bg-[#233b31] active:scale-[0.99] transition-all shadow-lg flex items-center justify-center gap-2 cursor-pointer disabled:opacity-60 mt-2"
+            className="w-full py-3.5 rounded-xl font-serif font-bold text-base tracking-wide bg-[#2C4A3E] text-[#FAF6ED] hover:bg-[#233b31] active:scale-[0.99] transition-all shadow-lg flex items-center justify-center gap-2 cursor-pointer disabled:opacity-60 mt-2"
           >
             {saving ? (
               <>
