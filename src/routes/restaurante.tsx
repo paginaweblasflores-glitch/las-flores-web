@@ -357,12 +357,11 @@ function RestaurantePage() {
         <div className="relative z-10 mx-auto flex w-full max-w-6xl items-center justify-center px-4 sm:px-6 lg:px-8 text-piedra">
           <div className="max-w-3xl text-center">
             <h1 className="font-serif text-4xl md:text-6xl text-piedra font-normal leading-tight animate-reveal [animation-delay:200ms]">
-              La familia detrás de cada plato
+              Bienvenido a Nuestra Casa
             </h1>
             <p className="mx-auto mt-6 max-w-3xl text-base md:text-lg text-piedra/90 leading-relaxed">
-              Cada generación ha dejado una huella distinta: una fundadora que abrió el fuego, una
-              segunda etapa que consolidó el proyecto y una tercera que lo lleva al presente con una
-              mirada contemporánea.
+              Cruza la puerta de Las Flores y sé parte de la familia. Aquí, cada visita se recibe
+              con la misma calidez de siempre.
             </p>
           </div>
         </div>
