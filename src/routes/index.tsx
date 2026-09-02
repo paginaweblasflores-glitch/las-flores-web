@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { Star, MapPin, ChefHat, Info, ArrowRight, ArrowRightCircle } from "lucide-react";
 import { SiteHeader } from "../components/SiteHeader";
 import { useState, useEffect, useRef } from "react";
-const ayacuchoHero = "/inicio/ayacucho.webp";
+const ayacuchoHero = "/imagenes-reales/premios/ayacucho.webp";
 const culturaImg = "/imagenes-reales/ARTE Y CULTURA LISTO/CERAMICA/CERAMICA-AYACUCHANA.webp";
 const retabloImg =
   "/imagenes-reales/ARTE Y CULTURA LISTO/RETABLO AYACUCHANO/LopezA.webp";
@@ -801,6 +801,7 @@ function Index() {
           loop
           muted
           playsInline
+          preload="auto"
           poster={ayacuchoHero}
           className="absolute inset-0 w-full h-full object-cover opacity-75 scale-[1.02] pointer-events-none"
         >
