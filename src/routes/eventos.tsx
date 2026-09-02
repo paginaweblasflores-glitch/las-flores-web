@@ -76,9 +76,9 @@ const EVENT_TABS: EventTabData[] = [
     ],
     images: [
       "/imagenes-reales/EVENTOS-COORPORATIVAS/celebraciones-familiares.webp",
-      "/imagenes-reales/Salones/Salonprincipal.webp",
-      "/imagenes-reales/Salones/Terraza.webp",
-      "/imagenes-reales/Salones/jardin.webp"
+      "/imagenes-reales/Salones/salon-principal.webp",
+      "/imagenes-reales/Salones/terraza-colonial.webp",
+      "/imagenes-reales/Salones/jardin-andino.webp"
     ]
   },
   {
@@ -93,9 +93,9 @@ const EVENT_TABS: EventTabData[] = [
     ],
     images: [
       "/imagenes-reales/EVENTOS-COORPORATIVAS/reuniones-corporativas.webp",
-      "/imagenes-reales/Salones/Estrado.webp",
-      "/imagenes-reales/Salones/Ventana.webp",
-      "/imagenes-reales/Salones/pasillo.webp"
+      "/imagenes-reales/Salones/estrado-principal.webp",
+      "/imagenes-reales/Salones/salon-ventana.webp",
+      "/imagenes-reales/Salones/pasillo-central.webp"
     ]
   },
   {
@@ -110,9 +110,9 @@ const EVENT_TABS: EventTabData[] = [
     ],
     images: [
       "/imagenes-reales/EVENTOS-COORPORATIVAS/bodas-recepciones.webp",
-      "/imagenes-reales/Salones/entrada.webp",
-      "/imagenes-reales/Salones/Terraza.webp",
-      "/imagenes-reales/Salones/Salonprincipal.webp"
+      "/imagenes-reales/Salones/salon-entrada.webp",
+      "/imagenes-reales/Salones/terraza-colonial.webp",
+      "/imagenes-reales/Salones/salon-principal.webp"
     ]
   }
 ];

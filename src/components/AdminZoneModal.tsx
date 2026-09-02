@@ -95,7 +95,7 @@ export function AdminZoneModal({ isOpen, onClose, zone, onSaved }: AdminZoneModa
               type="text"
               value={imageUrl}
               onChange={(e) => setImageUrl(e.target.value)}
-              placeholder="/imagenes-reales/Salones/Terraza.webp"
+              placeholder="/imagenes-reales/Salones/terraza-colonial.webp"
               className="w-full px-4 py-2.5 rounded-xl border border-black/10 text-xs text-ink outline-none focus:border-eucalipto"
             />
             {imageUrl && (
