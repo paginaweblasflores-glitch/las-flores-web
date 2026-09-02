@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 const equipoImg = "/imagenes-reales/EQUIPO/02042026-DSC04926.webp";
 const casaImg = "/imagenes-reales/EQUIPO/Gregoria.webp";
+const heroRestauranteImg = "/imagenes-reales/hero-paginas/hero-restaurante.webp";
 const cocinaImg = "/imagenes-reales/EQUIPO/02042026-DSC05081-opt.webp";
 const platoPucaImg = "/gastronomia/puca-picante.webp"; // placeholder
 const platoCuyImg = "/gastronomia/cuy-chactado.webp"; // placeholder
@@ -344,8 +345,8 @@ function RestaurantePage() {
         className="relative min-h-[100svh] w-full overflow-hidden bg-eucalipto flex items-center pt-32 pb-24"
       >
         <img
-          src={casaImg}
-          alt="Gregoria, parte de la familia detrás de cada plato"
+          src={heroRestauranteImg}
+          alt="Entrada de Restaurante Las Flores en Huamanga, Ayacucho"
           width={1920}
           fetchPriority="high"
           height={800}
