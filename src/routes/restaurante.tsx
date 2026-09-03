@@ -3,9 +3,6 @@ const equipoImg = "/imagenes-reales/EQUIPO/02042026-DSC04926.webp";
 const casaImg = "/imagenes-reales/EQUIPO/Gregoria.webp";
 const heroRestauranteImg = "/imagenes-reales/hero-paginas/hero-restaurante.webp";
 const cocinaImg = "/imagenes-reales/EQUIPO/02042026-DSC05081-opt.webp";
-const platoPucaImg = "/gastronomia/puca-picante.webp"; // placeholder
-const platoCuyImg = "/gastronomia/cuy-chactado.webp"; // placeholder
-const platoMaizImg = "/gastronomia/chicharron.webp"; // placeholder
 import { SiteFooter } from "@/components/site-footer";
 import { useState, useTransition, useEffect, useRef } from "react";
 import { Calendar, CreditCard, ChevronRight, Check, ChevronDown } from "lucide-react";

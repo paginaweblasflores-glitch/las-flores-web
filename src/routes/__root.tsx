@@ -131,7 +131,6 @@ const restaurantSchema = {
   "@type": "Restaurant",
   "name": "Restaurante Las Flores",
   "alternateName": ["Las Flores Ayacucho", "Restaurante Las Flores Ayacucho"],
-  "image": "https://www.restaurantelasflores.com/gastronomia/Puca-picante.webp",
   "@id": "https://www.restaurantelasflores.com/#restaurant",
   "url": "https://www.restaurantelasflores.com/",
   "telephone": "+51980723422",
