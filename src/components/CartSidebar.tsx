@@ -32,6 +32,7 @@ import { signInWithGoogle, signInWithFacebook, createOrder, signOut, supabase } 
 import { isValidUuid, calculateCouponDiscount } from "../lib/pricing";
 import { playSuccessChime } from "@/lib/soundUtils";
 import { sendOrderEmails } from "../lib/emailService";
+import { buildOrderItem, formatCustomizations } from "../lib/orderItems";
 import { LocationSelector } from "./LocationSelector";
 import { CustomerHistoryModal } from "./CustomerHistoryModal";
 import { LoginModal } from "./LoginModal";
@@ -938,29 +939,11 @@ export function CartSidebar() {
                               <p className="font-serif text-sm font-bold leading-snug text-nogal">
                                 {item.name}
                               </p>
-                              {item.customizations && (
-                                <div className="mt-1 space-y-0.5">
-                                  {item.customizations.bebidaFria && (
-                                    <p className="text-xs text-black/60 font-medium">
-                                      • <span className="font-bold text-eucalipto">Fría:</span> {item.customizations.bebidaFria}
-                                    </p>
-                                  )}
-                                  {item.customizations.bebidaCaliente && (
-                                    <p className="text-xs text-black/60 font-medium">
-                                      • <span className="font-bold text-eucalipto">Caliente:</span> {item.customizations.bebidaCaliente}
-                                    </p>
-                                  )}
-                                  {item.customizations.sandwich && (
-                                    <p className="text-xs text-black/60 font-medium">
-                                      • <span className="font-bold text-eucalipto">Sándwich:</span> {item.customizations.sandwich}
-                                    </p>
-                                  )}
-                                  {item.customizations.acompanamiento && (
-                                    <p className="text-xs text-black/60 font-medium">
-                                      • <span className="font-bold text-eucalipto">Acompañante:</span> {item.customizations.acompanamiento}
-                                    </p>
-                                  )}
-                                </div>
+                              {formatCustomizations(item.customizations) && (
+                                <p className="mt-1 text-xs text-black/60 font-medium">
+                                  <span className="font-bold text-eucalipto">Personalización:</span>{" "}
+                                  {formatCustomizations(item.customizations)}
+                                </p>
                               )}
                             </div>
                             <button

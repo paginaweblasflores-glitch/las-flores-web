@@ -99,6 +99,7 @@ export async function sendOrderEmails(orderData: any, items: any[] = []): Promis
     <tr>
       <td style="padding: 12px 10px; border-bottom: 1px solid #EAE3D2; font-size: 13px; color: #1B2A24;">
         <strong style="color: #2C4A3E;">${item.quantity || 1}x</strong> ${item.name || item.product_name}
+        ${item.customizations ? `<div style="font-size: 12px; color: #6B7280; margin-top: 4px;">Personalización: ${Object.entries(item.customizations).filter(([, value]) => value).map(([key, value]) => `${key}: ${value}`).join("; ")}</div>` : item.notes ? `<div style="font-size: 12px; color: #6B7280; margin-top: 4px;">${item.notes}</div>` : ""}
       </td>
       <td style="padding: 12px 10px; border-bottom: 1px solid #EAE3D2; font-size: 13px; color: #1B2A24; text-align: right; font-weight: 700;">
         S/ ${(Number(item.price || 0) * (item.quantity || 1)).toFixed(2)}

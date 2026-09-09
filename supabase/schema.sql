@@ -125,7 +125,8 @@ CREATE TABLE IF NOT EXISTS public.order_items (
     product_name TEXT NOT NULL,
     unit_price NUMERIC(10, 2) NOT NULL CHECK (unit_price >= 0),
     quantity INT NOT NULL CHECK (quantity > 0),
-    subtotal NUMERIC(10, 2) NOT NULL CHECK (subtotal >= 0)
+    subtotal NUMERIC(10, 2) NOT NULL CHECK (subtotal >= 0),
+    notes TEXT
 );
 
 CREATE INDEX IF NOT EXISTS idx_order_items_order ON public.order_items(order_id);

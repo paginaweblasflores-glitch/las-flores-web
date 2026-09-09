@@ -256,7 +256,8 @@ CREATE TABLE IF NOT EXISTS public.order_items (
     product_name TEXT NOT NULL,
     unit_price NUMERIC(10,2) NOT NULL CHECK (unit_price >= 0),
     quantity INT NOT NULL CHECK (quantity > 0),
-    subtotal NUMERIC(10,2) NOT NULL CHECK (subtotal >= 0)
+    subtotal NUMERIC(10,2) NOT NULL CHECK (subtotal >= 0),
+    notes TEXT
 );
 CREATE INDEX IF NOT EXISTS idx_order_items_order ON public.order_items(order_id);
 
@@ -542,6 +543,8 @@ DECLARE
     v_quantity       INT;
     v_price          NUMERIC(10,2);
     v_prod_name      TEXT;
+    v_custom_name    TEXT;
+    v_custom_notes   TEXT;
     v_available      BOOLEAN;
     v_pin            TEXT;
     v_coupon_res     RECORD;
@@ -557,6 +560,10 @@ BEGIN
           FROM public.products WHERE id = v_product_id;
         IF NOT FOUND THEN RAISE EXCEPTION 'Producto % no encontrado.', v_product_id; END IF;
         IF NOT v_available THEN RAISE EXCEPTION 'El producto "%" no está disponible.', v_prod_name; END IF;
+        v_price := COALESCE((v_item->>'unit_price')::NUMERIC, v_price);
+        v_custom_name := NULLIF(TRIM(v_item->>'product_name'), '');
+        v_custom_notes := NULLIF(TRIM(v_item->>'notes'), '');
+        IF v_price < 0 THEN RAISE EXCEPTION 'Precio inválido para el producto "%".', v_prod_name; END IF;
         v_subtotal := v_subtotal + (v_price * v_quantity);
     END LOOP;
 
@@ -587,9 +594,13 @@ BEGIN
         v_product_id := (v_item->>'id')::UUID;
         v_quantity   := (v_item->>'quantity')::INT;
         SELECT name, price INTO v_prod_name, v_price FROM public.products WHERE id = v_product_id;
+        v_price := COALESCE((v_item->>'unit_price')::NUMERIC, v_price);
+        v_custom_name := NULLIF(TRIM(v_item->>'product_name'), '');
+        v_custom_notes := NULLIF(TRIM(v_item->>'notes'), '');
         INSERT INTO public.order_items
-          (order_id, product_id, product_name, unit_price, quantity, subtotal)
-          VALUES (v_order_id, v_product_id, v_prod_name, v_price, v_quantity, (v_price * v_quantity));
+          (order_id, product_id, product_name, unit_price, quantity, subtotal, notes)
+          VALUES (v_order_id, v_product_id, COALESCE(v_custom_name, v_prod_name), v_price,
+                  v_quantity, (v_price * v_quantity), v_custom_notes);
     END LOOP;
 
     v_pin := LPAD((FLOOR(RANDOM() * 9000) + 1000)::TEXT, 4, '0');

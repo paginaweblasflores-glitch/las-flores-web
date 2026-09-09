@@ -204,7 +204,10 @@ export function CashierOrderCard({
                 <div key={idx} className="flex items-start justify-between text-xs bg-gray-50/80 p-2 rounded-lg border border-gray-200/70">
                   <div className="pr-2">
                     <span className="font-extrabold text-[#2D473C]">{item.quantity}x</span>{" "}
-                    <span className="font-semibold text-gray-800">{item.product_name}</span>
+                    <span className="font-semibold text-gray-800">
+                      {item.product_name}
+                      {item.notes && <span className="block mt-0.5 text-[11px] font-medium text-gray-500">{item.notes}</span>}
+                    </span>
                   </div>
                   <span className="font-sans font-black tracking-tight tabular-nums text-[#2D473C] shrink-0">
                     S/ {Number(item.subtotal || item.unit_price * item.quantity).toFixed(2)}

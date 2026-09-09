@@ -93,6 +93,7 @@ export interface OrderPayload {
     unit_price: number;
     quantity: number;
     subtotal: number;
+    notes?: string;
   }>;
 }
 
@@ -385,7 +386,13 @@ export async function createOrder(payload: OrderPayload & { discount_amount?: nu
         p_client_phone: orderData.client_phone,
         p_order_type: orderData.order_type,
         p_payment_method: orderData.payment_method,
-        p_items: items.map(item => ({ id: item.product_id, quantity: item.quantity })),
+        p_items: items.map(item => ({
+          id: item.product_id,
+          quantity: item.quantity,
+          product_name: item.product_name,
+          unit_price: item.unit_price,
+          notes: item.notes || null,
+        })),
         p_address: orderData.address || null,
         p_reference: orderData.reference || null,
         p_latitude: orderData.latitude || null,

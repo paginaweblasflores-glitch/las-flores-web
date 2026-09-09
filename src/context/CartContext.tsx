@@ -2,6 +2,7 @@ import { createContext, useContext, useState, useEffect, ReactNode } from "react
 import { useRouter } from "@tanstack/react-router";
 
 export interface CartCustomizations {
+  [key: string]: string | undefined;
   bebidaFria?: string;
   bebidaCaliente?: string;
   sandwich?: string;

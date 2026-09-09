@@ -226,7 +226,8 @@ CREATE TABLE IF NOT EXISTS public.order_items (
     product_name TEXT NOT NULL,
     unit_price NUMERIC(10, 2) NOT NULL CHECK (unit_price >= 0),
     quantity INT NOT NULL CHECK (quantity > 0),
-    subtotal NUMERIC(10, 2) NOT NULL CHECK (subtotal >= 0)
+    subtotal NUMERIC(10, 2) NOT NULL CHECK (subtotal >= 0),
+    notes TEXT
 );
 
 CREATE INDEX IF NOT EXISTS idx_order_items_order ON public.order_items(order_id);
@@ -441,6 +442,8 @@ DECLARE
     v_product_name TEXT;
     v_product_available BOOLEAN;
     v_item_subtotal NUMERIC(10, 2);
+    v_custom_name TEXT;
+    v_custom_notes TEXT;
     v_driver_pin TEXT;
     v_coupon_res RECORD;
 BEGIN
@@ -475,6 +478,12 @@ BEGIN
             RAISE EXCEPTION 'El producto "%" no se encuentra disponible.', v_product_name;
         END IF;
 
+        v_product_price := COALESCE((v_item->>'unit_price')::NUMERIC, v_product_price);
+        v_custom_name := NULLIF(TRIM(v_item->>'product_name'), '');
+        v_custom_notes := NULLIF(TRIM(v_item->>'notes'), '');
+        IF v_product_price < 0 THEN
+            RAISE EXCEPTION 'Precio inválido para el producto "%".', v_product_name;
+        END IF;
         v_item_subtotal := v_product_price * v_quantity;
         v_subtotal := v_subtotal + v_item_subtotal;
     END LOOP;
@@ -515,10 +524,15 @@ BEGIN
         SELECT name, price INTO v_product_name, v_product_price
         FROM public.products WHERE id = v_product_id;
 
+        v_product_price := COALESCE((v_item->>'unit_price')::NUMERIC, v_product_price);
+        v_custom_name := NULLIF(TRIM(v_item->>'product_name'), '');
+        v_custom_notes := NULLIF(TRIM(v_item->>'notes'), '');
+
         INSERT INTO public.order_items (
-            order_id, product_id, product_name, unit_price, quantity, subtotal
+            order_id, product_id, product_name, unit_price, quantity, subtotal, notes
         ) VALUES (
-            v_order_id, v_product_id, v_product_name, v_product_price, v_quantity, (v_product_price * v_quantity)
+            v_order_id, v_product_id, COALESCE(v_custom_name, v_product_name), v_product_price,
+            v_quantity, (v_product_price * v_quantity), v_custom_notes
         );
     END LOOP;
 

@@ -1,4 +1,5 @@
 import { describe, it, expect } from "vitest";
+import { buildOrderItem } from "../lib/orderItems";
 
 export interface CartItem {
   id: string;
@@ -29,5 +30,28 @@ describe("Pruebas Unitarias de Lógica de Carrito de Compras", () => {
     const { totalItems, totalPrice } = calculateCartTotals([]);
     expect(totalItems).toBe(0);
     expect(totalPrice).toBe(0.0);
+  });
+
+  it("debe conservar precio y detalle de personalización al crear el ítem del pedido", () => {
+    expect(
+      buildOrderItem({
+        id: "local-1",
+        productId: "product-1",
+        name: "Desayuno Ayacuchano",
+        price: 32,
+        quantity: 2,
+        customizations: {
+          bebidaFria: "Jugo de mango",
+          sandwich: "Pan con Chicharrón",
+        },
+      }),
+    ).toEqual({
+      product_id: "product-1",
+      product_name: "Desayuno Ayacuchano",
+      unit_price: 32,
+      quantity: 2,
+      subtotal: 64,
+      notes: "Fría: Jugo de mango; Sándwich: Pan con Chicharrón",
+    });
   });
 });
