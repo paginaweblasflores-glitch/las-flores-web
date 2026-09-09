@@ -2,6 +2,9 @@ import fs from 'fs';
 import path from 'path';
 import sharp from 'sharp';
 
+const targetDirectory = path.resolve(process.argv[2] ?? 'public');
+const minimumSize = Number(process.argv[3] ?? 400 * 1024);
+
 // En Windows (con este build de sharp/libvips), dejar que sharp abra el archivo
 // por ruta falla con "UNKNOWN: unknown error, open ..." en cuanto el mismo
 // proceso también escribe con fs.writeFileSync más adelante. Leyendo el archivo
@@ -24,7 +27,7 @@ async function optimizeDirectory(dirPath) {
       await optimizeDirectory(fullPath);
     } else if (entry.isFile() && /\.(webp|jpg|jpeg|png)$/i.test(entry.name)) {
       const stats = fs.statSync(fullPath);
-      if (stats.size > 400 * 1024) { // mayor a 400 KB
+      if (stats.size > minimumSize) {
         console.log(`Optimizing: ${fullPath} (${(stats.size / 1024 / 1024).toFixed(2)} MB)`);
 
         try {
@@ -47,5 +50,5 @@ async function optimizeDirectory(dirPath) {
   }
 }
 
-console.log('Starting image batch optimization in memory...');
-optimizeDirectory(path.resolve('public')).then(() => console.log('Image batch optimization complete!'));
+console.log(`Starting image batch optimization in memory: ${targetDirectory}`);
+optimizeDirectory(targetDirectory).then(() => console.log('Image batch optimization complete!'));
