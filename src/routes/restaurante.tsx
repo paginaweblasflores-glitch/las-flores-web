@@ -412,25 +412,25 @@ function RestaurantePage() {
       <ChefAccordionSection />
 
       {/* CTA Reservas y Delivery */}
-      <section id="reservas" className="bg-piedra py-16 md:py-32 px-6">
+      <section id="reservas" className="bg-cafe text-piedra py-16 md:py-32 px-6">
         <div className="max-w-7xl mx-auto grid items-center gap-10 md:grid-cols-[1.35fr_1fr] md:gap-16">
-          <div className="relative aspect-[4/3] overflow-hidden rounded-sm">
+          <div className="relative aspect-[4/3] overflow-hidden rounded-3xl shadow-2xl border-4 border-white/20">
             <img
-              src="/inicio/Ubicacion.webp"
-              alt="Ubicacion y destino del Restaurante Las Flores"
+              src="/familia/ubicacion-destino.webp"
+              alt="Mapa de ubicación de Restaurante Las Flores y distancias a Plaza Mayor, Aeropuerto, Wari y Pampa de la Quinua"
               loading="lazy"
               decoding="async"
               className="h-full w-full object-contain"
             />
           </div>
           <div className="text-center md:text-left">
-            <span className="text-eucalipto font-medium uppercase tracking-[0.3em] text-xs block mb-6">
+            <span className="text-chilca font-medium uppercase tracking-[0.3em] text-xs block mb-6">
               Ubicacion y destino
             </span>
             <h2 className="font-serif text-4xl md:text-6xl leading-[1.05] mb-8 text-balance">
               Encuentrenos en el corazon de Ayacucho
             </h2>
-            <p className="text-lg text-nogal/70 leading-[1.7] max-w-[52ch]">
+            <p className="text-lg text-piedra/70 leading-[1.7] max-w-[52ch]">
               Visite Restaurante Las Flores y descubra una experiencia gastronomica ayacuchana en
               un espacio familiar y acogedor.
             </p>
