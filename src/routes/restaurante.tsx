@@ -374,40 +374,38 @@ function RestaurantePage() {
 
       <ChefAccordionSection />
 
-      {/* Tesoros de Ayacucho */}
-      <section id="tesoros" className="bg-eucalipto text-piedra py-16 md:py-32 px-6">
+      {/* Familia Las Flores */}
+      <section id="familia" className="bg-eucalipto text-piedra py-16 md:py-32 px-6">
         <div className="max-w-6xl mx-auto flex flex-col lg:flex-row items-center gap-12 md:gap-20">
           <div className="flex-1 max-w-[50ch]">
             <span className="text-chilca font-medium uppercase tracking-[0.3em] text-xs mb-6 block">
-              Tesoros de Ayacucho
+              Familia Las Flores
             </span>
             <h2 className="font-serif text-4xl md:text-5xl leading-[1.1] text-balance mb-6">
-              Productos ayacuchanos de temporada
+              La familia detrás de cada plato
             </h2>
             <p className="text-lg text-piedra/70 leading-[1.7] mb-8">
-              Descubre los ingredientes autóctonos que dan vida a nuestra cocina: papa nativa, 
-              quinoa, nísperos, airampo, tunas y más. Cada temporada trae consigo los mejores 
-              productos de nuestra tierra, cosechados en su punto perfecto para ofrecerte 
-              el auténtico sabor de Ayacucho.
+              Conoce a las personas que hacen posible la magia ayacuchana en cada servicio:
+              historias de orgullo, pasión y excelencia culinaria de un equipo que trabaja para
+              que cada visita se sienta como en casa.
             </p>
             <Link
-              to="/tesoros-ayacucho"
+              to="/familia-las-flores"
               onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
               className="inline-flex items-center justify-center px-10 py-5 text-[11px] uppercase tracking-[0.25em] font-bold rounded-sm btn-yellow-hover"
             >
-              <span>DESCUBRE MÁS</span>
+              <span>CONOCE A LA FAMILIA</span>
             </Link>
           </div>
           <div className="flex-1 w-full">
-            <div className="relative aspect-4/3 rounded-sm overflow-hidden group">
+            <div className="relative aspect-4/3 rounded-3xl overflow-hidden shadow-2xl border-4 border-white/20 group">
               <img
-                src="/inicio/portada.webp"
-                alt="Productos ayacuchanos de temporada"
+                src="/inicio/Equipolasflores.webp"
+                alt="Equipo humano de Restaurante Las Flores"
                 loading="lazy"
                 decoding="async"
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
               />
-              <div className="absolute inset-0 border border-piedra/20 m-4 rounded-sm pointer-events-none" />
             </div>
           </div>
         </div>

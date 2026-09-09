@@ -1052,7 +1052,7 @@ function Index() {
       <section className="relative bg-eucalipto py-16 md:py-32 px-6">
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-12 items-center">
           <div className="md:col-span-5">
-            <div className="relative aspect-4/3 rounded-3xl overflow-hidden">
+            <div className="relative aspect-4/3 rounded-3xl overflow-hidden shadow-2xl border-4 border-white/20">
               <img
                 src="/imagenes-reales/productosAyacucho/Papa-Nativa.webp"
                 alt="Papa nativa ayacuchana, uno de los tesoros de temporada"

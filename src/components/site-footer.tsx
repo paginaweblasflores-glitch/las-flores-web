@@ -63,9 +63,6 @@ export function SiteFooter() {
             </Link>
 
             <div className="flex flex-col space-y-2 text-sm">
-              <Link to="/familia-las-flores" className="hover:text-chilca transition-colors">
-                Familia Las Flores
-              </Link>
               <Link to="/politica-de-privacidad" className="hover:text-chilca transition-colors">
                 Política de Privacidad
               </Link>
