@@ -102,7 +102,7 @@ export function BreakfastCustomizationModal({ dish, open, onClose }: BreakfastCu
       );
 
       const anyMatched = matched as any;
-      if (anyMatched?.price) {
+      if (anyMatched?.price !== undefined && anyMatched?.price !== null) {
         priceString = typeof anyMatched.price === "number" ? `S/ ${anyMatched.price.toFixed(2)}` : anyMatched.price;
       }
     });

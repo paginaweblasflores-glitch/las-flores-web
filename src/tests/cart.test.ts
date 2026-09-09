@@ -54,4 +54,22 @@ describe("Pruebas Unitarias de Lógica de Carrito de Compras", () => {
       notes: "Fría: Jugo de mango; Sándwich: Pan con Chicharrón",
     });
   });
+
+  it("debe conservar una proteína con precio variable para caja", () => {
+    expect(
+      buildOrderItem({
+        id: "local-pasta",
+        productId: "product-pasta",
+        name: "Espagueti al pesto",
+        price: 46,
+        quantity: 1,
+        customizations: { Proteína: "Filet mignon" },
+      }),
+    ).toMatchObject({
+      product_name: "Espagueti al pesto",
+      unit_price: 46,
+      subtotal: 46,
+      notes: "Proteína: Filet mignon",
+    });
+  });
 });
