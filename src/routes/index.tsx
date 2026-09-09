@@ -1054,8 +1054,8 @@ function Index() {
           <div className="md:col-span-5">
             <div className="relative aspect-4/3 rounded-3xl overflow-hidden shadow-2xl border-4 border-white/20">
               <img
-                src="/imagenes-reales/productosAyacucho/Papa-Nativa.webp"
-                alt="Papa nativa ayacuchana, uno de los tesoros de temporada"
+                src="/imagenes-reales/secciones/quinoa.webp"
+                alt="Cultivo de quinoa ayacuchana, uno de los tesoros de temporada"
                 loading="lazy"
                 decoding="async"
                 className="w-full h-full object-cover"

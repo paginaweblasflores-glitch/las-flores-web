@@ -372,8 +372,6 @@ function RestaurantePage() {
 
       <GenerationsSection />
 
-      <ChefAccordionSection />
-
       {/* Familia Las Flores */}
       <section id="familia" className="bg-eucalipto text-piedra py-16 md:py-32 px-6">
         <div className="max-w-6xl mx-auto flex flex-col lg:flex-row items-center gap-12 md:gap-20">
@@ -410,6 +408,8 @@ function RestaurantePage() {
           </div>
         </div>
       </section>
+
+      <ChefAccordionSection />
 
       {/* CTA Reservas y Delivery */}
       <section id="reservas" className="bg-piedra py-16 md:py-32 px-6">
