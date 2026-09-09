@@ -1048,6 +1048,43 @@ function Index() {
         </div>
       </section>
 
+      {/* TESOROS DE AYACUCHO */}
+      <section className="relative bg-eucalipto py-16 md:py-32 px-6">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-12 items-center">
+          <div className="md:col-span-5">
+            <div className="relative aspect-4/3 rounded-3xl overflow-hidden">
+              <img
+                src="/imagenes-reales/productosAyacucho/Papa-Nativa.webp"
+                alt="Papa nativa ayacuchana, uno de los tesoros de temporada"
+                loading="lazy"
+                decoding="async"
+                className="w-full h-full object-cover"
+              />
+            </div>
+          </div>
+          <div className="md:col-span-6 md:col-start-7">
+            <span className="text-chilca font-medium uppercase tracking-[0.3em] text-xs mb-6 block">
+              Tesoros de Ayacucho
+            </span>
+            <h2 className="font-serif text-3xl md:text-5xl leading-[1.1] text-piedra text-balance mb-4">
+              Productos ayacuchanos de temporada
+            </h2>
+            <p className="text-base md:text-lg leading-[1.7] text-piedra/75 mb-8">
+              Descubre los ingredientes autóctonos que dan vida a nuestra cocina: papa nativa,
+              quinoa, nísperos, airampo, tunas y más. Cada temporada trae consigo los mejores
+              productos de nuestra tierra, cosechados en su punto perfecto para ofrecerte el
+              auténtico sabor de Ayacucho.
+            </p>
+            <Link
+              to="/tesoros-ayacucho"
+              className="inline-flex items-center gap-3 px-8 py-4 text-[11px] uppercase tracking-[0.25em] font-bold rounded-sm btn-yellow-hover"
+            >
+              <span>Descubre Más</span> <span aria-hidden>→</span>
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* PREMIOS */}
       <section className="py-16 md:py-32 px-6">
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-12 items-center">
@@ -1137,22 +1174,6 @@ function Index() {
               className="w-full h-full min-h-[500px] md:min-h-[600px] object-cover rounded-3xl"
             />
           </div>
-        </div>
-      </section>
-
-      {/* CITA DEL PERSONAL */}
-      <section className="relative bg-eucalipto py-16 md:py-32 px-6">
-        <div className="max-w-4xl mx-auto text-center">
-          <span className="text-chilca font-medium uppercase tracking-[0.3em] text-xs block mb-8">
-            El Orgullo de nuestro Personal
-          </span>
-          <blockquote className="font-serif italic text-3xl md:text-5xl leading-[1.15] text-piedra/95 text-balance">
-            «Siento un profundo respeto al portar los colores de nuestra tierra. Aquí no solo
-            atendemos, aquí somos embajadores de Ayacucho.»
-          </blockquote>
-          <cite className="not-italic block mt-10 text-xs uppercase tracking-[0.3em] text-piedra/60">
-            — Carmen R., Anfitriona
-          </cite>
         </div>
       </section>
 

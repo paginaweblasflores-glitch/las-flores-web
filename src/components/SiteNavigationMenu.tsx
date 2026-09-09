@@ -10,7 +10,6 @@ const NAV_LINKS = [
   { label: 'La Carta', to: '/carta', hash: '' },
   { label: 'Reservas', to: '/reservas', hash: '' },
   { label: 'Eventos', to: '/eventos', hash: '' },
-  { label: 'Tesoros de Ayacucho', to: '/tesoros-ayacucho', hash: '' },
   { label: 'Galería', to: '/galeria', hash: '' },
   { label: 'Contacto', to: '/contacto', hash: '' },
 ];
