@@ -209,9 +209,14 @@ export function CashierOrderCard({
                       {item.notes && <span className="block mt-0.5 text-[11px] font-medium text-gray-500">{item.notes}</span>}
                     </span>
                   </div>
-                  <span className="font-sans font-black tracking-tight tabular-nums text-[#2D473C] shrink-0">
-                    S/ {Number(item.subtotal || item.unit_price * item.quantity).toFixed(2)}
-                  </span>
+                    <span className="text-right font-sans tracking-tight tabular-nums text-[#2D473C] shrink-0">
+                      <span className="block text-[10px] font-semibold text-gray-500">
+                        Unitario: S/ {Number(item.unit_price || 0).toFixed(2)}
+                      </span>
+                      <span className="block font-black">
+                        Total: S/ {Number(item.subtotal || item.unit_price * item.quantity).toFixed(2)}
+                      </span>
+                    </span>
                 </div>
               ))
             )}

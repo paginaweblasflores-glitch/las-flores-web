@@ -619,23 +619,10 @@ export function CartSidebar() {
           paymentMethod === "culqi" && culqiReferenceCode ? `Referencia: ${culqiReferenceCode}` : "",
         ].filter(Boolean).join(" | ") || undefined,
         items: items.map((i) => {
-          const opts = i.customizations
-            ? [
-                i.customizations.bebidaFria,
-                i.customizations.bebidaCaliente,
-                i.customizations.sandwich,
-                i.customizations.acompanamiento,
-              ]
-                .filter(Boolean)
-                .join(", ")
-            : "";
-          const rawProductId = i.productId || i.id;
+          const orderItem = buildOrderItem(i);
           return {
-            product_id: isValidUuid(rawProductId) ? rawProductId : undefined,
-            product_name: opts ? `${i.name} (${opts})` : i.name,
-            unit_price: i.price,
-            quantity: i.quantity,
-            subtotal: i.price * i.quantity,
+            ...orderItem,
+            product_id: isValidUuid(orderItem.product_id) ? orderItem.product_id : undefined,
           };
         }),
       };
