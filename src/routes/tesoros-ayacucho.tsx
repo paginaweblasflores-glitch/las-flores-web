@@ -36,7 +36,7 @@ type Producto = {
   usos: string[];
 };
 
-const productosPorTemporada: Record<string, Producto[]> = {
+const productosPorTemporadaAnterior: Record<string, Producto[]> = {
   Verano: [
     {
       nombre: "Tuna",
@@ -45,7 +45,7 @@ const productosPorTemporada: Record<string, Producto[]> = {
         "Fruto del nopal, dulce y refrescante. Rico en vitamina C y fibra. Se consume fresco o en jugos y mermeladas.",
       temporada: "Verano",
       meses: "Diciembre - Marzo",
-      imagen: "/imagenes-reales/productosAyacucho/Tuna.webp",
+      imagen: "/imagenes-reales/productosAyacucho/Verano/tuna.webp",
       usos: ["Fresco", "Jugos", "Mermeladas", "Postres"],
     },
     {
@@ -54,7 +54,7 @@ const productosPorTemporada: Record<string, Producto[]> = {
       descripcion: "Fruta dulce de hueso cosechada en esta época.",
       temporada: "Verano",
       meses: "Diciembre - Marzo",
-      imagen: "/imagenes-reales/productosAyacucho/durazno.webp",
+      imagen: "/imagenes-reales/productosAyacucho/Verano/granadilla.webp",
       usos: ["Fresco", "Postres", "Jugos", "Mermeladas"],
     },
     {
@@ -63,7 +63,7 @@ const productosPorTemporada: Record<string, Producto[]> = {
       descripcion: "Fruta nativa cremosa ideal para postres tradicionales.",
       temporada: "Verano",
       meses: "Diciembre - Mayo",
-      imagen: "/imagenes-reales/productosAyacucho/lucuma.webp",
+      imagen: "/imagenes-reales/productosAyacucho/Verano/lucuma.webp",
       usos: ["Helados", "Postres", "Batidos", "Dulces"],
     },
     {
@@ -72,7 +72,7 @@ const productosPorTemporada: Record<string, Producto[]> = {
       descripcion: "Cosechas tiernas perfectas para humitas.",
       temporada: "Verano",
       meses: "Enero - Mayo",
-      imagen: "/imagenes-reales/productosAyacucho/choclo.webp",
+      imagen: "/imagenes-reales/productosAyacucho/Verano/maiz.webp",
       usos: ["Sancochado", "Humitas", "Sopas", "Guisos"],
     },
     {
@@ -81,7 +81,7 @@ const productosPorTemporada: Record<string, Producto[]> = {
       descripcion: "Fruto ácido de cactácea silvestre que madura antes de las lluvias, para bebidas y jugos.",
       temporada: "Verano",
       meses: "Enero - Mayo",
-      imagen: "/imagenes-reales/productosAyacucho/sanky.webp",
+      imagen: "/imagenes-reales/productosAyacucho/Verano/aji amarillo.webp",
       usos: ["Jugos", "Bebidas", "Postres", "Mermeladas"],
     },
     {
@@ -89,7 +89,7 @@ const productosPorTemporada: Record<string, Producto[]> = {
       descripcion: "Fruta de verano jugosa y dulce, apreciada fresca y en preparaciones caseras.",
       temporada: "Verano",
       meses: "Diciembre - Marzo",
-      imagen: "/imagenes-reales/productosAyacucho/Verano/Ciruelo.webp",
+      imagen: "/imagenes-reales/productosAyacucho/Verano/granadilla.webp",
       usos: ["Fresco", "Jugos", "Postres", "Mermeladas"],
     },
     {
@@ -97,7 +97,7 @@ const productosPorTemporada: Record<string, Producto[]> = {
       descripcion: "Fruta tropical de pulpa dulce y aromática, ideal para bebidas y postres.",
       temporada: "Verano",
       meses: "Diciembre - Marzo",
-      imagen: "/imagenes-reales/productosAyacucho/Verano/Mango.webp",
+      imagen: "/imagenes-reales/productosAyacucho/Verano/lucuma.webp",
       usos: ["Fresco", "Jugos", "Postres", "Mermeladas"],
     },
     {
@@ -105,7 +105,7 @@ const productosPorTemporada: Record<string, Producto[]> = {
       descripcion: "Fruto tropical de pulpa aromática, utilizado en bebidas y preparaciones dulces.",
       temporada: "Verano",
       meses: "Diciembre - Marzo",
-      imagen: "/imagenes-reales/productosAyacucho/Verano/Aguaje.webp",
+      imagen: "/imagenes-reales/productosAyacucho/Verano/tuna.webp",
       usos: ["Fresco", "Jugos", "Bebidas", "Postres"],
     },
     {
@@ -113,7 +113,7 @@ const productosPorTemporada: Record<string, Producto[]> = {
       descripcion: "Tubérculo dulce y nutritivo, versátil para preparaciones tradicionales.",
       temporada: "Verano",
       meses: "Diciembre - Marzo",
-      imagen: "/imagenes-reales/productosAyacucho/Verano/Camote.webp",
+      imagen: "/imagenes-reales/productosAyacucho/Verano/yuca.webp",
       usos: ["Sancochado", "Guisos", "Postres", "Acompañamientos"],
     },
     {
@@ -121,7 +121,7 @@ const productosPorTemporada: Record<string, Producto[]> = {
       descripcion: "Fruta jugosa y refrescante, perfecta para consumir fresca o en bebidas.",
       temporada: "Verano",
       meses: "Diciembre - Marzo",
-      imagen: "/imagenes-reales/productosAyacucho/Verano/Melon.webp",
+      imagen: "/imagenes-reales/productosAyacucho/Verano/tuna.webp",
       usos: ["Fresco", "Jugos", "Ensaladas", "Postres"],
     },
     {
@@ -129,7 +129,7 @@ const productosPorTemporada: Record<string, Producto[]> = {
       descripcion: "Fruta de pulpa suave y dulce, apreciada fresca y en jugos.",
       temporada: "Verano",
       meses: "Diciembre - Marzo",
-      imagen: "/imagenes-reales/productosAyacucho/Verano/Papaya.webp",
+      imagen: "/imagenes-reales/productosAyacucho/Verano/granadilla.webp",
       usos: ["Fresco", "Jugos", "Batidos", "Postres"],
     },
     {
@@ -137,7 +137,7 @@ const productosPorTemporada: Record<string, Producto[]> = {
       descripcion: "Fruta tropical aromática y refrescante, ideal para bebidas y postres.",
       temporada: "Verano",
       meses: "Diciembre - Marzo",
-      imagen: "/imagenes-reales/productosAyacucho/Verano/Piña.webp",
+      imagen: "/imagenes-reales/productosAyacucho/Verano/lucuma.webp",
       usos: ["Fresco", "Jugos", "Bebidas", "Postres"],
     },
     {
@@ -145,7 +145,7 @@ const productosPorTemporada: Record<string, Producto[]> = {
       descripcion: "Fruta de pulpa dulce y abundante agua, especialmente refrescante en verano.",
       temporada: "Verano",
       meses: "Diciembre - Marzo",
-      imagen: "/imagenes-reales/productosAyacucho/Verano/Sandia.webp",
+      imagen: "/imagenes-reales/productosAyacucho/Verano/tuna.webp",
       usos: ["Fresco", "Jugos", "Bebidas", "Postres"],
     },
     {
@@ -153,7 +153,7 @@ const productosPorTemporada: Record<string, Producto[]> = {
       descripcion: "Raíz de textura firme y sabor suave, base de diversas preparaciones tradicionales.",
       temporada: "Verano",
       meses: "Diciembre - Marzo",
-      imagen: "/imagenes-reales/productosAyacucho/Verano/Yuca.webp",
+      imagen: "/imagenes-reales/productosAyacucho/Verano/yuca.webp",
       usos: ["Sancochado", "Guisos", "Frituras", "Acompañamientos"],
     }
   ],
@@ -164,7 +164,7 @@ const productosPorTemporada: Record<string, Producto[]> = {
       descripcion: "Variedades locales que inician su maduración óptima.",
       temporada: "Otoño",
       meses: "Marzo y Septiembre",
-      imagen: "/imagenes-reales/productosAyacucho/palta.webp",
+      imagen: "/imagenes-reales/productosAyacucho/Otoño/papa.webp",
       usos: ["Ensaladas", "Acompañamientos", "Sopas", "Salsas"],
     },
     {
@@ -174,7 +174,7 @@ const productosPorTemporada: Record<string, Producto[]> = {
         "Variedades ancestrales de papa con colores y sabores únicos. Base fundamental de la gastronomía ayacuchana.",
       temporada: "Otoño",
       meses: "Abril - Junio",
-      imagen: "/imagenes-reales/productosAyacucho/Papa-Nativa.webp",
+      imagen: "/imagenes-reales/productosAyacucho/Otoño/papa.webp",
       usos: ["Guisos", "Sopas", "Puca picante", "Papas fritas"],
     },
     {
@@ -184,7 +184,7 @@ const productosPorTemporada: Record<string, Producto[]> = {
         "Grano andino considerado superalimento. Rico en proteínas y minerales esenciales.",
       temporada: "Otoño",
       meses: "Mayo - Julio",
-      imagen: "/imagenes-reales/productosAyacucho/Quinoa.webp",
+      imagen: "/imagenes-reales/productosAyacucho/Otoño/oca.webp",
       usos: ["Sopas", "Ensaladas", "Guarniciones", "Postres"],
     },
     {
@@ -193,7 +193,7 @@ const productosPorTemporada: Record<string, Producto[]> = {
       descripcion: "Súper grano que se seca y cosecha en estos meses.",
       temporada: "Otoño",
       meses: "Abril - Junio",
-      imagen: "/imagenes-reales/productosAyacucho/kiwicha.webp",
+      imagen: "/imagenes-reales/productosAyacucho/Otoño/olluco.webp",
       usos: ["Bebidas", "Postres", "Sopas", "Desayunos"],
     },
     {
@@ -202,7 +202,7 @@ const productosPorTemporada: Record<string, Producto[]> = {
       descripcion: "Tubérculo dulce andino tradicional que sale junto a la papa.",
       temporada: "Otoño",
       meses: "Marzo - Junio",
-      imagen: "/imagenes-reales/productosAyacucho/oca.webp",
+      imagen: "/imagenes-reales/productosAyacucho/Otoño/oca.webp",
       usos: ["Sancochado", "Guisos", "Mermeladas", "Postres"],
     },
     {
@@ -211,7 +211,7 @@ const productosPorTemporada: Record<string, Producto[]> = {
       descripcion: "Tubérculo medicinal cosechado al decaer las lluvias.",
       temporada: "Otoño",
       meses: "Abril - Junio",
-      imagen: "/imagenes-reales/productosAyacucho/mashua.webp",
+      imagen: "/imagenes-reales/productosAyacucho/Otoño/olluco.webp",
       usos: ["Sancochado", "Guisos", "Postres medicinales"],
     },
     {
@@ -220,7 +220,7 @@ const productosPorTemporada: Record<string, Producto[]> = {
       descripcion: "Infaltable en los guisos, fresco de la cosecha estacional.",
       temporada: "Otoño",
       meses: "Marzo - Julio",
-      imagen: "/imagenes-reales/productosAyacucho/olluco.webp",
+      imagen: "/imagenes-reales/productosAyacucho/Otoño/olluco.webp",
       usos: ["Guisos", "Sopas", "Acompañamientos"],
     },
     {
@@ -229,7 +229,7 @@ const productosPorTemporada: Record<string, Producto[]> = {
       descripcion: "Frutos tiernos ideales para las mazamorras primaverales.",
       temporada: "Otoño",
       meses: "Marzo - Agosto",
-      imagen: "/imagenes-reales/productosAyacucho/calabaza.webp",
+      imagen: "/imagenes-reales/productosAyacucho/Otoño/calabaza.webp",
       usos: ["Mazamorras", "Sopas", "Guisos", "Dulces"],
     },
     {
@@ -239,7 +239,7 @@ const productosPorTemporada: Record<string, Producto[]> = {
         "Cactus cuya fruta produce un colorante natural rojo intenso. Usado en bebidas tradicionales.",
       temporada: "Otoño",
       meses: "Marzo y Junio",
-      imagen: "/imagenes-reales/productosAyacucho/Airampo.webp",
+      imagen: "/imagenes-reales/productosAyacucho/Otoño/chirimoya.webp",
       usos: ["Bebidas", "Colorante natural", "Postres", "Chicha"],
     },
     {
@@ -247,7 +247,7 @@ const productosPorTemporada: Record<string, Producto[]> = {
       descripcion: "Fruto de sabor intenso utilizado en preparaciones saladas y conservas.",
       temporada: "Otoño",
       meses: "Marzo - Junio",
-      imagen: "/imagenes-reales/productosAyacucho/Otoño/Aceituna.webp",
+      imagen: "/imagenes-reales/productosAyacucho/Otoño/chirimoya.webp",
       usos: ["Ensaladas", "Salsas", "Conservas", "Acompañamientos"],
     },
     {
@@ -255,7 +255,7 @@ const productosPorTemporada: Record<string, Producto[]> = {
       descripcion: "Grano aromático de tostado profundo, apreciado en bebidas calientes.",
       temporada: "Otoño",
       meses: "Marzo - Junio",
-      imagen: "/imagenes-reales/productosAyacucho/Otoño/Cafe.webp",
+      imagen: "/imagenes-reales/productosAyacucho/Otoño/chirimoya.webp",
       usos: ["Bebidas calientes", "Postres", "Dulces", "Infusiones"],
     },
     {
@@ -263,7 +263,7 @@ const productosPorTemporada: Record<string, Producto[]> = {
       descripcion: "Cultivo dulce utilizado para elaborar bebidas, mieles y derivados tradicionales.",
       temporada: "Otoño",
       meses: "Marzo - Junio",
-      imagen: "/imagenes-reales/productosAyacucho/Otoño/Caña de azucar.webp",
+      imagen: "/imagenes-reales/productosAyacucho/Otoño/camote.webp",
       usos: ["Bebidas", "Mieles", "Dulces", "Derivados"],
     },
     {
@@ -271,7 +271,7 @@ const productosPorTemporada: Record<string, Producto[]> = {
       descripcion: "Legumbre nutritiva y versátil, presente en guisos y acompañamientos.",
       temporada: "Otoño",
       meses: "Marzo - Junio",
-      imagen: "/imagenes-reales/productosAyacucho/Otoño/Frejol.webp",
+      imagen: "/imagenes-reales/productosAyacucho/Otoño/papa.webp",
       usos: ["Guisos", "Sopas", "Ensaladas", "Acompañamientos"],
     },
     {
@@ -279,7 +279,7 @@ const productosPorTemporada: Record<string, Producto[]> = {
       descripcion: "Fruta de granos jugosos y sabor equilibrado, rica en color y frescura.",
       temporada: "Otoño",
       meses: "Marzo - Junio",
-      imagen: "/imagenes-reales/productosAyacucho/Otoño/Granada.webp",
+      imagen: "/imagenes-reales/productosAyacucho/Otoño/chirimoya.webp",
       usos: ["Fresco", "Jugos", "Ensaladas", "Postres"],
     },
     {
@@ -287,7 +287,7 @@ const productosPorTemporada: Record<string, Producto[]> = {
       descripcion: "Fruto suave y dulce de temporada, usado fresco o en preparaciones dulces.",
       temporada: "Otoño",
       meses: "Marzo - Junio",
-      imagen: "/imagenes-reales/productosAyacucho/Otoño/Higo.webp",
+      imagen: "/imagenes-reales/productosAyacucho/Otoño/chirimoya.webp",
       usos: ["Fresco", "Postres", "Mermeladas", "Dulces"],
     },
     {
@@ -295,7 +295,7 @@ const productosPorTemporada: Record<string, Producto[]> = {
       descripcion: "Legumbre de alto valor nutritivo, ideal para sopas y guisos caseros.",
       temporada: "Otoño",
       meses: "Marzo - Junio",
-      imagen: "/imagenes-reales/productosAyacucho/Otoño/Lenteja.webp",
+      imagen: "/imagenes-reales/productosAyacucho/Otoño/olluco.webp",
       usos: ["Sopas", "Guisos", "Ensaladas", "Acompañamientos"],
     }
   ],
@@ -306,7 +306,7 @@ const productosPorTemporada: Record<string, Producto[]> = {
       descripcion: "Cosechado a mitad de año para panes tradicionales.",
       temporada: "Invierno",
       meses: "Junio - Agosto",
-      imagen: "/imagenes-reales/productosAyacucho/trigo.webp",
+      imagen: "/imagenes-reales/productosAyacucho/Invierno/haba.webp",
       usos: ["Panes", "Sopas", "Guisos", "Postres"],
     },
     {
@@ -315,7 +315,7 @@ const productosPorTemporada: Record<string, Producto[]> = {
       descripcion: "Tubérculos procesados aprovechando las heladas nocturnas.",
       temporada: "Invierno",
       meses: "Junio - Agosto",
-      imagen: "/imagenes-reales/productosAyacucho/chuño.webp",
+      imagen: "/imagenes-reales/productosAyacucho/Invierno/brocoli.webp",
       usos: ["Sopas", "Guisos", "Mazamorras", "Acompañamientos"],
     },
     {
@@ -324,7 +324,7 @@ const productosPorTemporada: Record<string, Producto[]> = {
       descripcion: "Primeras vainas verdes recolectadas en los valles.",
       temporada: "Invierno",
       meses: "Abril - Agosto",
-      imagen: "/imagenes-reales/productosAyacucho/arveja.webp",
+      imagen: "/imagenes-reales/productosAyacucho/Invierno/haba.webp",
       usos: ["Guisos", "Sopas", "Arroces", "Ensaladas"],
     },
     {
@@ -333,7 +333,7 @@ const productosPorTemporada: Record<string, Producto[]> = {
       descripcion: "Carne deshidratada de camélido u ovino típica de la estación.",
       temporada: "Invierno",
       meses: "Mayo - Agosto",
-      imagen: "/imagenes-reales/productosAyacucho/charqui.webp",
+      imagen: "/imagenes-reales/productosAyacucho/Invierno/aguaymanto.webp",
       usos: ["Sopas", "Olluquito", "Guisos", "Saltados"],
     },
     {
@@ -342,7 +342,7 @@ const productosPorTemporada: Record<string, Producto[]> = {
       descripcion: "Grano seco recolectado para harinas (máchica) y bebidas.",
       temporada: "Invierno",
       meses: "Octubre - Noviembre",
-      imagen: "/imagenes-reales/productosAyacucho/cebada.webp",
+      imagen: "/imagenes-reales/productosAyacucho/Invierno/aguaymanto.webp",
       usos: ["Máchica", "Bebidas calientes", "Refrescos", "Sopas"],
     },
     {
@@ -350,7 +350,7 @@ const productosPorTemporada: Record<string, Producto[]> = {
       descripcion: "Bulbo aromático esencial para aderezos y preparaciones tradicionales.",
       temporada: "Invierno",
       meses: "Junio - Agosto",
-      imagen: "/imagenes-reales/productosAyacucho/Invierno/Ajo.webp",
+      imagen: "/imagenes-reales/productosAyacucho/Invierno/brocoli.webp",
       usos: ["Aderezos", "Salsas", "Guisos", "Sopas"],
     },
     {
@@ -358,7 +358,7 @@ const productosPorTemporada: Record<string, Producto[]> = {
       descripcion: "Raíz de color intenso y sabor terroso, ideal para ensaladas y bebidas.",
       temporada: "Invierno",
       meses: "Junio - Agosto",
-      imagen: "/imagenes-reales/productosAyacucho/Invierno/Beterraga.webp",
+      imagen: "/imagenes-reales/productosAyacucho/Invierno/aguaymanto.webp",
       usos: ["Ensaladas", "Jugos", "Sopas", "Acompañamientos"],
     },
     {
@@ -366,7 +366,7 @@ const productosPorTemporada: Record<string, Producto[]> = {
       descripcion: "Hortaliza nutritiva y fresca, utilizada en sopas, ensaladas y guisos.",
       temporada: "Invierno",
       meses: "Junio - Agosto",
-      imagen: "/imagenes-reales/productosAyacucho/Invierno/Brocoli.webp",
+      imagen: "/imagenes-reales/productosAyacucho/Invierno/brocoli.webp",
       usos: ["Sopas", "Ensaladas", "Guisos", "Acompañamientos"],
     },
     {
@@ -374,7 +374,7 @@ const productosPorTemporada: Record<string, Producto[]> = {
       descripcion: "Hortaliza de textura suave y sabor delicado para preparaciones caseras.",
       temporada: "Invierno",
       meses: "Junio - Agosto",
-      imagen: "/imagenes-reales/productosAyacucho/Invierno/Colifor.webp",
+      imagen: "/imagenes-reales/productosAyacucho/Invierno/brocoli.webp",
       usos: ["Sopas", "Ensaladas", "Guisos", "Acompañamientos"],
     },
     {
@@ -382,7 +382,7 @@ const productosPorTemporada: Record<string, Producto[]> = {
       descripcion: "Cítrico aromático y refrescante que realza bebidas y preparaciones de nuestra cocina.",
       temporada: "Invierno",
       meses: "Junio - Agosto",
-      imagen: "/imagenes-reales/productosAyacucho/Invierno/Limon.webp",
+      imagen: "/imagenes-reales/productosAyacucho/Invierno/aguaymanto.webp",
       usos: ["Bebidas", "Aderezos", "Salsas", "Postres"],
     },
     {
@@ -390,7 +390,7 @@ const productosPorTemporada: Record<string, Producto[]> = {
       descripcion: "Cítrico dulce y jugoso, perfecto para consumir fresco o preparar bebidas.",
       temporada: "Invierno",
       meses: "Junio - Agosto",
-      imagen: "/imagenes-reales/productosAyacucho/Invierno/Mandarina.webp",
+      imagen: "/imagenes-reales/productosAyacucho/Invierno/aguaymanto.webp",
       usos: ["Fresco", "Jugos", "Postres", "Mermeladas"],
     },
     {
@@ -398,7 +398,7 @@ const productosPorTemporada: Record<string, Producto[]> = {
       descripcion: "Raíz crocante y nutritiva, utilizada en ensaladas, sopas y guisos.",
       temporada: "Invierno",
       meses: "Junio - Agosto",
-      imagen: "/imagenes-reales/productosAyacucho/Invierno/Zanahoria.webp",
+      imagen: "/imagenes-reales/productosAyacucho/Invierno/aguaymanto.webp",
       usos: ["Ensaladas", "Sopas", "Guisos", "Jugos"],
     }
   ],
@@ -410,7 +410,7 @@ const productosPorTemporada: Record<string, Producto[]> = {
         "Fruta dulce y jugosa de pulpa anaranjada. Excelente fuente de vitamina A y antioxidantes.",
       temporada: "Primavera",
       meses: "Septiembre - Noviembre",
-      imagen: "/imagenes-reales/productosAyacucho/Níspero.webp",
+      imagen: "/imagenes-reales/productosAyacucho/Primavera/manzanilla.webp",
       usos: ["Fresco", "Jugos", "Compotas", "Ensaladas de frutas"],
     },
     {
@@ -420,7 +420,7 @@ const productosPorTemporada: Record<string, Producto[]> = {
         "Legumbre tierna y nutritiva. Se consume en sopas, guisos y como acompañamiento.",
       temporada: "Primavera",
       meses: "Septiembre - Noviembre",
-      imagen: "/imagenes-reales/productosAyacucho/Habas-Verdes.webp",
+      imagen: "/imagenes-reales/productosAyacucho/Primavera/hierba buena.webp",
       usos: ["Sopas", "Guisos", "Ensaladas", "Saltados"],
     },
     {
@@ -429,7 +429,7 @@ const productosPorTemporada: Record<string, Producto[]> = {
       descripcion: "Hierbas aromáticas frescas que reviven con el calor, para mondingo.",
       temporada: "Primavera",
       meses: "Septiembre - Marzo",
-      imagen: "/imagenes-reales/productosAyacucho/hierba-buena.webp",
+      imagen: "/imagenes-reales/productosAyacucho/Primavera/hierba buena.webp",
       usos: ["Mondongo", "Sopas", "Bebidas", "Aderezos"],
     },
     {
@@ -438,7 +438,7 @@ const productosPorTemporada: Record<string, Producto[]> = {
       descripcion: "Hierba digestiva ancestral en su punto más aromático, bebidas.",
       temporada: "Primavera",
       meses: "Septiembre - Marzo",
-      imagen: "/imagenes-reales/productosAyacucho/muña.webp",
+      imagen: "/imagenes-reales/productosAyacucho/Primavera/muña.webp",
       usos: ["Infusiones", "Sopas", "Aderezos", "Digestivos"],
     },
     {
@@ -446,7 +446,7 @@ const productosPorTemporada: Record<string, Producto[]> = {
       descripcion: "Ají aromático y de sabor intenso, utilizado para realzar preparaciones.",
       temporada: "Primavera",
       meses: "Septiembre - Marzo",
-      imagen: "/imagenes-reales/productosAyacucho/Primvera/Aji Limo.webp",
+      imagen: "/imagenes-reales/productosAyacucho/Primavera/romero.webp",
       usos: ["Salsas", "Aderezos", "Guisos", "Ceviches"],
     },
     {
@@ -454,7 +454,7 @@ const productosPorTemporada: Record<string, Producto[]> = {
       descripcion: "Hortaliza de sabor delicado, ideal para ensaladas y guisos.",
       temporada: "Primavera",
       meses: "Septiembre - Noviembre",
-      imagen: "/imagenes-reales/productosAyacucho/Primvera/Alcachofa.webp",
+      imagen: "/imagenes-reales/productosAyacucho/Primavera/eucalipto.webp",
       usos: ["Ensaladas", "Guisos", "Entradas", "Acompañamientos"],
     },
     {
@@ -462,7 +462,7 @@ const productosPorTemporada: Record<string, Producto[]> = {
       descripcion: "Fruto pequeño de sabor dulce y ligeramente ácido, ideal para preparaciones frescas.",
       temporada: "Primavera",
       meses: "Septiembre - Noviembre",
-      imagen: "/imagenes-reales/productosAyacucho/Primvera/Arandano.webp",
+      imagen: "/imagenes-reales/productosAyacucho/Primavera/manzanilla.webp",
       usos: ["Fresco", "Jugos", "Postres", "Mermeladas"],
     },
     {
@@ -470,7 +470,7 @@ const productosPorTemporada: Record<string, Producto[]> = {
       descripcion: "Fruta jugosa y dulce, apreciada fresca y en preparaciones caseras.",
       temporada: "Primavera",
       meses: "Septiembre - Noviembre",
-      imagen: "/imagenes-reales/productosAyacucho/Primvera/Ciruelo.webp",
+      imagen: "/imagenes-reales/productosAyacucho/Primavera/manzanilla.webp",
       usos: ["Fresco", "Jugos", "Postres", "Mermeladas"],
     },
     {
@@ -478,7 +478,7 @@ const productosPorTemporada: Record<string, Producto[]> = {
       descripcion: "Hortaliza tierna y versátil, utilizada en ensaladas y preparaciones saladas.",
       temporada: "Primavera",
       meses: "Septiembre - Noviembre",
-      imagen: "/imagenes-reales/productosAyacucho/Primvera/Esparrago.webp",
+      imagen: "/imagenes-reales/productosAyacucho/Primavera/eucalipto.webp",
       usos: ["Ensaladas", "Sopas", "Guisos", "Acompañamientos"],
     },
     {
@@ -486,7 +486,7 @@ const productosPorTemporada: Record<string, Producto[]> = {
       descripcion: "Fruto aromático y dulce que aporta frescura y color a bebidas y postres.",
       temporada: "Primavera",
       meses: "Septiembre - Noviembre",
-      imagen: "/imagenes-reales/productosAyacucho/Primvera/Fresa.webp",
+      imagen: "/imagenes-reales/productosAyacucho/Primavera/manzanilla.webp",
       usos: ["Fresco", "Jugos", "Postres", "Mermeladas"],
     },
     {
@@ -494,7 +494,7 @@ const productosPorTemporada: Record<string, Producto[]> = {
       descripcion: "Hortaliza fresca y crocante, ideal para ensaladas y bebidas refrescantes.",
       temporada: "Primavera",
       meses: "Septiembre - Noviembre",
-      imagen: "/imagenes-reales/productosAyacucho/Primvera/Pepino.webp",
+      imagen: "/imagenes-reales/productosAyacucho/Primavera/muña.webp",
       usos: ["Ensaladas", "Bebidas", "Aderezos", "Acompañamientos"],
     },
     {
@@ -502,9 +502,180 @@ const productosPorTemporada: Record<string, Producto[]> = {
       descripcion: "Hortaliza colorida y aromática que aporta sabor y frescura a diversos platos.",
       temporada: "Primavera",
       meses: "Septiembre - Noviembre",
-      imagen: "/imagenes-reales/productosAyacucho/Primvera/Pimenton.webp",
+      imagen: "/imagenes-reales/productosAyacucho/Primavera/romero.webp",
       usos: ["Ensaladas", "Guisos", "Salsas", "Acompañamientos"],
     }
+  ],
+};
+
+const productosPorTemporada: Record<string, Producto[]> = {
+  Verano: [
+    {
+      nombre: "Ají Amarillo",
+      descripcion: "Ají aromático y de sabor intenso, esencial en la cocina ayacuchana.",
+      temporada: "Verano",
+      meses: "Diciembre - Marzo",
+      imagen: "/imagenes-reales/productosAyacucho/Verano/aji amarillo.webp",
+      usos: ["Salsas", "Aderezos", "Guisos", "Cremas"],
+    },
+    {
+      nombre: "Granadilla",
+      descripcion: "Fruta dulce y aromática, ideal para bebidas y postres frescos.",
+      temporada: "Verano",
+      meses: "Diciembre - Marzo",
+      imagen: "/imagenes-reales/productosAyacucho/Verano/granadilla.webp",
+      usos: ["Fresco", "Jugos", "Postres", "Mermeladas"],
+    },
+    {
+      nombre: "Lucuma",
+      descripcion: "Fruta andina cremosa y de dulzor natural, protagonista de postres tradicionales.",
+      temporada: "Verano",
+      meses: "Diciembre - Mayo",
+      imagen: "/imagenes-reales/productosAyacucho/Verano/lucuma.webp",
+      usos: ["Helados", "Postres", "Batidos", "Dulces"],
+    },
+    {
+      nombre: "Maiz",
+      descripcion: "Cereal andino de cosecha tierna, base de humitas y preparaciones tradicionales.",
+      temporada: "Verano",
+      meses: "Enero - Mayo",
+      imagen: "/imagenes-reales/productosAyacucho/Verano/maiz.webp",
+      usos: ["Sancochado", "Humitas", "Sopas", "Guisos"],
+    },
+    {
+      nombre: "Tuna",
+      descripcion: "Fruto del nopal, dulce y refrescante, rico en vitamina C y fibra.",
+      temporada: "Verano",
+      meses: "Diciembre - Marzo",
+      imagen: "/imagenes-reales/productosAyacucho/Verano/tuna.webp",
+      usos: ["Fresco", "Jugos", "Mermeladas", "Postres"],
+    },
+    {
+      nombre: "Yuca",
+      descripcion: "Raiz de textura firme y sabor suave, base de preparaciones tradicionales.",
+      temporada: "Verano",
+      meses: "Diciembre - Marzo",
+      imagen: "/imagenes-reales/productosAyacucho/Verano/yuca.webp",
+      usos: ["Sancochado", "Guisos", "Frituras", "Acompanamientos"],
+    },
+  ],
+  Otoño: [
+    {
+      nombre: "Calabaza",
+      descripcion: "Fruto de pulpa suave, apreciado en sopas, guisos y dulces andinos.",
+      temporada: "Otoño",
+      meses: "Marzo - Agosto",
+      imagen: "/imagenes-reales/productosAyacucho/Otoño/calabaza.webp",
+      usos: ["Mazamorras", "Sopas", "Guisos", "Dulces"],
+    },
+    {
+      nombre: "Camote",
+      descripcion: "Tuberculo dulce y nutritivo, versatil para preparaciones tradicionales.",
+      temporada: "Otoño",
+      meses: "Marzo - Junio",
+      imagen: "/imagenes-reales/productosAyacucho/Otoño/camote.webp",
+      usos: ["Sancochado", "Guisos", "Postres", "Acompanamientos"],
+    },
+    {
+      nombre: "Chirimoya",
+      descripcion: "Fruta de pulpa cremosa y aroma delicado, perfecta para postres frescos.",
+      temporada: "Otoño",
+      meses: "Marzo - Junio",
+      imagen: "/imagenes-reales/productosAyacucho/Otoño/chirimoya.webp",
+      usos: ["Fresco", "Jugos", "Batidos", "Postres"],
+    },
+    {
+      nombre: "Oca",
+      descripcion: "Tuberculo dulce andino que acompana la cocina tradicional de Ayacucho.",
+      temporada: "Otoño",
+      meses: "Marzo - Junio",
+      imagen: "/imagenes-reales/productosAyacucho/Otoño/oca.webp",
+      usos: ["Sancochado", "Guisos", "Mermeladas", "Postres"],
+    },
+    {
+      nombre: "Olluco",
+      descripcion: "Tuberculo fresco de cosecha estacional, infaltable en guisos andinos.",
+      temporada: "Otoño",
+      meses: "Marzo - Julio",
+      imagen: "/imagenes-reales/productosAyacucho/Otoño/olluco.webp",
+      usos: ["Guisos", "Sopas", "Acompanamientos", "Ensaladas"],
+    },
+    {
+      nombre: "Papa",
+      descripcion: "Tuberculo ancestral, base fundamental de la gastronomia ayacuchana.",
+      temporada: "Otoño",
+      meses: "Abril - Junio",
+      imagen: "/imagenes-reales/productosAyacucho/Otoño/papa.webp",
+      usos: ["Guisos", "Sopas", "Puca picante", "Papas fritas"],
+    },
+  ],
+  Invierno: [
+    {
+      nombre: "Aguaymanto",
+      descripcion: "Fruto andino de sabor dulce y acido, ideal para bebidas y postres.",
+      temporada: "Invierno",
+      meses: "Junio - Agosto",
+      imagen: "/imagenes-reales/productosAyacucho/Invierno/aguaymanto.webp",
+      usos: ["Fresco", "Jugos", "Postres", "Mermeladas"],
+    },
+    {
+      nombre: "Brocoli",
+      descripcion: "Hortaliza nutritiva y fresca para sopas, ensaladas y guisos.",
+      temporada: "Invierno",
+      meses: "Junio - Agosto",
+      imagen: "/imagenes-reales/productosAyacucho/Invierno/brocoli.webp",
+      usos: ["Sopas", "Ensaladas", "Guisos", "Acompanamientos"],
+    },
+    {
+      nombre: "Haba",
+      descripcion: "Legumbre nutritiva de los valles, presente en sopas y guisos caseros.",
+      temporada: "Invierno",
+      meses: "Abril - Agosto",
+      imagen: "/imagenes-reales/productosAyacucho/Invierno/haba.webp",
+      usos: ["Guisos", "Sopas", "Arroces", "Ensaladas"],
+    },
+  ],
+  Primavera: [
+    {
+      nombre: "Eucalipto",
+      descripcion: "Arbol aromatico usado tradicionalmente en infusiones y preparaciones naturales.",
+      temporada: "Primavera",
+      meses: "Septiembre - Noviembre",
+      imagen: "/imagenes-reales/productosAyacucho/Primavera/eucalipto.webp",
+      usos: ["Infusiones", "Bebidas", "Aromas", "Digestivos"],
+    },
+    {
+      nombre: "Hierba Buena",
+      descripcion: "Hierba aromatica fresca para bebidas, sopas y el tradicional mondongo.",
+      temporada: "Primavera",
+      meses: "Septiembre - Marzo",
+      imagen: "/imagenes-reales/productosAyacucho/Primavera/hierba buena.webp",
+      usos: ["Mondongo", "Sopas", "Bebidas", "Aderezos"],
+    },
+    {
+      nombre: "Manzanilla",
+      descripcion: "Flor aromatica tradicional, apreciada en infusiones y bebidas calientes.",
+      temporada: "Primavera",
+      meses: "Septiembre - Noviembre",
+      imagen: "/imagenes-reales/productosAyacucho/Primavera/manzanilla.webp",
+      usos: ["Infusiones", "Bebidas", "Digestivos", "Aromas"],
+    },
+    {
+      nombre: "Muna",
+      descripcion: "Hierba digestiva ancestral de aroma intenso y refrescante.",
+      temporada: "Primavera",
+      meses: "Septiembre - Marzo",
+      imagen: "/imagenes-reales/productosAyacucho/Primavera/muña.webp",
+      usos: ["Infusiones", "Sopas", "Aderezos", "Digestivos"],
+    },
+    {
+      nombre: "Romero",
+      descripcion: "Hierba aromatica de sabor profundo para aderezos y preparaciones saladas.",
+      temporada: "Primavera",
+      meses: "Septiembre - Noviembre",
+      imagen: "/imagenes-reales/productosAyacucho/Primavera/romero.webp",
+      usos: ["Aderezos", "Salsas", "Guisos", "Infusiones"],
+    },
   ],
 };
 
@@ -590,7 +761,7 @@ function TesorosAyacuchoPage() {
                 <img
                   src={producto.imagen}
                   alt={producto.nombre}
-                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 ease-out group-hover:scale-110"
+                  className="absolute inset-0 w-full h-full max-w-full max-h-full object-cover"
                 />
                 
                 {/* Gradiente base (más oscuro en móvil porque el texto siempre está visible, en PC se oscurece al hacer hover) */}
