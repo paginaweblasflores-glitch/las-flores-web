@@ -663,7 +663,7 @@ function ReservasPage() {
         <section className="relative min-h-[60vh] flex items-center justify-center pt-32 pb-24 px-0 bg-eucalipto-dark text-piedra overflow-hidden">
           <div className="absolute inset-0 z-0">
             <img
-              src="/inicio/reserva.webp"
+              src="/imagenes-reales/secciones/compartir.webp"
               alt="Restaurante Las Flores Ayacucho"
               loading="eager"
               decoding="async"
