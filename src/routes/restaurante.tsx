@@ -86,7 +86,7 @@ const chefRecommendations = [
     price: "S/ 65",
     description:
       "Guiso de papa vieja en salsa de ají panca con maní tostado, trozos de carne de cerdo y especias, servido con arroz blanco, ensalada regional y una presa de chicharrón huamanguino.",
-    image: "/imagenes-reales/RECOMENDACIONES-CHEF/puca.webp",
+    image: "/imagenes-reales/recomendaciones-chef/puca-picante.webp",
     alt: "Puca Picante",
   },
   {
@@ -94,7 +94,7 @@ const chefRecommendations = [
     price: "S/ 85",
     description:
       "Plato insignia, acompañado con papas nativas doradas, qapchi, choclo salteado en especias, ensalada criolla y chips de papas.",
-    image: "/imagenes-reales/RECOMENDACIONES-CHEF/cuy-chactado.webp",
+    image: "/imagenes-reales/recomendaciones-chef/cuy-las-flores.webp",
     alt: "Cuy las Flores",
   },
   {
@@ -102,7 +102,7 @@ const chefRecommendations = [
     price: "S/ 70",
     description:
       "Trozos de carne de cerdo dorados en su propia manteca, acompañado de papas sancochadas, qapchi, chips de camote y ensalada criolla.",
-    image: "/imagenes-reales/RECOMENDACIONES-CHEF/chicharon.webp",
+    image: "/imagenes-reales/recomendaciones-chef/chicharon.webp",
     alt: "Chicharrón Huamanguino",
   },
 ];
