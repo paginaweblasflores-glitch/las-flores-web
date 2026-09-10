@@ -194,7 +194,10 @@ function ReservasPage() {
   useEffect(() => {
     listRestaurantZones().then((res) => {
       if (res && res.length > 0) {
-        const mapped = res.map((z) => {
+        const mapped = res
+          // Respetar el toggle "HABILITADO/DESHABILITADO" del panel admin
+          .filter((z) => z.is_active !== false)
+          .map((z) => {
           const fallback = FALLBACK_ZONES.find((f) => f.id === z.id);
           return {
             id: z.id,
