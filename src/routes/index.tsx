@@ -1171,7 +1171,7 @@ function Index() {
               height={1200}
               loading="lazy"
               decoding="async"
-              className="w-full h-full min-h-[500px] md:min-h-[600px] object-cover rounded-3xl"
+              className="w-full h-full min-h-[500px] md:min-h-[600px] object-cover rounded-3xl shadow-2xl border border-nogal/10"
             />
           </div>
         </div>
