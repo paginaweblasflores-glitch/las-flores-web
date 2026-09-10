@@ -161,7 +161,7 @@ const GALLERY_CATEGORIES: Category[] = [
 ];
 
 function GaleriaPage() {
-  const [activeCategory, setActiveCategory] = useState<string>("festividades");
+  const [activeCategory, setActiveCategory] = useState<string>("arte-cultura");
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
 
   const currentCategory = GALLERY_CATEGORIES.find((cat) => cat.id === activeCategory);
