@@ -174,10 +174,15 @@ export async function signInWithFacebook() {
       ? window.location.origin
       : "https://www.restaurantelasflores.com";
 
+  // Facebook usa redirección de página completa (no popup), así que la URL de
+  // retorno NO lleva ?auth_popup=1 — de lo contrario la pestaña principal se
+  // trataría a sí misma como popup e intentaría cerrarse. El callback lo maneja
+  // el flujo de redirección en __root.tsx (spinner mientras Supabase procesa
+  // el ?code= y dispara SIGNED_IN).
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: "facebook",
     options: {
-      redirectTo: `${currentOrigin}/?auth_popup=1`,
+      redirectTo: `${currentOrigin}/`,
     },
   });
   if (error) throw error;
