@@ -416,7 +416,7 @@ function RestaurantePage() {
         <div className="max-w-7xl mx-auto grid items-center gap-10 md:grid-cols-[1.35fr_1fr] md:gap-16">
           <div className="relative aspect-[4/3] overflow-hidden rounded-3xl shadow-2xl border-4 border-white/20">
             <img
-              src="/familia/ubicacion-destino.webp"
+              src="/familia/ubicacion.webp"
               alt="Mapa de ubicación de Restaurante Las Flores y distancias a Plaza Mayor, Aeropuerto, Wari y Pampa de la Quinua"
               loading="lazy"
               decoding="async"
