@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { X, Facebook, Instagram, Phone, Mail, MessageCircle, Menu } from 'lucide-react';
 import { Link } from '@tanstack/react-router';
 import { UserAuthButton } from './UserAuthButton';
@@ -21,6 +22,11 @@ export function SiteNavigationMenu({
   isAlwaysDark?: boolean;
 }) {
   const [isOpen, setIsOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     document.body.style.overflow = isOpen ? 'hidden' : '';
@@ -57,6 +63,8 @@ export function SiteNavigationMenu({
         <UserAuthButton textColorClass={textColor} />
       </div>
 
+      {mounted && createPortal(
+        <>
       {/* ── Backdrop ── */}
       <div
         className={`fixed inset-0 z-[90] bg-black/40 backdrop-blur-sm transition-opacity duration-300 ${isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
@@ -166,6 +174,9 @@ export function SiteNavigationMenu({
           </div>
         </div>
       </div>
+        </>,
+        document.body
+      )}
     </>
   );
 }
