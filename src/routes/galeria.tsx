@@ -61,7 +61,6 @@ const GALLERY_CATEGORIES: Category[] = [
     images: [
       "/imagenes-reales/galeria/festividades/carnaval-uno.webp",
       "/imagenes-reales/galeria/festividades/carnaval-tres.webp",
-      "/imagenes-reales/galeria/festividades/carnaval-dos.webp",
       "/imagenes-reales/galeria/festividades/samana-santa-uno.webp",
       "/imagenes-reales/galeria/festividades/semana-santa-dos.webp",
       "/imagenes-reales/galeria/festividades/semana-santa-tres.webp",
