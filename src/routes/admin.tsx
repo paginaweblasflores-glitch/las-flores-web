@@ -250,7 +250,7 @@ function AdminRoute() {
 
   const handleSignOut = async () => {
     await signOut();
-    window.location.href = "/restaurante";
+    window.location.href = "/staff-login";
   };
 
   const handleUpdateOrderStatus = async (orderId: string, newStatus: string) => {
