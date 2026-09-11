@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { supabase } from "@/lib/supabase";
+import { sendEventQuoteEmail } from "@/lib/emailService";
 const heroImg =
   "/imagenes-reales/hero-paginas/hero-eventos-opt.webp";
 const casaImg = "/imagenes-reales/CARTA/02042026-DSC04401.webp";
@@ -262,7 +263,7 @@ function EventosPage() {
           name,
           email,
           phone,
-          guests,
+          guest_count: guests,
           event_type,
           event_date,
           message,
@@ -274,6 +275,12 @@ function EventosPage() {
         console.warn("Error al guardar cotización de evento en Supabase (event_quotes):", error);
         alert("Nota: Hubo un inconveniente al registrar la cotización en el servidor, pero hemos recibido tu solicitud.");
       }
+
+      // Enviar notificación a contacto@restaurantelasflores.com
+      sendEventQuoteEmail({ name, email, phone, guests, event_type, event_date, message }).catch((e) =>
+        console.warn("Error al enviar correo de cotización de evento:", e)
+      );
+
       setFormStatus("success");
     } catch (err: any) {
       console.warn("Excepción al solicitar cotización de evento en Supabase:", err);

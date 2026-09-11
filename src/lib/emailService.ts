@@ -377,7 +377,52 @@ export async function sendContactEmail(contactData: any): Promise<void> {
 }
 
 /**
- * 4. Enviar Solicitud de Reseña de 5 Estrellas en Google Maps (Post-Atención / NPS)
+ * 4. Enviar Cotización de Evento (formulario "Cotizar Evento" de la página de Eventos)
+ */
+export async function sendEventQuoteEmail(quoteData: {
+  name: string;
+  email: string;
+  phone: string;
+  guests: number | null;
+  event_type: string;
+  event_date: string | null;
+  message: string;
+}): Promise<void> {
+  const emailHtml = `
+    <div style="font-family: Georgia, serif, sans-serif; max-width: 600px; margin: 0 auto; background-color: #F6F1E7; padding: 20px;">
+      <div style="background-color: #FFFFFF; border: 3px solid #2C4A3E; border-radius: 14px; padding: 24px;">
+        <div style="text-align: center; margin-bottom: 16px;">
+          <img src="https://www.restaurantelasflores.com/images.png" alt="Restaurante Las Flores" style="max-width: 180px; width: 65%; height: auto;" />
+        </div>
+        <h2 style="font-family: Georgia, serif; color: #2C4A3E; margin-top: 0; font-size: 18px; text-align: center; border-bottom: 2px solid #2C4A3E; padding-bottom: 8px;">
+          Nueva Cotización de Evento desde la Web
+        </h2>
+        <div style="font-family: Arial, sans-serif; font-size: 13px; color: #333333; line-height: 1.8;">
+          <p style="margin: 4px 0;"><strong>Nombre:</strong> ${quoteData.name}</p>
+          <p style="margin: 4px 0;"><strong>Correo Electrónico:</strong> ${quoteData.email}</p>
+          <p style="margin: 4px 0;"><strong>Teléfono:</strong> ${quoteData.phone || "No especificado"}</p>
+          <p style="margin: 4px 0;"><strong>Tipo de Evento:</strong> ${quoteData.event_type || "No especificado"}</p>
+          <p style="margin: 4px 0;"><strong>N° de Invitados:</strong> ${quoteData.guests ?? "No especificado"}</p>
+          <p style="margin: 4px 0;"><strong>Fecha Solicitada:</strong> ${quoteData.event_date || "No especificada"}</p>
+          <div style="background: #FAF6ED; padding: 16px; border-left: 4px solid #2C4A3E; border-radius: 8px; margin-top: 16px;">
+            <p style="margin: 0; color: #1B2A24; line-height: 1.6;">${quoteData.message || "Sin mensaje adicional."}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+
+  await sendEmail({
+    from: SENDERS.GENERAL,
+    replyTo: quoteData.email,
+    to: OFFICIAL_EMAIL,
+    subject: `Cotización de Evento — ${quoteData.name}`,
+    html: emailHtml,
+  });
+}
+
+/**
+ * 5. Enviar Solicitud de Reseña de 5 Estrellas en Google Maps (Post-Atención / NPS)
  */
 export async function sendReviewRequestEmail(customerData: { name: string; email: string }): Promise<void> {
   const customerEmail = customerData.email;
