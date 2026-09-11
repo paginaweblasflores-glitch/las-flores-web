@@ -76,4 +76,12 @@
     <priority>0.5</priority>
   </url>
 
+  <!-- Únete al Equipo -->
+  <url>
+    <loc>https://www.restaurantelasflores.com/unete-al-equipo</loc>
+    <lastmod>2026-09-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
 </urlset>
