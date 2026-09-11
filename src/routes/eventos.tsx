@@ -109,10 +109,8 @@ const EVENT_TABS: EventTabData[] = [
       "Atención preferencial"
     ],
     images: [
-      "/imagenes-reales/EVENTOS-COORPORATIVAS/bodas-recepciones.webp",
-      "/imagenes-reales/Salones/salon-entrada.webp",
-      "/imagenes-reales/Salones/terraza-colonial.webp",
-      "/imagenes-reales/Salones/salon-principal.webp"
+      "/imagenes-reales/eventos/boda-uno.webp",
+      "/imagenes-reales/eventos/boda-dos.webp"
     ]
   }
 ];
