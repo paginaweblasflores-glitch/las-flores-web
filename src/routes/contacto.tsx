@@ -24,8 +24,39 @@ export const Route = createFileRoute("/contacto")({
     meta: [
       { title: "Contacto | Restaurante Las Flores Ayacucho" },
       { name: "description", content: "Póngase en contacto con Restaurante Las Flores en Ayacucho. Atención al cliente, reservas, pedidos a domicilio y ubicación." },
+      {
+        name: "keywords",
+        content:
+          "contacto restaurante las flores, telefono restaurante ayacucho, ubicacion restaurante ayacucho, direccion restaurante las flores, horario restaurante ayacucho",
+      },
+      { property: "og:title", content: "Contacto | Restaurante Las Flores Ayacucho" },
+      {
+        property: "og:description",
+        content: "Póngase en contacto con Restaurante Las Flores en Ayacucho. Atención al cliente, reservas, pedidos a domicilio y ubicación.",
+      },
+      { property: "og:image", content: "https://www.restaurantelasflores.com/imagenes-reales/hero-paginas/hero-contacto.webp" },
+      { property: "og:url", content: "https://www.restaurantelasflores.com/contacto" },
+      { property: "og:type", content: "website" },
+      { name: "twitter:image", content: "https://www.restaurantelasflores.com/imagenes-reales/hero-paginas/hero-contacto.webp" },
     ],
     links: [{ rel: "canonical", href: "https://www.restaurantelasflores.com/contacto" }],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          "mainEntity": FAQS.map((f) => ({
+            "@type": "Question",
+            "name": f.q,
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": f.a,
+            },
+          })),
+        }),
+      },
+    ],
   }),
   component: ContactoPage,
 });

@@ -48,6 +48,20 @@ export const Route = createFileRoute("/eventos")({
         content:
           "Celebre bodas, almuerzos de negocios y reuniones familiares en los exclusivos ambientes de Restaurante Las Flores en Ayacucho.",
       },
+      {
+        name: "keywords",
+        content:
+          "eventos ayacucho, salones para eventos ayacucho, local para bodas ayacucho, recepciones ayacucho, reuniones corporativas ayacucho, celebraciones familiares ayacucho, restaurante para eventos ayacucho",
+      },
+      { property: "og:title", content: "Eventos y Recepciones | Restaurante Las Flores" },
+      {
+        property: "og:description",
+        content: "Celebre bodas, almuerzos de negocios y reuniones familiares en los exclusivos ambientes de Restaurante Las Flores en Ayacucho.",
+      },
+      { property: "og:image", content: "https://www.restaurantelasflores.com/inicio/eventos.webp" },
+      { property: "og:url", content: "https://www.restaurantelasflores.com/eventos" },
+      { property: "og:type", content: "website" },
+      { name: "twitter:image", content: "https://www.restaurantelasflores.com/inicio/eventos.webp" },
     ],
     links: [{ rel: "canonical", href: "https://www.restaurantelasflores.com/eventos" }],
   }),

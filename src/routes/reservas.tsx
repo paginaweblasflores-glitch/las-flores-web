@@ -21,6 +21,20 @@ export const Route = createFileRoute("/reservas")({
         content:
           "Reserva tu mesa en el Restaurante Las Flores de Ayacucho. Desayunos, almuerzos y cenas con vista al corazón de Huamanga. Atención todos los días.",
       },
+      {
+        name: "keywords",
+        content:
+          "reservar mesa ayacucho, reservas restaurante las flores, reservar restaurante ayacucho, mesa para desayuno ayacucho, salones para eventos ayacucho, reserva online ayacucho",
+      },
+      { property: "og:title", content: "Reservas | Restaurante Las Flores — Mesa en Ayacucho" },
+      {
+        property: "og:description",
+        content: "Reserva tu mesa online en Restaurante Las Flores. Elige el salón, la fecha y el horario que prefieras en el corazón de Huamanga.",
+      },
+      { property: "og:image", content: "https://www.restaurantelasflores.com/images.png" },
+      { property: "og:url", content: "https://www.restaurantelasflores.com/reservas" },
+      { property: "og:type", content: "website" },
+      { name: "twitter:image", content: "https://www.restaurantelasflores.com/images.png" },
     ],
     links: [{ rel: "canonical", href: "https://www.restaurantelasflores.com/reservas" }],
   }),

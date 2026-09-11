@@ -14,6 +14,20 @@ export const Route = createFileRoute("/galeria")({
         content:
           "Galería fotográfica del Restaurante Las Flores en Ayacucho. Descubre nuestros platos, ambiente y momentos especiales.",
       },
+      {
+        name: "keywords",
+        content:
+          "galeria restaurante las flores, fotos restaurante ayacucho, ambiente restaurante ayacucho, platos tipicos ayacucho fotos, arte y cultura ayacuchana",
+      },
+      { property: "og:title", content: "Galería | Restaurante Las Flores Ayacucho" },
+      {
+        property: "og:description",
+        content: "Descubre nuestros platos, ambiente y momentos especiales en fotos del Restaurante Las Flores en Ayacucho.",
+      },
+      { property: "og:image", content: "https://www.restaurantelasflores.com/images.png" },
+      { property: "og:url", content: "https://www.restaurantelasflores.com/galeria" },
+      { property: "og:type", content: "website" },
+      { name: "twitter:image", content: "https://www.restaurantelasflores.com/images.png" },
     ],
     links: [{ rel: "canonical", href: "https://www.restaurantelasflores.com/galeria" }],
   }),
