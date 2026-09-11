@@ -1,6 +1,6 @@
 import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
-import { ShieldCheck, UserCircle2, Lock, Loader2, LogIn, ArrowLeft } from "lucide-react";
+import { UserCircle2, Lock, Loader2, LogIn, ArrowLeft, Eye, EyeOff } from "lucide-react";
 import { supabase } from "../lib/supabase";
 
 // Mapa interno usuario → correo real de Supabase Auth. El personal solo ve y
@@ -25,6 +25,7 @@ function StaffLoginPage() {
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [checkingSession, setCheckingSession] = useState(true);
   const [errorMsg, setErrorMsg] = useState("");
@@ -102,8 +103,8 @@ function StaffLoginPage() {
         {/* Header */}
         <div className="bg-[#2C4A3E] text-[#FAF6ED] p-7 text-center relative overflow-hidden">
           <div className="absolute top-0 right-0 w-32 h-32 bg-white/5 rounded-full blur-2xl pointer-events-none" />
-          <div className="w-12 h-12 rounded-2xl bg-[#D4AF37]/15 text-[#D4AF37] flex items-center justify-center mx-auto mb-3 border border-[#D4AF37]/30 shadow-inner">
-            <ShieldCheck size={24} />
+          <div className="w-16 h-16 rounded-2xl bg-[#D4AF37]/15 flex items-center justify-center mx-auto mb-3 border border-[#D4AF37]/30 shadow-inner overflow-hidden">
+            <img src="/logo/logo-trasparente.webp" alt="Las Flores" className="w-11 h-11 object-contain" />
           </div>
           <h1 className="font-serif font-bold text-2xl text-white">Acceso Administrativo</h1>
           <p className="text-sm text-[#FAF6ED]/75 mt-1.5">
@@ -137,15 +138,26 @@ function StaffLoginPage() {
             <label className="block text-xs font-bold text-[#2C4A3E] uppercase tracking-[0.14em] mb-1.5 flex items-center gap-1.5">
               <Lock size={13} className="text-[#2C4A3E]/70" /> Contraseña
             </label>
-            <input
-              type="password"
-              required
-              autoComplete="current-password"
-              placeholder="••••••••"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-4 py-3 rounded-xl border border-[#2C4A3E]/20 bg-white text-base md:text-sm font-medium text-[#1b2a24] focus:outline-none focus:ring-2 focus:ring-[#2C4A3E] transition-all shadow-xs"
-            />
+            <div className="relative">
+              <input
+                type={showPassword ? "text" : "password"}
+                required
+                autoComplete="current-password"
+                placeholder="••••••••"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="w-full px-4 py-3 pr-11 rounded-xl border border-[#2C4A3E]/20 bg-white text-base md:text-sm font-medium text-[#1b2a24] focus:outline-none focus:ring-2 focus:ring-[#2C4A3E] transition-all shadow-xs"
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword((v) => !v)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-[#2C4A3E]/50 hover:text-[#2C4A3E] transition-colors cursor-pointer"
+                aria-label={showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
+                tabIndex={-1}
+              >
+                {showPassword ? <EyeOff size={17} /> : <Eye size={17} />}
+              </button>
+            </div>
           </div>
 
           {errorMsg && (
