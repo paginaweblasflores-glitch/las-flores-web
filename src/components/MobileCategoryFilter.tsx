@@ -88,21 +88,22 @@ export function MobileCategoryFilter({
     const container = scrollRef.current;
     const activeButton = event.currentTarget;
     const nextButton = categoryButtonRefs.current[index + 1];
-    const shouldRevealNext = container
+    const shouldRevealNext = container && nextButton
       ? shouldRevealNextCategory(
           index,
           categories.length,
-          activeButton.getBoundingClientRect().right,
+          nextButton.getBoundingClientRect().left,
           container.getBoundingClientRect().right,
         )
       : false;
 
-    onSelect(key);
-    activeButton.scrollIntoView({ behavior: "smooth", inline: "nearest", block: "nearest" });
-
     if (shouldRevealNext && nextButton) {
       nextButton.scrollIntoView({ behavior: "smooth", inline: "nearest", block: "nearest" });
+    } else {
+      activeButton.scrollIntoView({ behavior: "smooth", inline: "nearest", block: "nearest" });
     }
+
+    onSelect(key);
   };
 
   return (

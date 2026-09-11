@@ -3,10 +3,10 @@ import { shouldRevealNextCategory } from "../utils/categoryScroll";
 
 describe("desplazamiento progresivo de categorías", () => {
   it("revela la siguiente categoría cuando la activa queda al borde visible", () => {
-    expect(shouldRevealNextCategory(2, 8, 398, 400)).toBe(true);
+    expect(shouldRevealNextCategory(2, 8, 410, 400)).toBe(true);
   });
 
-  it("no desplaza si la categoría activa aún está visible con margen", () => {
+  it("no desplaza si la siguiente categoría ya está visible", () => {
     expect(shouldRevealNextCategory(2, 8, 360, 400)).toBe(false);
   });
 
