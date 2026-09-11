@@ -171,7 +171,7 @@ export function CompleteProfileModal({
 
   const content = (
     <div className="fixed inset-0 z-[99999] flex items-center justify-center p-4 bg-[#1b2a24]/85 backdrop-blur-md animate-in fade-in duration-200 pointer-events-auto select-none">
-      <div className="bg-[#FAF6ED] rounded-3xl w-full max-w-md overflow-hidden shadow-2xl border border-[#2C4A3E]/15 animate-in zoom-in-95 duration-200 relative pointer-events-auto">
+      <div className="bg-[#FAF6ED] rounded-3xl w-full max-w-md max-h-[90vh] overflow-hidden shadow-2xl border border-[#2C4A3E]/15 animate-in zoom-in-95 duration-200 relative pointer-events-auto flex flex-col">
         
         {/* Botón Cerrar X (Solo si ya tenía celular previo) */}
         {onClose && canClose && (
@@ -186,7 +186,7 @@ export function CompleteProfileModal({
         )}
 
         {/* Header Elegante */}
-        <div className="bg-[#2C4A3E] text-[#FAF6ED] p-7 text-center relative overflow-hidden">
+        <div className="bg-[#2C4A3E] text-[#FAF6ED] p-7 text-center relative overflow-hidden shrink-0">
           <div className="absolute top-0 right-0 w-32 h-32 bg-white/5 rounded-full blur-2xl pointer-events-none" />
           <div className="w-12 h-12 rounded-2xl bg-[#D4AF37]/15 text-[#D4AF37] flex items-center justify-center mx-auto mb-3 border border-[#D4AF37]/30 shadow-inner">
             <ShieldCheck size={24} />
@@ -200,7 +200,7 @@ export function CompleteProfileModal({
         </div>
 
         {/* Formulario */}
-        <form onSubmit={handleSubmit} className="p-6 sm:p-7 space-y-4">
+        <form onSubmit={handleSubmit} className="p-6 sm:p-7 space-y-4 overflow-y-auto">
           
           {/* Nombre Completo */}
           <div>
