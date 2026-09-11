@@ -75,10 +75,10 @@ const EVENT_TABS: EventTabData[] = [
       "Espacios modulares según la cantidad de invitados"
     ],
     images: [
-      "/imagenes-reales/EVENTOS-COORPORATIVAS/celebraciones-familiares.webp",
-      "/imagenes-reales/Salones/salon-principal.webp",
-      "/imagenes-reales/Salones/terraza-colonial.webp",
-      "/imagenes-reales/Salones/jardin-andino.webp"
+      "/imagenes-reales/eventos/familia-uno.webp",
+      "/imagenes-reales/eventos/familia-dos.webp",
+      "/imagenes-reales/eventos/familia-tres.webp",
+      "/imagenes-reales/eventos/familia-cuatro.webp"
     ]
   },
   {
