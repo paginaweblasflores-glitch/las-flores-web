@@ -332,7 +332,7 @@ function ReservasPage() {
   }, [form.date, form.time]);
 
   // Generate next 14 days calendar carousel with consistent local date formatting
-  const DAYS_CAROUSEL = useMemo(() => {
+  const baseDaysCarousel = useMemo(() => {
     const list = [];
     const t = new Date();
     for (let i = 0; i < 14; i++) {
@@ -348,6 +348,24 @@ function ReservasPage() {
     }
     return list;
   }, []);
+
+  // Fecha elegida desde el calendario nativo (input type="date") cuando el
+  // usuario quiere reservar más allá de los próximos 14 días. Si no está ya
+  // en la tira de días, se inserta ordenada para que quede visible/seleccionable.
+  const [customDateIso, setCustomDateIso] = useState<string | null>(null);
+  const dateInputRef = useRef<HTMLInputElement>(null);
+
+  const DAYS_CAROUSEL = useMemo(() => {
+    if (!customDateIso || baseDaysCarousel.some((d) => d.iso === customDateIso)) {
+      return baseDaysCarousel;
+    }
+    const [yyyy, mm, dd] = customDateIso.split("-").map(Number);
+    const d = new Date(yyyy, mm - 1, dd);
+    const dayShort = d.toLocaleDateString("es-PE", { weekday: "short" }).substring(0, 2);
+    const dayShortCap = dayShort.charAt(0).toUpperCase() + dayShort.slice(1);
+    const customItem = { iso: customDateIso, dayNum: String(dd).padStart(2, "0"), dayShortCap, fullDate: d };
+    return [...baseDaysCarousel, customItem].sort((a, b) => a.iso.localeCompare(b.iso));
+  }, [baseDaysCarousel, customDateIso]);
 
   // Note: date is not pre-selected; user must pick a date
 
@@ -927,10 +945,42 @@ function ReservasPage() {
 
             {/* 3. Selector Horizontal de Días & Leyenda de Estados con Branding */}
             <div>
-              <div className="mb-3">
+              <div className="mb-3 flex items-center justify-between gap-2">
                 <span className="text-xs uppercase tracking-wider font-bold text-[#2e5339]">
                   Selecciona una fecha
                 </span>
+                <button
+                  type="button"
+                  onClick={() => {
+                    const input = dateInputRef.current;
+                    if (!input) return;
+                    if (typeof input.showPicker === "function") {
+                      input.showPicker();
+                    } else {
+                      input.click();
+                    }
+                  }}
+                  className="flex items-center gap-1.5 text-[11px] font-bold text-[#2e5339] border border-[#2e5339]/30 bg-[#2e5339]/10 hover:bg-[#2e5339]/20 rounded-lg px-3 py-1.5 transition-all cursor-pointer"
+                  aria-label="Elegir otra fecha desde el calendario"
+                >
+                  <Calendar size={14} />
+                  <span>Otra fecha</span>
+                </button>
+                <input
+                  ref={dateInputRef}
+                  type="date"
+                  min={todayIso}
+                  value={form.date || ""}
+                  onChange={(e) => {
+                    const iso = e.target.value;
+                    if (!iso) return;
+                    setCustomDateIso(iso);
+                    setForm((f) => ({ ...f, date: iso }));
+                  }}
+                  className="sr-only"
+                  tabIndex={-1}
+                  aria-hidden="true"
+                />
               </div>
 
               {/* Carousel horizontal de fechas */}
