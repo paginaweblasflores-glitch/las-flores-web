@@ -123,9 +123,9 @@ function AdminRoute() {
   const checkAuth = async () => {
     try {
       const { data: { user }, error: userError } = await supabase.auth.getUser();
-      
+
       if (userError || !user) {
-        navigate({ to: "/restaurante" });
+        navigate({ to: "/staff-login" });
         return;
       }
 
@@ -138,7 +138,7 @@ function AdminRoute() {
         .single();
 
       if (profileError || profile?.role !== "admin") {
-        navigate({ to: "/restaurante" });
+        navigate({ to: "/staff-login" });
         return;
       }
 
@@ -146,7 +146,7 @@ function AdminRoute() {
       await fetchData();
     } catch (error) {
       console.error("Error checking auth:", error);
-      navigate({ to: "/restaurante" });
+      navigate({ to: "/staff-login" });
     } finally {
       setLoading(false);
     }

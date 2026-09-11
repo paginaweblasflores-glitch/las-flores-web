@@ -196,9 +196,9 @@ function CashierDashboardRoute() {
   const checkAuth = async () => {
     try {
       const { data: { user }, error: userError } = await supabase.auth.getUser();
-      
+
       if (userError || !user) {
-        navigate({ to: "/restaurante" });
+        navigate({ to: "/staff-login" });
         return;
       }
 
@@ -211,7 +211,7 @@ function CashierDashboardRoute() {
       const userRole = profile?.role?.toLowerCase();
       if (profileError || (userRole !== "admin" && userRole !== "cashier" && userRole !== "staff")) {
         console.warn("Acceso denegado a caja. Rol insuficiente:", userRole);
-        navigate({ to: "/restaurante" });
+        navigate({ to: "/staff-login" });
         return;
       }
 
@@ -219,7 +219,7 @@ function CashierDashboardRoute() {
       await fetchData();
     } catch (err) {
       console.error("Error al comprobar permisos de caja:", err);
-      navigate({ to: "/restaurante" });
+      navigate({ to: "/staff-login" });
     } finally {
       setLoading(false);
     }

@@ -1,49 +1,7 @@
 import { Link } from "@tanstack/react-router";
-import { Instagram, Facebook, BookOpen, Lock, Loader2 } from "lucide-react";
-import { useState } from "react";
-import { signInWithGoogle, supabase } from "../lib/supabase";
+import { Instagram, Facebook, BookOpen, Lock } from "lucide-react";
 
 export function SiteFooter() {
-  const [signingIn, setSigningIn] = useState(false);
-
-  const handleAdminLogin = async () => {
-    if (signingIn) return;
-    setSigningIn(true);
-
-    try {
-      // Revisa si ya hay sesión
-      const { data: { session } } = await supabase.auth.getSession();
-      if (session) {
-        const { data: profile } = await supabase.from('profiles').select('role').eq('id', session.user.id).single();
-        if (profile?.role === 'admin') {
-          window.location.href = "/admin";
-        } else {
-          window.location.href = "/restaurante";
-        }
-        setSigningIn(false);
-        return;
-      }
-
-      await signInWithGoogle();
-      
-      const { data: { subscription } } = supabase.auth.onAuthStateChange(async (_event, newSession) => {
-        if (newSession) {
-          subscription.unsubscribe();
-          const { data: profile } = await supabase.from('profiles').select('role').eq('id', newSession.user.id).single();
-          if (profile?.role === 'admin') {
-            window.location.href = "/admin";
-          } else {
-            window.location.href = "/restaurante";
-          }
-          setSigningIn(false);
-        }
-      });
-    } catch (e) {
-      console.error(e);
-      setSigningIn(false);
-    }
-  };
-
   return (
     <footer className="bg-eucalipto-dark text-piedra/80 py-16 md:py-20 text-sm border-t border-cream/5">
       <div className="max-w-7xl mx-auto px-6">
@@ -149,14 +107,13 @@ export function SiteFooter() {
         <div className="pt-8 border-t border-cream/10 flex flex-col md:flex-row justify-between items-center gap-4 text-[11px] tracking-wider text-piedra/40">
           <span>© 2026 Restaurante Las Flores S.A.C.</span>
           <div className="flex items-center gap-4">
-            <button
-              onClick={handleAdminLogin}
-              disabled={signingIn}
+            <Link
+              to="/staff-login"
               className="hover:text-piedra transition-colors"
               title="Acceso Administrativo"
             >
-              {signingIn ? <Loader2 size={12} className="animate-spin" /> : <Lock size={12} />}
-            </button>
+              <Lock size={12} />
+            </Link>
             <span>Todos los derechos reservados</span>
           </div>
         </div>

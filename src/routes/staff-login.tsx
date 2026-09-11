@@ -1,0 +1,163 @@
+import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
+import { useState, useEffect } from "react";
+import { ShieldCheck, Mail, Lock, Loader2, LogIn, ArrowLeft } from "lucide-react";
+import { supabase } from "../lib/supabase";
+
+export const Route = createFileRoute("/staff-login")({
+  head: () => ({
+    meta: [
+      { title: "Acceso Administrativo | Restaurante Las Flores" },
+      { name: "robots", content: "noindex, nofollow" },
+    ],
+  }),
+  component: StaffLoginPage,
+});
+
+function StaffLoginPage() {
+  const navigate = useNavigate();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [checkingSession, setCheckingSession] = useState(true);
+  const [errorMsg, setErrorMsg] = useState("");
+
+  // Redirige según el rol del perfil ya autenticado
+  const redirectByRole = async (userId: string) => {
+    const { data: profile } = await supabase
+      .from("profiles")
+      .select("role")
+      .eq("id", userId)
+      .single();
+
+    const role = profile?.role?.toLowerCase();
+    if (role === "admin") {
+      window.location.href = "/admin";
+    } else if (role === "cashier" || role === "staff") {
+      window.location.href = "/caja";
+    } else {
+      setErrorMsg("Tu cuenta no tiene acceso a ningún panel administrativo.");
+      await supabase.auth.signOut();
+      setLoading(false);
+      setCheckingSession(false);
+    }
+  };
+
+  // Si ya hay una sesión activa (p. ej. volvió a esta página), redirige directo
+  useEffect(() => {
+    (async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session) {
+        await redirectByRole(session.user.id);
+      } else {
+        setCheckingSession(false);
+      }
+    })();
+  }, []);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setErrorMsg("");
+    setLoading(true);
+
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email: email.trim(),
+      password,
+    });
+
+    if (error || !data.user) {
+      setErrorMsg("Correo o contraseña incorrectos.");
+      setLoading(false);
+      return;
+    }
+
+    await redirectByRole(data.user.id);
+  };
+
+  if (checkingSession) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-[#1b2a24]">
+        <Loader2 size={28} className="animate-spin text-[#FAF6ED]/70" />
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-[#1b2a24] p-4">
+      <div className="bg-[#FAF6ED] rounded-3xl w-full max-w-sm overflow-hidden shadow-2xl border border-[#2C4A3E]/15">
+        {/* Header */}
+        <div className="bg-[#2C4A3E] text-[#FAF6ED] p-7 text-center relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-32 h-32 bg-white/5 rounded-full blur-2xl pointer-events-none" />
+          <div className="w-12 h-12 rounded-2xl bg-[#D4AF37]/15 text-[#D4AF37] flex items-center justify-center mx-auto mb-3 border border-[#D4AF37]/30 shadow-inner">
+            <ShieldCheck size={24} />
+          </div>
+          <h1 className="font-serif font-bold text-2xl text-white">Acceso Administrativo</h1>
+          <p className="text-sm text-[#FAF6ED]/75 mt-1.5">
+            Ingresa con tu correo y contraseña de personal.
+          </p>
+        </div>
+
+        {/* Formulario */}
+        <form onSubmit={handleSubmit} className="p-6 sm:p-7 space-y-4">
+          <div>
+            <label className="block text-xs font-bold text-[#2C4A3E] uppercase tracking-[0.14em] mb-1.5 flex items-center gap-1.5">
+              <Mail size={13} className="text-[#2C4A3E]/70" /> Correo Electrónico
+            </label>
+            <input
+              type="email"
+              required
+              autoComplete="username"
+              placeholder="tu@correo.com"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="w-full px-4 py-3 rounded-xl border border-[#2C4A3E]/20 bg-white text-base md:text-sm font-medium text-[#1b2a24] focus:outline-none focus:ring-2 focus:ring-[#2C4A3E] transition-all shadow-xs"
+            />
+          </div>
+
+          <div>
+            <label className="block text-xs font-bold text-[#2C4A3E] uppercase tracking-[0.14em] mb-1.5 flex items-center gap-1.5">
+              <Lock size={13} className="text-[#2C4A3E]/70" /> Contraseña
+            </label>
+            <input
+              type="password"
+              required
+              autoComplete="current-password"
+              placeholder="••••••••"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="w-full px-4 py-3 rounded-xl border border-[#2C4A3E]/20 bg-white text-base md:text-sm font-medium text-[#1b2a24] focus:outline-none focus:ring-2 focus:ring-[#2C4A3E] transition-all shadow-xs"
+            />
+          </div>
+
+          {errorMsg && (
+            <p className="text-xs font-bold text-red-700 bg-red-50 p-3 rounded-xl border border-red-200 text-center">
+              {errorMsg}
+            </p>
+          )}
+
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full py-3.5 rounded-xl font-serif font-bold text-base tracking-wide bg-[#2C4A3E] text-[#FAF6ED] hover:bg-[#233b31] active:scale-[0.99] transition-all shadow-lg flex items-center justify-center gap-2 cursor-pointer disabled:opacity-60 mt-2"
+          >
+            {loading ? (
+              <>
+                <Loader2 size={18} className="animate-spin" /> Ingresando...
+              </>
+            ) : (
+              <>
+                <LogIn size={18} /> Iniciar Sesión
+              </>
+            )}
+          </button>
+
+          <Link
+            to="/restaurante"
+            className="flex items-center justify-center gap-1.5 text-xs font-semibold text-[#2C4A3E]/70 hover:text-[#2C4A3E] transition-colors pt-1"
+          >
+            <ArrowLeft size={13} /> Volver al sitio
+          </Link>
+        </form>
+      </div>
+    </div>
+  );
+}

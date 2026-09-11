@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as UneteAlEquipoRouteImport } from './routes/unete-al-equipo'
 import { Route as TesorosAyacuchoRouteImport } from './routes/tesoros-ayacucho'
 import { Route as TerminosYCondicionesRouteImport } from './routes/terminos-y-condiciones'
+import { Route as StaffLoginRouteImport } from './routes/staff-login'
 import { Route as RestauranteRouteImport } from './routes/restaurante'
 import { Route as ReservasRouteImport } from './routes/reservas'
 import { Route as PoliticaDePrivacidadRouteImport } from './routes/politica-de-privacidad'
@@ -40,6 +41,11 @@ const TesorosAyacuchoRoute = TesorosAyacuchoRouteImport.update({
 const TerminosYCondicionesRoute = TerminosYCondicionesRouteImport.update({
   id: '/terminos-y-condiciones',
   path: '/terminos-y-condiciones',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const StaffLoginRoute = StaffLoginRouteImport.update({
+  id: '/staff-login',
+  path: '/staff-login',
   getParentRoute: () => rootRouteImport,
 } as any)
 const RestauranteRoute = RestauranteRouteImport.update({
@@ -126,6 +132,7 @@ export interface FileRoutesByFullPath {
   '/politica-de-privacidad': typeof PoliticaDePrivacidadRoute
   '/reservas': typeof ReservasRoute
   '/restaurante': typeof RestauranteRoute
+  '/staff-login': typeof StaffLoginRoute
   '/terminos-y-condiciones': typeof TerminosYCondicionesRoute
   '/tesoros-ayacucho': typeof TesorosAyacuchoRoute
   '/unete-al-equipo': typeof UneteAlEquipoRoute
@@ -145,6 +152,7 @@ export interface FileRoutesByTo {
   '/politica-de-privacidad': typeof PoliticaDePrivacidadRoute
   '/reservas': typeof ReservasRoute
   '/restaurante': typeof RestauranteRoute
+  '/staff-login': typeof StaffLoginRoute
   '/terminos-y-condiciones': typeof TerminosYCondicionesRoute
   '/tesoros-ayacucho': typeof TesorosAyacuchoRoute
   '/unete-al-equipo': typeof UneteAlEquipoRoute
@@ -165,6 +173,7 @@ export interface FileRoutesById {
   '/politica-de-privacidad': typeof PoliticaDePrivacidadRoute
   '/reservas': typeof ReservasRoute
   '/restaurante': typeof RestauranteRoute
+  '/staff-login': typeof StaffLoginRoute
   '/terminos-y-condiciones': typeof TerminosYCondicionesRoute
   '/tesoros-ayacucho': typeof TesorosAyacuchoRoute
   '/unete-al-equipo': typeof UneteAlEquipoRoute
@@ -186,6 +195,7 @@ export interface FileRouteTypes {
     | '/politica-de-privacidad'
     | '/reservas'
     | '/restaurante'
+    | '/staff-login'
     | '/terminos-y-condiciones'
     | '/tesoros-ayacucho'
     | '/unete-al-equipo'
@@ -205,6 +215,7 @@ export interface FileRouteTypes {
     | '/politica-de-privacidad'
     | '/reservas'
     | '/restaurante'
+    | '/staff-login'
     | '/terminos-y-condiciones'
     | '/tesoros-ayacucho'
     | '/unete-al-equipo'
@@ -224,6 +235,7 @@ export interface FileRouteTypes {
     | '/politica-de-privacidad'
     | '/reservas'
     | '/restaurante'
+    | '/staff-login'
     | '/terminos-y-condiciones'
     | '/tesoros-ayacucho'
     | '/unete-al-equipo'
@@ -244,6 +256,7 @@ export interface RootRouteChildren {
   PoliticaDePrivacidadRoute: typeof PoliticaDePrivacidadRoute
   ReservasRoute: typeof ReservasRoute
   RestauranteRoute: typeof RestauranteRoute
+  StaffLoginRoute: typeof StaffLoginRoute
   TerminosYCondicionesRoute: typeof TerminosYCondicionesRoute
   TesorosAyacuchoRoute: typeof TesorosAyacuchoRoute
   UneteAlEquipoRoute: typeof UneteAlEquipoRoute
@@ -272,6 +285,13 @@ declare module '@tanstack/react-router' {
       path: '/terminos-y-condiciones'
       fullPath: '/terminos-y-condiciones'
       preLoaderRoute: typeof TerminosYCondicionesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/staff-login': {
+      id: '/staff-login'
+      path: '/staff-login'
+      fullPath: '/staff-login'
+      preLoaderRoute: typeof StaffLoginRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/restaurante': {
@@ -388,6 +408,7 @@ const rootRouteChildren: RootRouteChildren = {
   PoliticaDePrivacidadRoute: PoliticaDePrivacidadRoute,
   ReservasRoute: ReservasRoute,
   RestauranteRoute: RestauranteRoute,
+  StaffLoginRoute: StaffLoginRoute,
   TerminosYCondicionesRoute: TerminosYCondicionesRoute,
   TesorosAyacuchoRoute: TesorosAyacuchoRoute,
   UneteAlEquipoRoute: UneteAlEquipoRoute,
