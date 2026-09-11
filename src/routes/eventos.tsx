@@ -146,24 +146,47 @@ function EventosPage() {
     bodas: true,
   });
 
-  // Estado para el carrusel móvil (imagen individual por tab)
+  // Estado para el carrusel móvil (imagen individual por tab). Igual que en
+  // desktop, visualIndex 1 apunta a la primera imagen real (hay un clon de la
+  // última imagen antes y un clon de la primera después, para el loop infinito).
   const [mobileImageIndices, setMobileImageIndices] = useState<Record<EventTabId, number>>({
-    familiares: 0,
-    corporativas: 0,
-    bodas: 0,
+    familiares: 1,
+    corporativas: 1,
+    bodas: 1,
+  });
+  const [mobileTransitions, setMobileTransitions] = useState<Record<EventTabId, boolean>>({
+    familiares: true,
+    corporativas: true,
+    bodas: true,
   });
   const [touchStartX, setTouchStartX] = useState<number | null>(null);
 
   const handleMobileSwipe = (direction: 'next' | 'prev') => {
+    const total = (EVENT_TABS.find(t => t.id === activeTab)?.images || []).length;
+    if (total <= 1) return;
+    const tabId = activeTab;
+    setMobileTransitions(prev => ({ ...prev, [tabId]: true }));
     setMobileImageIndices(prev => {
-      const images = EVENT_TABS.find(t => t.id === activeTab)?.images || [];
-      const total = images.length;
-      const current = prev[activeTab];
-      const next = direction === 'next'
-        ? (current + 1) % total
-        : (current - 1 + total) % total;
-      return { ...prev, [activeTab]: next };
+      const current = prev[tabId];
+      const next = direction === 'next' ? current + 1 : current - 1;
+      if (next === total + 1) {
+        window.setTimeout(() => {
+          setMobileTransitions(t => ({ ...t, [tabId]: false }));
+          setMobileImageIndices(p => ({ ...p, [tabId]: 1 }));
+        }, CAROUSEL_TRANSITION_MS);
+      } else if (next === 0) {
+        window.setTimeout(() => {
+          setMobileTransitions(t => ({ ...t, [tabId]: false }));
+          setMobileImageIndices(p => ({ ...p, [tabId]: total }));
+        }, CAROUSEL_TRANSITION_MS);
+      }
+      return { ...prev, [tabId]: next };
     });
+  };
+
+  const handleMobileDotClick = (tabId: EventTabId, realIndex: number) => {
+    setMobileTransitions(prev => ({ ...prev, [tabId]: true }));
+    setMobileImageIndices(prev => ({ ...prev, [tabId]: realIndex + 1 }));
   };
 
   // Duración de la transición del carrusel (debe calzar con "duration-700" en las clases).
@@ -349,6 +372,14 @@ function EventosPage() {
               ? [windows[total - 1], ...windows, windows[0]]
               : windows;
 
+            // Móvil: mismo truco de clones, pero con 1 imagen por "ventana".
+            const mobileVisualIndex = mobileImageIndices[tab.id];
+            const mobileTransitionEnabled = mobileTransitions[tab.id];
+            const mobileImages = total > 1
+              ? [currentImages[total - 1], ...currentImages, currentImages[0]]
+              : currentImages;
+            const mobileActiveDot = total > 0 ? ((mobileVisualIndex - 1) % total + total) % total : 0;
+
             return (
               <div
                 key={tab.id}
@@ -412,14 +443,14 @@ function EventosPage() {
                 >
                   {/* Carril de imágenes individuales */}
                   <div
-                    className="flex h-full transition-transform duration-700 ease-[cubic-bezier(0.25,1,0.5,1)]"
-                    style={{ transform: `translateX(-${mobileImageIndices[tab.id] * 100}%)` }}
+                    className={`flex h-full ${mobileTransitionEnabled ? "transition-transform duration-700 ease-[cubic-bezier(0.25,1,0.5,1)]" : ""}`}
+                    style={{ transform: `translateX(-${mobileVisualIndex * 100}%)` }}
                   >
-                    {currentImages.map((img, imgIdx) => (
+                    {mobileImages.map((img, imgIdx) => (
                       <div key={imgIdx} className="w-full h-full flex-shrink-0 relative">
                         <img
                           src={img}
-                          alt={`${tab.title} ${imgIdx + 1}`}
+                          alt={`${tab.title} ${imgIdx}`}
                           className="absolute inset-0 w-full h-full object-cover"
                           loading="lazy"
                         />
@@ -432,8 +463,8 @@ function EventosPage() {
                     {currentImages.map((_, i) => (
                       <button
                         key={i}
-                        onClick={() => setMobileImageIndices(prev => ({ ...prev, [tab.id]: i }))}
-                        className={`w-2 h-2 rounded-full transition-all ${mobileImageIndices[tab.id] === i ? 'bg-white scale-125' : 'bg-white/50'
+                        onClick={() => handleMobileDotClick(tab.id, i)}
+                        className={`w-2 h-2 rounded-full transition-all ${mobileActiveDot === i ? 'bg-white scale-125' : 'bg-white/50'
                           }`}
                       />
                     ))}
