@@ -94,8 +94,7 @@ const EVENT_TABS: EventTabData[] = [
     images: [
       "/imagenes-reales/eventos/coorporativo-uno.webp",
       "/imagenes-reales/eventos/coorporativo-dos.webp",
-      "/imagenes-reales/eventos/coorporativo-tres.webp",
-      "/imagenes-reales/eventos/coorporativo-cuatro.webp"
+      "/imagenes-reales/eventos/coorporativo-tres.webp"
     ]
   },
   {
