@@ -106,6 +106,8 @@ function CartaPage() {
       <SiteHeader
         isAlwaysSolid={true}
         showDelivery={true}
+        showDeliveryOnMobile={true}
+        showReservar={false}
         onDeliveryClick={() => setIsMenuOpen(true)}
       />
 

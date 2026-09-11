@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { MoreVertical, X, Check } from "lucide-react";
+import { shouldRevealNextCategory } from "../utils/categoryScroll";
 
 export interface CategoryFilterOption {
   key: string;
@@ -30,6 +31,7 @@ export function MobileCategoryFilter({
   accentTextColor = "#D4AF37",
 }: MobileCategoryFilterProps) {
   const scrollRef = useRef<HTMLDivElement>(null);
+  const categoryButtonRefs = useRef<Array<HTMLButtonElement | null>>([]);
   const dragState = useRef({ isDragging: false, startX: 0, startScrollLeft: 0, moved: false });
 
   const handleDragStart = (e: React.MouseEvent) => {
@@ -80,6 +82,29 @@ export function MobileCategoryFilter({
     setIsOpen(false);
   };
 
+  const handleCategorySelect = (key: string, index: number, event: React.MouseEvent<HTMLButtonElement>) => {
+    if (dragState.current.moved) return;
+
+    const container = scrollRef.current;
+    const activeButton = event.currentTarget;
+    const nextButton = categoryButtonRefs.current[index + 1];
+    const shouldRevealNext = container
+      ? shouldRevealNextCategory(
+          index,
+          categories.length,
+          activeButton.getBoundingClientRect().right,
+          container.getBoundingClientRect().right,
+        )
+      : false;
+
+    onSelect(key);
+    activeButton.scrollIntoView({ behavior: "smooth", inline: "nearest", block: "nearest" });
+
+    if (shouldRevealNext && nextButton) {
+      nextButton.scrollIntoView({ behavior: "smooth", inline: "nearest", block: "nearest" });
+    }
+  };
+
   return (
     <>
       <div className="flex items-center gap-2 pr-3">
@@ -92,16 +117,15 @@ export function MobileCategoryFilter({
           onMouseUp={handleDragEnd}
           onMouseLeave={handleDragEnd}
         >
-          {categories.map((cat) => {
+          {categories.map((cat, index) => {
             const isActive = activeKey === cat.key;
             return (
               <button
                 key={cat.key}
-                onClick={(e) => {
-                  if (dragState.current.moved) return;
-                  onSelect(cat.key);
-                  e.currentTarget.scrollIntoView({ behavior: "smooth", inline: "nearest", block: "nearest" });
+                ref={(button) => {
+                  categoryButtonRefs.current[index] = button;
                 }}
+                onClick={(e) => handleCategorySelect(cat.key, index, e)}
                 style={isActive ? { background: accentColor, color: accentTextColor } : undefined}
                 className={`flex-shrink-0 whitespace-nowrap px-5 py-2 rounded-full text-xs font-bold transition-all ${
                   isActive ? "shadow-md" : "bg-white border border-gray-200 text-gray-700 hover:bg-gray-100"

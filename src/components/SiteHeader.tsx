@@ -3,12 +3,14 @@ import { Link } from "@tanstack/react-router";
 import { SiteNavigationMenu } from "./SiteNavigationMenu";
 import { AnimatedCartButton } from "./AnimatedCartButton";
 import { useCart } from "../context/CartContext";
+import { getDeliveryButtonVisibilityClass } from "../utils/siteHeader";
 
 interface SiteHeaderProps {
   isAlwaysSolid?: boolean;
   onDeliveryClick?: () => void;
   showReservar?: boolean;
   showDelivery?: boolean;
+  showDeliveryOnMobile?: boolean;
 }
 
 export function SiteHeader({
@@ -16,6 +18,7 @@ export function SiteHeader({
   onDeliveryClick,
   showReservar = true,
   showDelivery = false,
+  showDeliveryOnMobile = false,
 }: SiteHeaderProps) {
   const [isScrolled, setIsScrolled] = useState(false);
   const { totalItems, setIsOpen } = useCart();
@@ -74,7 +77,7 @@ export function SiteHeader({
         {(showDelivery || onDeliveryClick) && (
           <button
             onClick={onDeliveryClick}
-            className={`hidden sm:inline-block transition-colors leading-none hover:text-chilca cursor-pointer ${
+            className={`${getDeliveryButtonVisibilityClass(showDeliveryOnMobile)} transition-colors leading-none hover:text-chilca cursor-pointer ${
               solid ? "text-nogal" : "text-piedra"
             }`}
           >
