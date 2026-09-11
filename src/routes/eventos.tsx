@@ -130,10 +130,20 @@ function EventosPage() {
   const [isPending, startTransition] = useTransition();
 
   const [activeTab, setActiveTab] = useState<EventTabId>("familiares");
+  // visualIndex: posición dentro de la pista renderizada (incluye un clon al
+  // inicio y otro al final para lograr el efecto de scroll infinito). El
+  // índice 1 apunta siempre a la primera ventana "real" de imágenes.
   const [carouselIndices, setCarouselIndices] = useState<Record<EventTabId, number>>({
-    familiares: 0,
-    corporativas: 0,
-    bodas: 0,
+    familiares: 1,
+    corporativas: 1,
+    bodas: 1,
+  });
+  // Controla si la pista debe animar la transición o saltar sin transición
+  // (usado solo para el "reseteo silencioso" al cruzar los clones del loop).
+  const [carouselTransitions, setCarouselTransitions] = useState<Record<EventTabId, boolean>>({
+    familiares: true,
+    corporativas: true,
+    bodas: true,
   });
 
   // Estado para el carrusel móvil (imagen individual por tab)
@@ -156,21 +166,45 @@ function EventosPage() {
     });
   };
 
+  // Duración de la transición del carrusel (debe calzar con "duration-700" en las clases).
+  const CAROUSEL_TRANSITION_MS = 700;
+
+  // Al llegar al clon del final/inicio de la pista, tras la animación
+  // saltamos sin transición a la ventana real equivalente, logrando un
+  // scroll circular que nunca "reinicia" hacia atrás. Se usa un timeout (en
+  // vez de depender del evento transitionend) porque ese evento no siempre
+  // se dispara en pestañas en segundo plano.
   const handleNextSlide = () => {
+    const total = (EVENT_TABS.find((t) => t.id === activeTab)?.images || []).length;
+    if (total <= 1) return;
+    const tabId = activeTab;
+    setCarouselTransitions((prev) => ({ ...prev, [tabId]: true }));
     setCarouselIndices((prev) => {
-      const currentImages = EVENT_TABS.find((t) => t.id === activeTab)?.images || [];
-      const totalPairs = Math.ceil(currentImages.length / 2);
-      const nextIndex = (prev[activeTab] + 1) % totalPairs;
-      return { ...prev, [activeTab]: nextIndex };
+      const nextIndex = prev[tabId] + 1;
+      if (nextIndex === total + 1) {
+        window.setTimeout(() => {
+          setCarouselTransitions((t) => ({ ...t, [tabId]: false }));
+          setCarouselIndices((p) => ({ ...p, [tabId]: 1 }));
+        }, CAROUSEL_TRANSITION_MS);
+      }
+      return { ...prev, [tabId]: nextIndex };
     });
   };
 
   const handlePrevSlide = () => {
+    const total = (EVENT_TABS.find((t) => t.id === activeTab)?.images || []).length;
+    if (total <= 1) return;
+    const tabId = activeTab;
+    setCarouselTransitions((prev) => ({ ...prev, [tabId]: true }));
     setCarouselIndices((prev) => {
-      const currentImages = EVENT_TABS.find((t) => t.id === activeTab)?.images || [];
-      const totalPairs = Math.ceil(currentImages.length / 2);
-      const prevIndex = (prev[activeTab] - 1 + totalPairs) % totalPairs;
-      return { ...prev, [activeTab]: prevIndex };
+      const prevIndex = prev[tabId] - 1;
+      if (prevIndex === 0) {
+        window.setTimeout(() => {
+          setCarouselTransitions((t) => ({ ...t, [tabId]: false }));
+          setCarouselIndices((p) => ({ ...p, [tabId]: total }));
+        }, CAROUSEL_TRANSITION_MS);
+      }
+      return { ...prev, [tabId]: prevIndex };
     });
   };
 
@@ -296,8 +330,24 @@ function EventosPage() {
         {/* Tab Content (3 Columns) */}
         <div className="relative w-full max-w-[1800px] mx-auto flex">
           {EVENT_TABS.map((tab) => {
-            const currentIndex = carouselIndices[tab.id];
+            const visualIndex = carouselIndices[tab.id];
+            const transitionEnabled = carouselTransitions[tab.id];
             const currentImages = tab.images;
+            const total = currentImages.length;
+            // Ventanas de 2 imágenes consecutivas y circulares: la ventana i
+            // muestra [imagen(i), imagen(i+1)], con vuelta al inicio al llegar
+            // al final (ej. con 3 imágenes: [1,2] → [2,3] → [3,1] → [1,2]...).
+            const windows = total > 0
+              ? Array.from({ length: total }, (_, i) => [
+                currentImages[i % total],
+                currentImages[(i + 1) % total],
+              ])
+              : [];
+            // Clon del último al inicio y del primero al final, para que el
+            // scroll nunca tenga que "saltar hacia atrás" visualmente.
+            const renderedWindows = total > 1
+              ? [windows[total - 1], ...windows, windows[0]]
+              : windows;
 
             return (
               <div
@@ -390,23 +440,23 @@ function EventosPage() {
                   </div>
                 </div>
 
-                {/* ─── COLUMNA 3 DESKTOP: Galería Carrusel de pares ─── */}
+                {/* ─── COLUMNA 3 DESKTOP: Galería Carrusel infinito, de a una imagen ─── */}
                 <div className="hidden lg:block lg:w-[52%] pt-12 pb-16 pr-4 relative self-stretch">
                   <div className="overflow-hidden h-full">
                     <div
-                      className="flex h-full transition-transform duration-700 ease-[cubic-bezier(0.25,1,0.5,1)]"
-                      style={{ transform: `translateX(-${currentIndex * 100}%)` }}
+                      className={`flex h-full ${transitionEnabled ? "transition-transform duration-700 ease-[cubic-bezier(0.25,1,0.5,1)]" : ""}`}
+                      style={{ transform: `translateX(-${visualIndex * 100}%)` }}
                     >
-                      {Array.from({ length: Math.ceil(currentImages.length / 2) }, (_, pairIdx) => (
+                      {renderedWindows.map((pair, pairIdx) => (
                         <div
                           key={pairIdx}
                           className="w-full h-full flex-shrink-0 flex gap-6"
                         >
-                          {currentImages.slice(pairIdx * 2, pairIdx * 2 + 2).map((img, imgIdx) => (
+                          {pair.map((img, imgIdx) => (
                             <div key={imgIdx} className="flex-1 h-full relative overflow-hidden">
                               <img
                                 src={img}
-                                alt={`${tab.title} ${pairIdx * 2 + imgIdx + 1}`}
+                                alt={`${tab.title} ${pairIdx}-${imgIdx + 1}`}
                                 className="absolute inset-0 w-full h-full object-cover"
                                 loading="lazy"
                               />
