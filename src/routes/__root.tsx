@@ -102,8 +102,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "twitter:card", content: "summary_large_image" },
       { name: "geo.region", content: "PE-AYA" },
       { name: "geo.placename", content: "Ayacucho, Huamanga" },
-      { name: "geo.position", content: "-13.1611;-74.2236" },
-      { name: "ICBM", content: "-13.1611, -74.2236" },
+      { name: "geo.position", content: "-13.1628496;-74.2178801" },
+      { name: "ICBM", content: "-13.1628496, -74.2178801" },
     ],
     links: [
       {

@@ -69,8 +69,8 @@ export const Route = createFileRoute("/")({
           },
           "geo": {
             "@type": "GeoCoordinates",
-            "latitude": -13.158,
-            "longitude": -74.223
+            "latitude": -13.1628496,
+            "longitude": -74.2178801
           },
           "openingHoursSpecification": [
             {
@@ -82,7 +82,18 @@ export const Route = createFileRoute("/")({
           ],
           "servesCuisine": ["Peruana", "Ayacuchana", "Tradicional", "Parrillas", "Desayunos", "Almuerzos", "Cenas"],
           "acceptsReservations": "True",
-          "hasMenu": "https://www.restaurantelasflores.com/carta"
+          "hasMenu": "https://www.restaurantelasflores.com/carta",
+          "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.0",
+            "bestRating": "5",
+            "reviewCount": "1564"
+          },
+          "sameAs": [
+            "https://www.facebook.com/restaurantelasfloressac",
+            "https://www.instagram.com/restaurantelasflores/",
+            "https://www.tiktok.com/@lasfloresayacucho"
+          ]
         }),
       },
       {
