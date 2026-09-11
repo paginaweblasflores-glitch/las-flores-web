@@ -32,9 +32,6 @@ export const Route = createFileRoute("/reservas")({
   component: ReservasPage,
 });
 
-// Ambientes ocultos temporalmente (aún no operativos). Quitar el id de aquí para volver a mostrarlo.
-const HIDDEN_ZONE_IDS = new Set(["jardin"]);
-
 const FALLBACK_ZONES = [
   {
     id: "salon-principal",
@@ -216,9 +213,7 @@ function ReservasPage() {
     });
   }, []);
 
-  const ZONAS = (fetchedZones.length > 0 ? fetchedZones : FALLBACK_ZONES).filter(
-    (z) => !HIDDEN_ZONE_IDS.has(z.id)
-  );
+  const ZONAS = fetchedZones.length > 0 ? fetchedZones : FALLBACK_ZONES;
 
   // Keep form.zona in sync when ZONAS array loads dynamically from DB
   useEffect(() => {
