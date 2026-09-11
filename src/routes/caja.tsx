@@ -1,6 +1,6 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState, useRef } from "react";
-import { supabase } from "../lib/supabase";
+import { supabase, signOut } from "../lib/supabase";
 import { sendReviewRequestEmail } from "../lib/emailService";
 import { playOrderChime } from "../utils/audioAlert";
 import { CashierOrderCard } from "../components/CashierOrderCard";
@@ -225,6 +225,11 @@ function CashierDashboardRoute() {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleSignOut = async () => {
+    await signOut();
+    window.location.href = "/staff-login";
   };
 
   const fetchData = async (isSilent = false) => {
@@ -716,6 +721,7 @@ function CashierDashboardRoute() {
           avgWaitMins={avgWaitMins}
           todayReservationsCount={todayReservationsCount}
           isAdmin={isAdmin}
+          onSignOut={handleSignOut}
         />
 
         {/* View Mode Switcher Header Bar */}

@@ -1,4 +1,4 @@
-import { Volume2, BellOff, ShieldCheck, TrendingUp, ShoppingBag, Clock, Calendar } from "lucide-react";
+import { Volume2, BellOff, ShieldCheck, TrendingUp, ShoppingBag, Clock, Calendar, LogOut } from "lucide-react";
 import { Link } from "@tanstack/react-router";
 
 interface CashierKPIHeaderProps {
@@ -9,6 +9,7 @@ interface CashierKPIHeaderProps {
   avgWaitMins: number;
   todayReservationsCount: number;
   isAdmin: boolean;
+  onSignOut: () => void;
 }
 
 export function CashierKPIHeader({
@@ -19,6 +20,7 @@ export function CashierKPIHeader({
   avgWaitMins,
   todayReservationsCount,
   isAdmin,
+  onSignOut,
 }: CashierKPIHeaderProps) {
   return (
     <div className="space-y-4">
@@ -66,6 +68,14 @@ export function CashierKPIHeader({
               <span>Volver a Admin</span>
             </Link>
           )}
+
+          <button
+            onClick={onSignOut}
+            className="px-4 py-2 rounded-xl bg-red-500/20 hover:bg-red-500/30 text-red-200 text-xs font-extrabold flex items-center gap-2 transition-colors border border-red-500/40 shadow-2xs cursor-pointer"
+          >
+            <LogOut size={16} />
+            <span>Cerrar Sesión</span>
+          </button>
         </div>
       </header>
 
