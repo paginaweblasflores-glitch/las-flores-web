@@ -1,7 +1,15 @@
 import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
-import { ShieldCheck, Mail, Lock, Loader2, LogIn, ArrowLeft } from "lucide-react";
+import { ShieldCheck, UserCircle2, Lock, Loader2, LogIn, ArrowLeft } from "lucide-react";
 import { supabase } from "../lib/supabase";
+
+// Mapa interno usuario → correo real de Supabase Auth. El personal solo ve y
+// elige su "Usuario"; el correo nunca se muestra ni se escribe (es la
+// credencial de doble validación puertas adentro).
+const STAFF_USERS = [
+  { username: "Administrador Las Flores", email: "restaurantelasfloresperu@gmail.com" },
+  { username: "Caja Las Flores", email: "paginaweblasflores@gmail.com" },
+];
 
 export const Route = createFileRoute("/staff-login")({
   head: () => ({
@@ -15,7 +23,7 @@ export const Route = createFileRoute("/staff-login")({
 
 function StaffLoginPage() {
   const navigate = useNavigate();
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [checkingSession, setCheckingSession] = useState(true);
@@ -57,15 +65,22 @@ function StaffLoginPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMsg("");
+
+    const staffUser = STAFF_USERS.find((u) => u.username === username);
+    if (!staffUser) {
+      setErrorMsg("Selecciona un usuario válido.");
+      return;
+    }
+
     setLoading(true);
 
     const { data, error } = await supabase.auth.signInWithPassword({
-      email: email.trim(),
+      email: staffUser.email,
       password,
     });
 
     if (error || !data.user) {
-      setErrorMsg("Correo o contraseña incorrectos.");
+      setErrorMsg("Usuario o contraseña incorrectos.");
       setLoading(false);
       return;
     }
@@ -92,7 +107,7 @@ function StaffLoginPage() {
           </div>
           <h1 className="font-serif font-bold text-2xl text-white">Acceso Administrativo</h1>
           <p className="text-sm text-[#FAF6ED]/75 mt-1.5">
-            Ingresa con tu correo y contraseña de personal.
+            Selecciona tu usuario e ingresa tu contraseña.
           </p>
         </div>
 
@@ -100,17 +115,22 @@ function StaffLoginPage() {
         <form onSubmit={handleSubmit} className="p-6 sm:p-7 space-y-4">
           <div>
             <label className="block text-xs font-bold text-[#2C4A3E] uppercase tracking-[0.14em] mb-1.5 flex items-center gap-1.5">
-              <Mail size={13} className="text-[#2C4A3E]/70" /> Correo Electrónico
+              <UserCircle2 size={13} className="text-[#2C4A3E]/70" /> Usuario
             </label>
-            <input
-              type="email"
+            <select
               required
               autoComplete="username"
-              placeholder="tu@correo.com"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-4 py-3 rounded-xl border border-[#2C4A3E]/20 bg-white text-base md:text-sm font-medium text-[#1b2a24] focus:outline-none focus:ring-2 focus:ring-[#2C4A3E] transition-all shadow-xs"
-            />
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              className="w-full px-4 py-3 rounded-xl border border-[#2C4A3E]/20 bg-white text-base md:text-sm font-medium text-[#1b2a24] focus:outline-none focus:ring-2 focus:ring-[#2C4A3E] transition-all shadow-xs cursor-pointer"
+            >
+              <option value="">Selecciona tu usuario...</option>
+              {STAFF_USERS.map((u) => (
+                <option key={u.username} value={u.username}>
+                  {u.username}
+                </option>
+              ))}
+            </select>
           </div>
 
           <div>
