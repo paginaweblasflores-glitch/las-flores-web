@@ -92,10 +92,9 @@ const EVENT_TABS: EventTabData[] = [
       "Coffee breaks premium"
     ],
     images: [
-      "/imagenes-reales/EVENTOS-COORPORATIVAS/reuniones-corporativas.webp",
-      "/imagenes-reales/Salones/estrado-principal.webp",
-      "/imagenes-reales/Salones/salon-ventana.webp",
-      "/imagenes-reales/Salones/pasillo-central.webp"
+      "/imagenes-reales/eventos/coorporativo-uno.webp",
+      "/imagenes-reales/eventos/coorporativo-dos.webp",
+      "/imagenes-reales/eventos/coorporativo-tres.webp"
     ]
   },
   {
