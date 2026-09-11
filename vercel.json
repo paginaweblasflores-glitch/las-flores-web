@@ -47,11 +47,5 @@
         }
       ]
     }
-  ],
-  "rewrites": [
-    {
-      "source": "/((?!api/|assets/|.*\\.[\\w]+$).*)",
-      "destination": "/index.html"
-    }
   ]
 }
