@@ -705,26 +705,13 @@ function ReservasPage() {
         <main className="flex-1 max-w-7xl mx-auto w-full px-4 md:px-8 py-14">
           {/* Grid de Tarjetas Elegantes (Estilo La Rosa Náutica: Fotos altas y prominentes) */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-            {ZONAS.map((z) => {
-              const cardBlackout = checkBlackoutForSlot(z.id, form.date || todayIso);
-              return (
+            {ZONAS
+              .filter((z) => !checkBlackoutForSlot(z.id, form.date || todayIso))
+              .map((z) => (
                 <div
                   key={z.id}
-                  onClick={() => {
-                    if (cardBlackout) {
-                      setNoticeModal({
-                        open: true,
-                        zoneName: z.nombre,
-                        date: form.date || todayIso,
-                        reason: cardBlackout,
-                      });
-                      return;
-                    }
-                    handleSelectZoneCard(z);
-                  }}
-                  className={`group flex flex-col justify-between transition-all duration-300 ${
-                    cardBlackout ? "cursor-pointer opacity-90" : "cursor-pointer"
-                  }`}
+                  onClick={() => handleSelectZoneCard(z)}
+                  className="group flex flex-col justify-between transition-all duration-300 cursor-pointer"
                 >
                   <div>
                     {/* Foto Vertical Estilo La Rosa Náutica (Altura uniforme fija h-[580px]) */}
@@ -732,28 +719,13 @@ function ReservasPage() {
                       <img
                         src={z.imagen}
                         alt={z.nombre}
-                        className={`w-full h-full object-cover object-center transition-transform duration-700 ${
-                          cardBlackout ? "filter brightness-90" : "group-hover:scale-108"
-                        }`}
+                        className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-108"
                       />
                       <div className="absolute inset-0 bg-black/10 group-hover:bg-black/0 transition-colors duration-500" />
-                      
-                      {cardBlackout ? (
-                        <div className="absolute inset-0 bg-[#3b1f10]/75 backdrop-blur-xs flex items-center justify-center p-4 text-center z-20">
-                          <div className="bg-[#fdf8f0] text-[#3b1f10] p-4 rounded-2xl border border-[#d4a373]/40 shadow-xl space-y-1.5 max-w-[220px]">
-                            <span className="text-[11px] font-extrabold uppercase tracking-widest text-[#d4a373] block">
-                              🔒 AMBIENTE RESERVADO
-                            </span>
-                            <p className="text-[10px] text-gray-700 leading-tight">
-                              {cardBlackout}
-                            </p>
-                          </div>
-                        </div>
-                      ) : (
-                        <span className="absolute bottom-3 left-3 bg-black/65 backdrop-blur-xs text-white text-[10px] font-semibold uppercase tracking-widest px-3 py-1.5 rounded-xs">
-                          {z.capacidad}
-                        </span>
-                      )}
+
+                      <span className="absolute bottom-3 left-3 bg-black/65 backdrop-blur-xs text-white text-[10px] font-semibold uppercase tracking-widest px-3 py-1.5 rounded-xs">
+                        {z.capacidad}
+                      </span>
                     </div>
 
                     {/* Texto e Información */}
@@ -773,29 +745,15 @@ function ReservasPage() {
                       type="button"
                       onClick={(e) => {
                         e.stopPropagation();
-                        if (cardBlackout) {
-                          setNoticeModal({
-                            open: true,
-                            zoneName: z.nombre,
-                            date: form.date || todayIso,
-                            reason: cardBlackout,
-                          });
-                          return;
-                        }
                         handleSelectZoneCard(z);
                       }}
-                      className={`w-full rounded-full py-2.5 px-4 text-[11px] font-bold tracking-widest uppercase transition-all duration-300 shadow-2xs ${
-                        cardBlackout
-                          ? "bg-[#3b1f10]/10 text-[#3b1f10] border border-[#3b1f10]/30 hover:bg-[#3b1f10]/20"
-                          : "border border-[#3b1f10] text-[#3b1f10] group-hover:bg-[#3b1f10] group-hover:text-white"
-                      }`}
+                      className="w-full rounded-full py-2.5 px-4 text-[11px] font-bold tracking-widest uppercase transition-all duration-300 shadow-2xs border border-[#3b1f10] text-[#3b1f10] group-hover:bg-[#3b1f10] group-hover:text-white"
                     >
-                      {cardBlackout ? "Ambiente Reservado" : `Reservar ${z.nombre}`}
+                      Reservar {z.nombre}
                     </button>
                   </div>
                 </div>
-              );
-            })}
+              ))}
           </div>
         </main>
       )}
