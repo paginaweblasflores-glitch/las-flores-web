@@ -412,21 +412,23 @@ function EventosPage() {
                   </div>
                 </div>
 
-                {/* Columna 2 (Centro - Controles) */}
-                <div className="hidden lg:flex w-fit px-4 flex-col justify-end items-center gap-3 pb-16">
-                  <button
-                    onClick={handlePrevSlide}
-                    className="w-12 h-12 border border-nogal/20 flex items-center justify-center text-nogal hover:bg-nogal/10 transition-colors"
-                  >
-                    <ChevronLeft size={20} strokeWidth={1.8} />
-                  </button>
-                  <button
-                    onClick={handleNextSlide}
-                    className="w-12 h-12 border border-nogal/20 flex items-center justify-center text-nogal hover:bg-nogal/10 transition-colors"
-                  >
-                    <ChevronRight size={20} strokeWidth={1.8} />
-                  </button>
-                </div>
+                {/* Columna 2 (Centro - Controles): solo tiene sentido con más de 1 imagen */}
+                {total > 1 && (
+                  <div className="hidden lg:flex w-fit px-4 flex-col justify-end items-center gap-3 pb-16">
+                    <button
+                      onClick={handlePrevSlide}
+                      className="w-12 h-12 border border-nogal/20 flex items-center justify-center text-nogal hover:bg-nogal/10 transition-colors"
+                    >
+                      <ChevronLeft size={20} strokeWidth={1.8} />
+                    </button>
+                    <button
+                      onClick={handleNextSlide}
+                      className="w-12 h-12 border border-nogal/20 flex items-center justify-center text-nogal hover:bg-nogal/10 transition-colors"
+                    >
+                      <ChevronRight size={20} strokeWidth={1.8} />
+                    </button>
+                  </div>
+                )}
 
                 {/* ─── COLUMNA 3 MÓVIL: una imagen a la vez con swipe táctil ─── */}
                 <div
@@ -439,62 +441,92 @@ function EventosPage() {
                     setTouchStartX(null);
                   }}
                 >
-                  {/* Carril de imágenes individuales */}
-                  <div
-                    className={`flex h-full ${mobileTransitionEnabled ? "transition-transform duration-1000 ease-[cubic-bezier(0.25,1,0.5,1)]" : ""}`}
-                    style={{ transform: `translateX(-${mobileVisualIndex * 100}%)` }}
-                  >
-                    {mobileImages.map((img, imgIdx) => (
-                      <div key={imgIdx} className="w-full h-full flex-shrink-0 relative">
+                  {total > 1 ? (
+                    <>
+                      {/* Carril de imágenes individuales */}
+                      <div
+                        className={`flex h-full ${mobileTransitionEnabled ? "transition-transform duration-1000 ease-[cubic-bezier(0.25,1,0.5,1)]" : ""}`}
+                        style={{ transform: `translateX(-${mobileVisualIndex * 100}%)` }}
+                      >
+                        {mobileImages.map((img, imgIdx) => (
+                          <div key={imgIdx} className="w-full h-full flex-shrink-0 relative">
+                            <img
+                              src={img}
+                              alt={`${tab.title} ${imgIdx}`}
+                              className="absolute inset-0 w-full h-full object-cover"
+                              loading="lazy"
+                            />
+                            <div className="absolute inset-2 border border-white/40 pointer-events-none" />
+                          </div>
+                        ))}
+                      </div>
+                      {/* Dots de navegación */}
+                      <div className="absolute bottom-3 left-0 right-0 flex justify-center gap-2">
+                        {currentImages.map((_, i) => (
+                          <button
+                            key={i}
+                            onClick={() => handleMobileDotClick(tab.id, i)}
+                            className={`w-2 h-2 rounded-full transition-all ${mobileActiveDot === i ? 'bg-white scale-125' : 'bg-white/50'
+                              }`}
+                          />
+                        ))}
+                      </div>
+                    </>
+                  ) : (
+                    currentImages[0] && (
+                      <div className="w-full h-full relative">
                         <img
-                          src={img}
-                          alt={`${tab.title} ${imgIdx}`}
+                          src={currentImages[0]}
+                          alt={`${tab.title} 1`}
                           className="absolute inset-0 w-full h-full object-cover"
                           loading="lazy"
                         />
                         <div className="absolute inset-2 border border-white/40 pointer-events-none" />
                       </div>
-                    ))}
-                  </div>
-                  {/* Dots de navegación */}
-                  <div className="absolute bottom-3 left-0 right-0 flex justify-center gap-2">
-                    {currentImages.map((_, i) => (
-                      <button
-                        key={i}
-                        onClick={() => handleMobileDotClick(tab.id, i)}
-                        className={`w-2 h-2 rounded-full transition-all ${mobileActiveDot === i ? 'bg-white scale-125' : 'bg-white/50'
-                          }`}
-                      />
-                    ))}
-                  </div>
+                    )
+                  )}
                 </div>
 
                 {/* ─── COLUMNA 3 DESKTOP: Galería Carrusel infinito, de a una imagen ─── */}
                 <div className="hidden lg:block lg:w-[52%] pt-12 pb-16 pr-4 relative self-stretch">
                   <div className="overflow-hidden h-full">
-                    <div
-                      className={`flex h-full ${transitionEnabled ? "transition-transform duration-1000 ease-[cubic-bezier(0.25,1,0.5,1)]" : ""}`}
-                      style={{ transform: `translateX(-${visualIndex * 100}%)` }}
-                    >
-                      {renderedWindows.map((pair, pairIdx) => (
-                        <div
-                          key={pairIdx}
-                          className="w-full h-full flex-shrink-0 flex gap-6"
-                        >
-                          {pair.map((img, imgIdx) => (
-                            <div key={imgIdx} className="flex-1 h-full relative overflow-hidden">
-                              <img
-                                src={img}
-                                alt={`${tab.title} ${pairIdx}-${imgIdx + 1}`}
-                                className="absolute inset-0 w-full h-full object-cover"
-                                loading="lazy"
-                              />
-                              <div className="absolute inset-4 border border-white/40 pointer-events-none" />
-                            </div>
-                          ))}
+                    {total > 1 ? (
+                      <div
+                        className={`flex h-full ${transitionEnabled ? "transition-transform duration-1000 ease-[cubic-bezier(0.25,1,0.5,1)]" : ""}`}
+                        style={{ transform: `translateX(-${visualIndex * 100}%)` }}
+                      >
+                        {renderedWindows.map((pair, pairIdx) => (
+                          <div
+                            key={pairIdx}
+                            className="w-full h-full flex-shrink-0 flex gap-6"
+                          >
+                            {pair.map((img, imgIdx) => (
+                              <div key={imgIdx} className="flex-1 h-full relative overflow-hidden">
+                                <img
+                                  src={img}
+                                  alt={`${tab.title} ${pairIdx}-${imgIdx + 1}`}
+                                  className="absolute inset-0 w-full h-full object-cover"
+                                  loading="lazy"
+                                />
+                                <div className="absolute inset-4 border border-white/40 pointer-events-none" />
+                              </div>
+                            ))}
+                          </div>
+                        ))}
+                      </div>
+                    ) : (
+                      currentImages[0] && (
+                        <div className="w-full h-full relative overflow-hidden">
+                          <img
+                            src={currentImages[0]}
+                            alt={`${tab.title} 1`}
+                            className="absolute inset-0 w-full h-full object-cover"
+                            loading="lazy"
+                          />
+                          <div className="absolute inset-4 border border-white/40 pointer-events-none" />
                         </div>
-                      ))}
-                    </div>
+                      )
+                    )}
                   </div>
                 </div>
               </div>
