@@ -8,6 +8,7 @@ interface CashierKPIHeaderProps {
   activeOrdersCount: number;
   avgWaitMins: number;
   todayReservationsCount: number;
+  isAdmin: boolean;
 }
 
 export function CashierKPIHeader({
@@ -17,6 +18,7 @@ export function CashierKPIHeader({
   activeOrdersCount,
   avgWaitMins,
   todayReservationsCount,
+  isAdmin,
 }: CashierKPIHeaderProps) {
   return (
     <div className="space-y-4">
@@ -55,13 +57,15 @@ export function CashierKPIHeader({
             <span>{soundEnabled ? "Alerta Sonora Activa" : "Alerta Silenciada"}</span>
           </button>
 
-          <Link
-            to="/admin"
-            className="px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-extrabold flex items-center gap-2 transition-colors border border-white/20 shadow-2xs"
-          >
-            <ShieldCheck size={16} className="text-[#D4AF37]" />
-            <span>Volver a Admin</span>
-          </Link>
+          {isAdmin && (
+            <Link
+              to="/admin"
+              className="px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-extrabold flex items-center gap-2 transition-colors border border-white/20 shadow-2xs"
+            >
+              <ShieldCheck size={16} className="text-[#D4AF37]" />
+              <span>Volver a Admin</span>
+            </Link>
+          )}
         </div>
       </header>
 

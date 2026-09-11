@@ -47,6 +47,7 @@ function CashierDashboardRoute() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const [isAuthorized, setIsAuthorized] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
   
   // View mode switcher: 'orders' vs 'reservations'
   const [viewMode, setViewMode] = useState<"orders" | "reservations">("orders");
@@ -215,6 +216,7 @@ function CashierDashboardRoute() {
         return;
       }
 
+      setIsAdmin(userRole === "admin");
       setIsAuthorized(true);
       await fetchData();
     } catch (err) {
@@ -713,6 +715,7 @@ function CashierDashboardRoute() {
           activeOrdersCount={activeOrdersCount}
           avgWaitMins={avgWaitMins}
           todayReservationsCount={todayReservationsCount}
+          isAdmin={isAdmin}
         />
 
         {/* View Mode Switcher Header Bar */}
