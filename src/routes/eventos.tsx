@@ -189,8 +189,8 @@ function EventosPage() {
     setMobileImageIndices(prev => ({ ...prev, [tabId]: realIndex + 1 }));
   };
 
-  // Duración de la transición del carrusel (debe calzar con "duration-700" en las clases).
-  const CAROUSEL_TRANSITION_MS = 700;
+  // Duración de la transición del carrusel (debe calzar con "duration-1000" en las clases).
+  const CAROUSEL_TRANSITION_MS = 1000;
 
   // Al llegar al clon del final/inicio de la pista, tras la animación
   // saltamos sin transición a la ventana real equivalente, logrando un
@@ -443,7 +443,7 @@ function EventosPage() {
                 >
                   {/* Carril de imágenes individuales */}
                   <div
-                    className={`flex h-full ${mobileTransitionEnabled ? "transition-transform duration-700 ease-[cubic-bezier(0.25,1,0.5,1)]" : ""}`}
+                    className={`flex h-full ${mobileTransitionEnabled ? "transition-transform duration-1000 ease-[cubic-bezier(0.25,1,0.5,1)]" : ""}`}
                     style={{ transform: `translateX(-${mobileVisualIndex * 100}%)` }}
                   >
                     {mobileImages.map((img, imgIdx) => (
@@ -475,7 +475,7 @@ function EventosPage() {
                 <div className="hidden lg:block lg:w-[52%] pt-12 pb-16 pr-4 relative self-stretch">
                   <div className="overflow-hidden h-full">
                     <div
-                      className={`flex h-full ${transitionEnabled ? "transition-transform duration-700 ease-[cubic-bezier(0.25,1,0.5,1)]" : ""}`}
+                      className={`flex h-full ${transitionEnabled ? "transition-transform duration-1000 ease-[cubic-bezier(0.25,1,0.5,1)]" : ""}`}
                       style={{ transform: `translateX(-${visualIndex * 100}%)` }}
                     >
                       {renderedWindows.map((pair, pairIdx) => (
