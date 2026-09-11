@@ -12,6 +12,20 @@ export const Route = createFileRoute("/familia-las-flores")({
         content:
           "Conozca al equipo humano de Restaurante Las Flores. Historias de orgullo, pasión y excelencia culinaria de quienes hacen posible la magia ayacuchana.",
       },
+      {
+        name: "keywords",
+        content:
+          "familia las flores, equipo restaurante las flores, historia restaurante ayacucho, colaboradores restaurante ayacucho, tradicion familiar ayacucho",
+      },
+      { property: "og:title", content: "Familia Las Flores — El Alma Detrás del Sabor" },
+      {
+        property: "og:description",
+        content: "Conozca al equipo humano de Restaurante Las Flores. Historias de orgullo, pasión y excelencia culinaria de quienes hacen posible la magia ayacuchana.",
+      },
+      { property: "og:image", content: "https://www.restaurantelasflores.com/familia/Cena.webp" },
+      { property: "og:url", content: "https://www.restaurantelasflores.com/familia-las-flores" },
+      { property: "og:type", content: "website" },
+      { name: "twitter:image", content: "https://www.restaurantelasflores.com/familia/Cena.webp" },
     ],
     links: [{ rel: "canonical", href: "https://www.restaurantelasflores.com/familia-las-flores" }],
   }),

@@ -19,6 +19,20 @@ export const Route = createFileRoute("/unete-al-equipo")({
         content:
           "Desarróllate profesionalmente en Restaurante Las Flores Ayacucho. Conoce nuestras convocatorias abiertas y forma parte de nuestra familia.",
       },
+      {
+        name: "keywords",
+        content:
+          "trabajo restaurante ayacucho, empleo restaurante las flores, convocatorias ayacucho, bolsa de trabajo ayacucho, trabajar en restaurante ayacucho",
+      },
+      { property: "og:title", content: "Únete al Equipo | Restaurante Las Flores" },
+      {
+        property: "og:description",
+        content: "Desarróllate profesionalmente en Restaurante Las Flores Ayacucho. Conoce nuestras convocatorias abiertas y forma parte de nuestra familia.",
+      },
+      { property: "og:image", content: "https://www.restaurantelasflores.com/imagenes-reales/EQUIPO/02042026-DSC05038.webp" },
+      { property: "og:url", content: "https://www.restaurantelasflores.com/unete-al-equipo" },
+      { property: "og:type", content: "website" },
+      { name: "twitter:image", content: "https://www.restaurantelasflores.com/imagenes-reales/EQUIPO/02042026-DSC05038.webp" },
     ],
     links: [{ rel: "canonical", href: "https://www.restaurantelasflores.com/unete-al-equipo" }],
   }),
