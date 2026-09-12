@@ -1,9 +1,10 @@
 import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useMemo } from "react";
 import { supabase, signOut } from "../lib/supabase";
 import { playOrderChime } from "../utils/audioAlert";
 import { CashierReservationCard } from "../components/CashierReservationCard";
 import { StatCard } from "../components/StatCard";
+import { SimpleTrendChart } from "../components/SimpleTrendChart";
 import {
   Search,
   RefreshCw,
@@ -18,7 +19,11 @@ import {
   History,
   UserCircle2,
   ChevronDown,
+  ListChecks,
+  LineChart,
 } from "lucide-react";
+
+type ReservasModule = "seguimiento" | "analitica";
 
 const getLocalYYYYMMDD = (d?: Date | string) => {
   if (!d) return "";
@@ -44,6 +49,7 @@ function PanelReservasRoute() {
   const [isAdmin, setIsAdmin] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
   const [soundEnabled, setSoundEnabled] = useState(true);
+  const [activeTab, setActiveTab] = useState<ReservasModule>("seguimiento");
   const [accountOpen, setAccountOpen] = useState(false);
   const accountRef = useRef<HTMLDivElement>(null);
 
@@ -306,6 +312,25 @@ function PanelReservasRoute() {
     return s === "confirmed" || s === "confirmada";
   }).length;
 
+  // Reservas por día (últimos 7 días) para el módulo de Analítica
+  const dailyReservationsEntries = useMemo(() => {
+    const daysMap: Record<string, { total: number; count: number }> = {};
+    const sorted = [...reservations].sort(
+      (a, b) => new Date(a.created_at || 0).getTime() - new Date(b.created_at || 0).getTime()
+    );
+    sorted.forEach((r) => {
+      const s = (r.status || "").toLowerCase();
+      if (s === "cancelled" || s === "cancelada") return;
+      const refDate = r.reservation_date || r.created_at;
+      if (!refDate) return;
+      const dateStr = new Date(refDate).toLocaleDateString("es-PE", { month: "short", day: "numeric" });
+      if (!daysMap[dateStr]) daysMap[dateStr] = { total: 0, count: 0 };
+      daysMap[dateStr].total += 1;
+      daysMap[dateStr].count += 1;
+    });
+    return Object.entries(daysMap).map(([label, { total, count }]) => ({ label, value: total, count }));
+  }, [reservations]);
+
   if (loading || !isAuthorized) {
     return (
       <div className="min-h-screen bg-[#F9F8F3] flex items-center justify-center font-sans">
@@ -360,6 +385,32 @@ function PanelReservasRoute() {
               </h1>
             </div>
 
+            {/* Module Tabs */}
+            <div className="flex items-center gap-1 flex-1 justify-center">
+              <button
+                onClick={() => setActiveTab("seguimiento")}
+                className={`px-3 py-2 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 whitespace-nowrap border-b-2 ${
+                  activeTab === "seguimiento"
+                    ? "border-[#D4AF37] text-white bg-white/5"
+                    : "border-transparent text-emerald-100/80 hover:text-white hover:bg-white/5"
+                }`}
+              >
+                <ListChecks size={15} className={activeTab === "seguimiento" ? "text-[#D4AF37]" : "text-emerald-300"} />
+                <span>Seguimiento</span>
+              </button>
+              <button
+                onClick={() => setActiveTab("analitica")}
+                className={`px-3 py-2 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 whitespace-nowrap border-b-2 ${
+                  activeTab === "analitica"
+                    ? "border-[#D4AF37] text-white bg-white/5"
+                    : "border-transparent text-emerald-100/80 hover:text-white hover:bg-white/5"
+                }`}
+              >
+                <LineChart size={15} className={activeTab === "analitica" ? "text-[#D4AF37]" : "text-emerald-300"} />
+                <span>Analítica</span>
+              </button>
+            </div>
+
             {/* Account Menu */}
             <div className="relative" ref={accountRef}>
               <button
@@ -412,6 +463,8 @@ function PanelReservasRoute() {
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 space-y-6">
 
+      {activeTab === "seguimiento" && (
+        <>
         {/* KPIs */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
           <StatCard
@@ -575,6 +628,21 @@ function PanelReservasRoute() {
               })}
           </div>
         )}
+        </>
+      )}
+
+      {activeTab === "analitica" && (
+        <SimpleTrendChart
+          icon={Calendar}
+          title="Reservas por Día"
+          subtitle="Reservas registradas en los últimos 7 días"
+          accent="eucalipto"
+          entries={dailyReservationsEntries}
+          countLabel="reservas"
+          emptyMessage="No hay reservas registradas en los últimos 7 días."
+        />
+      )}
+
       </main>
     </div>
   );

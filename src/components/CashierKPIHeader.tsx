@@ -1,13 +1,17 @@
 import { useEffect, useRef, useState } from "react";
-import { Volume2, BellOff, ShieldCheck, TrendingUp, ShoppingBag, Clock, LogOut, UserCircle2, ChevronDown } from "lucide-react";
+import { Volume2, BellOff, ShieldCheck, TrendingUp, ShoppingBag, Clock, LogOut, UserCircle2, ChevronDown, ListChecks, LineChart } from "lucide-react";
 import { Link } from "@tanstack/react-router";
 import { StatCard } from "./StatCard";
+
+export type CashierModule = "seguimiento" | "analitica";
 
 interface CashierTopBarProps {
   soundEnabled: boolean;
   onToggleSound: () => void;
   isAdmin: boolean;
   onSignOut: () => void;
+  activeTab: CashierModule;
+  onSelectTab: (tab: CashierModule) => void;
 }
 
 export function CashierTopBar({
@@ -15,6 +19,8 @@ export function CashierTopBar({
   onToggleSound,
   isAdmin,
   onSignOut,
+  activeTab,
+  onSelectTab,
 }: CashierTopBarProps) {
   const [accountOpen, setAccountOpen] = useState(false);
   const accountRef = useRef<HTMLDivElement>(null);
@@ -40,6 +46,32 @@ export function CashierTopBar({
             <h1 className="font-serif text-sm font-black tracking-tight text-white leading-none">
               Panel de Caja
             </h1>
+          </div>
+
+          {/* Module Tabs */}
+          <div className="flex items-center gap-1 flex-1 justify-center">
+            <button
+              onClick={() => onSelectTab("seguimiento")}
+              className={`px-3 py-2 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 whitespace-nowrap border-b-2 ${
+                activeTab === "seguimiento"
+                  ? "border-[#D4AF37] text-white bg-white/5"
+                  : "border-transparent text-emerald-100/80 hover:text-white hover:bg-white/5"
+              }`}
+            >
+              <ListChecks size={15} className={activeTab === "seguimiento" ? "text-[#D4AF37]" : "text-emerald-300"} />
+              <span>Seguimiento</span>
+            </button>
+            <button
+              onClick={() => onSelectTab("analitica")}
+              className={`px-3 py-2 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 whitespace-nowrap border-b-2 ${
+                activeTab === "analitica"
+                  ? "border-[#D4AF37] text-white bg-white/5"
+                  : "border-transparent text-emerald-100/80 hover:text-white hover:bg-white/5"
+              }`}
+            >
+              <LineChart size={15} className={activeTab === "analitica" ? "text-[#D4AF37]" : "text-emerald-300"} />
+              <span>Analítica</span>
+            </button>
           </div>
 
           {/* Account Menu */}
