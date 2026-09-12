@@ -22,9 +22,9 @@ export function CashierKPIHeader({
   onSignOut,
 }: CashierKPIHeaderProps) {
   return (
-    <div className="space-y-4">
+    <>
       {/* Upper Executive Operator Bar */}
-      <header className="bg-[#2D473C] text-[#F9F8F3] rounded-2xl border border-[#D4AF37]/40 shadow-lg p-4 sm:p-5 flex flex-col md:flex-row items-center justify-between gap-4">
+      <header className="bg-[#2D473C] text-[#F9F8F3] rounded-2xl border border-[#D4AF37]/40 shadow-lg p-4 sm:p-5 flex flex-col md:flex-row items-center justify-between gap-4 sticky top-0 z-30">
         <div className="flex items-center gap-3.5">
           <div className="w-12 h-12 rounded-xl bg-white p-1 flex items-center justify-center border-2 border-[#D4AF37] shadow-md shrink-0">
             <img src="/favicon.png" alt="Las Flores" className="w-full h-full object-contain rounded-lg" />
@@ -99,6 +99,6 @@ export function CashierKPIHeader({
           value={`${avgWaitMins} min`}
         />
       </div>
-    </div>
+    </>
   );
 }
