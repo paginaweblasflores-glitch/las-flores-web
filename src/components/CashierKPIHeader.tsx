@@ -23,18 +23,9 @@ export function CashierTopBar({
             <div className="w-9 h-9 rounded-xl bg-white p-1 flex items-center justify-center border-2 border-[#D4AF37] shadow-md shrink-0">
               <img src="/favicon.png" alt="Las Flores" className="w-full h-full object-contain rounded-lg" />
             </div>
-            <div>
-              <h1 className="font-serif text-sm font-black tracking-tight text-white flex items-center gap-1.5 leading-none">
-                Panel de Caja y Recepción
-                <span className="text-[10px] font-sans px-2 py-0.5 rounded-full bg-emerald-400/20 text-emerald-200 border border-emerald-400/40 font-extrabold flex items-center gap-1.5 uppercase tracking-wider">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                  TIMBRE EN VIVO
-                </span>
-              </h1>
-              <p className="text-[10px] text-emerald-200/80 font-sans uppercase font-extrabold tracking-wider mt-0.5">
-                Centro de Control Operativo Gastronómico
-              </p>
-            </div>
+            <h1 className="font-serif text-sm font-black tracking-tight text-white leading-none">
+              Panel de Caja
+            </h1>
           </div>
 
           {/* Action Controls */}
