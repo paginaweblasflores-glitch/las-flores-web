@@ -1,5 +1,5 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { useEffect, useState, useRef, useMemo } from "react";
+import { useEffect, useState, useRef } from "react";
 import { supabase, signOut } from "../lib/supabase";
 import { sendReviewRequestEmail } from "../lib/emailService";
 import { playOrderChime } from "../utils/audioAlert";
@@ -11,7 +11,6 @@ import { CashierListView } from "../components/CashierListView";
 import { CashierAuditModal } from "../components/CashierAuditModal";
 import { CashierStockModal } from "../components/CashierStockModal";
 import { YapeConfigModal } from "../components/YapeConfigModal";
-import { SimpleTrendChart } from "../components/SimpleTrendChart";
 import {
   Search,
   RefreshCw,
@@ -402,22 +401,6 @@ function CashierDashboardRoute() {
     })
     .reduce((sum, o) => sum + Number(o.total || 0), 0);
 
-  // Ventas por día (últimos 7 días) para el módulo de Analítica
-  const dailySalesEntries = useMemo(() => {
-    const daysMap: Record<string, { total: number; count: number }> = {};
-    const entregados = orders.filter((o) => getNormalizedStatus(o.status) === "entregado");
-    const sorted = [...entregados].sort(
-      (a, b) => new Date(a.created_at).getTime() - new Date(b.created_at).getTime()
-    );
-    sorted.forEach((o) => {
-      const dateStr = new Date(o.created_at).toLocaleDateString("es-PE", { month: "short", day: "numeric" });
-      if (!daysMap[dateStr]) daysMap[dateStr] = { total: 0, count: 0 };
-      daysMap[dateStr].total += Number(o.total || 0);
-      daysMap[dateStr].count += 1;
-    });
-    return Object.entries(daysMap).map(([label, { total, count }]) => ({ label, value: total, count }));
-  }, [orders]);
-
   // Timer en vivo para que el promedio y los tiempos de espera se actualicen cada 15 segundos
   const [currentTimestamp, setCurrentTimestamp] = useState(Date.now());
   useEffect(() => {
@@ -552,13 +535,6 @@ function CashierDashboardRoute() {
 
       {activeTab === "seguimiento" && (
         <>
-        {/* Executive KPI Cards */}
-        <CashierKPIHeader
-          todayRevenue={todayRevenue}
-          activeOrdersCount={activeOrdersCount}
-          avgWaitMins={avgWaitMins}
-        />
-
         {/* View Mode Switcher Header Bar */}
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4 bg-white p-2 rounded-2xl border border-gray-200 shadow-2xs">
 
@@ -905,15 +881,10 @@ function CashierDashboardRoute() {
       )}
 
       {activeTab === "analitica" && (
-        <SimpleTrendChart
-          icon={TrendingUp}
-          title="Ventas por Día"
-          subtitle="Facturación diaria de los últimos 7 días"
-          accent="cochinilla"
-          entries={dailySalesEntries}
-          valuePrefix="S/ "
-          countLabel="pedidos"
-          emptyMessage="No hay ventas registradas en los últimos 7 días."
+        <CashierKPIHeader
+          todayRevenue={todayRevenue}
+          activeOrdersCount={activeOrdersCount}
+          avgWaitMins={avgWaitMins}
         />
       )}
 

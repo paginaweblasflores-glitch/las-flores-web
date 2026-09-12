@@ -39,39 +39,41 @@ export function CashierTopBar({
     <header className="bg-[#2D473C] text-[#F9F8F3] border-b border-[#D4AF37]/30 shadow-xl sticky top-0 z-40 font-sans">
       <div className="max-w-[1800px] mx-auto px-4 md:px-6">
         <div className="flex flex-col md:flex-row items-center justify-between gap-3 py-3 md:h-16 md:py-0">
-          <div className="flex items-center gap-2.5 w-full md:w-auto">
-            <div className="w-9 h-9 rounded-xl bg-white p-1 flex items-center justify-center border-2 border-[#D4AF37] shadow-md shrink-0">
-              <img src="/favicon.png" alt="Las Flores" className="w-full h-full object-contain rounded-lg" />
+          <div className="flex items-center gap-4 w-full md:w-auto">
+            <div className="flex items-center gap-2.5 shrink-0">
+              <div className="w-9 h-9 rounded-xl bg-white p-1 flex items-center justify-center border-2 border-[#D4AF37] shadow-md shrink-0">
+                <img src="/favicon.png" alt="Las Flores" className="w-full h-full object-contain rounded-lg" />
+              </div>
+              <h1 className="font-serif text-sm font-black tracking-tight text-white leading-none">
+                Panel de Caja
+              </h1>
             </div>
-            <h1 className="font-serif text-sm font-black tracking-tight text-white leading-none">
-              Panel de Caja
-            </h1>
-          </div>
 
-          {/* Module Tabs */}
-          <div className="flex items-center gap-1 flex-1 justify-center">
-            <button
-              onClick={() => onSelectTab("seguimiento")}
-              className={`px-3 py-2 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 whitespace-nowrap border-b-2 ${
-                activeTab === "seguimiento"
-                  ? "border-[#D4AF37] text-white bg-white/5"
-                  : "border-transparent text-emerald-100/80 hover:text-white hover:bg-white/5"
-              }`}
-            >
-              <ListChecks size={15} className={activeTab === "seguimiento" ? "text-[#D4AF37]" : "text-emerald-300"} />
-              <span>Seguimiento</span>
-            </button>
-            <button
-              onClick={() => onSelectTab("analitica")}
-              className={`px-3 py-2 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 whitespace-nowrap border-b-2 ${
-                activeTab === "analitica"
-                  ? "border-[#D4AF37] text-white bg-white/5"
-                  : "border-transparent text-emerald-100/80 hover:text-white hover:bg-white/5"
-              }`}
-            >
-              <LineChart size={15} className={activeTab === "analitica" ? "text-[#D4AF37]" : "text-emerald-300"} />
-              <span>Analítica</span>
-            </button>
+            {/* Module Tabs */}
+            <div className="flex items-center gap-1">
+              <button
+                onClick={() => onSelectTab("analitica")}
+                className={`px-3 py-2 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 whitespace-nowrap border-b-2 ${
+                  activeTab === "analitica"
+                    ? "border-[#D4AF37] text-white bg-white/5"
+                    : "border-transparent text-emerald-100/80 hover:text-white hover:bg-white/5"
+                }`}
+              >
+                <LineChart size={15} className={activeTab === "analitica" ? "text-[#D4AF37]" : "text-emerald-300"} />
+                <span>Analítica</span>
+              </button>
+              <button
+                onClick={() => onSelectTab("seguimiento")}
+                className={`px-3 py-2 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 whitespace-nowrap border-b-2 ${
+                  activeTab === "seguimiento"
+                    ? "border-[#D4AF37] text-white bg-white/5"
+                    : "border-transparent text-emerald-100/80 hover:text-white hover:bg-white/5"
+                }`}
+              >
+                <ListChecks size={15} className={activeTab === "seguimiento" ? "text-[#D4AF37]" : "text-emerald-300"} />
+                <span>Seguimiento</span>
+              </button>
+            </div>
           </div>
 
           {/* Account Menu */}
