@@ -31,7 +31,7 @@ export function CashierKPIHeader({
           </div>
           <div>
             <h1 className="font-serif text-xl sm:text-2xl font-black tracking-tight text-white flex items-center gap-2">
-              Panel de Caja & Recepción
+              Panel de Caja y Recepción
               <span className="text-xs font-sans px-2.5 py-0.5 rounded-full bg-emerald-400/20 text-emerald-200 border border-emerald-400/40 font-extrabold flex items-center gap-1.5 uppercase tracking-wider">
                 <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
                 TIMBRE EN VIVO

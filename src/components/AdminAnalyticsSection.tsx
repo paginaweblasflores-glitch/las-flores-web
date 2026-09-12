@@ -332,7 +332,7 @@ export function AdminAnalyticsSection({
       {/* Printable Executive Header */}
       <div className="hidden print:block mb-8 text-center border-b border-gray-300 pb-6 text-gray-900">
         <h1 className="text-2xl font-serif font-bold">RESTAURANTE LAS FLORES S.A.C.</h1>
-        <p className="text-xs text-gray-600">Informe Ejecutivo de Inteligencia de Negocios & Ventas</p>
+        <p className="text-xs text-gray-600">Informe Ejecutivo de Inteligencia de Negocios y Ventas</p>
         <p className="text-xs text-gray-400 mt-1">Fecha de generación: {new Date().toLocaleString("es-PE")}</p>
       </div>
 
@@ -341,7 +341,7 @@ export function AdminAnalyticsSection({
         <div>
           <h2 className="font-serif text-lg font-bold text-[#3b1f10] flex items-center gap-2.5">
             <BarChart3 size={20} className="text-[#2e5339]" />
-            Inteligencia de Negocios & Analítica Avanzada
+            Inteligencia de Negocios y Analítica Avanzada
             <span className="font-sans text-xs px-2.5 py-0.5 rounded-full bg-[#2e5339]/10 text-[#2e5339] font-bold uppercase tracking-wider border border-[#2e5339]/20">
               Corporativo BI
             </span>
@@ -473,7 +473,7 @@ export function AdminAnalyticsSection({
           <div className="flex items-center justify-between text-[#3b1f10]/60 text-xs font-sans font-bold uppercase tracking-wider">
             <span className="flex items-center gap-1.5 text-[#3b1f10] font-bold">
               <Percent size={16} className="text-[#2e5339]" />
-              Impacto de Promociones & Descuentos Otorgados (BI)
+              Impacto de Promociones y Descuentos Otorgados (BI)
             </span>
             <span className="text-[#3b1f10] bg-[#f7f5ef] px-3 py-1 rounded-full border border-[#d4a373]/30 font-sans font-bold text-xs">
               {ordersWithCouponCount} pedidos con cupón
@@ -668,7 +668,7 @@ export function AdminAnalyticsSection({
         <div>
           <h3 className="font-serif text-sm font-bold text-[#14231D] flex items-center gap-2">
             <Award size={18} className="text-amber-500" />
-            Ranking: Top 5 Platos Más Vendidos & Facturación
+            Ranking: Top 5 Platos Más Vendidos y Facturación
           </h3>
           <p className="text-xs text-[#14231D]/40 font-medium">Basado en volumen de unidades e ingresos generados</p>
         </div>

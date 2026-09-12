@@ -571,7 +571,7 @@ function AdminRoute() {
                   <thead className="bg-[#2D473C] text-white uppercase text-xs font-black tracking-wider">
                     <tr>
                       <th className="py-3 px-4">Comensal</th>
-                      <th className="py-3 px-4">Fecha & Hora</th>
+                      <th className="py-3 px-4">Fecha y Hora</th>
                       <th className="py-3 px-4">Personas</th>
                       <th className="py-3 px-4">Mesa / Zona</th>
                       <th className="py-3 px-4">Estado</th>
@@ -777,7 +777,7 @@ function AdminRoute() {
             <div className="bg-white rounded-2xl border border-gray-200 shadow-2xs p-5 space-y-4">
               <div className="flex items-center justify-between">
                 <div>
-                  <h3 className="font-serif font-black text-lg text-[#2D473C]">Cupones & Códigos Promocionales</h3>
+                  <h3 className="font-serif font-black text-lg text-[#2D473C]">Cupones y Códigos Promocionales</h3>
                   <p className="text-xs text-gray-500">Gestión de descuentos y promociones especiales</p>
                 </div>
 

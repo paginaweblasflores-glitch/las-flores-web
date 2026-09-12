@@ -83,7 +83,7 @@ export function AdminZonesSection() {
             Gestión del Establecimiento
           </span>
           <h2 className="font-serif italic text-2xl font-bold text-[#3b1f10]">
-            Salones & Apagado de Reservas
+            Salones y Apagado de Reservas
           </h2>
           <p className="text-xs text-[#3b1f10]/60 mt-1 max-w-2xl font-sans">
             Administra la configuración de fotos, aforo y mesas por salón. Bloquea la entrada de reservas por teléfono o eventos especiales para evitar cruces.

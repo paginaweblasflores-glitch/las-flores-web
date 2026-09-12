@@ -36,14 +36,14 @@ export function AdminTopNav({
   userEmail,
 }: AdminTopNavProps) {
   const menuItems = [
-    { id: "analytics" as AdminTab, label: "Analítica & KPIs", icon: BarChart3 },
-    { id: "orders" as AdminTab, label: "Comandas & Ventas", icon: ShoppingBag },
+    { id: "analytics" as AdminTab, label: "Analítica", icon: BarChart3 },
+    { id: "orders" as AdminTab, label: "Comandas", icon: ShoppingBag },
     { id: "reservations" as AdminTab, label: "Reservas de Mesas", icon: Calendar },
-    { id: "menu" as AdminTab, label: "Carta & Productos", icon: UtensilsCrossed },
+    { id: "menu" as AdminTab, label: "Carta", icon: UtensilsCrossed },
     { id: "coupons" as AdminTab, label: "Cupones Promocionales", icon: Ticket },
     { id: "jobs" as AdminTab, label: "Bolsa de Trabajo", icon: Briefcase, badge: applicationsCount },
     { id: "complaints" as AdminTab, label: "Libro de Reclamaciones", icon: BookOpen, badge: complaintsCount },
-    { id: "zones" as AdminTab, label: "Zonas & Mesas", icon: Store },
+    { id: "zones" as AdminTab, label: "Zonas", icon: Store },
   ];
 
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -75,7 +75,7 @@ export function AdminTopNav({
                 <ShieldCheck size={12} className="text-[#D4AF37]" />
               </h2>
               <span className="text-[10px] font-sans uppercase font-extrabold text-emerald-200/80 tracking-wider block mt-0.5">
-                Suite de Administración
+                Suite de Admin
               </span>
             </div>
           </div>
@@ -119,9 +119,6 @@ export function AdminTopNav({
                 className="flex items-center gap-2 px-2.5 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 transition-colors border border-white/20"
               >
                 <UserCircle2 size={20} className="text-[#D4AF37]" />
-                <span className="hidden md:inline text-xs font-bold text-white max-w-[140px] truncate">
-                  {userEmail || "Administrador"}
-                </span>
                 <ChevronDown size={14} className={`text-emerald-200 transition-transform ${accountOpen ? "rotate-180" : ""}`} />
               </button>
 
