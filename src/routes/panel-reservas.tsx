@@ -16,6 +16,8 @@ import {
   Clock,
   CheckCircle2,
   History,
+  UserCircle2,
+  ChevronDown,
 } from "lucide-react";
 
 const getLocalYYYYMMDD = (d?: Date | string) => {
@@ -42,6 +44,18 @@ function PanelReservasRoute() {
   const [isAdmin, setIsAdmin] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
   const [soundEnabled, setSoundEnabled] = useState(true);
+  const [accountOpen, setAccountOpen] = useState(false);
+  const accountRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (accountRef.current && !accountRef.current.contains(e.target as Node)) {
+        setAccountOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   const [reservations, setReservations] = useState<any[]>([]);
   const [reservationStatusFilter, setReservationStatusFilter] = useState<string>("today");
@@ -346,40 +360,51 @@ function PanelReservasRoute() {
               </h1>
             </div>
 
-            <div className="flex items-center gap-3 w-full md:w-auto justify-end flex-wrap">
+            {/* Account Menu */}
+            <div className="relative" ref={accountRef}>
               <button
-                onClick={() => {
-                  const next = !soundEnabled;
-                  setSoundEnabled(next);
-                  if (next) playOrderChime();
-                }}
-                className={`px-4 py-2 rounded-xl text-xs font-black flex items-center gap-2 border transition-all shadow-2xs ${
-                  soundEnabled
-                    ? "bg-emerald-500/20 text-emerald-200 border-emerald-400/40 hover:bg-emerald-500/30"
-                    : "bg-red-500/20 text-red-200 border-red-500/40 hover:bg-red-500/30"
-                }`}
+                onClick={() => setAccountOpen((v) => !v)}
+                className="flex items-center gap-2 px-2.5 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 transition-colors border border-white/20"
               >
-                {soundEnabled ? <Volume2 size={16} className="text-emerald-300" /> : <BellOff size={16} className="text-red-300" />}
-                <span>{soundEnabled ? "Alerta Sonora Activa" : "Alerta Silenciada"}</span>
+                <UserCircle2 size={20} className="text-[#D4AF37]" />
+                <ChevronDown size={14} className={`text-emerald-200 transition-transform ${accountOpen ? "rotate-180" : ""}`} />
               </button>
 
-              {isAdmin && (
-                <Link
-                  to="/admin"
-                  className="px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-extrabold flex items-center gap-2 transition-colors border border-white/20 shadow-2xs"
-                >
-                  <ShieldCheck size={16} className="text-[#D4AF37]" />
-                  <span>Volver a Admin</span>
-                </Link>
+              {accountOpen && (
+                <div className="absolute right-0 mt-2 w-64 bg-white rounded-2xl shadow-2xl border border-gray-200 overflow-hidden z-50 text-[#231A14]">
+                  <button
+                    onClick={() => {
+                      const next = !soundEnabled;
+                      setSoundEnabled(next);
+                      if (next) playOrderChime();
+                      setAccountOpen(false);
+                    }}
+                    className="w-full px-4 py-2.5 flex items-center gap-2.5 text-xs font-bold text-gray-700 hover:bg-gray-50 transition-colors"
+                  >
+                    {soundEnabled ? <Volume2 size={15} className="text-emerald-600" /> : <BellOff size={15} className="text-red-600" />}
+                    <span>{soundEnabled ? "Silenciar Alerta Sonora" : "Activar Alerta Sonora"}</span>
+                  </button>
+
+                  {isAdmin && (
+                    <Link
+                      to="/admin"
+                      onClick={() => setAccountOpen(false)}
+                      className="w-full px-4 py-2.5 flex items-center gap-2.5 text-xs font-bold text-gray-700 hover:bg-gray-50 transition-colors"
+                    >
+                      <ShieldCheck size={15} className="text-[#2D473C]" />
+                      <span>Volver a Admin</span>
+                    </Link>
+                  )}
+
+                  <button
+                    onClick={handleSignOut}
+                    className="w-full px-4 py-2.5 flex items-center gap-2.5 text-xs font-extrabold text-red-600 hover:bg-red-50 transition-colors border-t border-gray-100"
+                  >
+                    <LogOut size={15} />
+                    <span>Cerrar Sesión</span>
+                  </button>
+                </div>
               )}
-
-              <button
-                onClick={handleSignOut}
-                className="px-4 py-2 rounded-xl bg-red-500/20 hover:bg-red-500/30 text-red-200 text-xs font-extrabold flex items-center gap-2 transition-colors border border-red-500/40 shadow-2xs cursor-pointer"
-              >
-                <LogOut size={16} />
-                <span>Cerrar Sesión</span>
-              </button>
             </div>
           </div>
         </div>
