@@ -112,7 +112,7 @@ function CartaPage() {
       />
 
       {/* Page Title */}
-      <div className="bg-piedra pt-28 md:pt-32 pb-4 text-center">
+      <div className="bg-piedra pt-16 md:pt-20 pb-4 text-center">
         <h1 className="font-serif text-4xl md:text-6xl text-nogal font-normal leading-tight">Nuestra Carta</h1>
       </div>
 
