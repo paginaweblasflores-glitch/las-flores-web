@@ -1,4 +1,4 @@
-import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { supabase, signOut } from "../lib/supabase";
 import {
@@ -13,13 +13,7 @@ import {
   CheckCircle2,
   ExternalLink,
   ShieldCheck,
-  Ticket,
-  Briefcase,
-  Store,
-  Calendar,
-  ShoppingBag,
   UtensilsCrossed,
-  BarChart3,
   Check,
   X,
   Filter,
@@ -34,7 +28,8 @@ import { AdminAnalyticsSection } from "../components/AdminAnalyticsSection";
 import { AdminJobsSection } from "../components/AdminJobsSection";
 import { AdminZonesSection } from "../components/AdminZonesSection";
 import { AdminComplaintsSection } from "../components/AdminComplaintsSection";
-import { AdminSidebar, AdminTab } from "../components/AdminSidebar";
+import type { AdminTab } from "../components/AdminSidebar";
+import { AdminTopNav } from "../components/AdminTopNav";
 import { YapeConfigModal } from "../components/YapeConfigModal";
 import { removeProductById } from "../utils/adminProducts";
 import { getYapeConfig, saveYapeConfig, subscribeToYapeConfig, DEFAULT_YAPE_CONFIG, type YapeConfig } from "../lib/yapeService";
@@ -366,10 +361,10 @@ function AdminRoute() {
   }
 
   return (
-    <div className="doc-legible min-h-screen bg-[#F9F8F3] flex font-sans selection:bg-[#D4AF37] selection:text-[#2D473C]">
-      
-      {/* Sidebar Navigation */}
-      <AdminSidebar
+    <div className="doc-legible min-h-screen bg-[#F9F8F3] flex flex-col font-sans selection:bg-[#D4AF37] selection:text-[#2D473C]">
+
+      {/* Top Navigation */}
+      <AdminTopNav
         activeTab={activeTab}
         onSelectTab={setActiveTab}
         applicationsCount={applicationsCount}
@@ -379,8 +374,8 @@ function AdminRoute() {
       />
 
       {/* Main Command Area */}
-      <div className="flex-1 flex flex-col min-w-0 overflow-y-auto">
-        
+      <div className="flex-1 flex flex-col min-w-0">
+
         {/* Upper Command Header */}
         <header className="bg-white border-b border-gray-200 px-6 py-4 flex flex-col md:flex-row items-center justify-between gap-4 sticky top-0 z-30 shadow-2xs">
           <div>
@@ -416,22 +411,6 @@ function AdminRoute() {
               <QrCode size={15} className="text-purple-700" />
               <span>QR Yape ({yapeConfig.mode === "personal" ? "Personal" : "Empresa"})</span>
             </button>
-
-            <Link
-              to="/caja"
-              className="px-4 py-2 rounded-xl bg-[#2D473C] hover:bg-[#243B31] text-white text-xs font-black flex items-center gap-2 transition-all shadow-2xs active:scale-98"
-            >
-              <ShoppingBag size={15} className="text-[#D4AF37]" />
-              <span>Ir a Panel de Caja</span>
-            </Link>
-
-            <Link
-              to="/panel-reservas"
-              className="px-4 py-2 rounded-xl bg-[#2D473C] hover:bg-[#243B31] text-white text-xs font-black flex items-center gap-2 transition-all shadow-2xs active:scale-98"
-            >
-              <Calendar size={15} className="text-[#D4AF37]" />
-              <span>Ir a Panel de Reservas</span>
-            </Link>
 
             <button
               onClick={() => {
