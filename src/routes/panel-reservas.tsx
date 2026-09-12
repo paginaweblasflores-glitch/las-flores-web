@@ -3,6 +3,7 @@ import { useEffect, useState, useRef } from "react";
 import { supabase, signOut } from "../lib/supabase";
 import { playOrderChime } from "../utils/audioAlert";
 import { CashierReservationCard } from "../components/CashierReservationCard";
+import { StatCard } from "../components/StatCard";
 import {
   Search,
   RefreshCw,
@@ -12,6 +13,9 @@ import {
   BellOff,
   ShieldCheck,
   LogOut,
+  Clock,
+  CheckCircle2,
+  History,
 } from "lucide-react";
 
 const getLocalYYYYMMDD = (d?: Date | string) => {
@@ -390,107 +394,55 @@ function PanelReservasRoute() {
 
         {/* KPIs */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-          <button
+          <StatCard
+            icon={Calendar}
+            accent="eucalipto"
+            label="Reservas del Día"
+            value={todayReservationsCount}
+            sublabel="Programadas para HOY"
+            badge="Hoy"
+            active={reservationStatusFilter === "today"}
             onClick={() => setReservationStatusFilter("today")}
-            className={`p-4 rounded-2xl text-left transition-all relative overflow-hidden font-sans ${
-              reservationStatusFilter === "today"
-                ? "bg-white text-gray-900 border-t-4 border-t-[#2D473C] shadow-md font-extrabold scale-[1.01]"
-                : "bg-white/70 text-gray-600 border border-transparent hover:bg-white shadow-2xs"
-            }`}
-          >
-            <div className="flex items-center justify-between">
-              <span className="text-xs font-sans font-extrabold uppercase tracking-wider text-[#2D473C]">
-                Reservas del Día
-              </span>
-              <span className={`px-2 py-0.5 rounded-full text-xs font-bold ${
-                reservationStatusFilter === "today" ? "bg-[#2D473C] text-white" : "bg-emerald-100 text-emerald-900"
-              }`}>
-                Hoy
-              </span>
-            </div>
-            <span className="font-sans text-3xl font-black tracking-tight tabular-nums block mt-2 text-[#2D473C]">
-              {todayReservationsCount}
-            </span>
-            <p className="text-xs mt-0.5 font-medium text-[#5F8575]">Programadas para HOY</p>
-          </button>
+          />
 
-          <button
+          <StatCard
+            icon={Clock}
+            accent="chilca"
+            label="Pendientes"
+            value={pendingReservationsCount}
+            sublabel="Por confirmar WhatsApp"
+            badge="Por Confirmar"
+            active={reservationStatusFilter === "pendiente"}
             onClick={() => setReservationStatusFilter("pendiente")}
-            className={`p-4 rounded-2xl text-left transition-all relative overflow-hidden font-sans ${
-              reservationStatusFilter === "pendiente"
-                ? "bg-white text-gray-900 border-t-4 border-t-[#D4AF37] shadow-md font-extrabold scale-[1.01]"
-                : "bg-white/70 text-gray-600 border border-transparent hover:bg-white shadow-2xs"
-            }`}
-          >
-            <div className="flex items-center justify-between">
-              <span className="text-xs font-sans font-extrabold uppercase tracking-wider text-amber-900">
-                Pendientes
-              </span>
-              <span className={`px-2 py-0.5 rounded-full text-xs font-bold ${
-                reservationStatusFilter === "pendiente" ? "bg-[#D4AF37] text-[#2D473C]" : "bg-amber-100 text-amber-900"
-              }`}>
-                Por Confirmar
-              </span>
-            </div>
-            <span className="font-sans text-3xl font-black tracking-tight tabular-nums block mt-2 text-amber-950">
-              {pendingReservationsCount}
-            </span>
-            <p className="text-xs mt-0.5 font-medium text-amber-800">Por confirmar WhatsApp</p>
-          </button>
+          />
 
-          <button
+          <StatCard
+            icon={CheckCircle2}
+            accent="cielo"
+            label="Confirmadas"
+            value={confirmedReservationsCount}
+            sublabel="Listas para recibir"
+            badge="Confirmado"
+            active={reservationStatusFilter === "confirmada"}
             onClick={() => {
               setReservationStatusFilter("confirmada");
               if (!resDateFrom && !resDateTo) setQuickDateRange("month");
             }}
-            className={`p-4 rounded-2xl text-left transition-all relative overflow-hidden font-sans ${
-              reservationStatusFilter === "confirmada"
-                ? "bg-white text-gray-900 border-t-4 border-t-blue-500 shadow-md font-extrabold scale-[1.01]"
-                : "bg-white/70 text-gray-600 border border-transparent hover:bg-white shadow-2xs"
-            }`}
-          >
-            <div className="flex items-center justify-between">
-              <span className="text-xs font-sans font-extrabold uppercase tracking-wider text-blue-900">
-                Confirmadas
-              </span>
-              <span className={`px-2 py-0.5 rounded-full text-xs font-bold ${
-                reservationStatusFilter === "confirmada" ? "bg-blue-600 text-white" : "bg-blue-100 text-blue-900"
-              }`}>
-                Confirmado
-              </span>
-            </div>
-            <span className="font-sans text-3xl font-black tracking-tight tabular-nums block mt-2 text-blue-950">
-              {confirmedReservationsCount}
-            </span>
-            <p className="text-xs mt-0.5 font-medium text-blue-800">Listas para recibir</p>
-          </button>
+          />
 
-          <button
+          <StatCard
+            icon={History}
+            accent="pacay"
+            label="Todas / Historial"
+            value={reservations.length}
+            sublabel="Total de reservas"
+            badge="Total"
+            active={reservationStatusFilter === "all"}
             onClick={() => {
               setReservationStatusFilter("all");
               if (!resDateFrom && !resDateTo) setQuickDateRange("month");
             }}
-            className={`p-4 rounded-2xl text-left transition-all font-sans ${
-              reservationStatusFilter === "all"
-                ? "bg-white text-gray-900 border-t-4 border-t-gray-500 shadow-md font-extrabold scale-[1.01]"
-                : "bg-white/70 text-gray-600 border border-transparent hover:bg-white shadow-2xs"
-            }`}
-          >
-            <div className="flex items-center justify-between">
-              <span className="text-xs font-sans font-extrabold uppercase tracking-wider text-gray-700">
-                Todas / Historial
-              </span>
-              <span className={`px-2 py-0.5 rounded-full text-xs font-bold ${
-                reservationStatusFilter === "all" ? "bg-gray-800 text-white" : "bg-gray-200 text-gray-700"
-              }`}>
-                Total
-              </span>
-            </div>
-            <span className="font-sans text-3xl font-black tracking-tight tabular-nums block mt-2 text-gray-900">
-              {reservations.length}
-            </span>
-            <p className="text-xs mt-0.5 font-medium text-gray-600">Total de reservas</p>
-          </button>
+          />
         </div>
 
         {/* Búsqueda y filtro de fechas */}
