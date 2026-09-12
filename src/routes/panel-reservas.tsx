@@ -341,18 +341,9 @@ function PanelReservasRoute() {
               <div className="w-9 h-9 rounded-xl bg-white p-1 flex items-center justify-center border-2 border-[#D4AF37] shadow-md shrink-0">
                 <img src="/favicon.png" alt="Las Flores" className="w-full h-full object-contain rounded-lg" />
               </div>
-              <div>
-                <h1 className="font-serif text-sm font-black tracking-tight text-white flex items-center gap-1.5 leading-none">
-                  Panel de Reservas
-                  <span className="text-[10px] font-sans px-2 py-0.5 rounded-full bg-emerald-400/20 text-emerald-200 border border-emerald-400/40 font-extrabold flex items-center gap-1.5 uppercase tracking-wider">
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                    TIEMPO REAL
-                  </span>
-                </h1>
-                <p className="text-[10px] text-emerald-200/80 font-sans uppercase font-extrabold tracking-wider mt-0.5">
-                  Gestión de Reservas de Mesas
-                </p>
-              </div>
+              <h1 className="font-serif text-sm font-black tracking-tight text-white leading-none">
+                Panel de Reservas
+              </h1>
             </div>
 
             <div className="flex items-center gap-3 w-full md:w-auto justify-end flex-wrap">
