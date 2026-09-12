@@ -25,20 +25,20 @@ export function CashierKPIHeader({
     <>
       {/* Upper Executive Operator Bar */}
       <header className="bg-[#2D473C] text-[#F9F8F3] rounded-2xl border border-[#D4AF37]/40 shadow-lg p-4 sm:p-5 flex flex-col md:flex-row items-center justify-between gap-4 sticky top-0 z-30">
-        <div className="flex items-center gap-3.5">
-          <div className="w-12 h-12 rounded-xl bg-white p-1 flex items-center justify-center border-2 border-[#D4AF37] shadow-md shrink-0">
+        <div className="flex items-center gap-2.5">
+          <div className="w-9 h-9 rounded-xl bg-white p-1 flex items-center justify-center border-2 border-[#D4AF37] shadow-md shrink-0">
             <img src="/favicon.png" alt="Las Flores" className="w-full h-full object-contain rounded-lg" />
           </div>
           <div>
-            <h1 className="font-serif text-xl sm:text-2xl font-black tracking-tight text-white flex items-center gap-2">
+            <h1 className="font-serif text-sm font-black tracking-tight text-white flex items-center gap-1.5 leading-none">
               Panel de Caja y Recepción
-              <span className="text-xs font-sans px-2.5 py-0.5 rounded-full bg-emerald-400/20 text-emerald-200 border border-emerald-400/40 font-extrabold flex items-center gap-1.5 uppercase tracking-wider">
-                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+              <span className="text-[10px] font-sans px-2 py-0.5 rounded-full bg-emerald-400/20 text-emerald-200 border border-emerald-400/40 font-extrabold flex items-center gap-1.5 uppercase tracking-wider">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
                 TIMBRE EN VIVO
               </span>
             </h1>
-            <p className="text-xs text-emerald-100/80 font-serif italic mt-0.5">
-              Restaurante Las Flores — Centro de Control Operativo Gastronómico
+            <p className="text-[10px] text-emerald-200/80 font-sans uppercase font-extrabold tracking-wider mt-0.5">
+              Centro de Control Operativo Gastronómico
             </p>
           </div>
         </div>
