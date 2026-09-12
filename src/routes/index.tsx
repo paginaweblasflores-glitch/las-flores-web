@@ -1062,7 +1062,7 @@ function Index() {
       {/* TESOROS DE AYACUCHO */}
       <section className="relative bg-eucalipto py-16 md:py-32 px-6">
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-12 items-center">
-          <div className="md:col-span-5">
+          <div className="order-2 md:order-none md:col-span-5">
             <div className="relative aspect-4/3 rounded-3xl overflow-hidden shadow-2xl border-4 border-white/20">
               <img
                 src="/imagenes-reales/secciones/quinoa.webp"
@@ -1073,7 +1073,7 @@ function Index() {
               />
             </div>
           </div>
-          <div className="md:col-span-6 md:col-start-7">
+          <div className="order-1 md:order-none md:col-span-6 md:col-start-7">
             <span className="text-chilca font-medium uppercase tracking-[0.3em] text-xs mb-6 block">
               Tesoros de Ayacucho
             </span>
