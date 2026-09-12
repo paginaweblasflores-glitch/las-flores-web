@@ -1,4 +1,4 @@
-import { Volume2, BellOff, ShieldCheck, TrendingUp, ShoppingBag, Clock, Calendar, LogOut } from "lucide-react";
+import { Volume2, BellOff, ShieldCheck, TrendingUp, ShoppingBag, Clock, LogOut } from "lucide-react";
 import { Link } from "@tanstack/react-router";
 
 interface CashierKPIHeaderProps {
@@ -7,7 +7,6 @@ interface CashierKPIHeaderProps {
   todayRevenue: number;
   activeOrdersCount: number;
   avgWaitMins: number;
-  todayReservationsCount: number;
   isAdmin: boolean;
   onSignOut: () => void;
 }
@@ -18,7 +17,6 @@ export function CashierKPIHeader({
   todayRevenue,
   activeOrdersCount,
   avgWaitMins,
-  todayReservationsCount,
   isAdmin,
   onSignOut,
 }: CashierKPIHeaderProps) {
@@ -80,7 +78,7 @@ export function CashierKPIHeader({
       </header>
 
       {/* Shift KPIs Metrics Cards Row */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3.5">
+      <div className="grid grid-cols-2 lg:grid-cols-3 gap-3.5">
         
         {/* KPI 1: Ventas Hoy */}
         <div className="bg-white p-4 rounded-2xl border border-gray-200/90 shadow-2xs hover:shadow-md transition-all flex items-center gap-3.5">
@@ -123,21 +121,6 @@ export function CashierKPIHeader({
             </span>
             <span className="font-sans text-2xl font-black tracking-tight tabular-nums text-blue-950">
               {avgWaitMins} min
-            </span>
-          </div>
-        </div>
-
-        {/* KPI 4: Reservas Hoy */}
-        <div className="bg-white p-4 rounded-2xl border border-gray-200/90 shadow-2xs hover:shadow-md transition-all flex items-center gap-3.5">
-          <div className="w-11 h-11 rounded-xl bg-purple-50 text-purple-700 flex items-center justify-center shrink-0 border border-purple-200 shadow-2xs">
-            <Calendar size={22} />
-          </div>
-          <div className="min-w-0">
-            <span className="text-xs font-sans font-extrabold uppercase tracking-wider text-gray-500 block truncate">
-              Reservas Hoy
-            </span>
-            <span className="font-sans text-2xl font-black tracking-tight tabular-nums text-purple-950">
-              {todayReservationsCount}
             </span>
           </div>
         </div>
