@@ -1,5 +1,6 @@
 import { Volume2, BellOff, ShieldCheck, TrendingUp, ShoppingBag, Clock, LogOut } from "lucide-react";
 import { Link } from "@tanstack/react-router";
+import { StatCard } from "./StatCard";
 
 interface CashierKPIHeaderProps {
   soundEnabled: boolean;
@@ -79,52 +80,24 @@ export function CashierKPIHeader({
 
       {/* Shift KPIs Metrics Cards Row */}
       <div className="grid grid-cols-2 lg:grid-cols-3 gap-3.5">
-        
-        {/* KPI 1: Ventas Hoy */}
-        <div className="bg-white p-4 rounded-2xl border border-gray-200/90 shadow-2xs hover:shadow-md transition-all flex items-center gap-3.5">
-          <div className="w-11 h-11 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center shrink-0 border border-emerald-200 shadow-2xs">
-            <TrendingUp size={22} />
-          </div>
-          <div className="min-w-0">
-            <span className="text-xs font-sans font-extrabold uppercase tracking-wider text-gray-500 block truncate">
-              Ventas Hoy (S/)
-            </span>
-            <span className="font-sans text-2xl font-black tracking-tight tabular-nums text-[#2D473C]">
-              S/ {todayRevenue.toFixed(2)}
-            </span>
-          </div>
-        </div>
-
-        {/* KPI 2: Comandas Activas */}
-        <div className="bg-white p-4 rounded-2xl border border-gray-200/90 shadow-2xs hover:shadow-md transition-all flex items-center gap-3.5">
-          <div className="w-11 h-11 rounded-xl bg-amber-50 text-amber-700 flex items-center justify-center shrink-0 border border-amber-200 shadow-2xs">
-            <ShoppingBag size={22} />
-          </div>
-          <div className="min-w-0">
-            <span className="text-xs font-sans font-extrabold uppercase tracking-wider text-gray-500 block truncate">
-              Comandas en Cola
-            </span>
-            <span className="font-sans text-2xl font-black tracking-tight tabular-nums text-amber-950">
-              {activeOrdersCount}
-            </span>
-          </div>
-        </div>
-
-        {/* KPI 3: Promedio de Espera */}
-        <div className="bg-white p-4 rounded-2xl border border-gray-200/90 shadow-2xs hover:shadow-md transition-all flex items-center gap-3.5">
-          <div className="w-11 h-11 rounded-xl bg-blue-50 text-blue-700 flex items-center justify-center shrink-0 border border-blue-200 shadow-2xs">
-            <Clock size={22} />
-          </div>
-          <div className="min-w-0">
-            <span className="text-xs font-sans font-extrabold uppercase tracking-wider text-gray-500 block truncate">
-              {activeOrdersCount > 0 ? "Espera en Cola" : "Promedio Despacho"}
-            </span>
-            <span className="font-sans text-2xl font-black tracking-tight tabular-nums text-blue-950">
-              {avgWaitMins} min
-            </span>
-          </div>
-        </div>
-
+        <StatCard
+          icon={TrendingUp}
+          accent="cochinilla"
+          label="Ventas Hoy (S/)"
+          value={`S/ ${todayRevenue.toFixed(2)}`}
+        />
+        <StatCard
+          icon={ShoppingBag}
+          accent="chilca"
+          label="Comandas en Cola"
+          value={activeOrdersCount}
+        />
+        <StatCard
+          icon={Clock}
+          accent="cielo"
+          label={activeOrdersCount > 0 ? "Espera en Cola" : "Promedio Despacho"}
+          value={`${avgWaitMins} min`}
+        />
       </div>
     </div>
   );
