@@ -9,6 +9,7 @@ import { supabase } from "../lib/supabase";
 const STAFF_USERS = [
   { username: "Administrador Las Flores", email: "restaurantelasfloresperu@gmail.com" },
   { username: "Caja Las Flores", email: "paginaweblasflores@gmail.com" },
+  { username: "Ventas Las Flores", email: "convencioneslyfayacucho@gamil.com" },
 ];
 
 export const Route = createFileRoute("/staff-login")({
@@ -43,6 +44,8 @@ function StaffLoginPage() {
       window.location.href = "/admin";
     } else if (role === "cashier" || role === "staff") {
       window.location.href = "/caja";
+    } else if (role === "ventas") {
+      window.location.href = "/panel-reservas";
     } else {
       setErrorMsg("Tu cuenta no tiene acceso a ningún panel administrativo.");
       await supabase.auth.signOut();

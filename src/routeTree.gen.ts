@@ -16,6 +16,7 @@ import { Route as StaffLoginRouteImport } from './routes/staff-login'
 import { Route as RestauranteRouteImport } from './routes/restaurante'
 import { Route as ReservasRouteImport } from './routes/reservas'
 import { Route as PoliticaDePrivacidadRouteImport } from './routes/politica-de-privacidad'
+import { Route as PanelReservasRouteImport } from './routes/panel-reservas'
 import { Route as LibroDeReclamacionesRouteImport } from './routes/libro-de-reclamaciones'
 import { Route as GaleriaRouteImport } from './routes/galeria'
 import { Route as FamiliaLasFloresRouteImport } from './routes/familia-las-flores'
@@ -61,6 +62,11 @@ const ReservasRoute = ReservasRouteImport.update({
 const PoliticaDePrivacidadRoute = PoliticaDePrivacidadRouteImport.update({
   id: '/politica-de-privacidad',
   path: '/politica-de-privacidad',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PanelReservasRoute = PanelReservasRouteImport.update({
+  id: '/panel-reservas',
+  path: '/panel-reservas',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LibroDeReclamacionesRoute = LibroDeReclamacionesRouteImport.update({
@@ -129,6 +135,7 @@ export interface FileRoutesByFullPath {
   '/familia-las-flores': typeof FamiliaLasFloresRoute
   '/galeria': typeof GaleriaRoute
   '/libro-de-reclamaciones': typeof LibroDeReclamacionesRoute
+  '/panel-reservas': typeof PanelReservasRoute
   '/politica-de-privacidad': typeof PoliticaDePrivacidadRoute
   '/reservas': typeof ReservasRoute
   '/restaurante': typeof RestauranteRoute
@@ -149,6 +156,7 @@ export interface FileRoutesByTo {
   '/familia-las-flores': typeof FamiliaLasFloresRoute
   '/galeria': typeof GaleriaRoute
   '/libro-de-reclamaciones': typeof LibroDeReclamacionesRoute
+  '/panel-reservas': typeof PanelReservasRoute
   '/politica-de-privacidad': typeof PoliticaDePrivacidadRoute
   '/reservas': typeof ReservasRoute
   '/restaurante': typeof RestauranteRoute
@@ -170,6 +178,7 @@ export interface FileRoutesById {
   '/familia-las-flores': typeof FamiliaLasFloresRoute
   '/galeria': typeof GaleriaRoute
   '/libro-de-reclamaciones': typeof LibroDeReclamacionesRoute
+  '/panel-reservas': typeof PanelReservasRoute
   '/politica-de-privacidad': typeof PoliticaDePrivacidadRoute
   '/reservas': typeof ReservasRoute
   '/restaurante': typeof RestauranteRoute
@@ -192,6 +201,7 @@ export interface FileRouteTypes {
     | '/familia-las-flores'
     | '/galeria'
     | '/libro-de-reclamaciones'
+    | '/panel-reservas'
     | '/politica-de-privacidad'
     | '/reservas'
     | '/restaurante'
@@ -212,6 +222,7 @@ export interface FileRouteTypes {
     | '/familia-las-flores'
     | '/galeria'
     | '/libro-de-reclamaciones'
+    | '/panel-reservas'
     | '/politica-de-privacidad'
     | '/reservas'
     | '/restaurante'
@@ -232,6 +243,7 @@ export interface FileRouteTypes {
     | '/familia-las-flores'
     | '/galeria'
     | '/libro-de-reclamaciones'
+    | '/panel-reservas'
     | '/politica-de-privacidad'
     | '/reservas'
     | '/restaurante'
@@ -253,6 +265,7 @@ export interface RootRouteChildren {
   FamiliaLasFloresRoute: typeof FamiliaLasFloresRoute
   GaleriaRoute: typeof GaleriaRoute
   LibroDeReclamacionesRoute: typeof LibroDeReclamacionesRoute
+  PanelReservasRoute: typeof PanelReservasRoute
   PoliticaDePrivacidadRoute: typeof PoliticaDePrivacidadRoute
   ReservasRoute: typeof ReservasRoute
   RestauranteRoute: typeof RestauranteRoute
@@ -313,6 +326,13 @@ declare module '@tanstack/react-router' {
       path: '/politica-de-privacidad'
       fullPath: '/politica-de-privacidad'
       preLoaderRoute: typeof PoliticaDePrivacidadRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/panel-reservas': {
+      id: '/panel-reservas'
+      path: '/panel-reservas'
+      fullPath: '/panel-reservas'
+      preLoaderRoute: typeof PanelReservasRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/libro-de-reclamaciones': {
@@ -405,6 +425,7 @@ const rootRouteChildren: RootRouteChildren = {
   FamiliaLasFloresRoute: FamiliaLasFloresRoute,
   GaleriaRoute: GaleriaRoute,
   LibroDeReclamacionesRoute: LibroDeReclamacionesRoute,
+  PanelReservasRoute: PanelReservasRoute,
   PoliticaDePrivacidadRoute: PoliticaDePrivacidadRoute,
   ReservasRoute: ReservasRoute,
   RestauranteRoute: RestauranteRoute,

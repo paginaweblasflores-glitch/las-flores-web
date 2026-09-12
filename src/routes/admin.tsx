@@ -425,6 +425,14 @@ function AdminRoute() {
               <span>Ir a Panel de Caja</span>
             </Link>
 
+            <Link
+              to="/panel-reservas"
+              className="px-4 py-2 rounded-xl bg-[#2D473C] hover:bg-[#243B31] text-white text-xs font-black flex items-center gap-2 transition-all shadow-2xs active:scale-98"
+            >
+              <Calendar size={15} className="text-[#D4AF37]" />
+              <span>Ir a Panel de Reservas</span>
+            </Link>
+
             <button
               onClick={() => {
                 setSelectedProduct(null);
