@@ -5,7 +5,7 @@ import { sendReviewRequestEmail } from "../lib/emailService";
 import { playOrderChime } from "../utils/audioAlert";
 import { CashierOrderCard } from "../components/CashierOrderCard";
 import { AdminOrderDetailModal } from "../components/AdminOrderDetailModal";
-import { CashierKPIHeader } from "../components/CashierKPIHeader";
+import { CashierTopBar, CashierKPIHeader } from "../components/CashierKPIHeader";
 import { CashierKanbanView } from "../components/CashierKanbanView";
 import { CashierListView } from "../components/CashierListView";
 import { CashierAuditModal } from "../components/CashierAuditModal";
@@ -515,22 +515,26 @@ function CashierDashboardRoute() {
         ))}
       </div>
 
+      {/* Executive Top Bar (fijo arriba, ancho completo) */}
+      <CashierTopBar
+        soundEnabled={soundEnabled}
+        onToggleSound={() => {
+          const next = !soundEnabled;
+          setSoundEnabled(next);
+          if (next) playOrderChime();
+        }}
+        isAdmin={isAdmin}
+        onSignOut={handleSignOut}
+      />
+
       {/* Main Content Container */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 space-y-6">
-        
-        {/* Executive KPI Header */}
+
+        {/* Executive KPI Cards */}
         <CashierKPIHeader
-          soundEnabled={soundEnabled}
-          onToggleSound={() => {
-            const next = !soundEnabled;
-            setSoundEnabled(next);
-            if (next) playOrderChime();
-          }}
           todayRevenue={todayRevenue}
           activeOrdersCount={activeOrdersCount}
           avgWaitMins={avgWaitMins}
-          isAdmin={isAdmin}
-          onSignOut={handleSignOut}
         />
 
         {/* View Mode Switcher Header Bar */}
