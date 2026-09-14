@@ -305,22 +305,19 @@ export function AdminAnalyticsSection({
       </div>
 
       {/* Timeframe & Controls Header */}
-      <div className="flex flex-col xl:flex-row items-start xl:items-center justify-between gap-4 bg-white/90 backdrop-blur-md p-5 rounded-3xl border border-[#d4a373]/25 shadow-sm print:hidden">
-        <div>
+      <div className="flex flex-col xl:flex-row items-start xl:items-center gap-4 bg-white/90 backdrop-blur-md p-5 rounded-3xl border border-[#d4a373]/25 shadow-sm print:hidden">
+        <div className="xl:shrink-0">
           <h2 className="font-serif text-lg font-bold text-[#3b1f10] flex items-center gap-2.5">
             <BarChart3 size={20} className="text-[#2e5339]" />
             Inteligencia de Negocios y Analítica Avanzada
-            <span className="font-sans text-xs px-2.5 py-0.5 rounded-full bg-[#2e5339]/10 text-[#2e5339] font-bold uppercase tracking-wider border border-[#2e5339]/20">
-              Corporativo BI
-            </span>
           </h2>
           <p className="text-xs text-[#3b1f10]/60 mt-0.5 font-sans">
             Analizando {validOrders.length} pedidos efectivos por un monto total de <strong className="text-[#3b1f10]">S/ {totalRevenue.toFixed(2)}</strong> <span className="font-medium text-[#2e5339]">{dateRangeString}</span>
           </p>
         </div>
 
-        <div className="flex items-center gap-3 w-full xl:w-auto flex-wrap">
-          
+        <div className="flex items-center gap-3 w-full xl:w-auto xl:flex-1 xl:justify-end flex-wrap">
+
           {/* Timeframe Selector Pills */}
           <div className="bg-[#f7f5ef] border border-[#d4a373]/25 rounded-2xl p-1 flex items-center shadow-inner text-xs font-bold font-serif overflow-x-auto">
             {[
