@@ -13,16 +13,17 @@ import { FamiliaLasFloresSection } from "../components/FamiliaLasFloresSection";
 export const Route = createFileRoute("/restaurante")({
   head: () => ({
     meta: [
-      { title: "Nuestro Restaurante — Las Flores | Tres generaciones" },
+      { title: "Nuestra Historia — Las Flores, El Mejor Restaurante en Ayacucho" },
       {
         name: "description",
         content:
-          "Tres generaciones cocinando Ayacucho. Conozca la historia, el equipo y las recomendaciones del chef de Restaurante Las Flores.",
+          "Tres generaciones de tradición culinaria hacen de Las Flores el mejor restaurante en Ayacucho. Conoce nuestra historia, el equipo y la firma del chef.",
       },
-      { property: "og:title", content: "Nuestro Restaurante — Las Flores" },
+      { property: "og:title", content: "Las Flores — El Mejor Restaurante en Ayacucho" },
       {
         property: "og:description",
-        content: "La historia, el equipo y la firma del chef de Restaurante Las Flores.",
+        content:
+          "Tres generaciones de tradición culinaria, nuestro equipo y las recomendaciones del chef: descubre la historia detrás del mejor restaurante en Ayacucho.",
       },
       {
         property: "og:image",
