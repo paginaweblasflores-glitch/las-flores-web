@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import { isCancelledStatus } from "../lib/orderStatus";
 import { supabase } from "../lib/supabase";
+import { getEligibleClosureMonths, formatMonthLabel, getMonthDateRange } from "../lib/monthUtils";
 
 interface CashierAuditModalProps {
   isOpen: boolean;
@@ -33,25 +34,6 @@ const getYYYYMMDD = (d?: Date | string) => {
   const dateObj = typeof d === "string" ? new Date(d) : d;
   if (isNaN(dateObj.getTime())) return "";
   return dateObj.toLocaleDateString("sv-SE");
-};
-
-// Últimos 12 meses ya cerrados (sin incluir el mes en curso, que aún no terminó)
-const getEligibleClosureMonths = () => {
-  const months: { value: string; label: string }[] = [];
-  const now = new Date();
-  for (let i = 1; i <= 12; i++) {
-    const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
-    const value = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}`;
-    const label = d.toLocaleDateString("es-PE", { month: "long", year: "numeric" });
-    months.push({ value, label: label.charAt(0).toUpperCase() + label.slice(1) });
-  }
-  return months;
-};
-
-const formatMonthLabel = (monthStr: string) => {
-  const [y, m] = monthStr.split("-").map(Number);
-  const label = new Date(y, m - 1, 1).toLocaleDateString("es-PE", { month: "long", year: "numeric" });
-  return label.charAt(0).toUpperCase() + label.slice(1);
 };
 
 // Abre una ventana en blanco. Debe llamarse de forma síncrona, en el mismo
@@ -175,16 +157,13 @@ export function CashierAuditModal({ isOpen, onClose, orders }: CashierAuditModal
     if (selErr) throw selErr;
     if (existing) return existing as MonthlyClosure;
 
-    const [y, m] = monthStr.split("-").map(Number);
-    const lastDay = new Date(y, m, 0).getDate();
-    const startDate = `${monthStr}-01T00:00:00`;
-    const endDate = `${monthStr}-${String(lastDay).padStart(2, "0")}T23:59:59`;
+    const { start, end } = getMonthDateRange(monthStr);
 
     const { data: monthOrders, error: ordErr } = await supabase
       .from("orders")
       .select("total, delivery_fee, payment_method, status")
-      .gte("created_at", startDate)
-      .lte("created_at", endDate);
+      .gte("created_at", start)
+      .lte("created_at", end);
 
     if (ordErr) throw ordErr;
 

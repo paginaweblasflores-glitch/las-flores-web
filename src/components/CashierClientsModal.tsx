@@ -1,5 +1,8 @@
-import { useState } from "react";
-import { X, Download, Search, Users, Truck, Store } from "lucide-react";
+import { useEffect, useState } from "react";
+import { X, Download, Search, Users, Truck, Store, Calendar, CalendarRange } from "lucide-react";
+import * as XLSX from "xlsx";
+import { supabase } from "../lib/supabase";
+import { getEligibleClosureMonths, formatMonthLabel, getMonthDateRange } from "../lib/monthUtils";
 
 interface CashierClientsModalProps {
   isOpen: boolean;
@@ -7,17 +10,86 @@ interface CashierClientsModalProps {
   orders: any[];
 }
 
+type FilterMode = "day" | "month";
+
+const getYYYYMMDD = (d?: Date | string) => {
+  if (!d) return "";
+  const dateObj = typeof d === "string" ? new Date(d) : d;
+  if (isNaN(dateObj.getTime())) return "";
+  return dateObj.toLocaleDateString("sv-SE");
+};
+
 export function CashierClientsModal({ isOpen, onClose, orders }: CashierClientsModalProps) {
+  const todayStr = getYYYYMMDD(new Date());
+  const eligibleMonths = getEligibleClosureMonths();
+
+  const [filterMode, setFilterMode] = useState<FilterMode>("day");
+  const [selectedDate, setSelectedDate] = useState(todayStr);
+  const [selectedMonth, setSelectedMonth] = useState(eligibleMonths[0]?.value || "");
   const [search, setSearch] = useState("");
+  const [fetchedOrders, setFetchedOrders] = useState<any[] | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [loadError, setLoadError] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!isOpen) return;
+
+    // El día de hoy ya viene cargado en memoria (prop `orders`), así que se
+    // usa directo sin ir a la base de datos. Cualquier otro día, o un mes
+    // completo, se consulta aparte porque `orders` solo trae los últimos 7 días.
+    if (filterMode === "day" && selectedDate === todayStr) {
+      setFetchedOrders(null);
+      setLoadError(null);
+      return;
+    }
+
+    let cancelled = false;
+    setLoading(true);
+    setLoadError(null);
+
+    const run = async () => {
+      const { start, end } =
+        filterMode === "day"
+          ? { start: `${selectedDate}T00:00:00`, end: `${selectedDate}T23:59:59` }
+          : getMonthDateRange(selectedMonth);
+
+      const { data, error } = await supabase
+        .from("orders")
+        .select("*")
+        .gte("created_at", start)
+        .lte("created_at", end)
+        .order("created_at", { ascending: false });
+
+      if (cancelled) return;
+      if (error) {
+        setLoadError("No se pudo cargar los pedidos.");
+        setFetchedOrders([]);
+      } else {
+        setFetchedOrders(data || []);
+      }
+      setLoading(false);
+    };
+
+    run();
+    return () => {
+      cancelled = true;
+    };
+  }, [isOpen, filterMode, selectedDate, selectedMonth, todayStr]);
 
   if (!isOpen) return null;
 
-  const sorted = [...orders].sort(
+  const baseOrders =
+    filterMode === "day" && selectedDate === todayStr
+      ? orders.filter((o) => getYYYYMMDD(o.created_at) === selectedDate)
+      : fetchedOrders || [];
+
+  const sorted = [...baseOrders].sort(
     (a, b) => new Date(b.created_at || 0).getTime() - new Date(a.created_at || 0).getTime()
   );
 
   const filtered = sorted.filter((o) => {
     const q = search.toLowerCase();
+    if (!q) return true;
     return (
       (o.order_number || "").toString().toLowerCase().includes(q) ||
       (o.client_name || "").toLowerCase().includes(q) ||
@@ -25,30 +97,43 @@ export function CashierClientsModal({ isOpen, onClose, orders }: CashierClientsM
     );
   });
 
-  const handleExportCSV = () => {
-    const headers = ["N° Orden", "Fecha/Hora", "Cliente", "Teléfono", "Modalidad", "Estado", "Total (S/)"];
+  const periodLabel =
+    filterMode === "day"
+      ? new Date(`${selectedDate}T00:00:00`).toLocaleDateString("es-PE", {
+          weekday: "long",
+          day: "2-digit",
+          month: "long",
+          year: "numeric",
+        })
+      : formatMonthLabel(selectedMonth);
 
-    const rows = filtered.map((o) => [
-      `"${o.order_number || o.id?.slice(0, 8)}"`,
-      `"${o.created_at ? new Date(o.created_at).toLocaleString("es-PE") : ""}"`,
-      `"${(o.client_name || "Cliente").replace(/"/g, '""')}"`,
-      `"${o.client_phone || ""}"`,
-      `"${o.order_type === "delivery" ? "Delivery" : "Recojo"}"`,
-      `"${o.status || "pendiente"}"`,
-      Number(o.total || 0).toFixed(2),
-    ]);
+  const handleExportExcel = () => {
+    const rows = filtered.map((o) => ({
+      "N° Orden": o.order_number || o.id?.slice(0, 8) || "",
+      "Fecha/Hora": o.created_at ? new Date(o.created_at).toLocaleString("es-PE") : "",
+      Cliente: o.client_name || "Cliente",
+      Teléfono: o.client_phone || "",
+      Modalidad: o.order_type === "delivery" ? "Delivery" : "Recojo",
+      Estado: o.status || "pendiente",
+      "Total (S/)": Number(o.total || 0),
+    }));
 
-    const csvContent =
-      "data:text/csv;charset=utf-8,﻿" +
-      [headers.join(","), ...rows.map((r) => r.join(","))].join("\n");
+    const worksheet = XLSX.utils.json_to_sheet(rows);
+    worksheet["!cols"] = [
+      { wch: 12 },
+      { wch: 20 },
+      { wch: 24 },
+      { wch: 14 },
+      { wch: 12 },
+      { wch: 14 },
+      { wch: 12 },
+    ];
 
-    const encodedUri = encodeURI(csvContent);
-    const link = document.createElement("a");
-    link.setAttribute("href", encodedUri);
-    link.setAttribute("download", `Clientes_Las_Flores_${new Date().toLocaleDateString("sv-SE")}.csv`);
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Clientes");
+
+    const suffix = filterMode === "day" ? selectedDate : selectedMonth;
+    XLSX.writeFile(workbook, `Clientes_Las_Flores_${suffix}.xlsx`);
   };
 
   return (
@@ -87,9 +172,55 @@ export function CashierClientsModal({ isOpen, onClose, orders }: CashierClientsM
           </button>
         </div>
 
-        {/* Búsqueda */}
-        <div className="p-4 px-6 bg-white border-b border-black/10">
-          <div className="relative w-full sm:w-80">
+        {/* Filtros */}
+        <div className="p-4 px-6 bg-white border-b border-black/10 flex flex-wrap items-center gap-3">
+          <div className="flex items-center bg-gray-100 rounded-xl p-1 border border-gray-200">
+            <button
+              onClick={() => setFilterMode("day")}
+              className={`px-3 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1.5 transition-all cursor-pointer ${
+                filterMode === "day" ? "bg-[#2c4a3e] text-white shadow-sm" : "text-black/50 hover:text-black/70"
+              }`}
+            >
+              <Calendar size={13} />
+              Por Día
+            </button>
+            <button
+              onClick={() => setFilterMode("month")}
+              className={`px-3 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1.5 transition-all cursor-pointer ${
+                filterMode === "month" ? "bg-[#2c4a3e] text-white shadow-sm" : "text-black/50 hover:text-black/70"
+              }`}
+            >
+              <CalendarRange size={13} />
+              Por Mes
+            </button>
+          </div>
+
+          {filterMode === "day" ? (
+            <div className="flex items-center gap-2 bg-gray-50 px-3.5 py-2 rounded-xl border border-gray-200">
+              <Calendar size={15} className="text-[#2c4a3e]" />
+              <input
+                type="date"
+                value={selectedDate}
+                max={todayStr}
+                onChange={(e) => setSelectedDate(e.target.value)}
+                className="bg-transparent text-xs font-bold text-[#2c4a3e] focus:outline-none cursor-pointer"
+              />
+            </div>
+          ) : (
+            <select
+              value={selectedMonth}
+              onChange={(e) => setSelectedMonth(e.target.value)}
+              className="text-xs font-bold bg-gray-50 border border-gray-200 rounded-xl px-3.5 py-2 focus:outline-none cursor-pointer text-[#2c4a3e]"
+            >
+              {eligibleMonths.map((mo) => (
+                <option key={mo.value} value={mo.value}>
+                  {mo.label}
+                </option>
+              ))}
+            </select>
+          )}
+
+          <div className="relative flex-1 min-w-[200px]">
             <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400" size={16} />
             <input
               type="text"
@@ -103,8 +234,17 @@ export function CashierClientsModal({ isOpen, onClose, orders }: CashierClientsM
 
         {/* Tabla */}
         <div className="flex-1 overflow-y-auto p-6">
+          <div className="flex items-center justify-between mb-3 px-1">
+            <p className="text-xs font-bold text-black/60 capitalize">{periodLabel}</p>
+            {loading && <p className="text-xs font-medium text-black/40">Cargando...</p>}
+          </div>
+
           <div className="bg-white rounded-2xl border border-black/10 shadow-xs overflow-hidden">
-            {filtered.length === 0 ? (
+            {loadError ? (
+              <div className="p-10 text-center text-red-600 space-y-2">
+                <p className="font-medium text-sm">{loadError}</p>
+              </div>
+            ) : !loading && filtered.length === 0 ? (
               <div className="p-10 text-center text-black/40 space-y-2">
                 <Users size={36} className="mx-auto text-black/20" />
                 <p className="font-medium text-sm">No hay clientes que coincidan con la búsqueda.</p>
@@ -181,16 +321,16 @@ export function CashierClientsModal({ isOpen, onClose, orders }: CashierClientsM
         {/* Footer */}
         <div className="p-4 px-6 bg-white border-t border-black/10 flex items-center justify-between">
           <div className="text-xs text-black/60 font-medium">
-            {filtered.length} {filtered.length === 1 ? "cliente" : "clientes"} — descarga la lista en Excel/CSV.
+            {filtered.length} {filtered.length === 1 ? "cliente" : "clientes"} — descarga la lista en Excel.
           </div>
 
           <button
-            onClick={handleExportCSV}
+            onClick={handleExportExcel}
             disabled={filtered.length === 0}
             className="py-2.5 px-4 rounded-xl bg-white border border-black/20 hover:bg-black/5 text-black font-bold text-xs flex items-center gap-2 transition-all shadow-xs cursor-pointer disabled:opacity-50"
           >
             <Download size={16} className="text-[#2c4a3e]" />
-            <span>Exportar Excel (CSV)</span>
+            <span>Exportar Excel</span>
           </button>
         </div>
       </div>
