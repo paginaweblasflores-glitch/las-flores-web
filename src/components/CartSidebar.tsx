@@ -609,6 +609,7 @@ export function CartSidebar() {
         subtotal: totalPrice,
         delivery_fee: DELIVERY_FEE,
         total: total,
+        coupon_code: appliedCoupon?.code,
         payment_method: paymentMethod === "culqi" ? "card" : paymentMethod,
         notes: [
           delivery.notes,
