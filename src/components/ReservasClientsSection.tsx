@@ -356,7 +356,7 @@ export function ReservasClientsSection({ reservations, onStatusChange }: Reserva
         >
           <div
             onClick={(e) => e.stopPropagation()}
-            className="relative w-full max-w-md max-h-[90vh] overflow-y-auto"
+            className="relative w-full max-w-md"
           >
             <button
               onClick={() => setSelectedReservation(null)}
@@ -364,13 +364,15 @@ export function ReservasClientsSection({ reservations, onStatusChange }: Reserva
             >
               <X size={16} />
             </button>
-            <CashierReservationCard
-              reservation={selectedReservation}
-              onStatusChange={async (id, status) => {
-                await onStatusChange(id, status);
-                setSelectedReservation(null);
-              }}
-            />
+            <div className="max-h-[90vh] overflow-y-auto rounded-2xl">
+              <CashierReservationCard
+                reservation={selectedReservation}
+                onStatusChange={async (id, status) => {
+                  await onStatusChange(id, status);
+                  setSelectedReservation(null);
+                }}
+              />
+            </div>
           </div>
         </div>
       )}
