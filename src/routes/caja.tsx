@@ -3,23 +3,18 @@ import { useEffect, useState, useRef } from "react";
 import { supabase, signOut } from "../lib/supabase";
 import { sendReviewRequestEmail } from "../lib/emailService";
 import { playOrderChime } from "../utils/audioAlert";
-import { CashierOrderCard } from "../components/CashierOrderCard";
 import { AdminOrderDetailModal } from "../components/AdminOrderDetailModal";
 import { CashierTopBar, CashierKPIHeader, type CashierModule } from "../components/CashierKPIHeader";
 import { CashierKanbanView } from "../components/CashierKanbanView";
-import { CashierListView } from "../components/CashierListView";
+import { CashierClientsModal } from "../components/CashierClientsModal";
 import { CashierAuditModal } from "../components/CashierAuditModal";
 import { CashierStockModal } from "../components/CashierStockModal";
 import { YapeConfigModal } from "../components/YapeConfigModal";
 import {
   Search,
   RefreshCw,
-  UtensilsCrossed,
   X,
   ShoppingBag,
-  Columns3,
-  LayoutGrid,
-  List,
   TrendingUp,
   PackageX,
   QrCode,
@@ -27,6 +22,7 @@ import {
   Smartphone,
   Building2,
   UserCheck,
+  Users,
 } from "lucide-react";
 import { getYapeConfig, saveYapeConfig, subscribeToYapeConfig, DEFAULT_YAPE_CONFIG, type YapeConfig } from "../lib/yapeService";
 
@@ -48,49 +44,12 @@ function CashierDashboardRoute() {
   const [isAdmin, setIsAdmin] = useState(false);
   const [activeTab, setActiveTab] = useState<CashierModule>("seguimiento");
 
-  // Layout layout mode switcher for orders: 'kanban' | 'grid' | 'list'
-  const [layoutMode, setLayoutMode] = useState<"kanban" | "grid" | "list">("kanban");
-
   // Orders state
   const [orders, setOrders] = useState<any[]>([]);
   const [orderItems, setOrderItems] = useState<any[]>([]);
-  const [statusFilter, setStatusFilter] = useState<string>("pendiente");
 
   const [searchQuery, setSearchQuery] = useState("");
-  const [orderDateFrom, setOrderDateFrom] = useState<string>("");
-  const [orderDateTo, setOrderDateTo] = useState<string>("");
-  const [activeOrderDateFilter, setActiveOrderDateFilter] = useState<"today" | "week" | "month" | "all" | "custom">("today");
-
-  const setQuickOrderDateRange = (type: "today" | "week" | "month" | "all") => {
-    setActiveOrderDateFilter(type);
-    const today = new Date();
-    const todayStr = getLocalYYYYMMDD(today);
-
-    if (type === "today") {
-      setOrderDateFrom(todayStr);
-      setOrderDateTo(todayStr);
-    } else if (type === "week") {
-      const day = today.getDay();
-      const diffToMonday = today.getDate() - day + (day === 0 ? -6 : 1);
-      const monday = new Date(today.setDate(diffToMonday));
-      const sunday = new Date(monday);
-      sunday.setDate(monday.getDate() + 6);
-      setOrderDateFrom(getLocalYYYYMMDD(monday));
-      setOrderDateTo(getLocalYYYYMMDD(sunday));
-    } else if (type === "month") {
-      const year = today.getFullYear();
-      const month = today.getMonth();
-      const lastDay = new Date(year, month + 1, 0);
-      const fMonth = String(month + 1).padStart(2, "0");
-      const lDay = String(lastDay.getDate()).padStart(2, "0");
-      setOrderDateFrom(`${year}-${fMonth}-01`);
-      setOrderDateTo(`${year}-${fMonth}-${lDay}`);
-    } else if (type === "all") {
-      setOrderDateFrom("");
-      setOrderDateTo("");
-    }
-  };
-  const [historicalStatusFilter, setHistoricalStatusFilter] = useState<string>("all");
+  const [isClientsModalOpen, setIsClientsModalOpen] = useState(false);
   const [soundEnabled, setSoundEnabled] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
 
@@ -354,42 +313,13 @@ function CashierDashboardRoute() {
 
   const todayStr = getLocalYYYYMMDD(new Date());
 
-  // Filtered orders list
+  // Filtered orders list (por búsqueda; el Kanban agrupa por estado internamente)
   const filteredOrders = orders.filter((ord) => {
-    const matchSearch =
+    return (
       (ord.order_number || "").toString().toLowerCase().includes(searchQuery.toLowerCase()) ||
       (ord.client_name || "").toLowerCase().includes(searchQuery.toLowerCase()) ||
-      (ord.client_phone || "").includes(searchQuery);
-
-    // En modo Kanban, pasamos todas las comandas que coincidan con la búsqueda (el filtrado por fecha solo aplica a entregados dentro del Kanban)
-    if (layoutMode === "kanban") {
-      return matchSearch;
-    }
-
-    const normStatus = getNormalizedStatus(ord.status);
-    let matchStatus = false;
-    
-    if (statusFilter === "all") {
-      if (historicalStatusFilter === "all") {
-        matchStatus = true;
-      } else {
-        matchStatus = normStatus === historicalStatusFilter;
-      }
-    } else {
-      matchStatus = normStatus === statusFilter;
-    }
-
-    const ordDateStr = ord.created_at ? getLocalYYYYMMDD(new Date(ord.created_at)) : "";
-    let matchDate = true;
-    
-    if (statusFilter === "entregado") {
-      matchDate = ordDateStr === todayStr;
-    } else if (statusFilter === "all") {
-      matchDate = (!orderDateFrom || ordDateStr >= orderDateFrom) &&
-                  (!orderDateTo || ordDateStr <= orderDateTo);
-    }
-
-    return matchSearch && matchStatus && matchDate;
+      (ord.client_phone || "").includes(searchQuery)
+    );
   });
 
   // KPI Calculations
@@ -581,235 +511,33 @@ function CashierDashboardRoute() {
                 {yapeConfig.mode === "personal" ? "Personal" : "Empresa"}
               </span>
             </button>
-          </div>
-
-          {/* Layout Switcher (Kanban vs Grid vs List) */}
-          <div className="flex items-center gap-1 bg-gray-100 p-1 rounded-xl border border-gray-200/80 w-full sm:w-auto justify-center">
-            <button
-              onClick={() => setLayoutMode("kanban")}
-              className={`py-1.5 px-3 rounded-lg text-xs font-extrabold flex items-center gap-1.5 transition-all ${
-                layoutMode === "kanban"
-                  ? "bg-white text-[#2D473C] shadow-xs"
-                  : "text-gray-600 hover:text-gray-900"
-              }`}
-              title="Vista Kanban por Columnas"
-            >
-              <Columns3 size={15} className="text-[#D4AF37]" />
-              <span>Kanban</span>
-            </button>
 
             <button
-              onClick={() => setLayoutMode("grid")}
-              className={`py-1.5 px-3 rounded-lg text-xs font-extrabold flex items-center gap-1.5 transition-all ${
-                layoutMode === "grid"
-                  ? "bg-white text-[#2D473C] shadow-xs"
-                  : "text-gray-600 hover:text-gray-900"
-              }`}
-              title="Vista Cuadrícula Táctil"
+              onClick={() => setIsClientsModalOpen(true)}
+              className="py-2.5 px-4 rounded-xl text-xs font-sans font-bold transition-all flex items-center justify-center gap-2 bg-[#2D473C]/10 text-[#2D473C] hover:bg-[#2D473C]/20 border border-[#2D473C]/30 cursor-pointer shadow-2xs"
             >
-              <LayoutGrid size={15} className="text-[#5F8575]" />
-              <span>Grid</span>
-            </button>
-
-            <button
-              onClick={() => setLayoutMode("list")}
-              className={`py-1.5 px-3 rounded-lg text-xs font-extrabold flex items-center gap-1.5 transition-all ${
-                layoutMode === "list"
-                  ? "bg-white text-[#2D473C] shadow-xs"
-                  : "text-gray-600 hover:text-gray-900"
-              }`}
-              title="Vista Lista Compacta"
-            >
-              <List size={15} className="text-gray-600" />
-              <span>Lista</span>
+              <Users size={16} className="text-[#2D473C]" />
+              <span>Clientes</span>
             </button>
           </div>
-
         </div>
 
         {/* ==================================================================== */}
         {/* COMANDAS Y PEDIDOS */}
         {/* ==================================================================== */}
         <>
-            {/* Quick Filter Status Tabs for Orders (Shown in Grid / List mode) */}
-            {layoutMode !== "kanban" && (
-              <div className="grid grid-cols-2 sm:grid-cols-5 gap-3">
-                
-                <button
-                  onClick={() => setStatusFilter("pendiente")}
-                  className={`p-4 rounded-2xl text-left transition-all relative overflow-hidden font-sans ${
-                    statusFilter === "pendiente"
-                      ? "bg-white text-gray-900 border-t-4 border-t-[#D4AF37] shadow-md font-extrabold scale-[1.01]"
-                      : "bg-white/70 text-gray-600 border border-transparent hover:bg-white shadow-2xs"
-                  }`}
-                >
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs font-sans font-extrabold uppercase tracking-wider text-gray-500">
-                      Pendientes
-                    </span>
-                    <span className={`px-2 py-0.5 rounded-full text-xs font-bold ${
-                      statusFilter === "pendiente" ? "bg-[#D4AF37] text-[#2D473C]" : "bg-amber-100 text-amber-900"
-                    }`}>
-                      Acción
-                    </span>
-                  </div>
-                  <span className="font-sans text-3xl font-black tracking-tight tabular-nums block mt-2 text-gray-900">
-                    {pendingOrders.length}
-                  </span>
-                  <p className="text-xs mt-0.5 font-medium text-gray-500">Por enviar a cocina</p>
-                </button>
-
-                <button
-                  onClick={() => setStatusFilter("en_preparacion")}
-                  className={`p-4 rounded-2xl text-left transition-all relative overflow-hidden font-sans ${
-                    statusFilter === "en_preparacion"
-                      ? "bg-white text-gray-900 border-t-4 border-t-blue-500 shadow-md font-extrabold scale-[1.01]"
-                      : "bg-white/70 text-gray-600 border border-transparent hover:bg-white shadow-2xs"
-                  }`}
-                >
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs font-sans font-extrabold uppercase tracking-wider text-gray-500">
-                      En Cocina
-                    </span>
-                    <span className={`px-2 py-0.5 rounded-full text-xs font-bold ${
-                      statusFilter === "en_preparacion" ? "bg-blue-600 text-white" : "bg-blue-100 text-blue-900"
-                    }`}>
-                      Cocina
-                    </span>
-                  </div>
-                  <span className="font-sans text-3xl font-black tracking-tight tabular-nums block mt-2 text-gray-900">
-                    {inKitchenOrders.length}
-                  </span>
-                  <p className="text-xs mt-0.5 font-medium text-gray-500">En preparación</p>
-                </button>
-
-                <button
-                  onClick={() => setStatusFilter("en_camino")}
-                  className={`p-4 rounded-2xl text-left transition-all relative overflow-hidden font-sans ${
-                    statusFilter === "en_camino"
-                      ? "bg-white text-gray-900 border-t-4 border-t-purple-500 shadow-md font-extrabold scale-[1.01]"
-                      : "bg-white/70 text-gray-600 border border-transparent hover:bg-white shadow-2xs"
-                  }`}
-                >
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs font-sans font-extrabold uppercase tracking-wider text-gray-500">
-                      Despacho / Recojo
-                    </span>
-                    <span className={`px-2 py-0.5 rounded-full text-xs font-bold ${
-                      statusFilter === "en_camino" ? "bg-purple-600 text-white" : "bg-purple-100 text-purple-900"
-                    }`}>
-                      Despacho
-                    </span>
-                  </div>
-                  <span className="font-sans text-3xl font-black tracking-tight tabular-nums block mt-2 text-gray-900">
-                    {onWayOrders.length}
-                  </span>
-                  <p className="text-xs mt-0.5 font-medium text-gray-500">Delivery / Recojo</p>
-                </button>
-
-                <button
-                  onClick={() => setStatusFilter("entregado")}
-                  className={`p-4 rounded-2xl text-left transition-all relative overflow-hidden font-sans ${
-                    statusFilter === "entregado"
-                      ? "bg-white text-gray-900 border-t-4 border-t-emerald-500 shadow-md font-extrabold scale-[1.01]"
-                      : "bg-white/70 text-gray-600 border border-transparent hover:bg-white shadow-2xs"
-                  }`}
-                >
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs font-sans font-extrabold uppercase tracking-wider text-gray-500">
-                      Entregados Hoy
-                    </span>
-                    <span className={`px-2 py-0.5 rounded-full text-xs font-bold ${
-                      statusFilter === "entregado" ? "bg-emerald-600 text-white" : "bg-emerald-100 text-emerald-900"
-                    }`}>
-                      Completado
-                    </span>
-                  </div>
-                  <span className="font-sans text-3xl font-black tracking-tight tabular-nums block mt-2 text-gray-900">
-                    {orders.filter((o) => getNormalizedStatus(o.status) === "entregado" && (o.created_at ? getLocalYYYYMMDD(new Date(o.created_at)) === todayStr : false)).length}
-                  </span>
-                  <p className="text-xs mt-0.5 font-medium text-gray-500">Total completados hoy</p>
-                </button>
-
-                <button
-                  onClick={() => setStatusFilter("all")}
-                  className={`p-4 rounded-2xl text-left transition-all col-span-2 sm:col-span-1 font-sans ${
-                    statusFilter === "all"
-                      ? "bg-white text-gray-900 border-t-4 border-t-[#2D473C] shadow-md font-extrabold scale-[1.01]"
-                      : "bg-white/70 text-gray-600 border border-transparent hover:bg-white shadow-2xs"
-                  }`}
-                >
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs font-sans font-extrabold uppercase tracking-wider text-[#2D473C]">
-                      Todos los Pedidos
-                    </span>
-                    <span className={`px-2 py-0.5 rounded-full text-xs font-bold ${
-                      statusFilter === "all" ? "bg-[#2D473C] text-white" : "bg-gray-200 text-gray-700"
-                    }`}>
-                      Total
-                    </span>
-                  </div>
-                  <span className="font-sans text-3xl font-black tracking-tight tabular-nums block mt-2 text-[#2D473C]">
-                    {orders.length}
-                  </span>
-                  <p className="text-xs mt-0.5 font-medium text-[#5F8575]">Total registrado</p>
-                </button>
-
-              </div>
-            )}
-
             {/* Filter Controls Wrapper */}
             <div className="flex flex-col gap-3">
               <div className="flex flex-col sm:flex-row items-center justify-between gap-4 bg-white p-3 rounded-2xl border border-gray-200 shadow-2xs">
-                <div className="flex flex-col md:flex-row gap-4 w-full md:w-auto">
-                  <div className="relative w-full md:w-80">
-                    <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400" size={16} />
-                    <input
-                      type="text"
-                      value={searchQuery}
-                      onChange={(e) => setSearchQuery(e.target.value)}
-                      placeholder="Buscar por # de orden, cliente o teléfono..."
-                      className="w-full text-xs bg-gray-50 border border-gray-200 rounded-xl pl-10 pr-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-[#2D473C]"
-                    />
-                  </div>
-                  
-                  {statusFilter === "all" && layoutMode !== "kanban" && (
-                    <div className="flex flex-wrap items-center gap-2 w-full lg:w-auto">
-                      <div className="flex items-center gap-1.5 bg-gray-50 border border-gray-200 rounded-xl px-3 py-1.5">
-                        <span className="text-xs font-serif font-bold text-gray-500 uppercase">Estado:</span>
-                        <select
-                          value={historicalStatusFilter}
-                          onChange={(e) => setHistoricalStatusFilter(e.target.value)}
-                          className="text-xs bg-transparent font-semibold text-gray-800 focus:outline-none cursor-pointer"
-                        >
-                          <option value="all">Todos</option>
-                          <option value="pendiente">Pendientes</option>
-                          <option value="en_preparacion">En Preparación</option>
-                          <option value="en_camino">En Camino / Listo</option>
-                          <option value="entregado">Entregados</option>
-                          <option value="cancelado">Cancelados</option>
-                        </select>
-                      </div>
-                      <div className="flex items-center gap-1.5 bg-gray-50 border border-gray-200 rounded-xl px-3 py-1.5">
-                        <span className="text-xs font-serif font-bold text-gray-500 uppercase">Desde:</span>
-                        <input
-                          type="date"
-                          value={orderDateFrom}
-                          onChange={(e) => { setOrderDateFrom(e.target.value); setActiveOrderDateFilter("custom"); }}
-                          className="text-xs bg-transparent font-semibold text-gray-800 focus:outline-none"
-                        />
-                      </div>
-                      <div className="flex items-center gap-1.5 bg-gray-50 border border-gray-200 rounded-xl px-3 py-1.5">
-                        <span className="text-xs font-serif font-bold text-gray-500 uppercase">Hasta:</span>
-                        <input
-                          type="date"
-                          value={orderDateTo}
-                          onChange={(e) => { setOrderDateTo(e.target.value); setActiveOrderDateFilter("custom"); }}
-                          className="text-xs bg-transparent font-semibold text-gray-800 focus:outline-none"
-                        />
-                      </div>
-                    </div>
-                  )}
+                <div className="relative w-full md:w-80">
+                  <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400" size={16} />
+                  <input
+                    type="text"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    placeholder="Buscar por # de orden, cliente o teléfono..."
+                    className="w-full text-xs bg-gray-50 border border-gray-200 rounded-xl pl-10 pr-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-[#2D473C]"
+                  />
                 </div>
 
                 <div className="flex items-center gap-3 w-full sm:w-auto justify-end">
@@ -825,13 +553,12 @@ function CashierDashboardRoute() {
               </div>
             </div>
 
-            {/* Display according to layoutMode */}
             {loading ? (
               <div className="py-20 text-center space-y-3">
                 <RefreshCw size={28} className="animate-spin text-[#2D473C] mx-auto" />
                 <p className="text-sm font-bold text-gray-600">Cargando comandas en tiempo real...</p>
               </div>
-            ) : layoutMode === "kanban" ? (
+            ) : (
               <CashierKanbanView
                 orders={filteredOrders}
                 orderItems={orderItems}
@@ -841,40 +568,6 @@ function CashierDashboardRoute() {
                   setIsDetailModalOpen(true);
                 }}
               />
-            ) : layoutMode === "list" ? (
-              <CashierListView
-                orders={filteredOrders}
-                orderItems={orderItems}
-                onStatusChange={handleUpdateOrderStatus}
-                onViewDetail={(ord) => {
-                  setSelectedOrder(ord);
-                  setIsDetailModalOpen(true);
-                }}
-              />
-            ) : (
-              /* Grid Layout Mode */
-              filteredOrders.length === 0 ? (
-                <div className="py-20 text-center bg-white rounded-2xl border border-gray-200 p-8 shadow-xs">
-                  <UtensilsCrossed size={36} className="text-gray-300 mx-auto mb-3" />
-                  <h3 className="font-serif font-bold text-base text-gray-800">No hay comandas en este estado</h3>
-                  <p className="text-xs text-gray-500 mt-1">Selecciona otro filtro o realiza una búsqueda diferente.</p>
-                </div>
-              ) : (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-                  {filteredOrders.map((order) => (
-                    <CashierOrderCard
-                      key={order.id}
-                      order={order}
-                      orderItems={orderItems}
-                      onStatusChange={handleUpdateOrderStatus}
-                      onViewDetail={(ord) => {
-                        setSelectedOrder(ord);
-                        setIsDetailModalOpen(true);
-                      }}
-                    />
-                  ))}
-                </div>
-              )
             )}
         </>
         </>
@@ -898,6 +591,13 @@ function CashierDashboardRoute() {
       <CashierAuditModal
         isOpen={isAuditModalOpen}
         onClose={() => setIsAuditModalOpen(false)}
+        orders={orders}
+      />
+
+      {/* Clientes y Pedidos Modal */}
+      <CashierClientsModal
+        isOpen={isClientsModalOpen}
+        onClose={() => setIsClientsModalOpen(false)}
         orders={orders}
       />
 
