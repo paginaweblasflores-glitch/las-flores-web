@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Clock, Phone, MapPin, Truck, Store, ChevronRight, Eye, MessageSquare, ExternalLink, Tag } from "lucide-react";
 import { openWhatsAppDispatch, generateDeliveryGoogleMapsUrl } from "../utils/whatsappDispatch";
+import { printTicket } from "../utils/ticketPrint";
 
 interface CashierOrderCardProps {
   order: any;
@@ -34,15 +35,6 @@ export function CashierOrderCard({
 
   const items = orderItems.filter((item) => item.order_id === order.id);
 
-  const handleNextStatus = async (newStatus: string) => {
-    setUpdating(true);
-    try {
-      await onStatusChange(order.id, newStatus);
-    } finally {
-      setUpdating(false);
-    }
-  };
-
   const normalizedStatus = (() => {
     const raw = (order.status || "").toLowerCase().trim();
     if (raw.includes("cocina") || raw.includes("preparac") || raw.includes("kitchen")) return "en_preparacion";
@@ -51,6 +43,48 @@ export function CashierOrderCard({
     if (raw.includes("cancel") || raw.includes("rechaz")) return "cancelado";
     return "pendiente";
   })();
+
+  // Comanda de cocina: se imprime justo al aceptar el pedido (pendiente ->
+  // en_preparacion), para que cocina la vea en su propia ticketera y empiece
+  // a preparar. No lleva precios — cocina no necesita esa información.
+  const printKitchenTicket = () => {
+    const itemsHtml = items
+      .map((item) => {
+        const notes = item.notes ? `<p style="padding-left:10px;">- ${item.notes}</p>` : "";
+        return `<div class="row"><span>${item.quantity}x ${item.product_name}</span></div>${notes}`;
+      })
+      .join("");
+
+    const html = `
+      <p class="center">RESTAURANTE LAS FLORES</p>
+      <p class="center">Comanda de Cocina</p>
+      <hr />
+      <p>Pedido: #${order.order_number || order.id?.slice(0, 8)}</p>
+      <p>Modalidad: ${order.order_type === "delivery" ? "DELIVERY" : "RECOJO EN TIENDA"}</p>
+      <p>Fecha: ${new Date().toLocaleString("es-PE")}</p>
+      <hr />
+      ${itemsHtml}
+      <hr />
+      <p>Cliente: ${order.client_name || "Cliente"}</p>
+    `;
+    printTicket(html, "Comanda de Cocina");
+  };
+
+  const handleNextStatus = async (newStatus: string) => {
+    // La impresión debe ser síncrona, en el mismo clic — antes de cualquier
+    // await — para que Chrome la reconozca como gesto directo del usuario y
+    // no bloquee la ventana de impresión.
+    if (normalizedStatus === "pendiente" && newStatus === "en_preparacion") {
+      printKitchenTicket();
+    }
+
+    setUpdating(true);
+    try {
+      await onStatusChange(order.id, newStatus);
+    } finally {
+      setUpdating(false);
+    }
+  };
 
   const isCompleted = normalizedStatus === "entregado" || normalizedStatus === "cancelado";
 

@@ -14,6 +14,7 @@ import {
 import { isCancelledStatus } from "../lib/orderStatus";
 import { supabase } from "../lib/supabase";
 import { getEligibleClosureMonths, formatMonthLabel, getMonthDateRange } from "../lib/monthUtils";
+import { openBlankWindow, writeTicketAndPrint } from "../utils/ticketPrint";
 
 interface CashierAuditModalProps {
   isOpen: boolean;
@@ -34,51 +35,6 @@ const getYYYYMMDD = (d?: Date | string) => {
   const dateObj = typeof d === "string" ? new Date(d) : d;
   if (isNaN(dateObj.getTime())) return "";
   return dateObj.toLocaleDateString("sv-SE");
-};
-
-// Abre una ventana en blanco. Debe llamarse de forma síncrona, en el mismo
-// evento de clic del usuario (sin ningún "await" antes) — si no, Chrome ya
-// no lo reconoce como un gesto directo del usuario y bloquea el popup.
-const openBlankWindow = () => window.open("", "_blank", "width=350,height=600");
-
-// Escribe el ticket (aislado, sin el resto de la app) en una ventana ya
-// abierta e imprime desde ahí. Así no hay riesgo de que Chrome cuente el
-// alto invisible del Kanban de fondo y genere páginas extra en blanco.
-const writeTicketAndPrint = (win: Window, bodyHtml: string) => {
-  win.document.write(`
-    <!DOCTYPE html>
-    <html>
-      <head>
-        <meta charset="utf-8" />
-        <title>Ticket de Cierre</title>
-        <style>
-          @page { size: 80mm auto; margin: 3mm; }
-          * { box-sizing: border-box; }
-          body {
-            font-family: "Courier New", monospace;
-            font-weight: bold;
-            font-size: 11px;
-            line-height: 1.3;
-            color: #000;
-            width: 72mm;
-            margin: 0;
-            padding: 0;
-          }
-          p { margin: 0; }
-          .center { text-align: center; }
-          .row { display: flex; justify-content: space-between; }
-          hr { border: none; border-top: 1px solid #000; margin: 4px 0; }
-        </style>
-      </head>
-      <body>${bodyHtml}</body>
-    </html>
-  `);
-  win.document.close();
-  win.focus();
-  win.onafterprint = () => win.close();
-  setTimeout(() => {
-    win.print();
-  }, 200);
 };
 
 export function CashierAuditModal({ isOpen, onClose, orders }: CashierAuditModalProps) {
