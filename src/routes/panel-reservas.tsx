@@ -6,6 +6,7 @@ import { CashierReservationCard } from "../components/CashierReservationCard";
 import { ReservasClientsSection } from "../components/ReservasClientsSection";
 import { StatCard } from "../components/StatCard";
 import { SimpleTrendChart } from "../components/SimpleTrendChart";
+import { getMonthDateRange } from "../lib/monthUtils";
 import {
   Search,
   RefreshCw,
@@ -66,6 +67,7 @@ function PanelReservasRoute() {
   }, []);
 
   const [reservations, setReservations] = useState<any[]>([]);
+  const [monthReservationsCount, setMonthReservationsCount] = useState(0);
   const [reservationStatusFilter, setReservationStatusFilter] = useState<string>("today");
   const [resDateFrom, setResDateFrom] = useState<string>("");
   const [resDateTo, setResDateTo] = useState<string>("");
@@ -222,8 +224,25 @@ function PanelReservasRoute() {
     }
   };
 
+  const fetchMonthCount = async () => {
+    try {
+      const monthStr = getLocalYYYYMMDD(new Date()).slice(0, 7);
+      const { start, end } = getMonthDateRange(monthStr);
+      const { count, error } = await supabase
+        .from("reservations")
+        .select("*", { count: "exact", head: true })
+        .gte("reservation_date", start.slice(0, 10))
+        .lte("reservation_date", end.slice(0, 10));
+
+      if (!error) setMonthReservationsCount(count ?? 0);
+    } catch (err) {
+      console.error("Error al contar reservas del mes:", err);
+    }
+  };
+
   useEffect(() => {
     checkAuth();
+    fetchMonthCount();
   }, []);
 
   useEffect(() => {
@@ -243,12 +262,14 @@ function PanelReservasRoute() {
             });
           }
           fetchData(true);
+          fetchMonthCount();
         }
       )
       .subscribe();
 
     const interval = setInterval(() => {
       fetchData(true);
+      fetchMonthCount();
     }, 5000);
 
     return () => {
@@ -273,6 +294,10 @@ function PanelReservasRoute() {
   };
 
   const todayStr = getLocalYYYYMMDD(new Date());
+  const currentMonthName = (() => {
+    const label = new Date().toLocaleDateString("es-PE", { month: "long" });
+    return label.charAt(0).toUpperCase() + label.slice(1);
+  })();
 
   const filteredReservations = reservations.filter((res) => {
     const matchSearch =
@@ -652,12 +677,18 @@ function PanelReservasRoute() {
 
       {activeTab === "analitica" && (
         <>
-          <div className="max-w-xs">
+          <div className="grid grid-cols-1 sm:grid-cols-2 max-w-xl gap-4">
             <StatCard
               icon={History}
               accent="eucalipto"
               label="Reservas Totales"
               value={reservations.length}
+            />
+            <StatCard
+              icon={Calendar}
+              accent="chilca"
+              label={`Reservas de ${currentMonthName}`}
+              value={monthReservationsCount}
             />
           </div>
 
