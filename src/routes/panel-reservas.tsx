@@ -651,15 +651,26 @@ function PanelReservasRoute() {
       )}
 
       {activeTab === "analitica" && (
-        <SimpleTrendChart
-          icon={Calendar}
-          title="Reservas por Día"
-          subtitle="Reservas registradas en los últimos 7 días"
-          accent="eucalipto"
-          entries={dailyReservationsEntries}
-          countLabel="reservas"
-          emptyMessage="No hay reservas registradas en los últimos 7 días."
-        />
+        <>
+          <div className="max-w-xs">
+            <StatCard
+              icon={History}
+              accent="eucalipto"
+              label="Reservas Totales"
+              value={reservations.length}
+            />
+          </div>
+
+          <SimpleTrendChart
+            icon={Calendar}
+            title="Reservas por Día"
+            subtitle="Reservas registradas en los últimos 7 días"
+            accent="eucalipto"
+            entries={dailyReservationsEntries}
+            countLabel="reservas"
+            emptyMessage="No hay reservas registradas en los últimos 7 días."
+          />
+        </>
       )}
 
       </main>
