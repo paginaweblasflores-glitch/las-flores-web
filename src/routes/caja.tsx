@@ -11,7 +11,6 @@ import { CashierAuditModal } from "../components/CashierAuditModal";
 import { CashierStockModal } from "../components/CashierStockModal";
 import { YapeConfigModal } from "../components/YapeConfigModal";
 import {
-  Search,
   RefreshCw,
   X,
   ShoppingBag,
@@ -48,7 +47,6 @@ function CashierDashboardRoute() {
   const [orders, setOrders] = useState<any[]>([]);
   const [orderItems, setOrderItems] = useState<any[]>([]);
 
-  const [searchQuery, setSearchQuery] = useState("");
   const [isClientsModalOpen, setIsClientsModalOpen] = useState(false);
   const [soundEnabled, setSoundEnabled] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
@@ -313,15 +311,6 @@ function CashierDashboardRoute() {
 
   const todayStr = getLocalYYYYMMDD(new Date());
 
-  // Filtered orders list (por búsqueda; el Kanban agrupa por estado internamente)
-  const filteredOrders = orders.filter((ord) => {
-    return (
-      (ord.order_number || "").toString().toLowerCase().includes(searchQuery.toLowerCase()) ||
-      (ord.client_name || "").toLowerCase().includes(searchQuery.toLowerCase()) ||
-      (ord.client_phone || "").includes(searchQuery)
-    );
-  });
-
   // KPI Calculations
   const todayRevenue = orders
     .filter((o) => {
@@ -520,39 +509,21 @@ function CashierDashboardRoute() {
               <span>Clientes</span>
             </button>
           </div>
+
+          <button
+            onClick={() => fetchData()}
+            disabled={refreshing}
+            className="px-4 py-2.5 rounded-xl bg-gray-100 hover:bg-gray-200 text-gray-800 text-xs font-bold flex items-center gap-2 transition-colors disabled:opacity-50 whitespace-nowrap"
+          >
+            <RefreshCw size={14} className={refreshing ? "animate-spin text-[#2D473C]" : ""} />
+            Actualizar Datos
+          </button>
         </div>
 
         {/* ==================================================================== */}
         {/* COMANDAS Y PEDIDOS */}
         {/* ==================================================================== */}
         <>
-            {/* Filter Controls Wrapper */}
-            <div className="flex flex-col gap-3">
-              <div className="flex flex-col sm:flex-row items-center justify-between gap-4 bg-white p-3 rounded-2xl border border-gray-200 shadow-2xs">
-                <div className="relative w-full md:w-80">
-                  <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400" size={16} />
-                  <input
-                    type="text"
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    placeholder="Buscar por # de orden, cliente o teléfono..."
-                    className="w-full text-xs bg-gray-50 border border-gray-200 rounded-xl pl-10 pr-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-[#2D473C]"
-                  />
-                </div>
-
-                <div className="flex items-center gap-3 w-full sm:w-auto justify-end">
-                  <button
-                    onClick={() => fetchData()}
-                    disabled={refreshing}
-                    className="px-4 py-2.5 rounded-xl bg-gray-100 hover:bg-gray-200 text-gray-800 text-xs font-bold flex items-center gap-2 transition-colors disabled:opacity-50 whitespace-nowrap"
-                  >
-                    <RefreshCw size={14} className={refreshing ? "animate-spin text-[#2D473C]" : ""} />
-                    Actualizar Datos
-                  </button>
-                </div>
-              </div>
-            </div>
-
             {loading ? (
               <div className="py-20 text-center space-y-3">
                 <RefreshCw size={28} className="animate-spin text-[#2D473C] mx-auto" />
@@ -560,7 +531,7 @@ function CashierDashboardRoute() {
               </div>
             ) : (
               <CashierKanbanView
-                orders={filteredOrders}
+                orders={orders}
                 orderItems={orderItems}
                 onStatusChange={handleUpdateOrderStatus}
                 onViewDetail={(ord) => {
