@@ -489,6 +489,7 @@ export function CashierAuditModal({ isOpen, onClose, orders }: CashierAuditModal
           {printMode === "daily" && (
             <div className="hidden print:block font-mono font-bold text-[11px] leading-snug text-black w-[72mm]">
               <p className="text-center">RESTAURANTE LAS FLORES</p>
+              <p className="text-center">Delivery de la Página Web</p>
               <p className="text-center">Arqueo y Cierre de Caja</p>
               <p className="text-center mb-2">Fecha: {selectedDate}</p>
               <div className="border-t border-black my-1" />
@@ -520,6 +521,7 @@ export function CashierAuditModal({ isOpen, onClose, orders }: CashierAuditModal
           {printMode === "monthly" && monthlyClosure && (
             <div className="hidden print:block font-mono font-bold text-[11px] leading-snug text-black w-[72mm]">
               <p className="text-center">RESTAURANTE LAS FLORES</p>
+              <p className="text-center">Delivery de la Página Web</p>
               <p className="text-center">Cierre Mensual</p>
               <p className="text-center mb-2">Mes: {formatMonthLabel(monthlyClosure.month)}</p>
               <div className="border-t border-black my-1" />
