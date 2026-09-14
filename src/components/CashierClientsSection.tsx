@@ -3,6 +3,7 @@ import { Download, Search, Users, Truck, Store, Calendar, CalendarRange } from "
 import * as XLSX from "xlsx";
 import { supabase } from "../lib/supabase";
 import { getRecentMonths, formatMonthLabel, getMonthDateRange } from "../lib/monthUtils";
+import { TablePagination } from "./TablePagination";
 
 interface CashierClientsSectionProps {
   orders: any[];
@@ -28,6 +29,8 @@ export function CashierClientsSection({ orders }: CashierClientsSectionProps) {
   const [fetchedOrders, setFetchedOrders] = useState<any[] | null>(null);
   const [loading, setLoading] = useState(false);
   const [loadError, setLoadError] = useState<string | null>(null);
+  const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
 
   useEffect(() => {
     // El día de hoy ya viene cargado en memoria (prop `orders`), así que se
@@ -90,6 +93,13 @@ export function CashierClientsSection({ orders }: CashierClientsSectionProps) {
       (o.client_phone || "").includes(search)
     );
   });
+
+  useEffect(() => {
+    setPage(1);
+  }, [filterMode, selectedDate, selectedMonth, search, pageSize]);
+
+  const totalFiltered = filtered.length;
+  const paginated = filtered.slice((page - 1) * pageSize, page * pageSize);
 
   const periodLabel =
     filterMode === "day"
@@ -223,7 +233,7 @@ export function CashierClientsSection({ orders }: CashierClientsSectionProps) {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-black/5 font-medium text-black/80">
-                  {filtered.map((o) => (
+                  {paginated.map((o) => (
                     <tr key={o.id} className="hover:bg-[#2D473C]/5 transition-colors">
                       <td className="p-3.5 pl-4 font-serif font-bold text-[#2D473C]">
                         #{o.order_number || o.id?.slice(0, 8)}
@@ -276,6 +286,18 @@ export function CashierClientsSection({ orders }: CashierClientsSectionProps) {
             </div>
           )}
         </div>
+
+        {totalFiltered > 0 && (
+          <div className="mt-3">
+            <TablePagination
+              page={page}
+              pageSize={pageSize}
+              total={totalFiltered}
+              onPageChange={setPage}
+              onPageSizeChange={setPageSize}
+            />
+          </div>
+        )}
       </div>
 
       {/* Footer */}
