@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState, useEffect, useRef } from "react";
-import { CheckCircle2, Navigation2, Package, MapPin, ExternalLink, Loader2, AlertTriangle, ShieldCheck, Clock, ArrowRight, Banknote, Check } from "lucide-react";
+import { CheckCircle2, Navigation2, Package, MapPin, ExternalLink, Loader2, AlertTriangle, ShieldCheck, Phone, Clock, ArrowRight, Banknote, Check } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 
 export const Route = createFileRoute("/d/$orderId")({
@@ -21,6 +21,8 @@ interface OrderData {
   status: string;
   payment_method: string;
   items?: { quantity: number; product_name: string; subtotal: number }[];
+  client_name: string | null;
+  client_phone: string | null;
 }
 
 function DriverMagicLink() {
@@ -352,13 +354,27 @@ function DriverMagicLink() {
                 <MapPin className="text-nogal" size={20} />
               </div>
               <div className="flex-1 min-w-0">
-                <p className="text-[10px] uppercase font-bold tracking-widest text-nogal/50 mb-0.5">Destino:</p>
-                <p className="font-bold text-sm text-nogal leading-snug">{orderData.address || "Dirección no especificada"}</p>
+                <p className="text-[10px] uppercase font-bold tracking-widest text-nogal/50 mb-0.5">Cliente & Destino:</p>
+                <p className="font-bold text-sm text-nogal truncate">{orderData.client_name || "Cliente Las Flores"}</p>
+                <p className="text-xs text-nogal/80 font-medium leading-snug mt-1">{orderData.address || "Dirección no especificada"}</p>
                 {orderData.reference && (
                   <p className="text-[11px] text-nogal/60 mt-1 italic">Ref: {orderData.reference}</p>
                 )}
               </div>
             </div>
+
+            {orderData.client_phone && (
+              <div className="pt-2 border-t border-nogal/10 flex justify-between items-center">
+                <span className="text-[10px] uppercase font-bold text-nogal/50">Teléfono del cliente:</span>
+                <a
+                  href={`tel:${orderData.client_phone}`}
+                  className="text-xs font-bold text-eucalipto hover:underline flex items-center gap-1"
+                >
+                  <Phone size={13} />
+                  {orderData.client_phone}
+                </a>
+              </div>
+            )}
 
             {/* Detalle de Comanda */}
             <div className="border-t border-nogal/10 pt-3 space-y-1.5">
