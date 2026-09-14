@@ -119,6 +119,14 @@ export function CashierAuditModal({ isOpen, onClose, orders }: CashierAuditModal
 
   return (
     <div className="fixed inset-0 z-[120] flex items-center justify-center p-3 sm:p-6 animate-in fade-in duration-200">
+      {/* Tamaño de página para impresora de ticketera (80mm), no A4/Carta */}
+      <style>{`
+        @media print {
+          @page { size: 80mm auto; margin: 3mm; }
+          html, body { width: 80mm; }
+        }
+      `}</style>
+
       {/* Backdrop */}
       <div
         className="absolute inset-0 bg-[#2c4a3e]/80 backdrop-blur-md cursor-pointer print:hidden"
@@ -169,15 +177,8 @@ export function CashierAuditModal({ isOpen, onClose, orders }: CashierAuditModal
 
         {/* Cierre / Arqueo — Contenido Imprimible */}
         <div className="flex-1 overflow-y-auto p-6 space-y-6 print:p-0 print:overflow-visible">
-          {/* Encabezado visible en Impresión */}
-          <div className="hidden print:block text-center border-b pb-4 mb-4">
-            <h1 className="text-xl font-bold font-serif text-black">RESTAURANTE LAS FLORES</h1>
-            <p className="text-xs text-black/70 uppercase tracking-widest font-bold">REPORTE DE ARQUEO Y CIERRE DE CAJA</p>
-            <p className="text-xs font-mono mt-1">Fecha de Cierre: {selectedDate}</p>
-          </div>
-
-          {/* Tarjetas de KPI */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 print:grid-cols-2 print:gap-2">
+          {/* Tarjetas de KPI (no se imprimen: la versión de ticketera de abajo ya resume esto) */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 print:hidden">
             {/* Total Efectivo a Rendir */}
             <div className="bg-white p-5 rounded-2xl border border-black/10 shadow-xs flex flex-col justify-between space-y-3">
               <div className="flex items-center justify-between">
@@ -259,8 +260,8 @@ export function CashierAuditModal({ isOpen, onClose, orders }: CashierAuditModal
             </div>
           </div>
 
-          {/* Tabla de Detalle de Comandas */}
-          <div className="bg-white rounded-2xl border border-black/10 shadow-xs overflow-hidden">
+          {/* Tabla de Detalle de Comandas (no se imprime, ver ticket compacto abajo) */}
+          <div className="bg-white rounded-2xl border border-black/10 shadow-xs overflow-hidden print:hidden">
             <div className="p-4 bg-black/3 border-b border-black/10 flex items-center justify-between">
               <h3 className="font-serif font-bold text-sm text-[#2c4a3e] flex items-center gap-2">
                 <ShoppingBag size={16} className="text-[#2c4a3e]" />
@@ -361,6 +362,35 @@ export function CashierAuditModal({ isOpen, onClose, orders }: CashierAuditModal
                 </table>
               </div>
             )}
+          </div>
+
+          {/* Ticket compacto — lo único que se imprime, en ancho de ticketera */}
+          <div className="hidden print:block font-mono text-[11px] leading-snug text-black w-[72mm] mx-auto">
+            <p className="text-center font-bold">RESTAURANTE LAS FLORES</p>
+            <p className="text-center">Arqueo y Cierre de Caja</p>
+            <p className="text-center mb-2">Fecha: {selectedDate}</p>
+            <p>--------------------------------</p>
+            <div className="flex justify-between"><span>Efectivo a rendir</span><span>S/ {totalCash.toFixed(2)}</span></div>
+            <div className="flex justify-between"><span>Cobrado online</span><span>S/ {totalOnline.toFixed(2)}</span></div>
+            <div className="flex justify-between"><span>Fletes delivery</span><span>S/ {totalDeliveryFees.toFixed(2)}</span></div>
+            <p>--------------------------------</p>
+            <div className="flex justify-between font-bold"><span>VENTA TOTAL NETO</span><span>S/ {totalSales.toFixed(2)}</span></div>
+            <p>{filteredOrders.length} comandas ({countDelivery} delivery / {countPickup} recojo)</p>
+            <p>--------------------------------</p>
+            {filteredOrders.map((o) => {
+              const createdTime = new Date(o.created_at).toLocaleTimeString("es-PE", {
+                hour: "2-digit",
+                minute: "2-digit",
+              });
+              return (
+                <div key={o.id} className="flex justify-between">
+                  <span>#{o.order_number || o.id?.slice(0, 8)} {createdTime}</span>
+                  <span>S/ {Number(o.total || 0).toFixed(2)}</span>
+                </div>
+              );
+            })}
+            <p>--------------------------------</p>
+            <p className="text-center mt-2">Impreso: {new Date().toLocaleString("es-PE")}</p>
           </div>
         </div>
 
