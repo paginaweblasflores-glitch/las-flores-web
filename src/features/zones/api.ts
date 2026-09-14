@@ -215,6 +215,11 @@ export async function createZoneBlackout(
   return data;
 }
 
+export async function deleteZoneBlackout(id: string): Promise<void> {
+  const { error } = await supabase.from("zone_blackouts").delete().eq("id", id);
+  if (error) throw error;
+}
+
 export async function toggleBlackoutStatus(
   id: string,
   is_active: boolean

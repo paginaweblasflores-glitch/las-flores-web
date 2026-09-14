@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import type { RestaurantZone, ZoneBlackout } from "../features/zones/types";
-import { listRestaurantZones, listZoneBlackouts, toggleBlackoutStatus } from "../features/zones/api";
+import { listRestaurantZones, listZoneBlackouts, toggleBlackoutStatus, deleteZoneBlackout } from "../features/zones/api";
 import { AdminZoneModal } from "./AdminZoneModal";
 import { AdminBlackoutModal } from "./AdminBlackoutModal";
-import { LayoutGrid, ShieldAlert, Power, Edit3, Users, RefreshCw, Loader2, AlertCircle, MapPin, Clock } from "lucide-react";
+import { TablePagination } from "./TablePagination";
+import { LayoutGrid, ShieldAlert, Power, Edit3, Users, RefreshCw, Loader2, AlertCircle, MapPin, Clock, Trash2 } from "lucide-react";
 
 export function AdminZonesSection() {
   const [zones, setZones] = useState<RestaurantZone[]>([]);
@@ -16,6 +17,9 @@ export function AdminZonesSection() {
   const [selectedZoneToEdit, setSelectedZoneToEdit] = useState<RestaurantZone | null>(null);
   const [isZoneModalOpen, setIsZoneModalOpen] = useState(false);
   const [isBlackoutModalOpen, setIsBlackoutModalOpen] = useState(false);
+
+  const [blackoutsPage, setBlackoutsPage] = useState(1);
+  const [blackoutsPageSize, setBlackoutsPageSize] = useState(10);
 
   useEffect(() => {
     loadData();
@@ -48,6 +52,31 @@ export function AdminZonesSection() {
       alert("Error al cambiar el estado del apagado.");
     }
   };
+
+  const handleDeleteBlackout = async (blackout: ZoneBlackout) => {
+    const zoneLabel = blackout.zone_id ? blackout.restaurant_zones?.name || blackout.zone_id : "Todo el Local";
+    const confirmed = window.confirm(
+      `¿Eliminar permanentemente este registro de apagado/bloqueo para "${zoneLabel}" (${blackout.start_date})?`
+    );
+    if (!confirmed) return;
+
+    try {
+      await deleteZoneBlackout(blackout.id);
+      setBlackouts((prev) => prev.filter((b) => b.id !== blackout.id));
+    } catch (err) {
+      console.error(err);
+      alert("Error al eliminar el registro de apagado.");
+    }
+  };
+
+  useEffect(() => {
+    setBlackoutsPage(1);
+  }, [blackoutsPageSize]);
+
+  const paginatedBlackouts = blackouts.slice(
+    (blackoutsPage - 1) * blackoutsPageSize,
+    blackoutsPage * blackoutsPageSize
+  );
 
   if (loading) {
     return (
@@ -245,7 +274,7 @@ export function AdminZonesSection() {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-[#d4a373]/15">
-                  {blackouts.map((b) => (
+                  {paginatedBlackouts.map((b) => (
                     <tr key={b.id} className="hover:bg-[#fdf8f0]/80 transition-colors">
                       <td className="py-4 px-5 font-bold text-[#3b1f10]">
                         {b.zone_id ? (
@@ -295,23 +324,45 @@ export function AdminZonesSection() {
                         </span>
                       </td>
                       <td className="py-4 px-5 text-right">
-                        <button
-                          type="button"
-                          onClick={() => handleToggleBlackout(b.id, b.is_active)}
-                          className={`px-3.5 py-1.5 rounded-xl font-bold text-xs transition-all flex items-center gap-1.5 ml-auto cursor-pointer ${
-                            b.is_active
-                              ? "bg-[#2e5339] hover:bg-[#23412c] text-white shadow-xs"
-                              : "bg-[#f7f5ef] hover:bg-white text-[#3b1f10] border border-[#d4a373]/30"
-                          }`}
-                        >
-                          <Power size={13} />
-                          <span>{b.is_active ? "Encender Zona" : "Reactivar Apagado"}</span>
-                        </button>
+                        <div className="flex items-center justify-end gap-1.5">
+                          <button
+                            type="button"
+                            onClick={() => handleToggleBlackout(b.id, b.is_active)}
+                            className={`px-3.5 py-1.5 rounded-xl font-bold text-xs transition-all flex items-center gap-1.5 cursor-pointer ${
+                              b.is_active
+                                ? "bg-[#2e5339] hover:bg-[#23412c] text-white shadow-xs"
+                                : "bg-[#f7f5ef] hover:bg-white text-[#3b1f10] border border-[#d4a373]/30"
+                            }`}
+                          >
+                            <Power size={13} />
+                            <span>{b.is_active ? "Encender Zona" : "Reactivar Apagado"}</span>
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => handleDeleteBlackout(b)}
+                            title="Eliminar registro"
+                            className="p-2 rounded-xl text-[#3b1f10]/60 hover:text-red-700 hover:bg-red-50 border border-transparent hover:border-red-200 transition-all cursor-pointer"
+                          >
+                            <Trash2 size={14} />
+                          </button>
+                        </div>
                       </td>
                     </tr>
                   ))}
                 </tbody>
               </table>
+            </div>
+          )}
+
+          {blackouts.length > 0 && (
+            <div className="p-5 border-t border-[#d4a373]/20">
+              <TablePagination
+                page={blackoutsPage}
+                pageSize={blackoutsPageSize}
+                total={blackouts.length}
+                onPageChange={setBlackoutsPage}
+                onPageSizeChange={setBlackoutsPageSize}
+              />
             </div>
           )}
         </div>
