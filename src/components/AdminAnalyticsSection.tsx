@@ -6,13 +6,13 @@ import {
   Award,
   PieChart as PieChartIcon,
   BarChart3,
-  CheckCircle2,
   Percent,
   Clock,
   CreditCard,
   Truck,
   Store,
   Info,
+  Wallet,
 } from "lucide-react";
 import { StatCard } from "./StatCard";
 
@@ -116,17 +116,19 @@ export function AdminAnalyticsSection({
     return { totalRevenue: rev, validOrders: valid, averageTicket: avg };
   }, [filteredOrders]);
 
+  // Ganancia Neta: Facturación Total sin los fletes de delivery, ya que ese
+  // monto se le paga al motorizado y no queda como ganancia del restaurante.
+  const { netProfit, totalDeliveryFeesCollected } = useMemo(() => {
+    const fees = validOrders.reduce((sum, o) => sum + Number(o.delivery_fee || 0), 0);
+    return { netProfit: totalRevenue - fees, totalDeliveryFeesCollected: fees };
+  }, [validOrders, totalRevenue]);
+
   // Discounts & Promotions Metrics (BI Analytics)
   const { totalDiscountGiven, ordersWithCouponCount } = useMemo(() => {
     const totalDiscount = validOrders.reduce((sum, o) => sum + Number(o.discount_amount || 0), 0);
     const couponOrders = validOrders.filter((o) => Number(o.discount_amount || 0) > 0 || Boolean(o.coupon_code)).length;
     return { totalDiscountGiven: totalDiscount, ordersWithCouponCount: couponOrders };
   }, [validOrders]);
-
-  const completionRate = useMemo(() => {
-    if (filteredOrders.length === 0) return 100;
-    return (validOrders.length / filteredOrders.length) * 100;
-  }, [filteredOrders, validOrders]);
 
   const deliveryCount = useMemo(() => {
     return validOrders.filter((o) => o.order_type === "delivery").length;
@@ -378,6 +380,15 @@ export function AdminAnalyticsSection({
           }
         />
 
+        {/* Net Profit (Facturación Total sin fletes de delivery) */}
+        <StatCard
+          icon={Wallet}
+          accent="pacay"
+          label="Ganancia Neta"
+          value={`S/ ${netProfit.toFixed(2)}`}
+          sublabel={`Sin fletes de delivery (S/ ${totalDeliveryFeesCollected.toFixed(2)})`}
+        />
+
         {/* Average Ticket Size */}
         <StatCard
           icon={ShoppingBag}
@@ -385,19 +396,6 @@ export function AdminAnalyticsSection({
           label="Ticket Promedio (AOV)"
           value={`S/ ${averageTicket.toFixed(2)}`}
           sublabel="Gasto medio por orden"
-        />
-
-        {/* Completion Rate */}
-        <StatCard
-          icon={Percent}
-          accent="cielo"
-          label="Efectividad de Venta"
-          value={`${completionRate.toFixed(1)}%`}
-          sublabel={
-            <span className="flex items-center gap-1">
-              <CheckCircle2 size={12} /> {validOrders.length} de {filteredOrders.length} entregados
-            </span>
-          }
         />
 
         {/* Top Product Star */}
