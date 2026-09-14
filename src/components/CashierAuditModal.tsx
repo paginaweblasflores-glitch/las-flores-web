@@ -54,12 +54,56 @@ const formatMonthLabel = (monthStr: string) => {
   return label.charAt(0).toUpperCase() + label.slice(1);
 };
 
+// Abre una ventana en blanco. Debe llamarse de forma síncrona, en el mismo
+// evento de clic del usuario (sin ningún "await" antes) — si no, Chrome ya
+// no lo reconoce como un gesto directo del usuario y bloquea el popup.
+const openBlankWindow = () => window.open("", "_blank", "width=350,height=600");
+
+// Escribe el ticket (aislado, sin el resto de la app) en una ventana ya
+// abierta e imprime desde ahí. Así no hay riesgo de que Chrome cuente el
+// alto invisible del Kanban de fondo y genere páginas extra en blanco.
+const writeTicketAndPrint = (win: Window, bodyHtml: string) => {
+  win.document.write(`
+    <!DOCTYPE html>
+    <html>
+      <head>
+        <meta charset="utf-8" />
+        <title>Ticket de Cierre</title>
+        <style>
+          @page { size: 80mm auto; margin: 3mm; }
+          * { box-sizing: border-box; }
+          body {
+            font-family: "Courier New", monospace;
+            font-weight: bold;
+            font-size: 11px;
+            line-height: 1.3;
+            color: #000;
+            width: 72mm;
+            margin: 0;
+            padding: 0;
+          }
+          p { margin: 0; }
+          .center { text-align: center; }
+          .row { display: flex; justify-content: space-between; }
+          hr { border: none; border-top: 1px solid #000; margin: 4px 0; }
+        </style>
+      </head>
+      <body>${bodyHtml}</body>
+    </html>
+  `);
+  win.document.close();
+  win.focus();
+  win.onafterprint = () => win.close();
+  setTimeout(() => {
+    win.print();
+  }, 200);
+};
+
 export function CashierAuditModal({ isOpen, onClose, orders }: CashierAuditModalProps) {
   const todayStr = getYYYYMMDD(new Date());
   const [selectedDate, setSelectedDate] = useState<string>(todayStr);
 
   const eligibleMonths = getEligibleClosureMonths();
-  const [printMode, setPrintMode] = useState<"daily" | "monthly">("daily");
   const [monthlyPopoverOpen, setMonthlyPopoverOpen] = useState(false);
   const [selectedClosureMonth, setSelectedClosureMonth] = useState(eligibleMonths[0]?.value || "");
   const [monthlyLoading, setMonthlyLoading] = useState(false);
@@ -192,75 +236,82 @@ export function CashierAuditModal({ isOpen, onClose, orders }: CashierAuditModal
   const handlePrintMonthly = async () => {
     setMonthlyError(null);
     setMonthlyLoading(true);
+    // Se abre la ventana YA, en el mismo clic, antes de cualquier await —
+    // si se abre después de consultar la base de datos, Chrome la bloquea
+    // por no ser ya un gesto directo del usuario.
+    const win = openBlankWindow();
     try {
       const closure = await getOrCreateMonthlyClosure(selectedClosureMonth);
       setMonthlyClosure(closure);
-      setPrintMode("monthly");
       setMonthlyPopoverOpen(false);
-      requestAnimationFrame(() => requestAnimationFrame(() => window.print()));
+
+      const html = `
+        <p class="center">RESTAURANTE LAS FLORES</p>
+        <p class="center">Delivery de la Página Web</p>
+        <p class="center">Cierre Mensual</p>
+        <p class="center" style="margin-bottom:8px;">Mes: ${formatMonthLabel(closure.month)}</p>
+        <hr />
+        <div class="row"><span>Cobrado online</span><span>S/ ${Number(closure.total_online).toFixed(2)}</span></div>
+        <div class="row"><span>Fletes delivery</span><span>S/ ${Number(closure.total_delivery_fees).toFixed(2)}</span></div>
+        <hr />
+        <div class="row"><span>VENTA TOTAL NETO</span><span>S/ ${Number(closure.total_net).toFixed(2)}</span></div>
+        <p>${closure.order_count} comandas del mes</p>
+        <hr />
+      `;
+      if (win) writeTicketAndPrint(win, html);
     } catch (err: any) {
+      win?.close();
       setMonthlyError(err?.message || "No se pudo generar el cierre mensual.");
     } finally {
       setMonthlyLoading(false);
     }
   };
 
-  // Función para imprimir reporte
+  // Función para imprimir el ticket del día
   const handlePrint = () => {
-    setPrintMode("daily");
-    requestAnimationFrame(() => requestAnimationFrame(() => window.print()));
+    const orderRows = filteredOrders
+      .map((o) => {
+        const t = new Date(o.created_at).toLocaleTimeString("es-PE", { hour: "2-digit", minute: "2-digit" });
+        return `<div class="row"><span>#${o.order_number || o.id?.slice(0, 8)} ${t}</span><span>S/ ${Number(o.total || 0).toFixed(2)}</span></div>`;
+      })
+      .join("");
+
+    const html = `
+      <p class="center">RESTAURANTE LAS FLORES</p>
+      <p class="center">Delivery de la Página Web</p>
+      <p class="center">Arqueo y Cierre de Caja</p>
+      <p class="center" style="margin-bottom:8px;">Fecha: ${selectedDate}</p>
+      <hr />
+      <div class="row"><span>Efectivo a rendir</span><span>S/ ${totalCash.toFixed(2)}</span></div>
+      <div class="row"><span>Cobrado online</span><span>S/ ${totalOnline.toFixed(2)}</span></div>
+      <div class="row"><span>Fletes delivery</span><span>S/ ${totalDeliveryFees.toFixed(2)}</span></div>
+      <hr />
+      <div class="row"><span>VENTA TOTAL NETO</span><span>S/ ${totalSales.toFixed(2)}</span></div>
+      <p>${countDelivery} delivery / ${countPickup} recojo</p>
+      <hr />
+      <p>Detalle de Delivery</p>
+      ${orderRows}
+      <hr />
+    `;
+    const win = openBlankWindow();
+    if (win) writeTicketAndPrint(win, html);
   };
 
   return (
-    <div id="cashier-audit-print-area" className="fixed inset-0 z-[120] flex items-center justify-center p-3 sm:p-6 animate-in fade-in duration-200">
-      {/* Tamaño de página para impresora de ticketera (80mm), no A4/Carta.
-          El resto de la app (Kanban, botones de fondo) también vive en el
-          documento, así que hay que ocultarlo explícitamente: no basta con
-          "print:hidden" dentro del propio modal. */}
-      <style>{`
-        @media print {
-          @page { size: 80mm auto; margin: 3mm; }
-          html, body { width: 80mm; }
-          body * { visibility: hidden !important; }
-          #cashier-audit-print-area, #cashier-audit-print-area * { visibility: visible !important; }
-          /* Mantiene "fixed" (para no heredar el espacio en blanco que dejan
-             los elementos ocultos con visibility:hidden en el flujo normal),
-             pero alineado arriba a la izquierda en vez de centrado. */
-          #cashier-audit-print-area {
-            position: fixed !important;
-            inset: 0 !important;
-            display: flex !important;
-            align-items: flex-start !important;
-            justify-content: flex-start !important;
-            padding: 0 !important;
-          }
-          /* La tarjeta del modal pierde fondo/sombra/bordes: solo queda el ticket */
-          #cashier-audit-card {
-            background: transparent !important;
-            box-shadow: none !important;
-            border: none !important;
-            border-radius: 0 !important;
-            max-width: none !important;
-            max-height: none !important;
-            width: auto !important;
-          }
-        }
-      `}</style>
-
+    <div className="fixed inset-0 z-[120] flex items-center justify-center p-3 sm:p-6 animate-in fade-in duration-200">
       {/* Backdrop */}
       <div
-        className="absolute inset-0 bg-[#2c4a3e]/80 backdrop-blur-md cursor-pointer print:hidden"
+        className="absolute inset-0 bg-[#2c4a3e]/80 backdrop-blur-md cursor-pointer"
         onClick={onClose}
         aria-hidden="true"
       />
 
       <div
-        id="cashier-audit-card"
         onClick={(e) => e.stopPropagation()}
         className="relative z-10 bg-[#fbf5e6] w-full max-w-4xl max-h-[92vh] rounded-3xl shadow-2xl border border-[#2c4a3e]/20 flex flex-col overflow-hidden"
       >
         {/* Encabezado del Modal */}
-        <div className="bg-[#2c4a3e] text-white p-5 px-6 flex items-center justify-between shadow-md print:hidden">
+        <div className="bg-[#2c4a3e] text-white p-5 px-6 flex items-center justify-between shadow-md">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-2xl bg-[#d4af37]/20 flex items-center justify-center border border-[#d4af37]/40">
               <TrendingUp size={22} className="text-[#d4af37]" />
@@ -297,9 +348,9 @@ export function CashierAuditModal({ isOpen, onClose, orders }: CashierAuditModal
         </div>
 
         {/* Cierre / Arqueo — Contenido Imprimible */}
-        <div className="flex-1 overflow-y-auto p-6 space-y-6 print:p-0 print:overflow-visible">
+        <div className="flex-1 overflow-y-auto p-6 space-y-6">
           {/* Tarjetas de KPI (no se imprimen: la versión de ticketera de abajo ya resume esto) */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 print:hidden">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {/* Total Efectivo a Rendir */}
             <div className="bg-white p-5 rounded-2xl border border-black/10 shadow-xs flex flex-col justify-between space-y-3">
               <div className="flex items-center justify-between">
@@ -382,7 +433,7 @@ export function CashierAuditModal({ isOpen, onClose, orders }: CashierAuditModal
           </div>
 
           {/* Tabla de Detalle de Comandas (no se imprime, ver ticket compacto abajo) */}
-          <div className="bg-white rounded-2xl border border-black/10 shadow-xs overflow-hidden print:hidden">
+          <div className="bg-white rounded-2xl border border-black/10 shadow-xs overflow-hidden">
             <div className="p-4 bg-black/3 border-b border-black/10 flex items-center justify-between">
               <h3 className="font-serif font-bold text-sm text-[#2c4a3e] flex items-center gap-2">
                 <ShoppingBag size={16} className="text-[#2c4a3e]" />
@@ -485,58 +536,10 @@ export function CashierAuditModal({ isOpen, onClose, orders }: CashierAuditModal
             )}
           </div>
 
-          {/* Ticket compacto del día — lo único que se imprime, en ancho de ticketera */}
-          {printMode === "daily" && (
-            <div className="hidden print:block font-mono font-bold text-[11px] leading-snug text-black w-[72mm]">
-              <p className="text-center">RESTAURANTE LAS FLORES</p>
-              <p className="text-center">Delivery de la Página Web</p>
-              <p className="text-center">Arqueo y Cierre de Caja</p>
-              <p className="text-center mb-2">Fecha: {selectedDate}</p>
-              <div className="border-t border-black my-1" />
-              <div className="flex justify-between"><span>Efectivo a rendir</span><span>S/ {totalCash.toFixed(2)}</span></div>
-              <div className="flex justify-between"><span>Cobrado online</span><span>S/ {totalOnline.toFixed(2)}</span></div>
-              <div className="flex justify-between"><span>Fletes delivery</span><span>S/ {totalDeliveryFees.toFixed(2)}</span></div>
-              <div className="border-t border-black my-1" />
-              <div className="flex justify-between"><span>VENTA TOTAL NETO</span><span>S/ {totalSales.toFixed(2)}</span></div>
-              <p>{countDelivery} delivery / {countPickup} recojo</p>
-              <div className="border-t border-black my-1" />
-              <p>Detalle de Delivery</p>
-              {filteredOrders.map((o) => {
-                const createdTime = new Date(o.created_at).toLocaleTimeString("es-PE", {
-                  hour: "2-digit",
-                  minute: "2-digit",
-                });
-                return (
-                  <div key={o.id} className="flex justify-between">
-                    <span>#{o.order_number || o.id?.slice(0, 8)} {createdTime}</span>
-                    <span>S/ {Number(o.total || 0).toFixed(2)}</span>
-                  </div>
-                );
-              })}
-              <div className="border-t border-black my-1" />
-            </div>
-          )}
-
-          {/* Ticket compacto del cierre mensual (grabado en la BD, inmutable) */}
-          {printMode === "monthly" && monthlyClosure && (
-            <div className="hidden print:block font-mono font-bold text-[11px] leading-snug text-black w-[72mm]">
-              <p className="text-center">RESTAURANTE LAS FLORES</p>
-              <p className="text-center">Delivery de la Página Web</p>
-              <p className="text-center">Cierre Mensual</p>
-              <p className="text-center mb-2">Mes: {formatMonthLabel(monthlyClosure.month)}</p>
-              <div className="border-t border-black my-1" />
-              <div className="flex justify-between"><span>Cobrado online</span><span>S/ {Number(monthlyClosure.total_online).toFixed(2)}</span></div>
-              <div className="flex justify-between"><span>Fletes delivery</span><span>S/ {Number(monthlyClosure.total_delivery_fees).toFixed(2)}</span></div>
-              <div className="border-t border-black my-1" />
-              <div className="flex justify-between"><span>VENTA TOTAL NETO</span><span>S/ {Number(monthlyClosure.total_net).toFixed(2)}</span></div>
-              <p>{monthlyClosure.order_count} comandas del mes</p>
-              <div className="border-t border-black my-1" />
-            </div>
-          )}
         </div>
 
         {/* Acciones de Footer del Modal */}
-        <div className="p-4 px-6 bg-white border-t border-black/10 flex items-center justify-between print:hidden">
+        <div className="p-4 px-6 bg-white border-t border-black/10 flex items-center justify-between">
           <div className="text-xs text-black/60 font-medium">
             Imprime el ticket del día o el cierre mensual (una sola vez, no editable).
           </div>
