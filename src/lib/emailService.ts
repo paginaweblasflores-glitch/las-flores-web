@@ -590,3 +590,64 @@ export async function sendComplaintEmail(complaintData: {
   });
 }
 
+/**
+ * 5. Enviar Respuesta Formal de la Administración al consumidor
+ * (cuando el admin guarda una respuesta desde el Libro de Reclamaciones)
+ */
+export async function sendComplaintResponseEmail(data: {
+  code: string;
+  fullName: string;
+  email: string;
+  claimType: string;
+  statusLabel: string;
+  adminResponse: string;
+}): Promise<void> {
+  if (!data.email || !data.email.includes("@")) return;
+
+  const emailHtml = `
+    <div style="background-color: #FAF6ED; padding: 28px; max-width: 620px; margin: 0 auto; font-family: Arial, sans-serif; border: 1px solid #D4AF3740; border-radius: 12px; color: #1B2A24;">
+
+      <div style="text-align: center; border-bottom: 2px solid #2C4A3E; padding-bottom: 16px; margin-bottom: 20px;">
+        <h1 style="color: #2C4A3E; font-size: 20px; margin: 0 0 6px 0; text-transform: uppercase; letter-spacing: 1px;">
+          Restaurante Turístico Las Flores
+        </h1>
+        <p style="margin: 0; font-size: 11px; color: #666666;">
+          Respuesta a su Hoja de Reclamación — Libro de Reclamaciones Virtual (Indecopi)
+        </p>
+      </div>
+
+      <div style="background-color: #FFFFFF; padding: 18px; border-radius: 8px; border: 1px solid #E2D9C8; margin-bottom: 20px;">
+        <div style="text-align: center; margin-bottom: 14px;">
+          <span style="font-size: 11px; font-weight: bold; color: #888888; text-transform: uppercase; letter-spacing: 1px;">Código de Hoja de Reclamación</span>
+          <p style="font-size: 22px; font-weight: 900; color: #2C4A3E; margin: 4px 0 0 0; font-family: monospace; letter-spacing: 2px;">
+            ${data.code}
+          </p>
+          <span style="font-size: 11px; color: #555555; display: block; margin-top: 4px;">
+            Estado actual: <strong>${data.statusLabel}</strong>
+          </span>
+        </div>
+
+        <div style="font-size: 13px; line-height: 1.6; color: #333333; border-top: 1px dashed #DDD; padding-top: 12px;">
+          <p style="margin: 4px 0;">Estimado(a) <strong>${data.fullName}</strong>,</p>
+          <p style="margin: 8px 0 4px 0;">Le hacemos llegar la respuesta formal a su ${data.claimType} registrado en nuestro Libro de Reclamaciones:</p>
+          <div style="background-color: #F8F9FA; padding: 12px; border-radius: 6px; font-size: 13px; color: #222; border: 1px solid #EEE; white-space: pre-wrap;">${data.adminResponse}</div>
+        </div>
+      </div>
+
+      <div style="text-align: center; font-size: 11px; color: #777777;">
+        <p style="margin: 0;">Restaurante Las Flores S.A.C. — RUC 20608514921</p>
+        <p style="margin: 2px 0 0 0;">Jr. José Olaya 106, Huamanga, Ayacucho • contacto@restaurantelasflores.com</p>
+      </div>
+
+    </div>
+  `;
+
+  await sendEmail({
+    from: SENDERS.NOTIFICACIONES,
+    replyTo: OFFICIAL_EMAIL,
+    to: data.email,
+    subject: `Respuesta a su reclamación — ${data.code}`,
+    html: emailHtml,
+  });
+}
+

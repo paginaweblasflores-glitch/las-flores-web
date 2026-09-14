@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { supabase } from "../lib/supabase";
+import { sendComplaintResponseEmail } from "../lib/emailService";
 import {
   BookOpen,
   Search,
@@ -157,6 +158,19 @@ export function AdminComplaintsSection({ onPendingCountChange }: AdminComplaints
         .eq("id", selectedComplaint.id);
 
       if (error) throw error;
+
+      const trimmedResponse = adminResponse.trim();
+      const responseChanged = trimmedResponse && trimmedResponse !== (selectedComplaint.admin_response || "").trim();
+      if (responseChanged) {
+        sendComplaintResponseEmail({
+          code: selectedComplaint.code,
+          fullName: selectedComplaint.full_name,
+          email: selectedComplaint.email,
+          claimType: selectedComplaint.claim_type,
+          statusLabel: COMPLAINT_STATUS_LABELS[newStatus]?.label || newStatus,
+          adminResponse: trimmedResponse,
+        }).catch((err) => console.error("Error al enviar el correo de respuesta al cliente:", err));
+      }
 
       const updatedList = complaints.map((c) =>
         c.id === selectedComplaint.id
@@ -553,6 +567,13 @@ export function AdminComplaintsSection({ onPendingCountChange }: AdminComplaints
                   placeholder="Detalle la respuesta brindada al cliente, acuerdos o medidas correctivas adoptadas..."
                   className="w-full bg-white border border-gray-300 rounded-xl p-3 text-xs text-gray-800 focus:outline-none focus:border-[#2D473C]"
                 />
+                {adminResponse.trim() &&
+                  adminResponse.trim() !== (selectedComplaint.admin_response || "").trim() && (
+                    <p className="text-xs text-emerald-700 font-semibold mt-1.5 flex items-center gap-1.5">
+                      <Mail size={13} />
+                      Al guardar, se enviará esta respuesta al correo del cliente ({selectedComplaint.email}).
+                    </p>
+                  )}
               </div>
             </div>
 
