@@ -261,11 +261,29 @@ export function AdminOrderDetailModal({
           </div>
 
           {/* Total Footer */}
-          <div className="pt-4 border-t border-gray-100 flex items-center justify-between">
-            <span className="text-sm font-semibold text-gray-500">Monto Total del Pedido</span>
-            <span className="text-2xl font-extrabold text-eucalipto">
-              S/ {Number(order.total).toFixed(2)}
-            </span>
+          <div className="pt-4 border-t border-gray-100 space-y-2">
+            {(Number(order.discount_amount || 0) > 0 || order.coupon_code) && (
+              <>
+                <div className="flex items-center justify-between text-sm">
+                  <span className="text-gray-500">Subtotal (precio normal)</span>
+                  <span className="font-semibold text-gray-800">S/ {Number(order.subtotal || 0).toFixed(2)}</span>
+                </div>
+                <div className="flex items-center justify-between text-sm">
+                  <span className="text-emerald-700 font-semibold">
+                    Cupón {order.coupon_code ? `"${order.coupon_code}"` : "aplicado"}
+                  </span>
+                  <span className="font-bold text-emerald-700">
+                    -S/ {Number(order.discount_amount || 0).toFixed(2)}
+                  </span>
+                </div>
+              </>
+            )}
+            <div className="flex items-center justify-between pt-2 border-t border-gray-100">
+              <span className="text-sm font-semibold text-gray-500">Monto Total del Pedido</span>
+              <span className="text-2xl font-extrabold text-eucalipto">
+                S/ {Number(order.total).toFixed(2)}
+              </span>
+            </div>
           </div>
 
         </div>

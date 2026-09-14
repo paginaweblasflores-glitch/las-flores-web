@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Clock, Phone, MapPin, Truck, Store, ChevronRight, Eye, MessageSquare, ExternalLink } from "lucide-react";
+import { Clock, Phone, MapPin, Truck, Store, ChevronRight, Eye, MessageSquare, ExternalLink, Tag } from "lucide-react";
 import { openWhatsAppDispatch, generateDeliveryGoogleMapsUrl } from "../utils/whatsappDispatch";
 
 interface CashierOrderCardProps {
@@ -226,6 +226,24 @@ export function CashierOrderCard({
 
       {/* Footer & Fast 1-Click Action */}
       <div className="pt-3 border-t border-gray-100 space-y-3">
+        {/* Cupón de Descuento Aplicado */}
+        {(Number(order.discount_amount || 0) > 0 || order.coupon_code) && (
+          <div className="flex items-center justify-between gap-2 text-xs bg-emerald-50/80 border border-emerald-200 rounded-xl px-3 py-2">
+            <div className="flex items-center gap-1.5 text-emerald-800 font-black">
+              <Tag size={13} />
+              <span>Cupón {order.coupon_code ? `"${order.coupon_code}"` : "aplicado"}</span>
+            </div>
+            <div className="text-right leading-tight">
+              <span className="block text-[10px] font-semibold text-emerald-700/80">
+                Precio normal: S/ {Number(order.subtotal || 0).toFixed(2)}
+              </span>
+              <span className="block font-black text-emerald-800">
+                Descuento: -S/ {Number(order.discount_amount || 0).toFixed(2)}
+              </span>
+            </div>
+          </div>
+        )}
+
         {/* Total & Payment Method */}
         <div className="flex items-center justify-between">
           <div>
