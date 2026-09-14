@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   X,
   Printer,
-  Download,
+  Lock,
   Banknote,
   CreditCard,
   Truck,
@@ -12,11 +12,20 @@ import {
   Store,
 } from "lucide-react";
 import { isCancelledStatus } from "../lib/orderStatus";
+import { supabase } from "../lib/supabase";
 
 interface CashierAuditModalProps {
   isOpen: boolean;
   onClose: () => void;
   orders: any[];
+}
+
+interface MonthlyClosure {
+  month: string;
+  total_online: number;
+  total_delivery_fees: number;
+  total_net: number;
+  order_count: number;
 }
 
 const getYYYYMMDD = (d?: Date | string) => {
@@ -26,9 +35,47 @@ const getYYYYMMDD = (d?: Date | string) => {
   return dateObj.toLocaleDateString("sv-SE");
 };
 
+// Últimos 12 meses ya cerrados (sin incluir el mes en curso, que aún no terminó)
+const getEligibleClosureMonths = () => {
+  const months: { value: string; label: string }[] = [];
+  const now = new Date();
+  for (let i = 1; i <= 12; i++) {
+    const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
+    const value = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}`;
+    const label = d.toLocaleDateString("es-PE", { month: "long", year: "numeric" });
+    months.push({ value, label: label.charAt(0).toUpperCase() + label.slice(1) });
+  }
+  return months;
+};
+
+const formatMonthLabel = (monthStr: string) => {
+  const [y, m] = monthStr.split("-").map(Number);
+  const label = new Date(y, m - 1, 1).toLocaleDateString("es-PE", { month: "long", year: "numeric" });
+  return label.charAt(0).toUpperCase() + label.slice(1);
+};
+
 export function CashierAuditModal({ isOpen, onClose, orders }: CashierAuditModalProps) {
   const todayStr = getYYYYMMDD(new Date());
   const [selectedDate, setSelectedDate] = useState<string>(todayStr);
+
+  const eligibleMonths = getEligibleClosureMonths();
+  const [printMode, setPrintMode] = useState<"daily" | "monthly">("daily");
+  const [monthlyPopoverOpen, setMonthlyPopoverOpen] = useState(false);
+  const [selectedClosureMonth, setSelectedClosureMonth] = useState(eligibleMonths[0]?.value || "");
+  const [monthlyLoading, setMonthlyLoading] = useState(false);
+  const [monthlyError, setMonthlyError] = useState<string | null>(null);
+  const [monthlyClosure, setMonthlyClosure] = useState<MonthlyClosure | null>(null);
+  const monthlyPopoverRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (monthlyPopoverRef.current && !monthlyPopoverRef.current.contains(e.target as Node)) {
+        setMonthlyPopoverOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   if (!isOpen) return null;
 
@@ -71,50 +118,97 @@ export function CashierAuditModal({ isOpen, onClose, orders }: CashierAuditModal
 
   const totalSales = totalCash + totalOnline;
 
-  // Función para exportar a CSV
-  const handleExportCSV = () => {
-    const headers = [
-      "N° Orden",
-      "Fecha/Hora",
-      "Cliente",
-      "Teléfono",
-      "Tipo",
-      "Método de Pago",
-      "Subtotal (S/)",
-      "Delivery (S/)",
-      "Total (S/)",
-      "Estado",
-    ];
+  // Busca el cierre mensual ya guardado; si no existe, lo calcula UNA VEZ desde
+  // las órdenes reales de ese mes y lo graba. De ahí en adelante siempre se lee
+  // el mismo registro — nunca se recalcula ni se puede editar desde la app.
+  const getOrCreateMonthlyClosure = async (monthStr: string): Promise<MonthlyClosure> => {
+    const { data: existing, error: selErr } = await supabase
+      .from("monthly_cash_closures")
+      .select("month, total_online, total_delivery_fees, total_net, order_count")
+      .eq("month", monthStr)
+      .maybeSingle();
 
-    const rows = filteredOrders.map((o) => [
-      `"${o.order_number || o.id?.slice(0, 8)}"`,
-      `"${new Date(o.created_at).toLocaleTimeString("es-PE", { hour: "2-digit", minute: "2-digit" })}"`,
-      `"${(o.client_name || "Cliente").replace(/"/g, '""')}"`,
-      `"${o.client_phone || ""}"`,
-      `"${o.order_type === "delivery" ? "Delivery" : "Recojo"}"`,
-      `"${(o.payment_method || "Yape").toUpperCase()}"`,
-      Number(o.subtotal || 0).toFixed(2),
-      Number(o.delivery_fee || 0).toFixed(2),
-      Number(o.total || 0).toFixed(2),
-      `"${o.status}"`,
-    ]);
+    if (selErr) throw selErr;
+    if (existing) return existing as MonthlyClosure;
 
-    const csvContent =
-      "data:text/csv;charset=utf-8,\uFEFF" +
-      [headers.join(","), ...rows.map((r) => r.join(","))].join("\n");
+    const [y, m] = monthStr.split("-").map(Number);
+    const lastDay = new Date(y, m, 0).getDate();
+    const startDate = `${monthStr}-01T00:00:00`;
+    const endDate = `${monthStr}-${String(lastDay).padStart(2, "0")}T23:59:59`;
 
-    const encodedUri = encodeURI(csvContent);
-    const link = document.createElement("a");
-    link.setAttribute("href", encodedUri);
-    link.setAttribute("download", `Cierre_de_Caja_${selectedDate}.csv`);
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    const { data: monthOrders, error: ordErr } = await supabase
+      .from("orders")
+      .select("total, delivery_fee, payment_method, status")
+      .gte("created_at", startDate)
+      .lte("created_at", endDate);
+
+    if (ordErr) throw ordErr;
+
+    let cash = 0;
+    let online = 0;
+    let fees = 0;
+    let count = 0;
+
+    (monthOrders || []).forEach((o: any) => {
+      if (isCancelledStatus(o.status)) return;
+      const total = Number(o.total || 0);
+      const pm = (o.payment_method || "").toLowerCase().trim();
+      const isCash = pm.includes("efectivo") || pm.includes("cash");
+      if (isCash) cash += total;
+      else online += total;
+      fees += Number(o.delivery_fee || 0);
+      count++;
+    });
+
+    const payload = {
+      month: monthStr,
+      total_online: online,
+      total_delivery_fees: fees,
+      total_net: cash + online,
+      order_count: count,
+    };
+
+    const { data: inserted, error: insErr } = await supabase
+      .from("monthly_cash_closures")
+      .insert(payload)
+      .select("month, total_online, total_delivery_fees, total_net, order_count")
+      .single();
+
+    if (insErr) {
+      // Carrera: otra sesión insertó el mismo mes justo antes. Se relee el
+      // registro ya grabado en vez de fallar.
+      const { data: raceExisting } = await supabase
+        .from("monthly_cash_closures")
+        .select("month, total_online, total_delivery_fees, total_net, order_count")
+        .eq("month", monthStr)
+        .maybeSingle();
+      if (raceExisting) return raceExisting as MonthlyClosure;
+      throw insErr;
+    }
+
+    return inserted as MonthlyClosure;
+  };
+
+  const handlePrintMonthly = async () => {
+    setMonthlyError(null);
+    setMonthlyLoading(true);
+    try {
+      const closure = await getOrCreateMonthlyClosure(selectedClosureMonth);
+      setMonthlyClosure(closure);
+      setPrintMode("monthly");
+      setMonthlyPopoverOpen(false);
+      requestAnimationFrame(() => requestAnimationFrame(() => window.print()));
+    } catch (err: any) {
+      setMonthlyError(err?.message || "No se pudo generar el cierre mensual.");
+    } finally {
+      setMonthlyLoading(false);
+    }
   };
 
   // Función para imprimir reporte
   const handlePrint = () => {
-    window.print();
+    setPrintMode("daily");
+    requestAnimationFrame(() => requestAnimationFrame(() => window.print()));
   };
 
   return (
@@ -391,51 +485,99 @@ export function CashierAuditModal({ isOpen, onClose, orders }: CashierAuditModal
             )}
           </div>
 
-          {/* Ticket compacto — lo único que se imprime, en ancho de ticketera */}
-          <div className="hidden print:block font-mono font-bold text-[11px] leading-snug text-black w-[72mm]">
-            <p className="text-center">RESTAURANTE LAS FLORES</p>
-            <p className="text-center">Arqueo y Cierre de Caja</p>
-            <p className="text-center mb-2">Fecha: {selectedDate}</p>
-            <div className="border-t border-black my-1" />
-            <div className="flex justify-between"><span>Efectivo a rendir</span><span>S/ {totalCash.toFixed(2)}</span></div>
-            <div className="flex justify-between"><span>Cobrado online</span><span>S/ {totalOnline.toFixed(2)}</span></div>
-            <div className="flex justify-between"><span>Fletes delivery</span><span>S/ {totalDeliveryFees.toFixed(2)}</span></div>
-            <div className="border-t border-black my-1" />
-            <div className="flex justify-between"><span>VENTA TOTAL NETO</span><span>S/ {totalSales.toFixed(2)}</span></div>
-            <p>{countDelivery} delivery / {countPickup} recojo</p>
-            <div className="border-t border-black my-1" />
-            <p>Detalle de Delivery</p>
-            {filteredOrders.map((o) => {
-              const createdTime = new Date(o.created_at).toLocaleTimeString("es-PE", {
-                hour: "2-digit",
-                minute: "2-digit",
-              });
-              return (
-                <div key={o.id} className="flex justify-between">
-                  <span>#{o.order_number || o.id?.slice(0, 8)} {createdTime}</span>
-                  <span>S/ {Number(o.total || 0).toFixed(2)}</span>
-                </div>
-              );
-            })}
-            <div className="border-t border-black my-1" />
-          </div>
+          {/* Ticket compacto del día — lo único que se imprime, en ancho de ticketera */}
+          {printMode === "daily" && (
+            <div className="hidden print:block font-mono font-bold text-[11px] leading-snug text-black w-[72mm]">
+              <p className="text-center">RESTAURANTE LAS FLORES</p>
+              <p className="text-center">Arqueo y Cierre de Caja</p>
+              <p className="text-center mb-2">Fecha: {selectedDate}</p>
+              <div className="border-t border-black my-1" />
+              <div className="flex justify-between"><span>Efectivo a rendir</span><span>S/ {totalCash.toFixed(2)}</span></div>
+              <div className="flex justify-between"><span>Cobrado online</span><span>S/ {totalOnline.toFixed(2)}</span></div>
+              <div className="flex justify-between"><span>Fletes delivery</span><span>S/ {totalDeliveryFees.toFixed(2)}</span></div>
+              <div className="border-t border-black my-1" />
+              <div className="flex justify-between"><span>VENTA TOTAL NETO</span><span>S/ {totalSales.toFixed(2)}</span></div>
+              <p>{countDelivery} delivery / {countPickup} recojo</p>
+              <div className="border-t border-black my-1" />
+              <p>Detalle de Delivery</p>
+              {filteredOrders.map((o) => {
+                const createdTime = new Date(o.created_at).toLocaleTimeString("es-PE", {
+                  hour: "2-digit",
+                  minute: "2-digit",
+                });
+                return (
+                  <div key={o.id} className="flex justify-between">
+                    <span>#{o.order_number || o.id?.slice(0, 8)} {createdTime}</span>
+                    <span>S/ {Number(o.total || 0).toFixed(2)}</span>
+                  </div>
+                );
+              })}
+              <div className="border-t border-black my-1" />
+            </div>
+          )}
+
+          {/* Ticket compacto del cierre mensual (grabado en la BD, inmutable) */}
+          {printMode === "monthly" && monthlyClosure && (
+            <div className="hidden print:block font-mono font-bold text-[11px] leading-snug text-black w-[72mm]">
+              <p className="text-center">RESTAURANTE LAS FLORES</p>
+              <p className="text-center">Cierre Mensual</p>
+              <p className="text-center mb-2">Mes: {formatMonthLabel(monthlyClosure.month)}</p>
+              <div className="border-t border-black my-1" />
+              <div className="flex justify-between"><span>Cobrado online</span><span>S/ {Number(monthlyClosure.total_online).toFixed(2)}</span></div>
+              <div className="flex justify-between"><span>Fletes delivery</span><span>S/ {Number(monthlyClosure.total_delivery_fees).toFixed(2)}</span></div>
+              <div className="border-t border-black my-1" />
+              <div className="flex justify-between"><span>VENTA TOTAL NETO</span><span>S/ {Number(monthlyClosure.total_net).toFixed(2)}</span></div>
+              <p>{monthlyClosure.order_count} comandas del mes</p>
+              <div className="border-t border-black my-1" />
+            </div>
+          )}
         </div>
 
         {/* Acciones de Footer del Modal */}
         <div className="p-4 px-6 bg-white border-t border-black/10 flex items-center justify-between print:hidden">
           <div className="text-xs text-black/60 font-medium">
-            Imprime el reporte o descárgalo en Excel/CSV para contabilidad.
+            Imprime el ticket del día o el cierre mensual (una sola vez, no editable).
           </div>
 
           <div className="flex items-center gap-3">
-            <button
-              onClick={handleExportCSV}
-              disabled={filteredOrders.length === 0}
-              className="py-2.5 px-4 rounded-xl bg-white border border-black/20 hover:bg-black/5 text-black font-bold text-xs flex items-center gap-2 transition-all shadow-xs cursor-pointer disabled:opacity-50"
-            >
-              <Download size={16} className="text-[#2c4a3e]" />
-              <span>Exportar Excel (CSV)</span>
-            </button>
+            <div className="relative" ref={monthlyPopoverRef}>
+              <button
+                onClick={() => setMonthlyPopoverOpen((v) => !v)}
+                className="py-2.5 px-4 rounded-xl bg-white border border-black/20 hover:bg-black/5 text-black font-bold text-xs flex items-center gap-2 transition-all shadow-xs cursor-pointer"
+              >
+                <Lock size={16} className="text-[#2c4a3e]" />
+                <span>Cierre Mensual</span>
+              </button>
+
+              {monthlyPopoverOpen && (
+                <div className="absolute bottom-full right-0 mb-2 w-72 bg-white rounded-2xl shadow-2xl border border-black/10 p-4 space-y-3 z-20">
+                  <p className="text-xs font-bold text-black/70 leading-relaxed">
+                    Imprime lo cobrado online, los fletes y la venta neta de un mes ya cerrado.
+                    Se calcula y se graba una sola vez: no se puede editar después.
+                  </p>
+                  <select
+                    value={selectedClosureMonth}
+                    onChange={(e) => setSelectedClosureMonth(e.target.value)}
+                    className="w-full text-xs font-bold border border-black/20 rounded-xl px-3 py-2 focus:outline-none cursor-pointer"
+                  >
+                    {eligibleMonths.map((mo) => (
+                      <option key={mo.value} value={mo.value}>{mo.label}</option>
+                    ))}
+                  </select>
+                  {monthlyError && (
+                    <p className="text-xs text-red-600 font-bold">{monthlyError}</p>
+                  )}
+                  <button
+                    onClick={handlePrintMonthly}
+                    disabled={monthlyLoading}
+                    className="w-full py-2.5 rounded-xl bg-[#2c4a3e] hover:bg-[#2c4a3e]/90 text-[#fbf5e6] font-bold text-xs flex items-center justify-center gap-2 transition-all disabled:opacity-50 cursor-pointer"
+                  >
+                    <Printer size={15} className="text-[#d4af37]" />
+                    <span>{monthlyLoading ? "Generando…" : "Imprimir Cierre de Mes"}</span>
+                  </button>
+                </div>
+              )}
+            </div>
 
             <button
               onClick={handlePrint}
