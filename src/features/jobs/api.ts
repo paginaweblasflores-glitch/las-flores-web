@@ -104,6 +104,11 @@ export async function saveJobOffer(input: JobOfferInput, id?: string): Promise<J
   return data as JobOffer;
 }
 
+export async function deleteJobOffer(id: string): Promise<void> {
+  const { error } = await supabase.from("job_offers").delete().eq("id", id);
+  throwIfError(error);
+}
+
 export async function duplicateJobOffer(offer: JobOffer): Promise<JobOffer> {
   const { id: _id, created_at: _createdAt, updated_at: _updatedAt, ...input } = offer;
 

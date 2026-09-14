@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import {
   listAdminJobOffers,
   saveJobOffer,
+  deleteJobOffer,
   listJobApplications,
   updateJobApplication,
   createCvSignedUrl,
@@ -31,6 +32,7 @@ import {
   Loader2,
   AlertCircle,
   X,
+  Trash2,
 } from "lucide-react";
 import { TablePagination } from "./TablePagination";
 
@@ -166,6 +168,29 @@ export function AdminJobsSection() {
       alert("Error al guardar la convocatoria.");
     } finally {
       setSavingOffer(false);
+    }
+  };
+
+  const handleDeleteOffer = async (offer: JobOffer) => {
+    const applicationsCount = applications.filter((a) => a.job_offer_id === offer.id).length;
+    if (applicationsCount > 0) {
+      alert(
+        `No se puede eliminar "${offer.title}" porque ya tiene ${applicationsCount} postulación(es) registrada(s). Cámbiala a "Cerrada" en su lugar si ya no la necesitas activa.`
+      );
+      return;
+    }
+
+    const confirmed = window.confirm(
+      `¿Estás seguro de eliminar permanentemente la convocatoria "${offer.title}"?`
+    );
+    if (!confirmed) return;
+
+    try {
+      await deleteJobOffer(offer.id);
+      setOffers((prev) => prev.filter((o) => o.id !== offer.id));
+    } catch (err) {
+      console.error(err);
+      alert("Error al eliminar la convocatoria.");
     }
   };
 
@@ -324,13 +349,22 @@ export function AdminJobsSection() {
                         {offer.application_deadline || "Sin fecha límite"}
                       </td>
                       <td className="px-6 py-4 text-right">
-                        <button
-                          onClick={() => handleOpenEditOffer(offer)}
-                          className="p-2 rounded-xl text-[#3b1f10]/70 hover:text-[#2e5339] hover:bg-[#2e5339]/10 border border-transparent hover:border-[#2e5339]/20 transition-all cursor-pointer"
-                          title="Editar Convocatoria"
-                        >
-                          <Edit2 size={16} />
-                        </button>
+                        <div className="flex items-center justify-end gap-1">
+                          <button
+                            onClick={() => handleOpenEditOffer(offer)}
+                            className="p-2 rounded-xl text-[#3b1f10]/70 hover:text-[#2e5339] hover:bg-[#2e5339]/10 border border-transparent hover:border-[#2e5339]/20 transition-all cursor-pointer"
+                            title="Editar Convocatoria"
+                          >
+                            <Edit2 size={16} />
+                          </button>
+                          <button
+                            onClick={() => handleDeleteOffer(offer)}
+                            className="p-2 rounded-xl text-[#3b1f10]/70 hover:text-red-700 hover:bg-red-50 border border-transparent hover:border-red-200 transition-all cursor-pointer"
+                            title="Eliminar Convocatoria"
+                          >
+                            <Trash2 size={16} />
+                          </button>
+                        </div>
                       </td>
                     </tr>
                   ))
