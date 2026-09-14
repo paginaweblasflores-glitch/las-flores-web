@@ -330,6 +330,23 @@ function ReservasPage() {
     return matching ? matching.reason : null;
   };
 
+  // Un apagado "Indefinido" oculta la zona por completo del sitio (como
+  // deshabilitarla manualmente); "Día Completo" y "Rango de Horas" son
+  // temporales y la zona debe seguir viéndose, solo marcada como bloqueada
+  // con el motivo (ver checkBlackoutForSlot). Aplica igual para todas las
+  // zonas, no es un caso especial de ninguna en particular.
+  const checkIndefiniteBlackout = (zoneId: string | null, date: string) => {
+    if (!date) return null;
+    const matching = allActiveBlackouts.find((b) => {
+      if (!b.is_active) return false;
+      if (b.blackout_type !== "indefinite") return false;
+      if (b.zone_id !== null && zoneId !== null && b.zone_id !== zoneId) return false;
+      if (date < b.start_date) return false;
+      return true;
+    });
+    return matching ? matching.reason : null;
+  };
+
   // Fetch blocked zones for selected date/time
   useEffect(() => {
     if (!form.date) return;
@@ -720,12 +737,14 @@ function ReservasPage() {
           {/* Grid de Tarjetas Elegantes (Estilo La Rosa Náutica: Fotos altas y prominentes) */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
             {ZONAS
-              .filter((z) => !checkBlackoutForSlot(z.id, form.date || todayIso))
-              .map((z) => (
+              .filter((z) => !checkIndefiniteBlackout(z.id, form.date || todayIso))
+              .map((z) => {
+                const blockReason = checkBlackoutForSlot(z.id, form.date || todayIso);
+                return (
                 <div
                   key={z.id}
                   onClick={() => handleSelectZoneCard(z)}
-                  className="group flex flex-col justify-between transition-all duration-300 cursor-pointer"
+                  className={`group flex flex-col justify-between transition-all duration-300 cursor-pointer ${blockReason ? "opacity-70" : ""}`}
                 >
                   <div>
                     {/* Foto Vertical Estilo La Rosa Náutica (Altura uniforme fija h-[580px]) */}
@@ -736,6 +755,12 @@ function ReservasPage() {
                         className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-108"
                       />
                       <div className="absolute inset-0 bg-black/10 group-hover:bg-black/0 transition-colors duration-500" />
+
+                      {blockReason && (
+                        <span className="absolute top-3 left-3 right-3 bg-red-700/90 backdrop-blur-xs text-white text-[10px] font-bold uppercase tracking-wide px-3 py-2 rounded-xs text-center leading-snug">
+                          Reservada / No disponible: {blockReason}
+                        </span>
+                      )}
 
                       <span className="absolute bottom-3 left-3 bg-black/65 backdrop-blur-xs text-white text-[10px] font-semibold uppercase tracking-widest px-3 py-1.5 rounded-xs">
                         {z.capacidad}
@@ -767,7 +792,8 @@ function ReservasPage() {
                     </button>
                   </div>
                 </div>
-              ))}
+                );
+              })}
           </div>
         </main>
       )}
