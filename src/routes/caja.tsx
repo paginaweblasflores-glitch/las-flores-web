@@ -881,11 +881,7 @@ function CashierDashboardRoute() {
       )}
 
       {activeTab === "analitica" && (
-        <CashierKPIHeader
-          todayRevenue={todayRevenue}
-          activeOrdersCount={activeOrdersCount}
-          avgWaitMins={avgWaitMins}
-        />
+        <CashierKPIHeader todayRevenue={todayRevenue} />
       )}
 
       </main>
