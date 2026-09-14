@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Download, Search, Users, Truck, Store, Calendar, CalendarRange } from "lucide-react";
+import { Download, Search, Users, Truck, Store, Calendar, CalendarRange, Eye } from "lucide-react";
 import * as XLSX from "xlsx";
 import { supabase } from "../lib/supabase";
 import { getRecentMonths, formatMonthLabel, getMonthDateRange } from "../lib/monthUtils";
@@ -7,6 +7,7 @@ import { TablePagination } from "./TablePagination";
 
 interface CashierClientsSectionProps {
   orders: any[];
+  onViewDetail: (order: any) => void;
 }
 
 type FilterMode = "day" | "month";
@@ -18,7 +19,7 @@ const getYYYYMMDD = (d?: Date | string) => {
   return dateObj.toLocaleDateString("sv-SE");
 };
 
-export function CashierClientsSection({ orders }: CashierClientsSectionProps) {
+export function CashierClientsSection({ orders, onViewDetail }: CashierClientsSectionProps) {
   const todayStr = getYYYYMMDD(new Date());
   const eligibleMonths = getRecentMonths();
 
@@ -229,7 +230,8 @@ export function CashierClientsSection({ orders }: CashierClientsSectionProps) {
                     <th className="p-3.5">Cliente</th>
                     <th className="p-3.5">Modalidad</th>
                     <th className="p-3.5">Estado</th>
-                    <th className="p-3.5 text-right pr-4">Total</th>
+                    <th className="p-3.5 text-right">Total</th>
+                    <th className="p-3.5 text-center pr-4">Ver</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-black/5 font-medium text-black/80">
@@ -276,8 +278,17 @@ export function CashierClientsSection({ orders }: CashierClientsSectionProps) {
                           {o.status || "pendiente"}
                         </span>
                       </td>
-                      <td className="p-3.5 text-right pr-4 font-bold text-[#2D473C]">
+                      <td className="p-3.5 text-right font-bold text-[#2D473C]">
                         S/ {Number(o.total || 0).toFixed(2)}
+                      </td>
+                      <td className="p-3.5 text-center pr-4">
+                        <button
+                          onClick={() => onViewDetail(o)}
+                          className="p-2 rounded-lg bg-gray-100 hover:bg-gray-200 border border-gray-200 text-gray-700 transition-colors"
+                          title="Ver Detalle Completo del Cliente"
+                        >
+                          <Eye size={14} />
+                        </button>
                       </td>
                     </tr>
                   ))}

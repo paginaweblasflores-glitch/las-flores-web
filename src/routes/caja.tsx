@@ -544,7 +544,13 @@ function CashierDashboardRoute() {
       )}
 
       {activeTab === "clientes" && (
-        <CashierClientsSection orders={orders} />
+        <CashierClientsSection
+          orders={orders}
+          onViewDetail={(ord) => {
+            setSelectedOrder(ord);
+            setIsDetailModalOpen(true);
+          }}
+        />
       )}
 
       </main>
