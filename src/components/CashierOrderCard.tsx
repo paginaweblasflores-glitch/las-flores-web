@@ -50,22 +50,28 @@ export function CashierOrderCard({
   const printKitchenTicket = () => {
     const itemsHtml = items
       .map((item) => {
-        const notes = item.notes ? `<p style="padding-left:10px;">- ${item.notes}</p>` : "";
-        return `<div class="row"><span>${item.quantity}x ${item.product_name}</span></div>${notes}`;
+        const detailLines = (item.notes || "")
+          .split(";")
+          .map((d: string) => d.trim())
+          .filter(Boolean)
+          .map((d: string) => `<p style="padding-left:10px;">- ${d.toUpperCase()}</p>`)
+          .join("");
+        return `<div class="row"><span>${item.quantity}x ${(item.product_name || "").toUpperCase()}</span></div>${detailLines}`;
       })
-      .join("");
+      .join("<div style=\"height:4px;\"></div>");
 
     const html = `
       <p class="center">RESTAURANTE LAS FLORES</p>
-      <p class="center">Comanda de Cocina</p>
+      <p class="center">COMANDA DE COCINA</p>
       <hr />
-      <p>Pedido: #${order.order_number || order.id?.slice(0, 8)}</p>
-      <p>Modalidad: ${order.order_type === "delivery" ? "DELIVERY" : "RECOJO EN TIENDA"}</p>
-      <p>Fecha: ${new Date().toLocaleString("es-PE")}</p>
+      <p>PEDIDO: #${order.order_number || order.id?.slice(0, 8)}</p>
+      <p>MODALIDAD: ${order.order_type === "delivery" ? "DELIVERY" : "RECOJO EN TIENDA"}</p>
+      <p>ORIGEN: PAGINA WEB</p>
+      <p>FECHA: ${new Date().toLocaleString("es-PE").toUpperCase()}</p>
       <hr />
       ${itemsHtml}
       <hr />
-      <p>Cliente: ${order.client_name || "Cliente"}</p>
+      <p>CLIENTE: ${(order.client_name || "Cliente").toUpperCase()}</p>
     `;
     printTicket(html, "Comanda de Cocina");
   };
