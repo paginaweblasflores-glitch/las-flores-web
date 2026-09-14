@@ -355,8 +355,7 @@ function RestaurantePage() {
         <div className="relative z-10 mx-auto flex w-full max-w-6xl items-center justify-center px-4 sm:px-6 lg:px-8 text-piedra">
           <div className="max-w-3xl text-center">
             <h1 className="font-serif text-4xl md:text-6xl text-piedra font-normal leading-tight animate-reveal [animation-delay:200ms]">
-              Bienvenido a Nuestra Casa,
-              <span className="block">El Mejor Restaurante en Ayacucho</span>
+              Bienvenido a Nuestra Casa
             </h1>
             <p className="mx-auto mt-6 max-w-3xl text-base md:text-lg text-piedra/90 leading-relaxed">
               Cruza la puerta de Las Flores y sé parte de la familia. Aquí, cada visita se recibe
