@@ -1,8 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState, useEffect, useRef } from "react";
-import { CheckCircle2, Navigation2, Package, MapPin, ExternalLink, Loader2, AlertTriangle, ShieldCheck, Phone, Clock, ArrowRight, Banknote, Check } from "lucide-react";
+import { CheckCircle2, Navigation2, Package, MapPin, ExternalLink, Loader2, AlertTriangle, ShieldCheck, Clock, ArrowRight, Banknote, Check } from "lucide-react";
 import { supabase } from "@/lib/supabase";
-import { sendReviewRequestEmail } from "@/lib/emailService";
 
 export const Route = createFileRoute("/d/$orderId")({
   component: DriverMagicLink,
@@ -14,8 +13,6 @@ export const Route = createFileRoute("/d/$orderId")({
 interface OrderData {
   id: string;
   order_number: string;
-  client_name: string;
-  client_phone: string;
   address: string;
   reference: string;
   latitude: number | null;
@@ -23,7 +20,7 @@ interface OrderData {
   total: number;
   status: string;
   payment_method: string;
-  order_items?: { quantity: number; product_name: string; subtotal: number }[];
+  items?: { quantity: number; product_name: string; subtotal: number }[];
 }
 
 function DriverMagicLink() {
@@ -36,23 +33,27 @@ function DriverMagicLink() {
   const [processingState, setProcessingState] = useState(false);
   const [pinInput, setPinInput] = useState("");
   const [pinError, setPinError] = useState(false);
+  const [updateError, setUpdateError] = useState<string | null>(null);
   const [isDriverAuthenticated, setIsDriverAuthenticated] = useState(() => {
     if (typeof window === "undefined") return false;
     return localStorage.getItem(`driver_auth_${orderId}`) === "true";
   });
+  const [verifiedPin, setVerifiedPin] = useState(() => {
+    if (typeof window === "undefined") return "";
+    return localStorage.getItem(`driver_pin_${orderId}`) || "";
+  });
 
   const channelRef = useRef<any>(null);
 
-  // Cargar datos reales del pedido desde Supabase
+  // Cargar datos reales del pedido desde Supabase (vía RPC, sin exponer
+  // nombre/correo/teléfono del cliente — ver supabase/driver_tracking_rpc.sql)
   useEffect(() => {
     const fetchOrder = async () => {
       setLoadingOrder(true);
       try {
-        const { data: order, error: fetchErr } = await supabase
-          .from("orders")
-          .select("*, order_items(*)")
-          .eq("id", orderId)
-          .single();
+        const { data: rows, error: fetchErr } = await supabase
+          .rpc("get_order_tracking", { p_order_id: orderId });
+        const order = rows?.[0];
 
         if (fetchErr || !order) {
           setOrderError("Pedido no encontrado o enlace caducado.");
@@ -103,9 +104,27 @@ function DriverMagicLink() {
     ? { lat: orderData.latitude, lng: orderData.longitude }
     : null;
 
+  // Todas las actualizaciones de estado pasan por update_order_status_driver,
+  // que vuelve a verificar el PIN en el servidor (ver
+  // supabase/driver_tracking_rpc.sql) — sin esto, cualquiera con el UUID del
+  // pedido (sin conocer el PIN) podría mover el pedido igual.
+  const updateStatusSecure = async (newStatus: "en_preparacion" | "en_camino" | "entregado") => {
+    const { data: ok, error } = await supabase.rpc("update_order_status_driver", {
+      p_order_id: orderId,
+      p_pin: verifiedPin,
+      p_new_status: newStatus,
+    });
+
+    if (error || ok !== true) {
+      setUpdateError("No se pudo actualizar el pedido. Vuelve a ingresar el PIN e intenta de nuevo.");
+      return false;
+    }
+    setUpdateError(null);
+    return true;
+  };
+
   const startJourney = async () => {
     setProcessingState(true);
-    setDeliveryPhase('to_restaurant');
 
     if (channelRef.current) {
       try {
@@ -119,22 +138,13 @@ function DriverMagicLink() {
       }
     }
 
-    // Persistir en la BD para que el motorizado no pierda progreso al refrescar
-    try {
-      await supabase
-        .from("orders")
-        .update({ status: "en_preparacion" })
-        .eq("id", orderId);
-    } catch (err) {
-      console.error("Error al actualizar estado en DB:", err);
-    } finally {
-      setProcessingState(false);
-    }
+    const success = await updateStatusSecure("en_preparacion");
+    if (success) setDeliveryPhase('to_restaurant');
+    setProcessingState(false);
   };
 
   const markPickedUp = async () => {
     setProcessingState(true);
-    setDeliveryPhase('to_customer');
 
     if (channelRef.current) {
       try {
@@ -148,17 +158,9 @@ function DriverMagicLink() {
       }
     }
 
-    // Actualizar estado del pedido en Supabase DB a 'en_camino'
-    try {
-      await supabase
-        .from("orders")
-        .update({ status: "en_camino" })
-        .eq("id", orderId);
-    } catch (err) {
-      console.error("Error al actualizar estado en DB:", err);
-    } finally {
-      setProcessingState(false);
-    }
+    const success = await updateStatusSecure("en_camino");
+    if (success) setDeliveryPhase('to_customer');
+    setProcessingState(false);
   };
 
   const markDelivered = async () => {
@@ -175,29 +177,9 @@ function DriverMagicLink() {
       }
     }
 
-    setDeliveryPhase('delivered');
-
-    // Actualizar estado del pedido en Supabase a 'entregado'
-    try {
-      await supabase
-        .from("orders")
-        .update({ status: "entregado" })
-        .eq("id", orderId);
-
-      // Disparar correo de solicitud de reseña de 5 estrellas al cliente
-      const emailToUse = (orderData as any)?.client_email || (orderData as any)?.customer_email || (orderData as any)?.email;
-      const nameToUse = orderData?.client_name || "Cliente";
-      if (emailToUse && emailToUse.includes("@")) {
-        sendReviewRequestEmail({
-          name: nameToUse,
-          email: emailToUse,
-        }).catch((e) => console.warn("Driver view review email warning:", e));
-      }
-    } catch (err) {
-      console.error("Error al actualizar estado en DB:", err);
-    } finally {
-      setProcessingState(false);
-    }
+    const success = await updateStatusSecure("entregado");
+    if (success) setDeliveryPhase('delivered');
+    setProcessingState(false);
   };
 
   // Estado 1: Cargando datos del pedido
@@ -238,6 +220,8 @@ function DriverMagicLink() {
 
       if (!error && isValid === true) {
         localStorage.setItem(`driver_auth_${orderId}`, "true");
+        localStorage.setItem(`driver_pin_${orderId}`, cleanInput);
+        setVerifiedPin(cleanInput);
         setIsDriverAuthenticated(true);
         setPinError(false);
         return;
@@ -246,14 +230,7 @@ function DriverMagicLink() {
       console.warn("RPC verify_driver_pin error:", err);
     }
 
-    const exactDriverPin = (orderData as any)?.driver_pin;
-    if (exactDriverPin && cleanInput === String(exactDriverPin).trim()) {
-      localStorage.setItem(`driver_auth_${orderId}`, "true");
-      setIsDriverAuthenticated(true);
-      setPinError(false);
-    } else {
-      setPinError(true);
-    }
+    setPinError(true);
   };
 
   // Estado 2.5: PIN de Motorizado no autenticado
@@ -375,32 +352,18 @@ function DriverMagicLink() {
                 <MapPin className="text-nogal" size={20} />
               </div>
               <div className="flex-1 min-w-0">
-                <p className="text-[10px] uppercase font-bold tracking-widest text-nogal/50 mb-0.5">Cliente & Destino:</p>
-                <p className="font-bold text-sm text-nogal truncate">{orderData.client_name || "Cliente Las Flores"}</p>
-                <p className="text-xs text-nogal/80 font-medium leading-snug mt-1">{orderData.address || "Dirección no especificada"}</p>
+                <p className="text-[10px] uppercase font-bold tracking-widest text-nogal/50 mb-0.5">Destino:</p>
+                <p className="font-bold text-sm text-nogal leading-snug">{orderData.address || "Dirección no especificada"}</p>
                 {orderData.reference && (
                   <p className="text-[11px] text-nogal/60 mt-1 italic">Ref: {orderData.reference}</p>
                 )}
               </div>
             </div>
 
-            {orderData.client_phone && (
-              <div className="pt-2 border-t border-nogal/10 flex justify-between items-center">
-                <span className="text-[10px] uppercase font-bold text-nogal/50">Teléfono del cliente:</span>
-                <a
-                  href={`tel:${orderData.client_phone}`}
-                  className="text-xs font-bold text-eucalipto hover:underline flex items-center gap-1"
-                >
-                  <Phone size={13} />
-                  {orderData.client_phone}
-                </a>
-              </div>
-            )}
-            
             {/* Detalle de Comanda */}
             <div className="border-t border-nogal/10 pt-3 space-y-1.5">
               <p className="text-[10px] uppercase font-bold tracking-widest text-nogal/50">Platos de la Comanda:</p>
-              {orderData.order_items?.map((item, idx) => (
+              {orderData.items?.map((item, idx) => (
                 <div key={idx} className="flex justify-between text-xs font-medium">
                   <span className="text-nogal/80">{item.quantity}x {item.product_name}</span>
                   <span className="font-bold text-nogal">S/ {Number(item.subtotal).toFixed(2)}</span>
@@ -439,6 +402,12 @@ function DriverMagicLink() {
           </div>
 
           {/* FASES DE NAVEGACIÓN Y ACCIÓN */}
+          {updateError && (
+            <div className="bg-red-50 border border-red-200 text-red-700 text-xs font-bold p-3 rounded-xl">
+              {updateError}
+            </div>
+          )}
+
           {deliveryPhase === 'pending' && (
             <div className="space-y-3">
               <p className="text-nogal/70 text-xs leading-relaxed font-serif italic">
