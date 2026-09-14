@@ -21,6 +21,7 @@ import {
   User,
   MapPin,
   ExternalLink,
+  Trash2,
 } from "lucide-react";
 import { TablePagination } from "./TablePagination";
 
@@ -214,6 +215,31 @@ export function AdminComplaintsSection({ onPendingCountChange }: AdminComplaints
       alert("Error al actualizar el estado de la hoja de reclamación: " + err.message);
     } finally {
       setIsSaving(false);
+    }
+  };
+
+  const handleDeleteComplaint = async (complaint: ComplaintItem) => {
+    const confirmed = window.confirm(
+      `¿Eliminar permanentemente la hoja de reclamación ${complaint.code} de ${complaint.full_name}? Esta acción no se puede deshacer.`
+    );
+    if (!confirmed) return;
+
+    try {
+      const { error } = await supabase.from("complaints").delete().eq("id", complaint.id);
+      if (error) throw error;
+
+      const updatedList = complaints.filter((c) => c.id !== complaint.id);
+      setComplaints(updatedList);
+      const pendingCount = updatedList.filter((c) => c.status === "pending").length;
+      onPendingCountChange?.(pendingCount);
+
+      if (selectedComplaint?.id === complaint.id) {
+        setIsModalOpen(false);
+        setSelectedComplaint(null);
+      }
+    } catch (err: any) {
+      console.error(err);
+      alert("Error al eliminar la hoja de reclamación: " + err.message);
     }
   };
 
@@ -424,16 +450,28 @@ export function AdminComplaintsSection({ onPendingCountChange }: AdminComplaints
                       </td>
 
                       <td className="py-3.5 px-4 text-right">
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            handleOpenDetail(item);
-                          }}
-                          className="px-3 py-1.5 bg-gray-100 hover:bg-[#2D473C] hover:text-white rounded-lg text-xs font-bold transition-colors inline-flex items-center gap-1"
-                        >
-                          <span>Atender</span>
-                          <ChevronRight size={13} />
-                        </button>
+                        <div className="flex items-center justify-end gap-1.5">
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleOpenDetail(item);
+                            }}
+                            className="px-3 py-1.5 bg-gray-100 hover:bg-[#2D473C] hover:text-white rounded-lg text-xs font-bold transition-colors inline-flex items-center gap-1"
+                          >
+                            <span>Atender</span>
+                            <ChevronRight size={13} />
+                          </button>
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleDeleteComplaint(item);
+                            }}
+                            title="Eliminar reclamación"
+                            className="p-1.5 bg-gray-100 hover:bg-red-100 text-gray-500 hover:text-red-700 rounded-lg transition-colors"
+                          >
+                            <Trash2 size={14} />
+                          </button>
+                        </div>
                       </td>
                     </tr>
                   );
