@@ -419,9 +419,15 @@ export function AdminComplaintsSection({ onPendingCountChange }: AdminComplaints
 
       {/* ── MODAL DETALLE & GESTIÓN DE ESTADO (INDECOPI) ── */}
       {isModalOpen && selectedComplaint && (
-        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 overflow-y-auto animate-in fade-in duration-200">
-          <div className="bg-white rounded-3xl max-w-3xl w-full p-6 md:p-8 shadow-2xl border border-gray-200 space-y-6 my-8">
-            
+        <div
+          className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-start justify-center p-4 overflow-y-auto animate-in fade-in duration-200"
+          onClick={() => setIsModalOpen(false)}
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className="bg-white rounded-3xl max-w-3xl w-full p-6 md:p-8 shadow-2xl border border-gray-200 space-y-6 my-8"
+          >
+
             {/* Header del Modal */}
             <div className="flex items-center justify-between border-b border-gray-100 pb-4">
               <div>
