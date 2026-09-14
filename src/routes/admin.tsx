@@ -20,6 +20,7 @@ import {
   QrCode,
 } from "lucide-react";
 
+import { TablePagination } from "../components/TablePagination";
 import { AdminOrderDetailModal } from "../components/AdminOrderDetailModal";
 import { AdminProductModal } from "../components/AdminProductModal";
 import { AdminCouponModal } from "../components/AdminCouponModal";
@@ -76,6 +77,26 @@ function AdminRoute() {
 
   const [menuSearch, setMenuSearch] = useState("");
   const [menuCategoryFilter, setMenuCategoryFilter] = useState("all");
+
+  // Paginación de tablas
+  const [ordersPage, setOrdersPage] = useState(1);
+  const [ordersPageSize, setOrdersPageSize] = useState(10);
+  const [reservationsPage, setReservationsPage] = useState(1);
+  const [reservationsPageSize, setReservationsPageSize] = useState(10);
+  const [couponsPage, setCouponsPage] = useState(1);
+  const [couponsPageSize, setCouponsPageSize] = useState(10);
+
+  useEffect(() => {
+    setOrdersPage(1);
+  }, [orderSearch, orderStatusFilter, orderDateFrom, orderDateTo, ordersPageSize]);
+
+  useEffect(() => {
+    setReservationsPage(1);
+  }, [resSearch, resStatusFilter, resDateFrom, resDateTo, reservationsPageSize]);
+
+  useEffect(() => {
+    setCouponsPage(1);
+  }, [couponsPageSize]);
 
   // Modal states
   const [selectedOrder, setSelectedOrder] = useState<any | null>(null);
@@ -328,6 +349,11 @@ function AdminRoute() {
     return matchSearch && matchStatus && matchDateRange;
   });
 
+  const paginatedReservations = filteredReservations.slice(
+    (reservationsPage - 1) * reservationsPageSize,
+    reservationsPage * reservationsPageSize
+  );
+
   const filteredOrders = orders.filter((ord) => {
     const matchSearch =
       (ord.order_number || "").toString().includes(orderSearch) ||
@@ -342,6 +368,16 @@ function AdminRoute() {
 
     return matchSearch && matchStatus && matchDateRange;
   });
+
+  const paginatedOrders = filteredOrders.slice(
+    (ordersPage - 1) * ordersPageSize,
+    ordersPage * ordersPageSize
+  );
+
+  const paginatedCoupons = coupons.slice(
+    (couponsPage - 1) * couponsPageSize,
+    couponsPage * couponsPageSize
+  );
 
   const filteredProducts = products.filter((prod) => {
     const matchSearch = (prod.name || "").toLowerCase().includes(menuSearch.toLowerCase());
@@ -493,7 +529,7 @@ function AdminRoute() {
                         </td>
                       </tr>
                     ) : (
-                      filteredOrders.map((ord) => (
+                      paginatedOrders.map((ord) => (
                         <tr key={ord.id} className="hover:bg-gray-50/80 transition-colors">
                           <td className="py-3 px-4 font-black text-gray-900">
                             #{ord.order_number || ord.id?.slice(0, 8)}
@@ -534,6 +570,16 @@ function AdminRoute() {
                   </tbody>
                 </table>
               </div>
+
+              {filteredOrders.length > 0 && (
+                <TablePagination
+                  page={ordersPage}
+                  pageSize={ordersPageSize}
+                  total={filteredOrders.length}
+                  onPageChange={setOrdersPage}
+                  onPageSizeChange={setOrdersPageSize}
+                />
+              )}
             </div>
           )}
 
@@ -588,7 +634,7 @@ function AdminRoute() {
                         </td>
                       </tr>
                     ) : (
-                      filteredReservations.map((res) => (
+                      paginatedReservations.map((res) => (
                         <tr key={res.id} className="hover:bg-gray-50/80 transition-colors">
                           <td className="py-3 px-4 font-bold text-gray-900">
                             {res.client_name || "Cliente Reserva"}
@@ -634,6 +680,16 @@ function AdminRoute() {
                   </tbody>
                 </table>
               </div>
+
+              {filteredReservations.length > 0 && (
+                <TablePagination
+                  page={reservationsPage}
+                  pageSize={reservationsPageSize}
+                  total={filteredReservations.length}
+                  onPageChange={setReservationsPage}
+                  onPageSizeChange={setReservationsPageSize}
+                />
+              )}
             </div>
           )}
 
@@ -796,7 +852,7 @@ function AdminRoute() {
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {coupons.map((coupon) => (
+                {paginatedCoupons.map((coupon) => (
                   <div key={coupon.id} className="p-4 rounded-2xl border border-gray-200 bg-gray-50/50 space-y-3">
                     <div className="flex items-center justify-between">
                       <span className="font-mono font-black text-base text-[#2D473C] bg-amber-100 px-3 py-1 rounded-xl border border-amber-300">
@@ -828,6 +884,16 @@ function AdminRoute() {
                   </div>
                 ))}
               </div>
+
+              {coupons.length > 0 && (
+                <TablePagination
+                  page={couponsPage}
+                  pageSize={couponsPageSize}
+                  total={coupons.length}
+                  onPageChange={setCouponsPage}
+                  onPageSizeChange={setCouponsPageSize}
+                />
+              )}
             </div>
           )}
 

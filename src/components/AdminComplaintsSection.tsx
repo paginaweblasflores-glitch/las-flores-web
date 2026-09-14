@@ -21,6 +21,7 @@ import {
   MapPin,
   ExternalLink,
 } from "lucide-react";
+import { TablePagination } from "./TablePagination";
 
 export type ComplaintStatus = "pending" | "in_review" | "resolved" | "closed";
 
@@ -87,6 +88,8 @@ export function AdminComplaintsSection({ onPendingCountChange }: AdminComplaints
   const [typeFilter, setTypeFilter] = useState<string>("all");
   const [selectedComplaint, setSelectedComplaint] = useState<ComplaintItem | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
 
   // Estados del modal de respuesta
   const [newStatus, setNewStatus] = useState<ComplaintStatus>("in_review");
@@ -192,6 +195,12 @@ export function AdminComplaintsSection({ onPendingCountChange }: AdminComplaints
 
     return matchesSearch && matchesStatus && matchesType;
   });
+
+  useEffect(() => {
+    setPage(1);
+  }, [searchTerm, statusFilter, typeFilter, pageSize]);
+
+  const paginatedComplaints = filteredComplaints.slice((page - 1) * pageSize, page * pageSize);
 
   // Métricas rápidas
   const totalPending = complaints.filter((c) => c.status === "pending").length;
@@ -323,7 +332,7 @@ export function AdminComplaintsSection({ onPendingCountChange }: AdminComplaints
                   </td>
                 </tr>
               ) : (
-                filteredComplaints.map((item) => {
+                paginatedComplaints.map((item) => {
                   const statusConf = COMPLAINT_STATUS_LABELS[item.status] || COMPLAINT_STATUS_LABELS.pending;
                   const dateStr = new Date(item.created_at).toLocaleDateString("es-PE", {
                     day: "2-digit",
@@ -397,6 +406,16 @@ export function AdminComplaintsSection({ onPendingCountChange }: AdminComplaints
           </table>
         </div>
       </div>
+
+      {filteredComplaints.length > 0 && (
+        <TablePagination
+          page={page}
+          pageSize={pageSize}
+          total={filteredComplaints.length}
+          onPageChange={setPage}
+          onPageSizeChange={setPageSize}
+        />
+      )}
 
       {/* ── MODAL DETALLE & GESTIÓN DE ESTADO (INDECOPI) ── */}
       {isModalOpen && selectedComplaint && (

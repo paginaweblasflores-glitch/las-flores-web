@@ -32,6 +32,7 @@ import {
   AlertCircle,
   X,
 } from "lucide-react";
+import { TablePagination } from "./TablePagination";
 
 export function AdminJobsSection() {
   const [subTab, setSubTab] = useState<"offers" | "applications">("offers");
@@ -70,6 +71,11 @@ export function AdminJobsSection() {
   const [appSearch, setAppSearch] = useState("");
   const [appStatusFilter, setAppStatusFilter] = useState<string>("all");
   const [offerFilter, setOfferFilter] = useState<string>("all");
+
+  const [offersPage, setOffersPage] = useState(1);
+  const [offersPageSize, setOffersPageSize] = useState(10);
+  const [appsPage, setAppsPage] = useState(1);
+  const [appsPageSize, setAppsPageSize] = useState(10);
 
   const loadData = async () => {
     setLoading(true);
@@ -195,6 +201,20 @@ export function AdminJobsSection() {
     return matchSearch && matchStatus && matchOffer;
   });
 
+  useEffect(() => {
+    setOffersPage(1);
+  }, [offersPageSize]);
+
+  useEffect(() => {
+    setAppsPage(1);
+  }, [appSearch, appStatusFilter, offerFilter, appsPageSize]);
+
+  const paginatedOffers = offers.slice((offersPage - 1) * offersPageSize, offersPage * offersPageSize);
+  const paginatedApplications = filteredApplications.slice(
+    (appsPage - 1) * appsPageSize,
+    appsPage * appsPageSize
+  );
+
   return (
     <div className="space-y-6">
       {/* Header con Sub-pestañas */}
@@ -245,6 +265,7 @@ export function AdminJobsSection() {
         </div>
       ) : subTab === "offers" ? (
         /* ── SECCIÓN 1: CONVOCATORIAS ── */
+        <div className="space-y-4">
         <div className="bg-white rounded-3xl border border-[#d4a373]/25 shadow-sm overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full text-left text-sm text-[#3b1f10]">
@@ -266,7 +287,7 @@ export function AdminJobsSection() {
                     </td>
                   </tr>
                 ) : (
-                  offers.map((offer) => (
+                  paginatedOffers.map((offer) => (
                     <tr key={offer.id} className="hover:bg-[#fdf8f0]/80 transition-colors">
                       <td className="px-6 py-4">
                         <div className="font-bold text-[#3b1f10] text-sm">{offer.title}</div>
@@ -317,6 +338,17 @@ export function AdminJobsSection() {
               </tbody>
             </table>
           </div>
+        </div>
+
+        {offers.length > 0 && (
+          <TablePagination
+            page={offersPage}
+            pageSize={offersPageSize}
+            total={offers.length}
+            onPageChange={setOffersPage}
+            onPageSizeChange={setOffersPageSize}
+          />
+        )}
         </div>
       ) : (
         /* ── SECCIÓN 2: POSTULANTES Y CVS ── */
@@ -385,7 +417,7 @@ export function AdminJobsSection() {
                       </td>
                     </tr>
                   ) : (
-                    filteredApplications.map((app) => (
+                    paginatedApplications.map((app) => (
                       <tr key={app.id} className="hover:bg-cream/40 transition-colors">
                         <td className="px-6 py-4">
                           <div className="font-bold text-ink">{app.full_name}</div>
@@ -443,6 +475,16 @@ export function AdminJobsSection() {
               </table>
             </div>
           </div>
+
+          {filteredApplications.length > 0 && (
+            <TablePagination
+              page={appsPage}
+              pageSize={appsPageSize}
+              total={filteredApplications.length}
+              onPageChange={setAppsPage}
+              onPageSizeChange={setAppsPageSize}
+            />
+          )}
         </div>
       )}
 
