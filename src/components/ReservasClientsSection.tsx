@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Download, Search, Users, Calendar, CalendarRange, CalendarClock } from "lucide-react";
 import * as XLSX from "xlsx";
 import { supabase } from "../lib/supabase";
-import { getEligibleClosureMonths, formatMonthLabel, getMonthDateRange } from "../lib/monthUtils";
+import { getRecentMonths, formatMonthLabel, getMonthDateRange } from "../lib/monthUtils";
 
 interface ReservasClientsSectionProps {
   reservations: any[];
@@ -31,7 +31,7 @@ const STATUS_LABELS: Record<string, string> = {
 
 export function ReservasClientsSection({ reservations }: ReservasClientsSectionProps) {
   const todayStr = getYYYYMMDD(new Date());
-  const eligibleMonths = getEligibleClosureMonths();
+  const eligibleMonths = getRecentMonths();
 
   const [filterMode, setFilterMode] = useState<FilterMode>("hoy");
   const [selectedDate, setSelectedDate] = useState(todayStr);

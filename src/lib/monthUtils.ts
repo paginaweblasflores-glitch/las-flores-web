@@ -11,6 +11,22 @@ export const getEligibleClosureMonths = () => {
   return months;
 };
 
+// Últimos 12 meses INCLUYENDO el mes en curso (para navegar/exportar
+// clientes), a diferencia de getEligibleClosureMonths que lo excluye a
+// propósito porque un cierre mensual no debe poder hacerse antes de que
+// el mes termine.
+export const getRecentMonths = () => {
+  const months: { value: string; label: string }[] = [];
+  const now = new Date();
+  for (let i = 0; i <= 11; i++) {
+    const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
+    const value = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}`;
+    const label = d.toLocaleDateString("es-PE", { month: "long", year: "numeric" });
+    months.push({ value, label: label.charAt(0).toUpperCase() + label.slice(1) });
+  }
+  return months;
+};
+
 export const formatMonthLabel = (monthStr: string) => {
   const [y, m] = monthStr.split("-").map(Number);
   const label = new Date(y, m - 1, 1).toLocaleDateString("es-PE", { month: "long", year: "numeric" });

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Download, Search, Users, Truck, Store, Calendar, CalendarRange } from "lucide-react";
 import * as XLSX from "xlsx";
 import { supabase } from "../lib/supabase";
-import { getEligibleClosureMonths, formatMonthLabel, getMonthDateRange } from "../lib/monthUtils";
+import { getRecentMonths, formatMonthLabel, getMonthDateRange } from "../lib/monthUtils";
 
 interface CashierClientsSectionProps {
   orders: any[];
@@ -19,7 +19,7 @@ const getYYYYMMDD = (d?: Date | string) => {
 
 export function CashierClientsSection({ orders }: CashierClientsSectionProps) {
   const todayStr = getYYYYMMDD(new Date());
-  const eligibleMonths = getEligibleClosureMonths();
+  const eligibleMonths = getRecentMonths();
 
   const [filterMode, setFilterMode] = useState<FilterMode>("day");
   const [selectedDate, setSelectedDate] = useState(todayStr);
