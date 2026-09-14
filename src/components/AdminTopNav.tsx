@@ -15,6 +15,7 @@ import {
   Menu,
   X,
   UserCircle2,
+  RefreshCw,
 } from "lucide-react";
 import type { AdminTab } from "./AdminSidebar";
 
@@ -25,6 +26,8 @@ interface AdminTopNavProps {
   complaintsCount?: number;
   onSignOut: () => void;
   userEmail?: string;
+  onRefresh: () => void;
+  refreshing?: boolean;
 }
 
 export function AdminTopNav({
@@ -34,6 +37,8 @@ export function AdminTopNav({
   complaintsCount = 0,
   onSignOut,
   userEmail,
+  onRefresh,
+  refreshing = false,
 }: AdminTopNavProps) {
   const menuItems = [
     { id: "analytics" as AdminTab, label: "Analítica", icon: BarChart3 },
@@ -111,8 +116,17 @@ export function AdminTopNav({
             })}
           </div>
 
-          {/* Right side: account menu + mobile toggle */}
+          {/* Right side: refresh + account menu + mobile toggle */}
           <div className="flex items-center gap-2 shrink-0">
+            <button
+              onClick={onRefresh}
+              disabled={refreshing}
+              title="Actualizar datos (sincroniza todo el panel)"
+              className="p-2.5 rounded-xl bg-white/10 hover:bg-white/20 transition-colors border border-white/20 disabled:opacity-50"
+            >
+              <RefreshCw size={16} className={refreshing ? "animate-spin text-[#D4AF37]" : "text-emerald-100"} />
+            </button>
+
             <div className="relative" ref={accountRef}>
               <button
                 onClick={() => setAccountOpen((v) => !v)}

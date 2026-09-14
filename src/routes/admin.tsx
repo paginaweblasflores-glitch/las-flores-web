@@ -17,7 +17,6 @@ import {
   Check,
   X,
   Filter,
-  QrCode,
 } from "lucide-react";
 
 import { TablePagination } from "../components/TablePagination";
@@ -31,9 +30,7 @@ import { AdminZonesSection } from "../components/AdminZonesSection";
 import { AdminComplaintsSection } from "../components/AdminComplaintsSection";
 import type { AdminTab } from "../components/AdminSidebar";
 import { AdminTopNav } from "../components/AdminTopNav";
-import { YapeConfigModal } from "../components/YapeConfigModal";
 import { removeProductById } from "../utils/adminProducts";
-import { getYapeConfig, saveYapeConfig, subscribeToYapeConfig, DEFAULT_YAPE_CONFIG, type YapeConfig } from "../lib/yapeService";
 
 const getLocalYYYYMMDD = (d = new Date()) => {
   const year = d.getFullYear();
@@ -109,17 +106,8 @@ function AdminRoute() {
   const [isCouponModalOpen, setIsCouponModalOpen] = useState(false);
   const [isCategoryModalOpen, setIsCategoryModalOpen] = useState(false);
 
-  // Yape QR Modal State
-  const [isYapeModalOpen, setIsYapeModalOpen] = useState(false);
-  const [yapeConfig, setYapeConfig] = useState<YapeConfig>(DEFAULT_YAPE_CONFIG);
-
   useEffect(() => {
     checkAuth();
-
-    getYapeConfig().then((cfg) => setYapeConfig(cfg));
-    const unsubYape = subscribeToYapeConfig((newConfig) => {
-      setYapeConfig(newConfig);
-    });
 
     const channel = supabase
       .channel("admin-realtime-dashboard")
@@ -131,7 +119,6 @@ function AdminRoute() {
       .subscribe();
 
     return () => {
-      unsubYape();
       supabase.removeChannel(channel);
     };
   }, []);
@@ -435,61 +422,12 @@ function AdminRoute() {
         complaintsCount={complaintsCount}
         onSignOut={handleSignOut}
         userEmail={userEmail}
+        onRefresh={() => fetchData()}
+        refreshing={refreshing}
       />
 
       {/* Main Command Area */}
       <div className="flex-1 flex flex-col min-w-0">
-
-        {/* Upper Command Header (solo en Analítica) */}
-        {activeTab === "analytics" && (
-          <header className="bg-white border-b border-gray-200 px-6 py-4 flex flex-col md:flex-row items-center justify-between gap-4 sticky top-0 z-30 shadow-2xs">
-            <div>
-              <h1 className="font-serif text-xl font-black text-[#2D473C] flex items-center gap-2">
-                Panel de Administración
-                <span className="text-xs font-sans px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-900 border border-emerald-300 font-extrabold flex items-center gap-1.5 uppercase tracking-wider">
-                  <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                  REALTIME
-                </span>
-              </h1>
-              <p className="text-xs text-gray-500 font-medium mt-0.5">
-                Bienvenido de nuevo, <strong className="text-gray-800 font-bold">{userEmail || "Administrador"}</strong>
-              </p>
-            </div>
-
-            <div className="flex items-center gap-3 w-full md:w-auto justify-end">
-              <button
-                onClick={() => fetchData()}
-                disabled={refreshing}
-                className="px-3.5 py-2 rounded-xl bg-gray-100 hover:bg-gray-200 text-gray-800 text-xs font-extrabold flex items-center gap-2 transition-colors disabled:opacity-50"
-                title="Actualizar Datos en Vivo"
-              >
-                <RefreshCw size={14} className={refreshing ? "animate-spin text-[#2D473C]" : ""} />
-                <span>Actualizar</span>
-              </button>
-
-              <button
-                type="button"
-                onClick={() => setIsYapeModalOpen(true)}
-                className="px-3.5 py-2 rounded-xl bg-purple-50 hover:bg-purple-100 text-purple-900 border border-purple-200 text-xs font-bold flex items-center gap-2 transition-all cursor-pointer shadow-2xs active:scale-98"
-                title="Configurar QR de Yape (Empresa / Personal)"
-              >
-                <QrCode size={15} className="text-purple-700" />
-                <span>QR Yape ({yapeConfig.mode === "personal" ? "Personal" : "Empresa"})</span>
-              </button>
-
-              <button
-                onClick={() => {
-                  setSelectedProduct(null);
-                  setIsProductModalOpen(true);
-                }}
-                className="px-4 py-2 rounded-xl bg-[#D4AF37] hover:bg-[#c29e2f] text-[#2D473C] text-xs font-black flex items-center gap-2 transition-all shadow-2xs active:scale-98"
-              >
-                <Plus size={16} />
-                <span>Nuevo Producto</span>
-              </button>
-            </div>
-          </header>
-        )}
 
         {/* Content Body Area */}
         <main className="p-6 space-y-6 flex-1">
@@ -974,16 +912,6 @@ function AdminRoute() {
         isOpen={isCategoryModalOpen}
         onClose={() => setIsCategoryModalOpen(false)}
         onSave={fetchData}
-      />
-
-      <YapeConfigModal
-        isOpen={isYapeModalOpen}
-        onClose={() => setIsYapeModalOpen(false)}
-        currentConfig={yapeConfig}
-        onSave={(updated) => {
-          setYapeConfig(updated);
-          saveYapeConfig(updated);
-        }}
       />
 
     </div>

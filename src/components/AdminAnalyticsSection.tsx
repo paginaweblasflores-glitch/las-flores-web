@@ -4,8 +4,6 @@ import {
   DollarSign,
   ShoppingBag,
   Award,
-  Download,
-  Printer,
   PieChart as PieChartIcon,
   BarChart3,
   CheckCircle2,
@@ -294,38 +292,6 @@ export function AdminAnalyticsSection({
     return Object.values(methods).filter((m) => m.count > 0 || validOrders.length === 0);
   }, [validOrders]);
 
-  // Export to CSV
-  const exportToCSV = () => {
-    if (filteredOrders.length === 0) {
-      alert("No hay datos para exportar.");
-      return;
-    }
-
-    const headers = ["N° Orden", "Fecha y Hora", "Cliente", "Telefono", "Tipo", "Metodo Pago", "Total (S/)", "Estado"];
-    const rows = filteredOrders.map((o) => [
-      `"#${o.order_number}"`,
-      `"${new Date(o.created_at).toLocaleString("es-PE")}"`,
-      `"${(o.client_name || "").replace(/"/g, '""')}"`,
-      `"${(o.client_phone || "").replace(/"/g, '""')}"`,
-      `"${o.order_type === "delivery" ? "Delivery" : "Recojo"}"`,
-      `"${o.payment_method || "N/A"}"`,
-      `"${Number(o.total || 0).toFixed(2)}"`,
-      `"${o.status}"`,
-    ]);
-
-    const csvContent =
-      "data:text/csv;charset=utf-8,\uFEFF" +
-      [headers.join(","), ...rows.map((e) => e.join(","))].join("\n");
-
-    const encodedUri = encodeURI(csvContent);
-    const link = document.createElement("a");
-    link.setAttribute("href", encodedUri);
-    link.setAttribute("download", `Reporte_Ventas_LasFlores_${timeframe}_${Date.now()}.csv`);
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
-
   return (
     <div className="p-6 space-y-8 animate-in fade-in duration-300">
       
@@ -391,27 +357,6 @@ export function AdminAnalyticsSection({
               onChange={(e) => { setCustomEndDate(e.target.value); setTimeframe("custom"); }}
               className="text-xs bg-white border border-[#d4a373]/20 rounded-xl px-2.5 py-1 text-[#3b1f10] font-sans focus:outline-none focus:ring-2 focus:ring-[#2e5339]/30"
             />
-          </div>
-
-          {/* Export Actions */}
-          <div className="flex items-center gap-2">
-            <button
-              onClick={exportToCSV}
-              className="px-4 py-2 rounded-2xl bg-[#2e5339] hover:bg-[#23412c] text-white text-xs font-bold flex items-center gap-1.5 transition-all shadow-sm cursor-pointer"
-              title="Descargar reporte en Excel / CSV"
-            >
-              <Download size={14} />
-              <span>Excel / CSV</span>
-            </button>
-
-            <button
-              onClick={() => window.print()}
-              className="px-4 py-2 rounded-2xl bg-white hover:bg-[#fdf8f0] text-[#3b1f10] text-xs font-bold flex items-center gap-1.5 transition-colors border border-[#d4a373]/30 cursor-pointer shadow-xs"
-              title="Imprimir reporte ejecutivo"
-            >
-              <Printer size={14} />
-              <span>Imprimir</span>
-            </button>
           </div>
 
         </div>
