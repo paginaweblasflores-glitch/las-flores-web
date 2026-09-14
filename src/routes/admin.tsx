@@ -27,6 +27,7 @@ import { AdminCategoryListModal } from "../components/AdminCategoryListModal";
 import { AdminAnalyticsSection } from "../components/AdminAnalyticsSection";
 import { AdminJobsSection } from "../components/AdminJobsSection";
 import { AdminZonesSection } from "../components/AdminZonesSection";
+import { AdminClientsSection } from "../components/AdminClientsSection";
 import { AdminComplaintsSection } from "../components/AdminComplaintsSection";
 import type { AdminTab } from "../components/AdminSidebar";
 import { AdminTopNav } from "../components/AdminTopNav";
@@ -868,6 +869,9 @@ function AdminRoute() {
               )}
             </div>
           )}
+
+          {/* ================= CLIENTS TAB ================= */}
+          {activeTab === "clients" && <AdminClientsSection />}
 
           {/* ================= JOBS TAB ================= */}
           {activeTab === "jobs" && (
