@@ -96,6 +96,7 @@ export function AdminComplaintsSection({ onPendingCountChange }: AdminComplaints
   const [newStatus, setNewStatus] = useState<ComplaintStatus>("in_review");
   const [adminResponse, setAdminResponse] = useState("");
   const [isSaving, setIsSaving] = useState(false);
+  const [sendState, setSendState] = useState<"idle" | "sending" | "sent" | "error">("idle");
 
   const fetchComplaints = async () => {
     setRefreshing(true);
@@ -140,7 +141,47 @@ export function AdminComplaintsSection({ onPendingCountChange }: AdminComplaints
     setSelectedComplaint(complaint);
     setNewStatus(complaint.status);
     setAdminResponse(complaint.admin_response || "");
+    setSendState("idle");
     setIsModalOpen(true);
+  };
+
+  const handleSendResponse = async () => {
+    if (!selectedComplaint) return;
+    const trimmedResponse = adminResponse.trim();
+    if (!trimmedResponse) return;
+
+    setSendState("sending");
+    try {
+      const { error } = await supabase
+        .from("complaints")
+        .update({
+          admin_response: trimmedResponse,
+          updated_at: new Date().toISOString(),
+        })
+        .eq("id", selectedComplaint.id);
+
+      if (error) throw error;
+
+      const emailSent = await sendComplaintResponseEmail({
+        code: selectedComplaint.code,
+        fullName: selectedComplaint.full_name,
+        email: selectedComplaint.email,
+        claimType: selectedComplaint.claim_type,
+        statusLabel: COMPLAINT_STATUS_LABELS[newStatus]?.label || newStatus,
+        adminResponse: trimmedResponse,
+      });
+
+      const updatedList = complaints.map((c) =>
+        c.id === selectedComplaint.id ? { ...c, admin_response: trimmedResponse } : c
+      );
+      setComplaints(updatedList);
+      setSelectedComplaint((prev) => (prev ? { ...prev, admin_response: trimmedResponse } : null));
+
+      setSendState(emailSent ? "sent" : "error");
+    } catch (err: any) {
+      console.error("Error al enviar la respuesta al cliente:", err);
+      setSendState("error");
+    }
   };
 
   const handleSaveResponse = async () => {
@@ -152,43 +193,25 @@ export function AdminComplaintsSection({ onPendingCountChange }: AdminComplaints
         .from("complaints")
         .update({
           status: newStatus,
-          admin_response: adminResponse.trim() || null,
           updated_at: new Date().toISOString(),
         })
         .eq("id", selectedComplaint.id);
 
       if (error) throw error;
 
-      const trimmedResponse = adminResponse.trim();
-      const responseChanged = trimmedResponse && trimmedResponse !== (selectedComplaint.admin_response || "").trim();
-      if (responseChanged) {
-        sendComplaintResponseEmail({
-          code: selectedComplaint.code,
-          fullName: selectedComplaint.full_name,
-          email: selectedComplaint.email,
-          claimType: selectedComplaint.claim_type,
-          statusLabel: COMPLAINT_STATUS_LABELS[newStatus]?.label || newStatus,
-          adminResponse: trimmedResponse,
-        }).catch((err) => console.error("Error al enviar el correo de respuesta al cliente:", err));
-      }
-
       const updatedList = complaints.map((c) =>
-        c.id === selectedComplaint.id
-          ? { ...c, status: newStatus, admin_response: adminResponse.trim() || null }
-          : c
+        c.id === selectedComplaint.id ? { ...c, status: newStatus } : c
       );
       setComplaints(updatedList);
       const pendingCount = updatedList.filter((c) => c.status === "pending").length;
       onPendingCountChange?.(pendingCount);
 
-      setSelectedComplaint((prev) =>
-        prev ? { ...prev, status: newStatus, admin_response: adminResponse.trim() || null } : null
-      );
+      setSelectedComplaint((prev) => (prev ? { ...prev, status: newStatus } : null));
 
       setIsModalOpen(false);
     } catch (err: any) {
       console.error(err);
-      alert("Error al actualizar la hoja de reclamación: " + err.message);
+      alert("Error al actualizar el estado de la hoja de reclamación: " + err.message);
     } finally {
       setIsSaving(false);
     }
@@ -563,17 +586,38 @@ export function AdminComplaintsSection({ onPendingCountChange }: AdminComplaints
                 <textarea
                   rows={3}
                   value={adminResponse}
-                  onChange={(e) => setAdminResponse(e.target.value)}
+                  onChange={(e) => {
+                    setAdminResponse(e.target.value);
+                    setSendState("idle");
+                  }}
                   placeholder="Detalle la respuesta brindada al cliente, acuerdos o medidas correctivas adoptadas..."
                   className="w-full bg-white border border-gray-300 rounded-xl p-3 text-xs text-gray-800 focus:outline-none focus:border-[#2D473C]"
                 />
-                {adminResponse.trim() &&
-                  adminResponse.trim() !== (selectedComplaint.admin_response || "").trim() && (
-                    <p className="text-xs text-emerald-700 font-semibold mt-1.5 flex items-center gap-1.5">
-                      <Mail size={13} />
-                      Al guardar, se enviará esta respuesta al correo del cliente ({selectedComplaint.email}).
+
+                <div className="flex items-center gap-3 mt-2">
+                  <button
+                    type="button"
+                    onClick={handleSendResponse}
+                    disabled={!adminResponse.trim() || sendState === "sending"}
+                    className="px-4 py-2 rounded-xl bg-[#2D473C]/10 hover:bg-[#2D473C]/20 text-[#2D473C] text-xs font-bold flex items-center gap-2 transition-colors disabled:opacity-50 cursor-pointer"
+                  >
+                    <Send size={14} />
+                    <span>{sendState === "sending" ? "Enviando..." : "Enviar Respuesta al Cliente"}</span>
+                  </button>
+
+                  {sendState === "sent" && (
+                    <p className="text-xs text-emerald-700 font-bold flex items-center gap-1.5">
+                      <CheckCircle2 size={14} />
+                      Mensaje enviado a {selectedComplaint.email}
                     </p>
                   )}
+                  {sendState === "error" && (
+                    <p className="text-xs text-red-700 font-bold flex items-center gap-1.5">
+                      <AlertTriangle size={14} />
+                      No se pudo enviar el correo. Se guardó la respuesta, pero revisa la configuración de correo.
+                    </p>
+                  )}
+                </div>
               </div>
             </div>
 

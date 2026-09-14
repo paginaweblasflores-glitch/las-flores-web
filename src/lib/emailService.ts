@@ -601,8 +601,8 @@ export async function sendComplaintResponseEmail(data: {
   claimType: string;
   statusLabel: string;
   adminResponse: string;
-}): Promise<void> {
-  if (!data.email || !data.email.includes("@")) return;
+}): Promise<boolean> {
+  if (!data.email || !data.email.includes("@")) return false;
 
   const emailHtml = `
     <div style="background-color: #FAF6ED; padding: 28px; max-width: 620px; margin: 0 auto; font-family: Arial, sans-serif; border: 1px solid #D4AF3740; border-radius: 12px; color: #1B2A24;">
@@ -642,7 +642,7 @@ export async function sendComplaintResponseEmail(data: {
     </div>
   `;
 
-  await sendEmail({
+  return sendEmail({
     from: SENDERS.NOTIFICACIONES,
     replyTo: OFFICIAL_EMAIL,
     to: data.email,
