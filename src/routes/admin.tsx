@@ -335,6 +335,33 @@ function AdminRoute() {
     }
   };
 
+  const handleDeleteCoupon = async (couponId: string) => {
+    const couponToDelete = coupons.find((c) => c.id === couponId);
+    if (!couponToDelete) return;
+
+    const confirmed = window.confirm(
+      `¿Estás seguro de eliminar permanentemente el cupón "${couponToDelete.code}"?`
+    );
+    if (!confirmed) return;
+
+    try {
+      const { error } = await supabase.from("coupons").delete().eq("id", couponId);
+      if (error) throw error;
+
+      setCoupons((prev) => prev.filter((c) => c.id !== couponId));
+
+      if (selectedCoupon?.id === couponId) {
+        setSelectedCoupon(null);
+      }
+      if (isCouponModalOpen) {
+        setIsCouponModalOpen(false);
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Error al eliminar el cupón.");
+    }
+  };
+
   // Filtered lists
   const filteredReservations = reservations.filter((res) => {
     const matchSearch =
@@ -870,7 +897,7 @@ function AdminRoute() {
                       <p>Usos acumulados: <strong className="text-gray-900 font-bold">{coupon.current_uses ?? coupon.used_count ?? 0}</strong></p>
                     </div>
 
-                    <div className="pt-2 border-t border-gray-200 flex justify-end">
+                    <div className="pt-2 border-t border-gray-200 flex justify-end gap-2">
                       <button
                         onClick={() => {
                           setSelectedCoupon(coupon);
@@ -879,6 +906,12 @@ function AdminRoute() {
                         className="px-3 py-1.5 rounded-lg bg-gray-200 hover:bg-gray-300 text-gray-800 text-xs font-bold flex items-center gap-1"
                       >
                         <Edit2 size={13} /> Editar
+                      </button>
+                      <button
+                        onClick={() => handleDeleteCoupon(coupon.id)}
+                        className="px-3 py-1.5 rounded-lg bg-red-50 hover:bg-red-100 text-red-700 text-xs font-bold flex items-center gap-1"
+                      >
+                        <Trash2 size={13} /> Eliminar
                       </button>
                     </div>
                   </div>
