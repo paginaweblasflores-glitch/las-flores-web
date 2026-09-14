@@ -129,7 +129,27 @@ export function CashierAuditModal({ isOpen, onClose, orders }: CashierAuditModal
           html, body { width: 80mm; }
           body * { visibility: hidden !important; }
           #cashier-audit-print-area, #cashier-audit-print-area * { visibility: visible !important; }
-          #cashier-audit-print-area { position: fixed !important; inset: 0 !important; }
+          /* Mantiene "fixed" (para no heredar el espacio en blanco que dejan
+             los elementos ocultos con visibility:hidden en el flujo normal),
+             pero alineado arriba a la izquierda en vez de centrado. */
+          #cashier-audit-print-area {
+            position: fixed !important;
+            inset: 0 !important;
+            display: flex !important;
+            align-items: flex-start !important;
+            justify-content: flex-start !important;
+            padding: 0 !important;
+          }
+          /* La tarjeta del modal pierde fondo/sombra/bordes: solo queda el ticket */
+          #cashier-audit-card {
+            background: transparent !important;
+            box-shadow: none !important;
+            border: none !important;
+            border-radius: 0 !important;
+            max-width: none !important;
+            max-height: none !important;
+            width: auto !important;
+          }
         }
       `}</style>
 
@@ -141,6 +161,7 @@ export function CashierAuditModal({ isOpen, onClose, orders }: CashierAuditModal
       />
 
       <div
+        id="cashier-audit-card"
         onClick={(e) => e.stopPropagation()}
         className="relative z-10 bg-[#fbf5e6] w-full max-w-4xl max-h-[92vh] rounded-3xl shadow-2xl border border-[#2c4a3e]/20 flex flex-col overflow-hidden"
       >
@@ -371,7 +392,7 @@ export function CashierAuditModal({ isOpen, onClose, orders }: CashierAuditModal
           </div>
 
           {/* Ticket compacto — lo único que se imprime, en ancho de ticketera */}
-          <div className="hidden print:block font-mono text-[11px] leading-snug text-black w-[72mm] mx-auto">
+          <div className="hidden print:block font-mono text-[11px] leading-snug text-black w-[72mm]">
             <p className="text-center font-bold">RESTAURANTE LAS FLORES</p>
             <p className="text-center">Arqueo y Cierre de Caja</p>
             <p className="text-center mb-2">Fecha: {selectedDate}</p>
