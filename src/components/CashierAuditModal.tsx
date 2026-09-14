@@ -118,12 +118,18 @@ export function CashierAuditModal({ isOpen, onClose, orders }: CashierAuditModal
   };
 
   return (
-    <div className="fixed inset-0 z-[120] flex items-center justify-center p-3 sm:p-6 animate-in fade-in duration-200">
-      {/* Tamaño de página para impresora de ticketera (80mm), no A4/Carta */}
+    <div id="cashier-audit-print-area" className="fixed inset-0 z-[120] flex items-center justify-center p-3 sm:p-6 animate-in fade-in duration-200">
+      {/* Tamaño de página para impresora de ticketera (80mm), no A4/Carta.
+          El resto de la app (Kanban, botones de fondo) también vive en el
+          documento, así que hay que ocultarlo explícitamente: no basta con
+          "print:hidden" dentro del propio modal. */}
       <style>{`
         @media print {
           @page { size: 80mm auto; margin: 3mm; }
           html, body { width: 80mm; }
+          body * { visibility: hidden !important; }
+          #cashier-audit-print-area, #cashier-audit-print-area * { visibility: visible !important; }
+          #cashier-audit-print-area { position: fixed !important; inset: 0 !important; }
         }
       `}</style>
 
