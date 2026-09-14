@@ -72,31 +72,8 @@ export function AdminClientsSection() {
 
   return (
     <div className="space-y-4">
-      {/* Header */}
-      <div className="bg-white rounded-2xl border border-gray-200 shadow-2xs p-5 flex items-center justify-between">
-        <div>
-          <h3 className="font-serif font-black text-lg text-[#2D473C]">Clientes Registrados</h3>
-          <p className="text-xs text-gray-500 mt-0.5">
-            Cuentas creadas por clientes al iniciar sesión (Google, Facebook o correo) — un registro único por cliente, creado la primera vez que inician sesión.
-          </p>
-        </div>
-        <div className="flex items-center gap-3">
-          <span className="text-xs font-bold text-gray-500 whitespace-nowrap">
-            Total: {clients.length}
-          </span>
-          <button
-            onClick={() => fetchClients()}
-            disabled={refreshing}
-            className="p-2.5 rounded-xl bg-gray-100 hover:bg-gray-200 text-gray-800 transition-colors disabled:opacity-50"
-            title="Actualizar"
-          >
-            <RefreshCw size={15} className={refreshing ? "animate-spin text-[#2D473C]" : ""} />
-          </button>
-        </div>
-      </div>
-
-      {/* Search */}
-      <div className="bg-white p-4 rounded-2xl border border-gray-200 shadow-2xs">
+      {/* Search + Actualizar */}
+      <div className="bg-white p-4 rounded-2xl border border-gray-200 shadow-2xs flex items-center justify-between gap-3">
         <div className="relative w-full sm:w-80">
           <Search size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400" />
           <input
@@ -107,6 +84,14 @@ export function AdminClientsSection() {
             className="w-full text-xs bg-gray-50 border border-gray-200 rounded-xl pl-10 pr-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-[#2D473C]"
           />
         </div>
+        <button
+          onClick={() => fetchClients()}
+          disabled={refreshing}
+          className="p-2.5 rounded-xl bg-gray-100 hover:bg-gray-200 text-gray-800 transition-colors disabled:opacity-50 shrink-0"
+          title="Actualizar"
+        >
+          <RefreshCw size={15} className={refreshing ? "animate-spin text-[#2D473C]" : ""} />
+        </button>
       </div>
 
       {/* Table */}
