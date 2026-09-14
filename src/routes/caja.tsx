@@ -6,7 +6,7 @@ import { playOrderChime } from "../utils/audioAlert";
 import { AdminOrderDetailModal } from "../components/AdminOrderDetailModal";
 import { CashierTopBar, CashierKPIHeader, type CashierModule } from "../components/CashierKPIHeader";
 import { CashierKanbanView } from "../components/CashierKanbanView";
-import { CashierClientsModal } from "../components/CashierClientsModal";
+import { CashierClientsSection } from "../components/CashierClientsSection";
 import { CashierAuditModal } from "../components/CashierAuditModal";
 import { CashierStockModal } from "../components/CashierStockModal";
 import { YapeConfigModal } from "../components/YapeConfigModal";
@@ -21,7 +21,6 @@ import {
   Smartphone,
   Building2,
   UserCheck,
-  Users,
 } from "lucide-react";
 import { getYapeConfig, saveYapeConfig, subscribeToYapeConfig, DEFAULT_YAPE_CONFIG, type YapeConfig } from "../lib/yapeService";
 
@@ -47,7 +46,6 @@ function CashierDashboardRoute() {
   const [orders, setOrders] = useState<any[]>([]);
   const [orderItems, setOrderItems] = useState<any[]>([]);
 
-  const [isClientsModalOpen, setIsClientsModalOpen] = useState(false);
   const [soundEnabled, setSoundEnabled] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
 
@@ -505,14 +503,6 @@ function CashierDashboardRoute() {
                 {yapeConfig.mode === "personal" ? "Personal" : "Empresa"}
               </span>
             </button>
-
-            <button
-              onClick={() => setIsClientsModalOpen(true)}
-              className="py-2.5 px-4 rounded-xl text-xs font-sans font-bold transition-all flex items-center justify-center gap-2 bg-[#2D473C]/10 text-[#2D473C] hover:bg-[#2D473C]/20 border border-[#2D473C]/30 cursor-pointer shadow-2xs"
-            >
-              <Users size={16} className="text-[#2D473C]" />
-              <span>Clientes</span>
-            </button>
           </div>
 
           <button
@@ -553,6 +543,10 @@ function CashierDashboardRoute() {
         <CashierKPIHeader todayRevenue={todayRevenue} todayOrdersCount={todayOrdersCount} />
       )}
 
+      {activeTab === "clientes" && (
+        <CashierClientsSection orders={orders} />
+      )}
+
       </main>
 
       {/* Detail & Printable Ticket Modal */}
@@ -567,13 +561,6 @@ function CashierDashboardRoute() {
       <CashierAuditModal
         isOpen={isAuditModalOpen}
         onClose={() => setIsAuditModalOpen(false)}
-        orders={orders}
-      />
-
-      {/* Clientes y Pedidos Modal */}
-      <CashierClientsModal
-        isOpen={isClientsModalOpen}
-        onClose={() => setIsClientsModalOpen(false)}
         orders={orders}
       />
 

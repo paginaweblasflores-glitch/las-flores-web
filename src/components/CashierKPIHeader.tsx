@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from "react";
-import { Volume2, BellOff, ShieldCheck, TrendingUp, LogOut, UserCircle2, ChevronDown, ListChecks, LineChart, ShoppingBag } from "lucide-react";
+import { Volume2, BellOff, ShieldCheck, TrendingUp, LogOut, UserCircle2, ChevronDown, ListChecks, LineChart, ShoppingBag, Users } from "lucide-react";
 import { Link } from "@tanstack/react-router";
 import { StatCard } from "./StatCard";
 
-export type CashierModule = "seguimiento" | "analitica";
+export type CashierModule = "seguimiento" | "analitica" | "clientes";
 
 interface CashierTopBarProps {
   soundEnabled: boolean;
@@ -72,6 +72,17 @@ export function CashierTopBar({
               >
                 <ListChecks size={15} className={activeTab === "seguimiento" ? "text-[#D4AF37]" : "text-emerald-300"} />
                 <span>Seguimiento</span>
+              </button>
+              <button
+                onClick={() => onSelectTab("clientes")}
+                className={`px-3 py-2 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 whitespace-nowrap border-b-2 ${
+                  activeTab === "clientes"
+                    ? "border-[#D4AF37] text-white bg-white/5"
+                    : "border-transparent text-emerald-100/80 hover:text-white hover:bg-white/5"
+                }`}
+              >
+                <Users size={15} className={activeTab === "clientes" ? "text-[#D4AF37]" : "text-emerald-300"} />
+                <span>Clientes</span>
               </button>
             </div>
           </div>
