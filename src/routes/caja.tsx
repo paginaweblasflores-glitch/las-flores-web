@@ -320,6 +320,11 @@ function CashierDashboardRoute() {
     })
     .reduce((sum, o) => sum + Number(o.total || 0), 0);
 
+  const todayOrdersCount = orders.filter((o) => {
+    const ordDateStr = o.created_at ? getLocalYYYYMMDD(new Date(o.created_at)) : "";
+    return ordDateStr === todayStr;
+  }).length;
+
   // Timer en vivo para que el promedio y los tiempos de espera se actualicen cada 15 segundos
   const [currentTimestamp, setCurrentTimestamp] = useState(Date.now());
   useEffect(() => {
@@ -545,7 +550,7 @@ function CashierDashboardRoute() {
       )}
 
       {activeTab === "analitica" && (
-        <CashierKPIHeader todayRevenue={todayRevenue} />
+        <CashierKPIHeader todayRevenue={todayRevenue} todayOrdersCount={todayOrdersCount} />
       )}
 
       </main>
