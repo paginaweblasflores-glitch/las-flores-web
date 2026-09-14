@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Volume2, BellOff, ShieldCheck, TrendingUp, LogOut, UserCircle2, ChevronDown, ListChecks, LineChart, ShoppingBag } from "lucide-react";
+import { Volume2, BellOff, ShieldCheck, TrendingUp, LogOut, UserCircle2, ChevronDown, ListChecks, LineChart, ShoppingBag, Banknote } from "lucide-react";
 import { Link } from "@tanstack/react-router";
 import { StatCard } from "./StatCard";
 
@@ -129,11 +129,12 @@ export function CashierTopBar({
 interface CashierKPIHeaderProps {
   todayRevenue: number;
   todayOrdersCount: number;
+  todayNetSales: number;
 }
 
-export function CashierKPIHeader({ todayRevenue, todayOrdersCount }: CashierKPIHeaderProps) {
+export function CashierKPIHeader({ todayRevenue, todayOrdersCount, todayNetSales }: CashierKPIHeaderProps) {
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 max-w-xl gap-4">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 max-w-3xl gap-4">
       <StatCard
         icon={TrendingUp}
         accent="cochinilla"
@@ -145,6 +146,12 @@ export function CashierKPIHeader({ todayRevenue, todayOrdersCount }: CashierKPIH
         accent="cielo"
         label="Pedidos del Día"
         value={todayOrdersCount}
+      />
+      <StatCard
+        icon={Banknote}
+        accent="eucalipto"
+        label="Venta Total Neto"
+        value={`S/ ${todayNetSales.toFixed(2)}`}
       />
     </div>
   );

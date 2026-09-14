@@ -1,6 +1,7 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState, useRef } from "react";
 import { supabase, signOut } from "../lib/supabase";
+import { isCancelledStatus } from "../lib/orderStatus";
 import { sendReviewRequestEmail } from "../lib/emailService";
 import { playOrderChime } from "../utils/audioAlert";
 import { AdminOrderDetailModal } from "../components/AdminOrderDetailModal";
@@ -325,6 +326,16 @@ function CashierDashboardRoute() {
     return ordDateStr === todayStr;
   }).length;
 
+  // Venta Total Neto: todos los pedidos de hoy no cancelados (sin importar
+  // su estado actual), igual que en Arqueo y Cierre de Caja.
+  const todayNetSales = orders
+    .filter((o) => {
+      if (isCancelledStatus(o.status)) return false;
+      const ordDateStr = o.created_at ? getLocalYYYYMMDD(new Date(o.created_at)) : "";
+      return ordDateStr === todayStr;
+    })
+    .reduce((sum, o) => sum + Number(o.total || 0), 0);
+
   // Timer en vivo para que el promedio y los tiempos de espera se actualicen cada 15 segundos
   const [currentTimestamp, setCurrentTimestamp] = useState(Date.now());
   useEffect(() => {
@@ -550,7 +561,11 @@ function CashierDashboardRoute() {
       )}
 
       {activeTab === "analitica" && (
-        <CashierKPIHeader todayRevenue={todayRevenue} todayOrdersCount={todayOrdersCount} />
+        <CashierKPIHeader
+          todayRevenue={todayRevenue}
+          todayOrdersCount={todayOrdersCount}
+          todayNetSales={todayNetSales}
+        />
       )}
 
       </main>
