@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
-import { Download, Search, Users, Calendar, CalendarRange, CalendarClock } from "lucide-react";
+import { Download, Search, Users, Calendar, CalendarRange, CalendarClock, Eye, X } from "lucide-react";
 import * as XLSX from "xlsx";
 import { supabase } from "../lib/supabase";
 import { getRecentMonths, formatMonthLabel, getMonthDateRange } from "../lib/monthUtils";
 import { TablePagination } from "./TablePagination";
+import { CashierReservationCard } from "./CashierReservationCard";
 
 interface ReservasClientsSectionProps {
   reservations: any[];
+  onStatusChange: (reservationId: string, newStatus: string) => Promise<void>;
 }
 
 type FilterMode = "hoy" | "dia" | "mes";
@@ -30,9 +32,10 @@ const STATUS_LABELS: Record<string, string> = {
   cancelada: "Cancelada",
 };
 
-export function ReservasClientsSection({ reservations }: ReservasClientsSectionProps) {
+export function ReservasClientsSection({ reservations, onStatusChange }: ReservasClientsSectionProps) {
   const todayStr = getYYYYMMDD(new Date());
   const eligibleMonths = getRecentMonths();
+  const [selectedReservation, setSelectedReservation] = useState<any | null>(null);
 
   const [filterMode, setFilterMode] = useState<FilterMode>("hoy");
   const [selectedDate, setSelectedDate] = useState(todayStr);
@@ -272,7 +275,8 @@ export function ReservasClientsSection({ reservations }: ReservasClientsSectionP
                     <th className="p-3.5">Servicio</th>
                     <th className="p-3.5">Personas</th>
                     <th className="p-3.5">Mesa/Sector</th>
-                    <th className="p-3.5 pr-4">Estado</th>
+                    <th className="p-3.5">Estado</th>
+                    <th className="p-3.5 pr-4 text-right">Ver</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-black/5 font-medium text-black/80">
@@ -292,10 +296,19 @@ export function ReservasClientsSection({ reservations }: ReservasClientsSectionP
                         </td>
                         <td className="p-3.5">{r.guest_count || 1}</td>
                         <td className="p-3.5 text-black/70">{r.table_number || r.zone_id || "-"}</td>
-                        <td className="p-3.5 pr-4 uppercase font-extrabold text-xs text-gray-800">
+                        <td className="p-3.5 uppercase font-extrabold text-xs text-gray-800">
                           <span className="px-2 py-0.5 rounded-full bg-gray-100 border border-gray-200 inline-block">
                             {STATUS_LABELS[statusKey] || "Pendiente"}
                           </span>
+                        </td>
+                        <td className="p-3.5 pr-4 text-right">
+                          <button
+                            onClick={() => setSelectedReservation(r)}
+                            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#2D473C]/10 hover:bg-[#2D473C]/20 text-[#2D473C] font-bold text-xs transition-colors cursor-pointer"
+                          >
+                            <Eye size={13} />
+                            Ver
+                          </button>
                         </td>
                       </tr>
                     );
@@ -334,6 +347,33 @@ export function ReservasClientsSection({ reservations }: ReservasClientsSectionP
           <span>Exportar Excel</span>
         </button>
       </div>
+
+      {/* Modal de detalle de reserva */}
+      {selectedReservation && (
+        <div
+          className="fixed inset-0 z-[130] flex items-center justify-center p-4 bg-[#2D473C]/80 backdrop-blur-md animate-in fade-in duration-200"
+          onClick={() => setSelectedReservation(null)}
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className="relative w-full max-w-md max-h-[90vh] overflow-y-auto"
+          >
+            <button
+              onClick={() => setSelectedReservation(null)}
+              className="absolute -top-3 -right-3 z-10 w-8 h-8 rounded-full bg-white shadow-lg text-black/60 hover:text-black flex items-center justify-center transition-all cursor-pointer"
+            >
+              <X size={16} />
+            </button>
+            <CashierReservationCard
+              reservation={selectedReservation}
+              onStatusChange={async (id, status) => {
+                await onStatusChange(id, status);
+                setSelectedReservation(null);
+              }}
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 }

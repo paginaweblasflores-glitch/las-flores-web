@@ -550,11 +550,7 @@ function PanelReservasRoute() {
             value={reservations.length}
             sublabel="Total de reservas"
             badge="Total"
-            active={reservationStatusFilter === "all"}
-            onClick={() => {
-              setReservationStatusFilter("all");
-              if (!resDateFrom && !resDateTo) setQuickDateRange("month");
-            }}
+            onClick={() => setActiveTab("clientes")}
           />
         </div>
 
@@ -572,7 +568,7 @@ function PanelReservasRoute() {
               />
             </div>
 
-            {(reservationStatusFilter === "all" || reservationStatusFilter === "confirmada") && (
+            {reservationStatusFilter === "confirmada" && (
               <div className="flex flex-wrap items-center gap-2 w-full lg:w-auto">
                 <div className="flex items-center gap-1.5 bg-gray-50 border border-gray-200 rounded-xl px-3 py-1.5">
                   <span className="text-xs font-serif font-bold text-gray-500 uppercase">Desde:</span>
@@ -672,7 +668,7 @@ function PanelReservasRoute() {
       )}
 
       {activeTab === "clientes" && (
-        <ReservasClientsSection reservations={reservations} />
+        <ReservasClientsSection reservations={reservations} onStatusChange={handleUpdateReservationStatus} />
       )}
 
       {activeTab === "analitica" && (
