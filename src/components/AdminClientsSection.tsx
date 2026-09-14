@@ -7,7 +7,6 @@ interface ClientProfile {
   id: string;
   email: string;
   full_name: string | null;
-  avatar_url: string | null;
   phone: string | null;
   created_at: string;
 }
@@ -27,7 +26,7 @@ export function AdminClientsSection() {
     try {
       const { data, error } = await supabase
         .from("profiles")
-        .select("id, email, full_name, avatar_url, phone, created_at")
+        .select("id, email, full_name, phone, created_at")
         .eq("role", "client")
         .order("created_at", { ascending: false });
 
@@ -145,17 +144,9 @@ export function AdminClientsSection() {
                   <tr key={c.id} className="hover:bg-gray-50/80 transition-colors">
                     <td className="py-3.5 px-4">
                       <div className="flex items-center gap-2.5">
-                        {c.avatar_url ? (
-                          <img
-                            src={c.avatar_url}
-                            alt={c.full_name || c.email}
-                            className="w-8 h-8 rounded-full object-cover border border-gray-200 shrink-0"
-                          />
-                        ) : (
-                          <div className="w-8 h-8 rounded-full bg-[#2D473C]/10 text-[#2D473C] flex items-center justify-center font-black text-xs shrink-0">
-                            {(c.full_name || c.email || "?").charAt(0).toUpperCase()}
-                          </div>
-                        )}
+                        <div className="w-8 h-8 rounded-full bg-[#2D473C]/10 text-[#2D473C] flex items-center justify-center font-black text-xs shrink-0">
+                          {(c.full_name || c.email || "?").charAt(0).toUpperCase()}
+                        </div>
                         <span className="font-bold text-gray-900">{c.full_name || "Sin nombre"}</span>
                       </div>
                     </td>
