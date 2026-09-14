@@ -5,6 +5,8 @@ import {
   deleteJobOffer,
   listJobApplications,
   updateJobApplication,
+  deleteJobApplication,
+  markNewApplicationsAsReviewed,
   createCvSignedUrl,
 } from "../features/jobs/api";
 import type {
@@ -36,7 +38,11 @@ import {
 } from "lucide-react";
 import { TablePagination } from "./TablePagination";
 
-export function AdminJobsSection() {
+interface AdminJobsSectionProps {
+  onNewApplicationsCountChange?: (count: number) => void;
+}
+
+export function AdminJobsSection({ onNewApplicationsCountChange }: AdminJobsSectionProps = {}) {
   const [subTab, setSubTab] = useState<"offers" | "applications">("offers");
   const [offers, setOffers] = useState<JobOffer[]>([]);
   const [applications, setApplications] = useState<JobApplication[]>([]);
@@ -89,11 +95,31 @@ export function AdminJobsSection() {
       ]);
       setOffers(offData);
       setApplications(appData);
+      onNewApplicationsCountChange?.(appData.filter((a) => a.status === "new").length);
     } catch (err) {
       console.error(err);
       setError("Error al cargar la información de convocatorias y postulantes.");
     } finally {
       setLoading(false);
+    }
+  };
+
+  // Al entrar a la pestaña de Postulantes se consideran "vistas" las nuevas:
+  // se pasan de "new" a "reviewing" para que el aviso de la barra superior
+  // desaparezca, igual que el usuario espera al mirar la lista.
+  const handleOpenApplicationsTab = async () => {
+    setSubTab("applications");
+    const newIds = applications.filter((a) => a.status === "new").map((a) => a.id);
+    if (newIds.length === 0) return;
+
+    try {
+      await markNewApplicationsAsReviewed(newIds);
+      setApplications((prev) =>
+        prev.map((a) => (newIds.includes(a.id) ? { ...a, status: "reviewing" } : a))
+      );
+      onNewApplicationsCountChange?.(0);
+    } catch (err) {
+      console.error("Error al marcar postulaciones como revisadas:", err);
     }
   };
 
@@ -216,6 +242,25 @@ export function AdminJobsSection() {
     }
   };
 
+  const handleDeleteApplication = async (app: JobApplication) => {
+    const confirmed = window.confirm(
+      `¿Eliminar permanentemente la postulación de "${app.full_name}"? Esto también borrará su CV.`
+    );
+    if (!confirmed) return;
+
+    try {
+      await deleteJobApplication(app.id, app.cv_path);
+      setApplications((prev) => {
+        const next = prev.filter((a) => a.id !== app.id);
+        onNewApplicationsCountChange?.(next.filter((a) => a.status === "new").length);
+        return next;
+      });
+    } catch (err) {
+      console.error(err);
+      alert("Error al eliminar la postulación.");
+    }
+  };
+
   const filteredApplications = applications.filter((app) => {
     const matchSearch =
       app.full_name.toLowerCase().includes(appSearch.toLowerCase()) ||
@@ -256,7 +301,7 @@ export function AdminJobsSection() {
             Convocatorias ({offers.length})
           </button>
           <button
-            onClick={() => setSubTab("applications")}
+            onClick={handleOpenApplicationsTab}
             className={`px-5 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider transition-all cursor-pointer ${
               subTab === "applications"
                 ? "bg-[#2e5339] text-white shadow-xs"
@@ -441,12 +486,13 @@ export function AdminJobsSection() {
                     <th className="px-6 py-4">Disponibilidad</th>
                     <th className="px-6 py-4">CV</th>
                     <th className="px-6 py-4">Estado</th>
+                    <th className="px-6 py-4 text-right">Acciones</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-black/5">
                   {filteredApplications.length === 0 ? (
                     <tr>
-                      <td colSpan={6} className="px-6 py-12 text-center text-ink/50 text-sm">
+                      <td colSpan={7} className="px-6 py-12 text-center text-ink/50 text-sm">
                         No se encontraron postulaciones recibidas.
                       </td>
                     </tr>
@@ -501,6 +547,15 @@ export function AdminJobsSection() {
                               </option>
                             ))}
                           </select>
+                        </td>
+                        <td className="px-6 py-4 text-right">
+                          <button
+                            onClick={() => handleDeleteApplication(app)}
+                            className="p-2 rounded-xl text-ink/50 hover:text-red-700 hover:bg-red-50 border border-transparent hover:border-red-200 transition-all cursor-pointer"
+                            title="Eliminar Postulación"
+                          >
+                            <Trash2 size={16} />
+                          </button>
                         </td>
                       </tr>
                     ))

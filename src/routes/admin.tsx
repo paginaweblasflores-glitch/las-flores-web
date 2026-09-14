@@ -240,10 +240,11 @@ function AdminRoute() {
         .order("created_at", { ascending: false });
       if (coupData) setCoupons(coupData);
 
-      // 7. Job Applications Count
+      // 7. Job Applications Count (solo las nuevas / no revisadas)
       const { count: jobAppsCount } = await supabase
         .from("job_applications")
-        .select("*", { count: "exact", head: true });
+        .select("*", { count: "exact", head: true })
+        .eq("status", "new");
       if (jobAppsCount !== null && jobAppsCount !== undefined) {
         setApplicationsCount(jobAppsCount);
       }
@@ -931,7 +932,9 @@ function AdminRoute() {
           )}
 
           {/* ================= JOBS TAB ================= */}
-          {activeTab === "jobs" && <AdminJobsSection />}
+          {activeTab === "jobs" && (
+            <AdminJobsSection onNewApplicationsCountChange={setApplicationsCount} />
+          )}
 
           {/* ================= COMPLAINTS TAB (LIBRO DE RECLAMACIONES) ================= */}
           {activeTab === "complaints" && (

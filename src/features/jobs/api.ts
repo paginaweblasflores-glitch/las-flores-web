@@ -194,6 +194,29 @@ export async function updateJobApplication(
   return data as JobApplication;
 }
 
+export async function deleteJobApplication(id: string, cvPath?: string | null): Promise<void> {
+  const { error } = await supabase.from("job_applications").delete().eq("id", id);
+  throwIfError(error);
+
+  if (cvPath) {
+    try {
+      await supabase.storage.from("job-cvs").remove([cvPath]);
+    } catch {
+      // El registro ya se borró, que es lo que importa; el archivo huérfano no bloquea nada.
+    }
+  }
+}
+
+export async function markNewApplicationsAsReviewed(ids: string[]): Promise<void> {
+  if (ids.length === 0) return;
+  const { error } = await supabase
+    .from("job_applications")
+    .update({ status: "reviewing" })
+    .in("id", ids)
+    .eq("status", "new");
+  throwIfError(error);
+}
+
 export async function createCvSignedUrl(path: string): Promise<string> {
   const { data, error } = await supabase.storage.from("job-cvs").createSignedUrl(path, 60);
 
