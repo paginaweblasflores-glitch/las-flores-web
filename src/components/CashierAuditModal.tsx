@@ -392,18 +392,19 @@ export function CashierAuditModal({ isOpen, onClose, orders }: CashierAuditModal
           </div>
 
           {/* Ticket compacto — lo único que se imprime, en ancho de ticketera */}
-          <div className="hidden print:block font-mono text-[11px] leading-snug text-black w-[72mm]">
-            <p className="text-center font-bold">RESTAURANTE LAS FLORES</p>
+          <div className="hidden print:block font-mono font-bold text-[11px] leading-snug text-black w-[72mm]">
+            <p className="text-center">RESTAURANTE LAS FLORES</p>
             <p className="text-center">Arqueo y Cierre de Caja</p>
             <p className="text-center mb-2">Fecha: {selectedDate}</p>
-            <p>--------------------------------</p>
+            <div className="border-t border-black my-1" />
             <div className="flex justify-between"><span>Efectivo a rendir</span><span>S/ {totalCash.toFixed(2)}</span></div>
             <div className="flex justify-between"><span>Cobrado online</span><span>S/ {totalOnline.toFixed(2)}</span></div>
             <div className="flex justify-between"><span>Fletes delivery</span><span>S/ {totalDeliveryFees.toFixed(2)}</span></div>
-            <p>--------------------------------</p>
-            <div className="flex justify-between font-bold"><span>VENTA TOTAL NETO</span><span>S/ {totalSales.toFixed(2)}</span></div>
-            <p>{filteredOrders.length} comandas ({countDelivery} delivery / {countPickup} recojo)</p>
-            <p>--------------------------------</p>
+            <div className="border-t border-black my-1" />
+            <div className="flex justify-between"><span>VENTA TOTAL NETO</span><span>S/ {totalSales.toFixed(2)}</span></div>
+            <p>{countDelivery} delivery / {countPickup} recojo</p>
+            <div className="border-t border-black my-1" />
+            <p>Detalle de Delivery</p>
             {filteredOrders.map((o) => {
               const createdTime = new Date(o.created_at).toLocaleTimeString("es-PE", {
                 hour: "2-digit",
@@ -416,8 +417,7 @@ export function CashierAuditModal({ isOpen, onClose, orders }: CashierAuditModal
                 </div>
               );
             })}
-            <p>--------------------------------</p>
-            <p className="text-center mt-2">Impreso: {new Date().toLocaleString("es-PE")}</p>
+            <div className="border-t border-black my-1" />
           </div>
         </div>
 
