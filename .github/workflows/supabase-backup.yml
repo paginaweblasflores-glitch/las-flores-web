@@ -17,7 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
-      BACKUP_DIRECTORY: ${{ runner.temp }}/las-flores-supabase-backup
+      BACKUP_DIRECTORY: backup-output
 
     steps:
       - name: Check out repository
@@ -34,6 +34,6 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: supabase-public-backup-${{ github.run_number }}
-          path: ${{ runner.temp }}/las-flores-supabase-backup/*
+          path: backup-output/*
           if-no-files-found: error
           retention-days: 30
