@@ -20,16 +20,21 @@ function Get-ConnectionString {
     throw "SUPABASE_DB_URL must use the postgres or postgresql scheme."
   }
   if ($connectionString -notmatch "(?i)(^|[?&])sslmode=(require|verify-ca|verify-full)(&|$)") {
-    throw "SUPABASE_DB_URL must enable TLS with sslmode=require, verify-ca, or verify-full."
+    if ($connectionString.Contains("?")) {
+      $connectionString = "${connectionString}&sslmode=require"
+    } else {
+      $connectionString = "${connectionString}?sslmode=require"
+    }
   }
 
   return $connectionString
 }
 
 $connectionString = Get-ConnectionString
+$displayConnectionString = $connectionString -replace '(:\/\/[^:]+:)[^@]+(@)', '${1}<REDACTED>${2}'
 $dumpCommand = @(
   "pg_dump",
-  "--dbname=<SUPABASE_DB_URL>",
+  "--dbname=$displayConnectionString",
   "--format=custom",
   "--no-owner",
   "--no-privileges",

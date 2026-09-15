@@ -15,7 +15,7 @@ if (-not ($output -match "SUPABASE_DB_URL")) {
 $temporaryDirectory = Join-Path ([IO.Path]::GetTempPath()) ("las-flores-backup-test-" + [guid]::NewGuid())
 New-Item -ItemType Directory -Path $temporaryDirectory | Out-Null
 try {
-  $env:SUPABASE_DB_URL = "postgresql://user:password@example.test:5432/postgres?sslmode=require"
+  $env:SUPABASE_DB_URL = "postgresql://user:password@example.test:5432/postgres"
   $ErrorActionPreference = "Continue"
   $dryRunOutput = & powershell -NoProfile -ExecutionPolicy Bypass -File $scriptPath -DryRun -OutputDirectory $temporaryDirectory 2>&1
   $ErrorActionPreference = $previousErrorActionPreference
@@ -24,6 +24,9 @@ try {
   }
   if (-not ($dryRunOutput -match "pg_dump")) {
     throw "Dry-run did not print the pg_dump command"
+  }
+  if (-not ($dryRunOutput -match "sslmode=require")) {
+    throw "The backup command did not add sslmode=require"
   }
   if (@(Get-ChildItem -Path $temporaryDirectory).Count -ne 0) {
     throw "Dry-run created output files"
