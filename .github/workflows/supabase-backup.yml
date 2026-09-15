@@ -1,0 +1,39 @@
+name: Supabase database backup
+
+on:
+  schedule:
+    - cron: "0 5 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: supabase-backup
+  cancel-in-progress: false
+
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+    env:
+      SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
+      BACKUP_DIRECTORY: backup-output
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Install PostgreSQL client
+        run: sudo apt-get update && sudo apt-get install --yes postgresql-client
+
+      - name: Create database backup
+        shell: pwsh
+        run: ./scripts/backup-supabase.ps1 -OutputDirectory $env:BACKUP_DIRECTORY
+
+      - name: Upload encrypted-at-rest GitHub artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: supabase-public-backup-${{ github.run_number }}
+          path: backup-output/*
+          if-no-files-found: error
+          retention-days: 30
