@@ -324,6 +324,7 @@ DROP FUNCTION IF EXISTS public.get_orders_by_ids(UUID[]);
 
 -- Rastreo público por enlace: solo los campos necesarios para la página de
 -- seguimiento. No expone correo ni teléfono del cliente.
+DROP FUNCTION IF EXISTS public.get_order_tracking(UUID);
 CREATE OR REPLACE FUNCTION public.get_order_tracking(p_order_id UUID)
 RETURNS TABLE (
     id UUID, order_number TEXT, address TEXT, reference TEXT,
@@ -339,7 +340,79 @@ $$;
 GRANT EXECUTE ON FUNCTION public.get_order_tracking(UUID) TO anon, authenticated;
 
 -- ----------------------------------------------------------------------------
--- 8. PIN del motorizado: nunca debe viajar al cliente
+-- 8. Disponibilidad de productos: caja solo puede alternar is_available
+-- ----------------------------------------------------------------------------
+-- `cashier` existe en el panel de caja y debe ser reconocido por las
+-- funciones de autorización aunque las instalaciones antiguas no lo incluyan.
+DO $$
+BEGIN
+  IF NOT EXISTS (
+    SELECT 1
+    FROM pg_publication_tables
+    WHERE pubname = 'supabase_realtime'
+      AND schemaname = 'public'
+      AND tablename = 'products'
+  ) THEN
+    ALTER PUBLICATION supabase_realtime ADD TABLE public.products;
+  END IF;
+END
+$$;
+
+ALTER TABLE public.profiles DROP CONSTRAINT IF EXISTS profiles_role_check;
+ALTER TABLE public.profiles
+  ADD CONSTRAINT profiles_role_check
+  CHECK (role IN ('client', 'staff', 'cashier', 'admin', 'ventas', 'delivery'));
+
+CREATE OR REPLACE FUNCTION public.is_staff()
+RETURNS BOOLEAN
+LANGUAGE sql
+STABLE
+SECURITY DEFINER
+SET search_path = public
+AS $$
+  SELECT EXISTS (
+    SELECT 1 FROM public.profiles
+    WHERE id = auth.uid() AND role IN ('admin', 'staff', 'cashier')
+  );
+$$;
+
+DROP POLICY IF EXISTS "products_availability_staff_update" ON public.products;
+CREATE POLICY "products_availability_staff_update" ON public.products
+  FOR UPDATE
+  USING (public.is_staff())
+  WITH CHECK (public.is_staff());
+
+CREATE OR REPLACE FUNCTION public.prevent_staff_product_edits()
+RETURNS TRIGGER
+LANGUAGE plpgsql
+SECURITY DEFINER
+SET search_path = public
+AS $$
+BEGIN
+  IF NOT public.is_admin() AND (
+    NEW.id IS DISTINCT FROM OLD.id OR
+    NEW.category_id IS DISTINCT FROM OLD.category_id OR
+    NEW.name IS DISTINCT FROM OLD.name OR
+    NEW.description IS DISTINCT FROM OLD.description OR
+    NEW.price IS DISTINCT FROM OLD.price OR
+    NEW.image_url IS DISTINCT FROM OLD.image_url OR
+    NEW.is_featured IS DISTINCT FROM OLD.is_featured OR
+    NEW.sort_order IS DISTINCT FROM OLD.sort_order
+  ) THEN
+    RAISE EXCEPTION 'El personal de caja solo puede cambiar la disponibilidad del producto';
+  END IF;
+  RETURN NEW;
+END;
+$$;
+
+DROP TRIGGER IF EXISTS products_availability_staff_only ON public.products;
+CREATE TRIGGER products_availability_staff_only
+  BEFORE UPDATE ON public.products
+  FOR EACH ROW
+  EXECUTE FUNCTION public.prevent_staff_product_edits();
+
+-- ----------------------------------------------------------------------------
+-- 9. PIN del motorizado: nunca debe viajar al cliente
 -- ----------------------------------------------------------------------------
 -- `verify_driver_pin` ya compara el PIN en el servidor. Se refuerza que la
 -- tabla sea inaccesible salvo para el personal.
