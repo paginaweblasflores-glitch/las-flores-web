@@ -90,11 +90,12 @@ export function CompleteProfileModal({
       return;
     }
 
-    // Fecha de cumpleaños (OPCIONAL)
-    let birthdateFormatted: string | null = null;
-    if (day && month && year) {
-      birthdateFormatted = `${year}-${month}-${day}`;
+    // Fecha de cumpleaños (OBLIGATORIA)
+    if (!day || !month || !year) {
+      setErrorMsg("Por favor ingresa tu fecha de nacimiento completa (día, mes y año).");
+      return;
     }
+    const birthdateFormatted: string = `${year}-${month}-${day}`;
 
     setSaving(true);
     try {
@@ -102,11 +103,9 @@ export function CompleteProfileModal({
       const updatePayload: Record<string, any> = {
         phone: cleanPhone,
         email: cleanEmail,
+        birth_date: birthdateFormatted,
         updated_at: new Date().toISOString(),
       };
-      if (birthdateFormatted) {
-        updatePayload.birth_date = birthdateFormatted;
-      }
       if (name.trim()) updatePayload.full_name = name.trim();
 
       const { data: updatedData, error: updateErr } = await supabase
@@ -123,12 +122,10 @@ export function CompleteProfileModal({
           id: userId,
           email: cleanEmail,
           phone: cleanPhone,
+          birth_date: birthdateFormatted,
           role: "client",
           updated_at: new Date().toISOString(),
         };
-        if (birthdateFormatted) {
-          upsertPayload.birth_date = birthdateFormatted;
-        }
         if (name.trim()) upsertPayload.full_name = name.trim();
 
         const { error: finalUpsertErr } = await supabase
@@ -147,7 +144,7 @@ export function CompleteProfileModal({
       await supabase.auth.updateUser({
         data: {
           phone: cleanPhone,
-          birth_date: birthdateFormatted || undefined,
+          birth_date: birthdateFormatted,
           full_name: name.trim() || undefined,
         },
       });
@@ -257,11 +254,12 @@ export function CompleteProfileModal({
 
           {/* Fecha de Nacimiento (OPCIONAL) */}
           <div>
-            <label className="block text-xs font-bold text-[#2C4A3E]/80 uppercase tracking-[0.14em] mb-1.5 flex items-center gap-1.5">
-              <Calendar size={13} className="text-[#2C4A3E]/70" /> Fecha de Nacimiento (Opcional)
+            <label className="block text-xs font-bold text-[#2C4A3E] uppercase tracking-[0.14em] mb-1.5 flex items-center gap-1.5">
+              <Calendar size={13} className="text-[#2C4A3E]/70" /> Fecha de Nacimiento *
             </label>
             <div className="grid grid-cols-3 gap-2">
               <select
+                required
                 value={day}
                 onChange={(e) => setDay(e.target.value)}
                 className="px-3 py-2.5 rounded-xl border border-[#2C4A3E]/20 bg-white text-base md:text-sm font-medium text-[#1b2a24] focus:outline-none focus:ring-2 focus:ring-[#2C4A3E] cursor-pointer shadow-xs"
@@ -275,6 +273,7 @@ export function CompleteProfileModal({
               </select>
 
               <select
+                required
                 value={month}
                 onChange={(e) => setMonth(e.target.value)}
                 className="px-3 py-2.5 rounded-xl border border-[#2C4A3E]/20 bg-white text-base md:text-sm font-medium text-[#1b2a24] focus:outline-none focus:ring-2 focus:ring-[#2C4A3E] cursor-pointer shadow-xs"
@@ -288,6 +287,7 @@ export function CompleteProfileModal({
               </select>
 
               <select
+                required
                 value={year}
                 onChange={(e) => setYear(e.target.value)}
                 className="px-3 py-2.5 rounded-xl border border-[#2C4A3E]/20 bg-white text-base md:text-sm font-medium text-[#1b2a24] focus:outline-none focus:ring-2 focus:ring-[#2C4A3E] cursor-pointer shadow-xs"
