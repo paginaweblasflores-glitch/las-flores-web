@@ -149,6 +149,19 @@ export function CompleteProfileModal({
         },
       });
 
+      // 3. Notificar al CRM (cliente nuevo completando su perfil por primera vez).
+      // Fire-and-forget: si el CRM falla, no debe afectar la experiencia del cliente.
+      fetch("/api/notify-crm", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          nombre_completo: name.trim(),
+          celular: cleanPhone,
+          correo: cleanEmail,
+          fecha_de_nacimiento: birthdateFormatted,
+        }),
+      }).catch((err) => console.warn("No se pudo notificar al CRM:", err));
+
       onSuccess({
         phone: cleanPhone,
         birthdate: birthdateFormatted,
