@@ -1,6 +1,7 @@
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { describe, expect, it } from "vitest";
+import { removeDishFromCategories } from "../lib/liveProducts";
 
 const hardeningRls = readFileSync(resolve(process.cwd(), "supabase/hardening_rls.sql"), "utf8");
 
@@ -27,5 +28,29 @@ describe("política de disponibilidad de productos", () => {
       /pg_publication_tables[\s\S]*supabase_realtime[\s\S]*public[\s\S]*products/i,
     );
     expect(hardeningRls).toMatch(/ALTER PUBLICATION supabase_realtime ADD TABLE public\.products/i);
+  });
+
+  it("puede retirar inmediatamente un plato deshabilitado del menu visible", () => {
+    const categories = [
+      {
+        id: "entradas",
+        label: "Entradas",
+        dishes: [{ id: "product-1", name: "Plato oculto", description: "", price: "S/ 10.00" }],
+      },
+    ];
+
+    expect(removeDishFromCategories(categories, "product-1")).toEqual([
+      { id: "entradas", label: "Entradas", dishes: [] },
+    ]);
+  });
+
+  it("no repone platos estaticos cuando Supabase devuelve una categoria vacia", () => {
+    const liveProductsSource = readFileSync(
+      resolve(process.cwd(), "src/lib/liveProducts.ts"),
+      "utf8",
+    );
+
+    expect(liveProductsSource).toMatch(/result\.push\(\{ \.\.\.cat, dishes: \[\] \}\)/);
+    expect(liveProductsSource).not.toMatch(/const defaultCat = staticCategories\.find/);
   });
 });

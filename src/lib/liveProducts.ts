@@ -4,6 +4,13 @@ import { categories as staticCategories, Category, Dish } from "../components/Me
 
 export type { Category, Dish };
 
+export function removeDishFromCategories(categories: Category[], productId: string): Category[] {
+  return categories.map((category) => ({
+    ...category,
+    dishes: category.dishes.filter((dish) => dish.id !== productId),
+  }));
+}
+
 function normalizeText(value: string): string {
   return (value || "")
     .toLowerCase()
@@ -298,15 +305,12 @@ export async function getLiveCategories(): Promise<Category[]> {
           dishes: liveDishes,
         });
       } else {
-        // Si no hay platos en la BD para esta categoría, conservar los estáticos
-        const defaultCat = staticCategories.find((c) => c.id === slug);
-        if (defaultCat && defaultCat.dishes.length > 0) {
-          result.push(defaultCat);
-        }
+        // Con datos en Supabase, una categoría vacía debe permanecer vacía.
+        result.push({ ...cat, dishes: [] });
       }
     });
 
-    return result.length > 0 ? result : staticCategories;
+    return result;
   } catch (err) {
     console.error("Exception fetching live categories:", err);
     return staticCategories;
@@ -333,7 +337,16 @@ export function useLiveMenuCategories() {
     const channelName = `live-menu-updates-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
     const channel = supabase
       .channel(channelName)
-      .on("postgres_changes", { event: "*", schema: "public", table: "products" }, () => {
+      .on("postgres_changes", { event: "*", schema: "public", table: "products" }, (payload) => {
+        const newProduct = payload.new as { id?: string; is_available?: boolean };
+        const oldProduct = payload.old as { id?: string };
+        const productId = newProduct.id || oldProduct.id;
+
+        if (productId && (payload.eventType === "DELETE" || newProduct.is_available === false)) {
+          setMenuCategories((currentCategories) => removeDishFromCategories(currentCategories, productId));
+          return;
+        }
+
         refreshMenu();
       })
       .on("postgres_changes", { event: "*", schema: "public", table: "categories" }, () => {
