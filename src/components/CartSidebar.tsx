@@ -509,17 +509,26 @@ export function CartSidebar() {
 
     // Validar disponibilidad de productos antes de confirmar el pedido
     try {
-      const productNames = items.map((i) => i.name);
+      const productIds = items.map((i) => i.productId || i.id.split("__")[0]);
       const { data: availableProducts } = await supabase
         .from("products")
-        .select("name, is_available")
-        .in("name", productNames);
+        .select("id, name, is_available")
+        .in("id", productIds);
 
-      if (availableProducts && availableProducts.length > 0) {
-        const unavailable = availableProducts.filter((p) => p.is_available === false);
-        if (unavailable.length > 0) {
-          const names = unavailable.map((p) => p.name).join(", ");
-          alert(`Los siguientes platos se agotaron mientras realizabas tu pedido: ${names}. Por favor, retíralos del carrito.`);
+      if (availableProducts) {
+        const availableById = new Map(availableProducts.map((product) => [product.id, product]));
+        const unavailable = productIds
+          .map((productId) => availableById.get(productId))
+          .filter((product): product is NonNullable<typeof product> => Boolean(product && product.is_available === false));
+        const missing = productIds.filter((productId) => !availableById.has(productId));
+
+        if (unavailable.length > 0 || missing.length > 0) {
+          const unavailableNames = unavailable.map((p) => p.name);
+          const missingNames = items
+            .filter((item) => missing.includes(item.productId || item.id.split("__")[0]))
+            .map((item) => item.name);
+          const names = [...unavailableNames, ...missingNames].join(", ");
+          alert(`Estos platos ya no están disponibles: ${names}. Retíralos del carrito antes de continuar.`);
           setProcessing(false);
           return;
         }

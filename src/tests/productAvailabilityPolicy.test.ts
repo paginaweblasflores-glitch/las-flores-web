@@ -2,6 +2,7 @@ import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { describe, expect, it } from "vitest";
 import { removeDishFromCategories } from "../lib/liveProducts";
+import { removeUnavailableCartItems } from "../context/CartContext";
 
 const hardeningRls = readFileSync(resolve(process.cwd(), "supabase/hardening_rls.sql"), "utf8");
 
@@ -52,5 +53,14 @@ describe("política de disponibilidad de productos", () => {
 
     expect(liveProductsSource).toMatch(/result\.push\(\{ \.\.\.cat, dishes: \[\] \}\)/);
     expect(liveProductsSource).not.toMatch(/const defaultCat = staticCategories\.find/);
+  });
+
+  it("retira del carrito los productos deshabilitados por su id real", () => {
+    const items = [
+      { id: "product-1__opcion", productId: "product-1", name: "Plato oculto", price: 10, quantity: 1 },
+      { id: "product-2", name: "Plato disponible", price: 12, quantity: 1 },
+    ];
+
+    expect(removeUnavailableCartItems(items, new Set(["product-1"]))).toEqual([items[1]]);
   });
 });

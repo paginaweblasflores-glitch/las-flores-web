@@ -1,5 +1,6 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from "react";
 import { useRouter } from "@tanstack/react-router";
+import { supabase } from "../lib/supabase";
 
 export interface CartCustomizations {
   [key: string]: string | undefined;
@@ -18,6 +19,10 @@ export interface CartItem {
   quantity: number;
   image?: string;
   customizations?: CartCustomizations;
+}
+
+export function removeUnavailableCartItems(items: CartItem[], unavailableIds: Set<string>): CartItem[] {
+  return items.filter((item) => !unavailableIds.has(item.productId || item.id.split("__")[0]));
 }
 
 interface CartContextType {
@@ -57,6 +62,31 @@ export function CartProvider({ children }: { children: ReactNode }) {
     } catch (e) {
       console.error("Error al cargar carrito desde localStorage:", e);
     }
+  }, []);
+
+  useEffect(() => {
+    const channel = supabase
+      .channel("cart-product-availability")
+      .on("postgres_changes", { event: "*", schema: "public", table: "products" }, (payload) => {
+        const product = payload.new as { id?: string; is_available?: boolean };
+        const oldProduct = payload.old as { id?: string };
+        const productId = product.id || oldProduct.id;
+
+        if (!productId || (payload.eventType !== "DELETE" && product.is_available !== false)) return;
+
+        setItems((currentItems) => {
+          const updatedItems = removeUnavailableCartItems(currentItems, new Set([productId]));
+          try {
+            localStorage.setItem("las_flores_cart", JSON.stringify(updatedItems));
+          } catch {}
+          return updatedItems;
+        });
+      })
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
   }, []);
 
   // Guardar en localStorage cada vez que cambien los ítems
