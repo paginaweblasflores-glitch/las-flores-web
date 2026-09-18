@@ -653,12 +653,14 @@ function ReservasPage() {
 
     return (
       <div className="w-full max-w-3xl mx-auto my-8 px-4">
-        <div className="relative flex items-center justify-between">
-          {/* Connecting line */}
-          <div className="absolute top-[22px] left-[10%] right-[10%] h-[3px] bg-gray-200 z-0" />
+        <div className="relative grid grid-cols-4">
+          {/* Connecting line: cada círculo ocupa 1/4 de ancho centrado, así que la
+              pista va de 12.5% a 87.5% (el centro de la 1ª a la 4ª columna) para
+              quedar exactamente pegada a cada círculo, sin espacio suelto. */}
+          <div className="absolute top-[22px] left-[12.5%] right-[12.5%] h-[3px] bg-gray-200 z-0" />
           <div
-            className="absolute top-[22px] left-[10%] h-[3px] bg-[#2e5339] z-0 transition-all duration-500"
-            style={{ width: `${((mainStep - 1) / 3) * 80}%` }}
+            className="absolute top-[22px] left-[12.5%] h-[3px] bg-[#A32638] z-0 transition-all duration-500"
+            style={{ width: `${((mainStep - 1) / 3) * 75}%` }}
           />
 
           {steps.map((s) => {
@@ -674,9 +676,9 @@ function ReservasPage() {
                   }}
                   className={`w-11 h-11 rounded-full flex items-center justify-center font-bold text-sm transition-all shadow-sm ${
                     isDone
-                      ? "bg-[#2e5339] text-white"
+                      ? "bg-[#A32638] text-white"
                       : isCurrent
-                      ? "bg-[#2e5339] text-white ring-4 ring-[#2e5339]/20 scale-105"
+                      ? "bg-[#A32638] text-white ring-4 ring-[#A32638]/20 scale-105"
                       : "bg-white text-gray-400 border-2 border-gray-200"
                   }`}
                 >
@@ -684,7 +686,7 @@ function ReservasPage() {
                 </button>
                 <span
                   className={`text-[11px] uppercase tracking-wider font-semibold ${
-                    isCurrent || isDone ? "text-[#2e5339]" : "text-gray-400"
+                    isCurrent || isDone ? "text-[#A32638]" : "text-gray-400"
                   }`}
                 >
                   {s.label}
@@ -802,7 +804,7 @@ function ReservasPage() {
       {selectedZona && (
         <div ref={wizardRef} className="animate-in fade-in duration-500">
           {/* Edge-to-Edge Split Hero Banner (Altura reducida para mostrar formulario abajo) */}
-          <div className="w-full h-[50vh] min-h-[420px] max-h-[520px] grid grid-cols-1 lg:grid-cols-2 bg-[#fdf8f0] border-b border-[#d4a373]/30 shadow-md overflow-hidden">
+          <div className="w-full h-[50vh] min-h-[420px] max-h-[520px] grid grid-cols-1 lg:grid-cols-2 border-b border-[#d4a373]/30 overflow-hidden">
             {/* Foto a la izquierda a pantalla completa */}
             <div className="h-[400px] lg:h-full w-full relative overflow-hidden">
               <img
@@ -816,12 +818,12 @@ function ReservasPage() {
               </span>
             </div>
 
-            {/* Contenido a la derecha con fondo pergamino y altura completa */}
-            <div className="p-8 md:p-14 lg:p-24 flex flex-col justify-center h-full pt-20 lg:pt-24">
+            {/* Contenido a la derecha con fondo verde eucalipto (el mismo de todas las secciones) — definitivo */}
+            <div className="bg-eucalipto p-8 md:p-14 lg:p-24 flex flex-col justify-center h-full pt-20 lg:pt-24">
               <button
                 type="button"
                 onClick={handleClearZone}
-                className="inline-flex items-center gap-1.5 text-xs text-[#2e5339] font-bold uppercase tracking-widest hover:underline mb-8 group"
+                className="inline-flex items-center gap-1.5 text-xs text-piedra font-bold uppercase tracking-widest hover:underline mb-8 group"
               >
                 <span className="transition-transform group-hover:-translate-x-1">←</span>
                 <span>Ver todos los ambientes</span>
@@ -831,15 +833,15 @@ function ReservasPage() {
                 Ambiente Seleccionado
               </span>
 
-              <h1 className="font-sans text-4xl md:text-6xl text-[#2e5339] font-bold mb-4 leading-tight">
+              <h1 className="font-sans text-4xl md:text-6xl text-piedra font-bold mb-4 leading-tight">
                 {selectedZona.nombre}
               </h1>
 
-              <span className="inline-block bg-[#2e5339]/10 text-[#2e5339] border border-[#2e5339]/20 text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full mb-6">
+              <span className="inline-block bg-piedra/10 text-piedra border border-piedra/25 text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full mb-6">
                 {selectedZona.capacidad}
               </span>
 
-              <p className="text-sm md:text-base text-gray-700 font-light leading-relaxed max-w-xl">
+              <p className="text-sm md:text-base text-piedra/75 font-light leading-relaxed max-w-xl">
                 {selectedZona.descripcion}
               </p>
             </div>
@@ -847,11 +849,28 @@ function ReservasPage() {
 
           {/* Stepper Widget Container */}
           <main className="max-w-4xl mx-auto w-full px-4 py-10 pb-24">
+            {/* Volver al paso anterior + Nombre de marca, encima del stepper */}
+            <div className="relative flex items-center justify-center min-h-10 mb-2">
+              {mainStep > 1 && mainStep < 4 && (
+                <button
+                  type="button"
+                  onClick={() => setMainStep((s) => Math.max(1, s - 1))}
+                  className="absolute left-0 top-1/2 -translate-y-1/2 inline-flex items-center gap-1.5 text-xs text-[#2e5339] font-bold uppercase tracking-widest hover:underline cursor-pointer group"
+                >
+                  <span className="transition-transform group-hover:-translate-x-1">←</span>
+                  <span>Volver</span>
+                </button>
+              )}
+              <p className="font-sans font-bold text-xl md:text-2xl uppercase tracking-[0.15em] text-[#2e5339]">
+                Restaurante Las Flores
+              </p>
+            </div>
+
             {renderStepper()}
 
             {/* ── STEP 1: ENCONTRAR (Personas, Fecha & Horario del Ambiente Elegido) ── */}
             {mainStep === 1 && (
-              <div className="bg-white p-6 md:p-10 rounded-2xl shadow-xl border border-[#d4a373]/20 space-y-10">
+              <div className="space-y-10">
                 {/* 1. Selector de Personas (Botones redondeados estilo cápsula según capacidad de la zona) */}
                 <div>
                   <h3 className="font-serif text-2xl text-[#2e5339] mb-4 flex items-center gap-2">
@@ -870,10 +889,10 @@ function ReservasPage() {
                           key={numStr}
                           type="button"
                           onClick={() => setForm((f) => ({ ...f, guests: numStr }))}
-                          className={`w-14 h-12 rounded-2xl border transition-all duration-200 font-bold text-sm flex items-center justify-center ${
+                          className={`w-14 h-12 rounded-2xl transition-all duration-200 font-bold text-sm flex items-center justify-center shadow-2xs ${
                             isSelected
-                              ? "bg-[#2e5339] text-white border-[#2e5339] shadow-md scale-105"
-                              : "bg-white text-gray-800 border-gray-200 hover:border-[#2e5339]/50 hover:bg-gray-50 shadow-2xs"
+                              ? "bg-[#2e5339] text-white shadow-md ring-2 ring-[#d4a373] scale-102"
+                              : "bg-[#A32638] text-white hover:bg-[#7a1c29]"
                           }`}
                         >
                           {numStr}
@@ -985,10 +1004,10 @@ function ReservasPage() {
                       key={item.iso}
                       type="button"
                       onClick={() => setForm((f) => ({ ...f, date: item.iso }))}
-                      className={`flex flex-col items-center justify-center min-w-[54px] py-2.5 rounded-xl border transition-all text-center ${
+                      className={`flex flex-col items-center justify-center min-w-[54px] py-2.5 rounded-xl transition-all text-center shadow-2xs ${
                         isSelected
-                          ? "bg-[#2e5339] text-white border-[#2e5339] shadow-md scale-105"
-                          : "bg-[#2e5339]/10 text-[#2e5339] border-[#2e5339]/30 hover:bg-[#2e5339]/20"
+                          ? "bg-[#2e5339] text-white shadow-md ring-2 ring-[#d4a373] scale-102"
+                          : "bg-[#A32638] text-white hover:bg-[#7a1c29]"
                       }`}
                     >
                       <span className="text-[14px] font-bold leading-none mb-1">{item.dayNum}</span>
@@ -1019,8 +1038,8 @@ function ReservasPage() {
                           hourBlackout
                             ? "bg-amber-50/90 text-amber-900/80 border border-amber-200/80 hover:bg-amber-100/90 cursor-pointer"
                             : isSelected
-                            ? "bg-[#3b1f10] text-white shadow-md ring-2 ring-[#d4a373] scale-102"
-                            : "bg-[#2e5339] text-white hover:bg-[#23412c]"
+                            ? "bg-[#2e5339] text-white shadow-md ring-2 ring-[#d4a373] scale-102"
+                            : "bg-[#A32638] text-white hover:bg-[#7a1c29]"
                         }`}
                         title={hourBlackout ? `Horario reservado: ${hourBlackout}` : undefined}
                       >
@@ -1050,8 +1069,8 @@ function ReservasPage() {
                           hourBlackout
                             ? "bg-amber-50/90 text-amber-900/80 border border-amber-200/80 hover:bg-amber-100/90 cursor-pointer"
                             : isSelected
-                            ? "bg-[#3b1f10] text-white shadow-md ring-2 ring-[#d4a373] scale-102"
-                            : "bg-[#2e5339] text-white hover:bg-[#23412c]"
+                            ? "bg-[#2e5339] text-white shadow-md ring-2 ring-[#d4a373] scale-102"
+                            : "bg-[#A32638] text-white hover:bg-[#7a1c29]"
                         }`}
                         title={hourBlackout ? `Horario reservado: ${hourBlackout}` : undefined}
                       >
@@ -1084,7 +1103,7 @@ function ReservasPage() {
                       disabled={!isStep1Complete}
                       className={`w-full py-4 rounded-xl font-bold uppercase tracking-widest text-sm transition-all shadow-md active:scale-[0.99] flex items-center justify-center gap-2 cursor-pointer ${
                         isStep1Complete
-                          ? "bg-[#2e5339] hover:bg-[#23412c] text-white cursor-pointer"
+                          ? "bg-[#A32638] hover:bg-[#7a1c29] text-white cursor-pointer"
                           : "bg-gray-200 text-gray-500 cursor-not-allowed border border-gray-300/60 opacity-80"
                       }`}
                     >
@@ -1099,7 +1118,7 @@ function ReservasPage() {
 
         {/* ── STEP 2: INFORMACIÓN (Datos Personales, Teléfono, Alergias y Términos) ── */}
         {mainStep === 2 && (
-          <div className="bg-white p-6 md:p-10 rounded-2xl shadow-xl border border-[#d4a373]/20 animate-in fade-in duration-400 space-y-8">
+          <div className="animate-in fade-in duration-400 space-y-8">
             {/* Summary Bar */}
             <div className="bg-[#fdf8f0] p-4 rounded-xl border border-[#d4a373]/30 flex flex-wrap items-center justify-between gap-4 text-xs">
               <div className="flex items-center gap-2">
@@ -1251,7 +1270,7 @@ function ReservasPage() {
               <div className="pt-4">
                 <button
                   type="submit"
-                  className="w-full bg-[#2e5339] hover:bg-[#23412c] text-white py-4 rounded-xl font-bold uppercase tracking-widest text-sm transition-all shadow-md active:scale-[0.99] cursor-pointer"
+                  className="w-full bg-[#A32638] hover:bg-[#7a1c29] text-white py-4 rounded-xl font-bold uppercase tracking-widest text-sm transition-all shadow-md active:scale-[0.99] cursor-pointer"
                 >
                   Continuar a Experiencia →
                 </button>
@@ -1262,7 +1281,7 @@ function ReservasPage() {
 
         {/* ── STEP 3: ADICIONAL (Ocasión, Alergias y Preferencias Unificadas) ── */}
         {mainStep === 3 && (
-          <div className="bg-white p-6 md:p-10 rounded-2xl shadow-xl border border-[#d4a373]/20 animate-in fade-in duration-400 space-y-7">
+          <div className="animate-in fade-in duration-400 space-y-7">
             {/* Top Back Link */}
             <div>
               <button
@@ -1347,7 +1366,7 @@ function ReservasPage() {
                   type="button"
                   onClick={handleFinalizeReservation}
                   disabled={isSubmitting}
-                  className="w-full bg-[#2e5339] hover:bg-[#23412c] text-white py-4 rounded-xl font-bold uppercase tracking-widest text-sm transition-all shadow-md active:scale-[0.99] disabled:opacity-50 cursor-pointer"
+                  className="w-full bg-[#A32638] hover:bg-[#7a1c29] text-white py-4 rounded-xl font-bold uppercase tracking-widest text-sm transition-all shadow-md active:scale-[0.99] disabled:opacity-50 cursor-pointer"
                 >
                   {isSubmitting ? "Procesando Reserva..." : "CONFIRMAR RESERVA"}
                 </button>
@@ -1492,7 +1511,7 @@ function ReservasPage() {
                     setSelectedZona(null);
                     window.scrollTo({ top: 300, behavior: "smooth" });
                   }}
-                  className="w-full py-4 bg-[#2e5339] hover:bg-[#23412c] text-white font-serif font-bold uppercase tracking-widest text-xs rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 active:scale-[0.99] cursor-pointer"
+                  className="w-full py-4 bg-[#A32638] hover:bg-[#7a1c29] text-white font-serif font-bold uppercase tracking-widest text-xs rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 active:scale-[0.99] cursor-pointer"
                 >
                   Hacer otra reserva
                 </button>
