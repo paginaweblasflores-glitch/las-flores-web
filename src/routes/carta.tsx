@@ -137,6 +137,9 @@ function CartaPage() {
         {/* Vertical Category Sidebar (solo escritorio) */}
         <aside className="hidden md:block w-72 bg-piedra border-r border-nogal/10 flex-shrink-0 sticky top-24 h-[calc(100vh-100px)] overflow-y-auto z-20 scrollbar-none shadow-[6px_0_16px_-10px_rgba(0,0,0,0.15)]">
           <div className="flex flex-col py-8 pr-8">
+            <span className="px-8 pb-3 text-sm uppercase tracking-[0.3em] font-bold text-nogal">
+              Categorías
+            </span>
             {currentCategories.map((cat) => (
               <button
                 key={cat.id}

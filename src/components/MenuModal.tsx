@@ -265,6 +265,9 @@ export function MenuModal({ open, onClose }: MenuModalProps) {
           style={{ background: R.crema }}
         >
           <div className="flex flex-col p-4 gap-1">
+            <span className="px-6 pb-2 text-sm uppercase tracking-[0.3em] font-bold text-nogal">
+              Categorías
+            </span>
             {currentCategories.map((cat) => {
               const isActive = activeId === cat.id;
               return (
