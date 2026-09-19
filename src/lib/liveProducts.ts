@@ -220,31 +220,13 @@ export async function getLiveCategories(): Promise<Category[]> {
       return staticCategories;
     }
 
-    // Crear mapa de categorías basándose en Supabase o estático
+    // Crear mapa de categorías basándose únicamente en las categorías reales de la BD.
+    // (Antes se sembraba primero con `staticCategories`, pero ese arreglo ahora es solo
+    // el placeholder de "Cargando categorías..." — sembrar con él dejaba esa entrada
+    // fantasma mezclada permanentemente con las categorías reales ya cargadas.)
     const categoriesMap = new Map<string, Category>();
 
-    // Identificar slugs de categorías inactivas explícitamente en BD
-    const inactiveSlugs = new Set<string>();
-    if (dbCategories) {
-      dbCategories.forEach(c => {
-        if (c.is_active === false) {
-          inactiveSlugs.add(c.slug || normalizeCategorySlug(c.name));
-        }
-      });
-    }
-
-    // Inicializar mapa con la estructura estática, omitiendo las que fueron desactivadas en BD
-    staticCategories.forEach((cat) => {
-      if (!inactiveSlugs.has(cat.id)) {
-        categoriesMap.set(cat.id, {
-          id: cat.id,
-          label: cat.label,
-          dishes: [],
-        });
-      }
-    });
-
-    // Agregar categorías nuevas de Supabase si existen y están activas
+    // Agregar categorías de Supabase si existen y están activas
     if (dbCategories) {
       dbCategories.forEach((c) => {
         const slug = c.slug || normalizeCategorySlug(c.name);
