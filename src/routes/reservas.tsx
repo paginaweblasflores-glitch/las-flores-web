@@ -668,7 +668,7 @@ function ReservasPage() {
             const isCurrent = mainStep === s.num;
 
             return (
-              <div key={s.num} className="relative z-10 flex flex-col items-center gap-1.5">
+              <div key={s.num} className="relative z-10 flex flex-col items-center gap-1.5 min-w-0 px-0.5">
                 <button
                   type="button"
                   onClick={() => {
@@ -685,7 +685,7 @@ function ReservasPage() {
                   {isDone ? <Check size={20} strokeWidth={3} /> : s.num}
                 </button>
                 <span
-                  className={`text-[11px] uppercase tracking-wider font-semibold ${
+                  className={`text-center leading-tight text-[8px] tracking-tight sm:text-[11px] sm:tracking-wider uppercase font-semibold ${
                     isCurrent || isDone ? "text-[#A32638]" : "text-gray-400"
                   }`}
                 >
