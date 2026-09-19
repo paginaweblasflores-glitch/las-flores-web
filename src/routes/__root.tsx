@@ -10,6 +10,7 @@ import {
 import { useEffect, useState, type ReactNode } from "react";
 import { CartProvider } from "../context/CartContext";
 import { CartSidebar } from "../components/CartSidebar";
+import { CookieConsentBanner } from "../components/CookieConsentBanner";
 import { supabase } from "../lib/supabase";
 
 import appCss from "../styles.css?url";
@@ -364,6 +365,7 @@ function RootComponent() {
       <CartProvider>
         <Outlet />
         <CartSidebar />
+        <CookieConsentBanner />
       </CartProvider>
     </QueryClientProvider>
   );

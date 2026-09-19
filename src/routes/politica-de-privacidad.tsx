@@ -133,10 +133,27 @@ function PoliticaPrivacidadPage() {
             </div>
           </section>
 
-          {/* 5. Derechos ARCO */}
-          <section className="space-y-3">
+          {/* 5. Cookies y Analítica */}
+          <section id="cookies" className="space-y-3 scroll-mt-28">
             <h2 className="font-serif text-xl md:text-2xl font-bold text-ink flex items-center gap-2">
               <span className="text-eucalipto">5.</span>
+              <span>Cookies y Analítica</span>
+            </h2>
+            <p>
+              Este sitio utiliza <strong>Google Analytics</strong> para entender cómo los visitantes usan la web (páginas visitadas, tiempo de permanencia) y así mejorar la experiencia. Esto implica el uso de cookies de analítica que identifican su navegador de forma anónima, sin recopilar su nombre ni datos de contacto.
+            </p>
+            <p>
+              También usamos cookies estrictamente necesarias para el funcionamiento del sitio, como mantener su sesión iniciada al ordenar un pedido o hacer una reserva.
+            </p>
+            <p>
+              Puede deshabilitar las cookies desde la configuración de su navegador en cualquier momento; sin embargo, algunas funciones del sitio (como el carrito de compras o el inicio de sesión) podrían dejar de funcionar correctamente.
+            </p>
+          </section>
+
+          {/* 6. Derechos ARCO */}
+          <section className="space-y-3">
+            <h2 className="font-serif text-xl md:text-2xl font-bold text-ink flex items-center gap-2">
+              <span className="text-eucalipto">6.</span>
               <span>Ejercicio de Derechos ARCO</span>
             </h2>
             <p>
@@ -151,10 +168,10 @@ function PoliticaPrivacidadPage() {
             </p>
           </section>
 
-          {/* 6. Contacto y Domicilio Legal */}
+          {/* 7. Contacto y Domicilio Legal */}
           <section className="space-y-3 border-t border-black/10 pt-6">
             <h2 className="font-serif text-xl md:text-2xl font-bold text-ink flex items-center gap-2">
-              <span className="text-eucalipto">6.</span>
+              <span className="text-eucalipto">7.</span>
               <span>Domicilio Legal y Canales de Atención</span>
             </h2>
             <p>
