@@ -33,7 +33,7 @@ export function CookieConsentBanner() {
   if (!visible) return null;
 
   return (
-    <div className="fixed bottom-4 inset-x-4 md:left-6 md:right-auto md:max-w-sm z-[9998] animate-in fade-in slide-in-from-bottom-4 duration-300">
+    <div className="fixed bottom-4 left-4 right-4 md:right-auto md:left-1/2 md:-translate-x-1/2 md:w-full md:max-w-sm z-[9998] animate-in fade-in slide-in-from-bottom-4 duration-300">
       <div className="bg-piedra border border-nogal/15 rounded-2xl shadow-xl p-5">
         <p className="font-serif text-sm text-nogal font-semibold mb-1.5">
           Usamos cookies
