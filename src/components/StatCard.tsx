@@ -1,7 +1,7 @@
 import type { LucideIcon } from "lucide-react";
 import type { ReactNode } from "react";
 
-export type StatCardAccent = "eucalipto" | "chilca" | "cochinilla" | "cielo" | "pacay";
+export type StatCardAccent = "eucalipto" | "chilca" | "cochinilla" | "cielo" | "pacay" | "naranja" | "morado";
 
 const ACCENT_STYLES: Record<StatCardAccent, { chipBg: string; chipText: string; chipBorder: string; value: string; activeBorder: string }> = {
   eucalipto: {
@@ -38,6 +38,20 @@ const ACCENT_STYLES: Record<StatCardAccent, { chipBg: string; chipText: string; 
     chipBorder: "border-[#7C9A5C]/25",
     value: "text-[#5f7a44]",
     activeBorder: "border-t-[#7C9A5C]",
+  },
+  naranja: {
+    chipBg: "bg-[#EA580C]/10",
+    chipText: "text-[#C2410C]",
+    chipBorder: "border-[#EA580C]/25",
+    value: "text-[#C2410C]",
+    activeBorder: "border-t-[#EA580C]",
+  },
+  morado: {
+    chipBg: "bg-[#9333EA]/10",
+    chipText: "text-[#7E22CE]",
+    chipBorder: "border-[#9333EA]/25",
+    value: "text-[#7E22CE]",
+    activeBorder: "border-t-[#9333EA]",
   },
 };
 

@@ -8,6 +8,8 @@ const ACCENT_HEX: Record<StatCardAccent, string> = {
   cochinilla: "#A32638",
   cielo: "#5E85A8",
   pacay: "#7C9A5C",
+  naranja: "#EA580C",
+  morado: "#9333EA",
 };
 
 interface TrendEntry {

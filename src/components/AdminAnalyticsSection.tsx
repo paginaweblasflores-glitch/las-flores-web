@@ -478,7 +478,7 @@ export function AdminAnalyticsSection({
                       <div className="w-full flex-1 max-h-[170px] flex items-end bg-[#14231D]/5 rounded-t-xl p-0.5 border border-[#14231D]/8">
                         <div
                           style={{ height: `${heightPercent}%` }}
-                          className="w-full bg-gradient-to-t from-[#14231D] via-[#2A4237] to-[#5F8575] hover:from-[#2A4237] hover:to-[#7B9F90] rounded-t-lg transition-all shadow-md group-hover:brightness-110"
+                          className="w-full bg-gradient-to-t from-blue-900 via-blue-700 to-blue-400 rounded-t-lg transition-all shadow-md group-hover:brightness-110"
                         />
                       </div>
                       <span className="text-xs text-[#14231D]/50 font-bold truncate w-full text-center tracking-tight">
@@ -571,7 +571,7 @@ export function AdminAnalyticsSection({
                   <div className="w-full bg-[#14231D]/8 h-3 rounded-full overflow-hidden border border-[#14231D]/8">
                     <div
                       style={{ width: `${barPercent}%` }}
-                      className="bg-gradient-to-r from-[#14231D] to-[#5F8575] h-full rounded-full transition-all duration-500"
+                      className="bg-gradient-to-r from-orange-700 to-orange-400 h-full rounded-full transition-all duration-500"
                     />
                   </div>
                 </div>
