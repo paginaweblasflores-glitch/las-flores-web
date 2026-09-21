@@ -15,6 +15,7 @@ import { LocationSelector } from "../components/LocationSelector";
 import RetabloWrapper, { AyacuchoFlowerInline } from "../components/RetabloWrapper";
 import { MenuModal } from "@/components/MenuModal";
 import { FamiliaLasFloresSection } from "../components/FamiliaLasFloresSection";
+import { getFestividadesDestacadas } from "../lib/festividadesLayout";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -75,9 +76,15 @@ export const Route = createFileRoute("/")({
           "openingHoursSpecification": [
             {
               "@type": "OpeningHoursSpecification",
-              "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+              "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
               "opens": "07:00",
-              "closes": "22:00"
+              "closes": "17:30"
+            },
+            {
+              "@type": "OpeningHoursSpecification",
+              "dayOfWeek": ["Saturday", "Sunday"],
+              "opens": "07:00",
+              "closes": "18:00"
             }
           ],
           "servesCuisine": ["Peruana", "Ayacuchana", "Tradicional", "Parrillas", "Desayunos", "Almuerzos", "Cenas"],
@@ -456,129 +463,39 @@ function PlatosTipicosGrid({ platos }: { platos: { img: string; nombre: string; 
 // ─── SECCIÓN FESTIVIDADES — Carrusel / Slider ───────────────────────────────────
 
 function FestividadesSlider({ onSelect }: { onSelect: (f: Festividad) => void }) {
-  const [activo, setActivo] = useState(0);
-  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
-
-  const resetTimer = () => {
-    if (timerRef.current) clearInterval(timerRef.current);
-    timerRef.current = setInterval(() => setActivo((p) => (p + 1) % festividades.length), 5000);
-  };
-
-  useEffect(() => {
-    resetTimer();
-    return () => {
-      if (timerRef.current) clearInterval(timerRef.current);
-    };
-  }, []);
-
-  const goTo = (i: number) => {
-    setActivo(i);
-    resetTimer();
-  };
-  const prev = () => {
-    setActivo((p) => (p - 1 + festividades.length) % festividades.length);
-    resetTimer();
-  };
-  const next = () => {
-    setActivo((p) => (p + 1) % festividades.length);
-    resetTimer();
-  };
-
-  const fest = festividades[activo];
+  const cards = getFestividadesDestacadas(festividades);
 
   return (
-    <div className="relative overflow-hidden bg-cafe w-full aspect-[4/3] md:aspect-[21/9] rounded-3xl shadow-xl group">
-
-      {festividades.map((f, i) => (
-        <div
-          key={f.id}
-          className={`absolute inset-0 transition-opacity duration-1000 ${i === activo ? "opacity-100" : "opacity-0"}`}
-        >
-          <img src={f.imagen} alt={f.nombre} loading="lazy" decoding="async" className="w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/20 to-transparent" />
-          {/* Línea de color de la festividad arriba */}
-          <div className={`absolute top-0 left-0 w-full h-1 ${f.colorAccent} z-20 opacity-80`} />
-        </div>
-      ))}
-
-      <div className="absolute bottom-0 left-0 w-full p-6 md:p-12 z-10 text-piedra">
-        <div className="max-w-3xl">
-          <p className="text-[10px] uppercase tracking-[0.35em] mb-3 text-piedra/70">{fest.fecha}</p>
-          <h3 className="font-serif italic text-3xl md:text-5xl mb-4 leading-tight">
-            {fest.nombre}
-          </h3>
-          <p className="text-sm md:text-base text-piedra/80 leading-relaxed mb-6 max-w-2xl hidden md:block">
-            {fest.descripcionCorta}
-          </p>
+    <div className="w-full">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-3 md:gap-5 lg:gap-6">
+        {cards.map((fest) => (
           <button
+            key={fest.id}
+            type="button"
             onClick={() => onSelect(fest)}
-            className="inline-flex items-center gap-3 px-6 py-3 bg-piedra/10 hover:bg-piedra text-piedra hover:text-nogal transition-colors text-[10px] uppercase tracking-[0.2em] font-semibold rounded-sm border border-piedra/20"
+            className="group relative isolate overflow-hidden rounded-[28px] text-left shadow-[0_16px_40px_rgba(29,19,11,0.18)] min-h-[330px] md:min-h-[440px] lg:min-h-[500px] transition-transform duration-300 hover:-translate-y-1"
           >
-            Descubrir Festividad <span aria-hidden>→</span>
-          </button>
-        </div>
-      </div>
-
-      {/* Flechas de navegación */}
-      <div className="absolute top-1/2 -translate-y-1/2 left-4 md:left-8 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-        <button
-          onClick={prev}
-          className="p-3 bg-cafe/40 hover:bg-cafe/80 rounded-full text-piedra backdrop-blur-sm transition-all"
-          aria-label="Anterior"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <path d="m15 18-6-6 6-6" />
-          </svg>
-        </button>
-      </div>
-      <div className="absolute top-1/2 -translate-y-1/2 right-4 md:right-8 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-        <button
-          onClick={next}
-          className="p-3 bg-cafe/40 hover:bg-cafe/80 rounded-full text-piedra backdrop-blur-sm transition-all"
-          aria-label="Siguiente"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <path d="m9 18 6-6-6-6" />
-          </svg>
-        </button>
-      </div>
-
-      {/* Indicadores de carga tipo barra */}
-      <div className="absolute bottom-6 md:bottom-12 right-6 md:right-12 z-10 flex gap-3 items-center">
-        {festividades.map((_, i) => (
-          <button
-            key={i}
-            onClick={() => goTo(i)}
-            className={`relative overflow-hidden transition-all duration-500 ${i === activo ? "w-12 h-1.5 rounded-full bg-piedra/30" : "w-1.5 h-1.5 rounded-full bg-piedra/50 hover:bg-piedra"}`}
-            aria-label={`Ver festividad ${i + 1}`}
-          >
-            {i === activo && (
-              <div
-                key={activo}
-                className="absolute top-0 left-0 h-full bg-piedra"
-                style={{ animation: "fillProgress 5s linear forwards" }}
-              />
-            )}
+            <img
+              src={fest.imagen}
+              alt={fest.nombre}
+              loading="lazy"
+              decoding="async"
+              className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#120d09]/90 via-[#120d09]/30 to-transparent" />
+            <div className={`absolute inset-x-0 top-0 h-1.5 ${fest.colorAccent}`} />
+            <div className="absolute inset-x-0 bottom-0 p-5 md:p-7 lg:p-8 text-piedra">
+              <p className="text-[10px] uppercase tracking-[0.35em] text-piedra/70 mb-3">{fest.fecha}</p>
+              <h3 className="font-serif text-2xl md:text-3xl lg:text-[2.15rem] leading-tight italic">
+                {fest.nombre}
+              </h3>
+              <p className="mt-3 max-w-[26ch] text-sm md:text-base leading-relaxed text-piedra/80">
+                {fest.descripcionCorta}
+              </p>
+              <span className="mt-5 inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.22em] font-semibold text-piedra">
+                Descubrir <span aria-hidden>→</span>
+              </span>
+            </div>
           </button>
         ))}
       </div>

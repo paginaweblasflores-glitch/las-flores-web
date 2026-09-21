@@ -55,7 +55,7 @@ export function SiteFooter() {
             <p className="leading-[1.8]">
               Jr. José Olaya 106, Ayacucho, Perú.
               <br />
-              967 456 230 / +51 980 723 422
+              +51 967 456 230 / +51 980 723 422
               <br />
               contacto@restaurantelasflores.com
             </p>
@@ -66,9 +66,9 @@ export function SiteFooter() {
             <div className="space-y-1">
               <p className="font-semibold text-piedra">Horario de Atención</p>
               <p>Lunes a Viernes</p>
-              <p>7:00 a. m. - 5:00 p. m.</p>
-              <p>Sábado y Domingo</p>
               <p>7:00 a. m. - 5:30 p. m.</p>
+              <p>Sábado y Domingo</p>
+              <p>7:00 a. m. - 6:00 p. m.</p>
             </div>
 
             <div className="flex gap-4 pt-4">

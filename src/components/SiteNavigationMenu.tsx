@@ -123,11 +123,11 @@ export function SiteNavigationMenu({
         <div className="px-8 py-4 shrink-0 border-t border-nogal/10 bg-piedra">
           <div className="flex flex-col gap-2.5 mb-4">
             <a
-              href="tel:967456230"
+              href="tel:+51967456230"
               className="flex items-center gap-3 text-sm text-nogal/75 hover:text-nogal transition-colors font-medium tracking-wide"
             >
               <Phone size={15} strokeWidth={2.5} />
-              967 456 230
+              +51 967 456 230
             </a>
             <a
               href="https://wa.me/51980723422"

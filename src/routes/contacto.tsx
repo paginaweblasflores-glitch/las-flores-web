@@ -228,11 +228,11 @@ function ContactoPage() {
                   <div className="text-xs text-gray-700 space-y-1">
                     <p className="flex justify-between">
                       <span>Lunes a Viernes:</span>
-                      <strong className="text-[#2e5339]">07:00 am – 05:00 pm</strong>
+                      <strong className="text-[#2e5339]">07:00 am – 05:30 pm</strong>
                     </p>
                     <p className="flex justify-between">
                       <span>Sábados y Domingos:</span>
-                      <strong className="text-[#2e5339]">07:00 am – 05:30 pm</strong>
+                      <strong className="text-[#2e5339]">07:00 am – 06:00 pm</strong>
                     </p>
                   </div>
                 </div>
