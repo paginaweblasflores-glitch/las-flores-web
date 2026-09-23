@@ -1082,7 +1082,7 @@ function Index() {
             </h2>
             <p className="text-base md:text-lg leading-[1.7] text-piedra/75 mb-8">
               Descubre los ingredientes autóctonos que dan vida a nuestra cocina: papa nativa,
-              quinoa, nísperos, airampo, tunas y más. Cada temporada trae consigo los mejores
+              olluco, calabaza, romero, tuna y más. Cada temporada trae consigo los mejores
               productos de nuestra tierra, cosechados en su punto perfecto para ofrecerte el
               auténtico sabor de Ayacucho.
             </p>
