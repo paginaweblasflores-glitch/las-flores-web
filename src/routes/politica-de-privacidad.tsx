@@ -178,7 +178,7 @@ function PoliticaPrivacidadPage() {
               <strong>Restaurante Turístico Las Flores</strong><br />
               Dirección: Jr. Lima 304, Centro Histórico de Huamanga, Ayacucho, Perú.<br />
               Correo Electrónico: contacto@restaurantelasflores.com<br />
-              Teléfono: 967 456 230 / WhatsApp: +51 980 723 422
+              Teléfono: +51 967 456 230 / WhatsApp: +51 980 723 422
             </p>
           </section>
 

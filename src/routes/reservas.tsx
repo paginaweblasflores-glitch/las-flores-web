@@ -11,6 +11,7 @@ import { Calendar, CheckCircle2, User as UserIcon, MapPin, Search, ChevronLeft, 
 import { AnimatedCartButton } from "@/components/AnimatedCartButton";
 import { LoginModal } from "@/components/LoginModal";
 import { getBlockedZonesForReservation, listRestaurantZones } from "@/features/zones/api";
+import { getReservationResumeState } from "@/lib/reservationResume";
 
 export const Route = createFileRoute("/reservas")({
   head: () => ({
@@ -145,6 +146,8 @@ const COUNTRY_CODES = [
   { code: "+34", iso: "es", name: "España" },
 ];
 
+const PENDING_RESERVATION_ZONE_KEY = "reserva_pending_zone";
+
 function ReservasPage() {
   const searchParams = Route.useSearch();
   const navigate = useNavigate();
@@ -269,6 +272,7 @@ function ReservasPage() {
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [showTermsModal, setShowTermsModal] = useState(false);
   const [pendingStepTransition, setPendingStepTransition] = useState<number | null>(null);
+  const [pendingZoneId, setPendingZoneId] = useState<string | null>(null);
 
   // Blackout & Zone Status State
   const [blockedZoneIds, setBlockedZoneIds] = useState<string[]>([]);
@@ -405,6 +409,10 @@ function ReservasPage() {
       setActiveUser(newUser);
 
       if (newUser) {
+        setPendingZoneId(localStorage.getItem(PENDING_RESERVATION_ZONE_KEY));
+      }
+
+      if (newUser) {
         const metaName = newUser.user_metadata?.full_name || newUser.user_metadata?.name || "";
         const parts = metaName.trim().split(" ");
         const fName = parts[0] || "";
@@ -435,6 +443,7 @@ function ReservasPage() {
       setActiveUser(newUser);
       
       if (newUser) {
+        setPendingZoneId(localStorage.getItem(PENDING_RESERVATION_ZONE_KEY));
         const metaName = newUser.user_metadata?.full_name || newUser.user_metadata?.name || "";
         const parts = metaName.trim().split(" ");
         setForm((f) => ({
@@ -462,6 +471,27 @@ function ReservasPage() {
     };
   }, []);
 
+  // Reanudar automáticamente el salón que el usuario eligió antes de iniciar sesión.
+  useEffect(() => {
+    if (!activeUser || !pendingZoneId) return;
+
+    const resumeState = getReservationResumeState(pendingZoneId, ZONAS);
+    if (!resumeState) return;
+
+    setSelectedZona(resumeState.zone);
+    setForm((f) => ({ ...f, zona: resumeState.zone }));
+    setMainStep(resumeState.step);
+    setShowLoginModal(false);
+    setPendingZoneId(null);
+    setPendingStepTransition(null);
+    localStorage.removeItem(PENDING_RESERVATION_ZONE_KEY);
+    localStorage.removeItem("reserva_pending_step");
+    navigate({ to: "/reservas", search: { zona: resumeState.zone.id } });
+    setTimeout(() => {
+      wizardRef.current?.scrollIntoView({ behavior: "smooth" });
+    }, 100);
+  }, [activeUser, pendingZoneId, ZONAS, navigate]);
+
   // Efecto separado para manejar la transición después del login
   useEffect(() => {
     if (activeUser && pendingStepTransition) {
@@ -487,6 +517,16 @@ function ReservasPage() {
       });
       return;
     }
+
+    if (!activeUser) {
+      localStorage.setItem(PENDING_RESERVATION_ZONE_KEY, z.id);
+      localStorage.setItem("reserva_pending_step", "1");
+      setPendingZoneId(z.id);
+      setPendingStepTransition(1);
+      setShowLoginModal(true);
+      return;
+    }
+
     setSelectedZona(z);
     setForm((f) => ({ ...f, zona: z }));
     setMainStep(1);
