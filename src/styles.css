@@ -339,3 +339,29 @@
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+/*
+ * Contenedor ancho para pantallas grandes (monitores 24"+): el sitio se
+ * diseñó y probó sobre todo en laptop, donde max-w-7xl (1280px) llena casi
+ * todo el ancho. En monitores de escritorio (1920px, 2560px+) esa misma
+ * franja deja demasiado espacio vacío a los lados. Este contenedor crece
+ * en pasos a partir de esos anchos, en vez de quedarse fijo en 1280px.
+ */
+.container-flores {
+  max-width: 80rem; /* 1280px, igual que max-w-7xl en pantallas normales */
+}
+@media (min-width: 1440px) {
+  .container-flores {
+    max-width: 90rem; /* 1440px */
+  }
+}
+@media (min-width: 1920px) {
+  .container-flores {
+    max-width: 105rem; /* 1680px */
+  }
+}
+@media (min-width: 2560px) {
+  .container-flores {
+    max-width: 120rem; /* 1920px */
+  }
+}

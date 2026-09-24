@@ -573,7 +573,7 @@ function Index() {
 
       {/* LUGARES PARA VISITAR */}
       <section id="lugares-para-visitar" className="py-16 md:py-32 px-6 bg-piedra">
-        <div className="max-w-7xl mx-auto">
+        <div className="container-flores mx-auto">
           <div className="mb-16 flex flex-col md:flex-row md:items-end md:justify-between gap-6">
             <div>
               <span className="text-eucalipto font-medium uppercase tracking-[0.3em] text-xs mb-4 block">
@@ -595,7 +595,7 @@ function Index() {
 
       {/* FESTIVIDADES DE HUAMANGA */}
       <section id="festividades-de-huamanga" className="py-16 md:py-32 px-6">
-        <div className="max-w-7xl mx-auto">
+        <div className="container-flores mx-auto">
           <div className="mb-16 flex flex-col md:flex-row md:items-end md:justify-between gap-6">
             <div>
               <span className="text-eucalipto font-medium uppercase tracking-[0.3em] text-xs mb-4 block">
@@ -616,7 +616,7 @@ function Index() {
 
       {/* FAUNA ANDINA */}
       <section>
-        <div className="max-w-7xl mx-auto px-6 mb-16">
+        <div className="container-flores mx-auto px-6 mb-16">
           <span className="text-eucalipto font-medium uppercase tracking-[0.3em] text-xs mb-4 block">
             Fauna Andina
           </span>
@@ -629,7 +629,7 @@ function Index() {
 
       {/* PLATOS TÍPICOS */}
       <section className="py-16 md:py-16 px-6 bg-cafe text-piedra selection:bg-chilca/30">
-        <div className="max-w-7xl mx-auto">
+        <div className="container-flores mx-auto">
           <div className="mb-16 md:mb-8 max-w-3xl">
             <span className="text-chilca font-medium uppercase tracking-[0.3em] text-[10px] mb-4 block">
               Platos Típicos
@@ -672,7 +672,7 @@ function Index() {
 
       {/* TESOROS DE AYACUCHO */}
       <section className="relative bg-eucalipto py-16 md:py-32 px-6">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-12 items-center">
+        <div className="container-flores mx-auto grid grid-cols-1 md:grid-cols-12 gap-12 items-center">
           <div className="order-2 md:order-none md:col-span-5">
             <div className="relative aspect-4/3 rounded-3xl overflow-hidden shadow-2xl border-4 border-white/20">
               <img
@@ -709,7 +709,7 @@ function Index() {
 
       {/* PREMIOS */}
       <section className="py-16 md:py-32 px-6">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-12 items-center">
+        <div className="container-flores mx-auto grid grid-cols-1 md:grid-cols-12 gap-12 items-center">
           <div className="md:col-span-6">
             <span className="text-eucalipto font-medium uppercase tracking-[0.3em] text-xs mb-6 block">
               Excelencia Reconocida

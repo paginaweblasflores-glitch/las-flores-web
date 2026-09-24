@@ -190,7 +190,7 @@ function GenerationsSection() {
 
   return (
     <section id="historia" className="bg-piedra py-16 md:py-20 px-6">
-      <div className="max-w-7xl mx-auto">
+      <div className="container-flores mx-auto">
         <div className="max-w-3xl mb-8 md:mb-12">
           <span className="text-eucalipto font-medium uppercase tracking-[0.3em] text-xs mb-4 block">
             Las Tres Generaciones
@@ -264,7 +264,7 @@ function ChefAccordionSection() {
 
   return (
     <section className="bg-piedra py-16 md:py-20 px-6">
-      <div className="max-w-7xl mx-auto">
+      <div className="container-flores mx-auto">
         <div className="mb-6">
           <span className="text-eucalipto font-medium uppercase tracking-[0.3em] text-xs mb-4 block">
             Especialidad de Casa
@@ -415,7 +415,7 @@ function RestaurantePage() {
 
       {/* CTA Reservas y Delivery */}
       <section id="reservas" className="bg-cafe text-piedra py-16 md:py-32 px-6">
-        <div className="max-w-7xl mx-auto grid items-center gap-10 md:grid-cols-[1.35fr_1fr] md:gap-16">
+        <div className="container-flores mx-auto grid items-center gap-10 md:grid-cols-[1.35fr_1fr] md:gap-16">
           <div className="relative aspect-[4/3] overflow-hidden rounded-3xl shadow-2xl border-4 border-white/20">
             <img
               src="/familia/ubicacion.webp"

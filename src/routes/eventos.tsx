@@ -342,7 +342,7 @@ function EventosPage() {
 
       {/* ── TABS MÓVIL: sticky pegado al header (solo < lg) ── */}
       <div className="block lg:hidden sticky top-12 z-30 w-full bg-[#F9F8F3] border-b border-gray-200 shadow-sm">
-        <div className="max-w-7xl mx-auto pl-6">
+        <div className="container-flores mx-auto pl-6">
           <MobileCategoryFilter
             categories={EVENT_TABS.map((tab) => ({ key: tab.id, label: tab.label }))}
             activeKey={activeTab}
