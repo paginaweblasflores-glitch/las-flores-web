@@ -27,6 +27,8 @@ import { Route as CajaRouteImport } from './routes/caja'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as RastreoOrderIdRouteImport } from './routes/rastreo/$orderId'
+import { Route as FestividadesSlugRouteImport } from './routes/festividades/$slug'
+import { Route as DestinosSlugRouteImport } from './routes/destinos/$slug'
 import { Route as DOrderIdRouteImport } from './routes/d/$orderId'
 
 const UneteAlEquipoRoute = UneteAlEquipoRouteImport.update({
@@ -119,6 +121,16 @@ const RastreoOrderIdRoute = RastreoOrderIdRouteImport.update({
   path: '/rastreo/$orderId',
   getParentRoute: () => rootRouteImport,
 } as any)
+const FestividadesSlugRoute = FestividadesSlugRouteImport.update({
+  id: '/festividades/$slug',
+  path: '/festividades/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DestinosSlugRoute = DestinosSlugRouteImport.update({
+  id: '/destinos/$slug',
+  path: '/destinos/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DOrderIdRoute = DOrderIdRouteImport.update({
   id: '/d/$orderId',
   path: '/d/$orderId',
@@ -144,6 +156,8 @@ export interface FileRoutesByFullPath {
   '/tesoros-ayacucho': typeof TesorosAyacuchoRoute
   '/unete-al-equipo': typeof UneteAlEquipoRoute
   '/d/$orderId': typeof DOrderIdRoute
+  '/destinos/$slug': typeof DestinosSlugRoute
+  '/festividades/$slug': typeof FestividadesSlugRoute
   '/rastreo/$orderId': typeof RastreoOrderIdRoute
 }
 export interface FileRoutesByTo {
@@ -165,6 +179,8 @@ export interface FileRoutesByTo {
   '/tesoros-ayacucho': typeof TesorosAyacuchoRoute
   '/unete-al-equipo': typeof UneteAlEquipoRoute
   '/d/$orderId': typeof DOrderIdRoute
+  '/destinos/$slug': typeof DestinosSlugRoute
+  '/festividades/$slug': typeof FestividadesSlugRoute
   '/rastreo/$orderId': typeof RastreoOrderIdRoute
 }
 export interface FileRoutesById {
@@ -187,6 +203,8 @@ export interface FileRoutesById {
   '/tesoros-ayacucho': typeof TesorosAyacuchoRoute
   '/unete-al-equipo': typeof UneteAlEquipoRoute
   '/d/$orderId': typeof DOrderIdRoute
+  '/destinos/$slug': typeof DestinosSlugRoute
+  '/festividades/$slug': typeof FestividadesSlugRoute
   '/rastreo/$orderId': typeof RastreoOrderIdRoute
 }
 export interface FileRouteTypes {
@@ -210,6 +228,8 @@ export interface FileRouteTypes {
     | '/tesoros-ayacucho'
     | '/unete-al-equipo'
     | '/d/$orderId'
+    | '/destinos/$slug'
+    | '/festividades/$slug'
     | '/rastreo/$orderId'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -231,6 +251,8 @@ export interface FileRouteTypes {
     | '/tesoros-ayacucho'
     | '/unete-al-equipo'
     | '/d/$orderId'
+    | '/destinos/$slug'
+    | '/festividades/$slug'
     | '/rastreo/$orderId'
   id:
     | '__root__'
@@ -252,6 +274,8 @@ export interface FileRouteTypes {
     | '/tesoros-ayacucho'
     | '/unete-al-equipo'
     | '/d/$orderId'
+    | '/destinos/$slug'
+    | '/festividades/$slug'
     | '/rastreo/$orderId'
   fileRoutesById: FileRoutesById
 }
@@ -274,6 +298,8 @@ export interface RootRouteChildren {
   TesorosAyacuchoRoute: typeof TesorosAyacuchoRoute
   UneteAlEquipoRoute: typeof UneteAlEquipoRoute
   DOrderIdRoute: typeof DOrderIdRoute
+  DestinosSlugRoute: typeof DestinosSlugRoute
+  FestividadesSlugRoute: typeof FestividadesSlugRoute
   RastreoOrderIdRoute: typeof RastreoOrderIdRoute
 }
 
@@ -405,6 +431,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RastreoOrderIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/festividades/$slug': {
+      id: '/festividades/$slug'
+      path: '/festividades/$slug'
+      fullPath: '/festividades/$slug'
+      preLoaderRoute: typeof FestividadesSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/destinos/$slug': {
+      id: '/destinos/$slug'
+      path: '/destinos/$slug'
+      fullPath: '/destinos/$slug'
+      preLoaderRoute: typeof DestinosSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/d/$orderId': {
       id: '/d/$orderId'
       path: '/d/$orderId'
@@ -434,6 +474,8 @@ const rootRouteChildren: RootRouteChildren = {
   TesorosAyacuchoRoute: TesorosAyacuchoRoute,
   UneteAlEquipoRoute: UneteAlEquipoRoute,
   DOrderIdRoute: DOrderIdRoute,
+  DestinosSlugRoute: DestinosSlugRoute,
+  FestividadesSlugRoute: FestividadesSlugRoute,
   RastreoOrderIdRoute: RastreoOrderIdRoute,
 }
 export const routeTree = rootRouteImport

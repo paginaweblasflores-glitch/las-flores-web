@@ -46,3 +46,7 @@ supabase/.temp/
 .worktrees/
 *.mov
 
+# Material interno, no se sube al repositorio
+/awasi/
+/docs/
+

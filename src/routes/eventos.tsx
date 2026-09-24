@@ -438,13 +438,13 @@ function EventosPage() {
                   <div className="hidden lg:flex w-fit px-4 flex-col justify-end items-center gap-3 pb-16">
                     <button
                       onClick={handlePrevSlide}
-                      className="w-12 h-12 border border-nogal/20 flex items-center justify-center text-nogal hover:bg-nogal/10 transition-colors"
+                      className="w-12 h-12 border-2 border-nogal rounded-md flex items-center justify-center text-nogal hover:bg-nogal/10 transition-colors"
                     >
                       <ChevronLeft size={20} strokeWidth={1.8} />
                     </button>
                     <button
                       onClick={handleNextSlide}
-                      className="w-12 h-12 border border-nogal/20 flex items-center justify-center text-nogal hover:bg-nogal/10 transition-colors"
+                      className="w-12 h-12 border-2 border-nogal rounded-md flex items-center justify-center text-nogal hover:bg-nogal/10 transition-colors"
                     >
                       <ChevronRight size={20} strokeWidth={1.8} />
                     </button>
