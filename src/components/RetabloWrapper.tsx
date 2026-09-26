@@ -110,7 +110,7 @@ const RetabloWrapper = ({ children }: { children: ReactNode }) => {
     };
   }, []);
 
-  const doorAngle = isOpen ? 165 : 0;
+  const doorAngle = isOpen ? 120 : 0;
 
   return (
     <div
@@ -349,10 +349,9 @@ const RetabloWrapper = ({ children }: { children: ReactNode }) => {
             >
               <div className="relative w-full h-full bg-white overflow-hidden">
                 <img
-                  src="/retablo-puerta.png"
+                  src="/retablo/puerta.png"
                   alt="Ilustración floral ayacuchana - Puerta Izquierda"
-                  className="w-full h-full"
-                  style={{ objectFit: "fill" }}
+                  className="absolute inset-0 block w-full h-full object-fill"
                   draggable={false}
                 />
               </div>
@@ -417,10 +416,10 @@ const RetabloWrapper = ({ children }: { children: ReactNode }) => {
             >
               <div className="relative w-full h-full bg-white overflow-hidden">
                 <img
-                  src="/retablo-puerta.png"
+                  src="/retablo/puerta.png"
                   alt="Ilustración floral ayacuchana - Puerta Derecha"
-                  className="w-full h-full"
-                  style={{ objectFit: "fill", transform: "scaleX(-1)" }}
+                  className="absolute inset-0 block w-full h-full object-fill"
+                  style={{ transform: "scaleX(-1)" }}
                   draggable={false}
                 />
               </div>
