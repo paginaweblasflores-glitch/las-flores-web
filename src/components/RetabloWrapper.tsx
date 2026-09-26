@@ -110,7 +110,7 @@ const RetabloWrapper = ({ children }: { children: ReactNode }) => {
     };
   }, []);
 
-  const doorAngle = isOpen ? 165 : 0;
+  const doorAngle = isOpen ? 120 : 0;
 
   return (
     <div
@@ -246,7 +246,7 @@ const RetabloWrapper = ({ children }: { children: ReactNode }) => {
             fill="#3b1f10"
           />
 
-          {/* 2. Fondo pergamino blanco interior para la ilustración floral */}
+          {/* 2. Fondo blanco interior para eliminar el efecto cuadriculado del copete */}
           <polygon
             points="500,36 948,226 52,226"
             fill="#ffffff"
@@ -254,12 +254,13 @@ const RetabloWrapper = ({ children }: { children: ReactNode }) => {
 
           {/* 3. Ilustración floral interior recortada por el clipPath */}
           <image
-            href="/retablo-copete.png"
+            href="/retablo-copete-blanco.png"
             x="0"
             y="0"
             width="1000"
             height="240"
-            preserveAspectRatio="none"
+            preserveAspectRatio="xMidYMid slice"
+            imageRendering="auto"
             clipPath="url(#copeteFlowerClip)"
           />
 
@@ -289,8 +290,17 @@ const RetabloWrapper = ({ children }: { children: ReactNode }) => {
         <div className="relative h-full flex flex-col overflow-visible" style={{ transformStyle: "preserve-3d" }}>
 
           {/* Interior crema con Marco Oscuro de 10-12px y Sombra Inset 3D */}
-          <div className="retablo-interior mx-[10px] lg:mx-[14px] mb-[10px] lg:mb-[14px] border-[8px] lg:border-[12px] border-[#3b1f10] rounded-xs flex-1 flex flex-col justify-center overflow-hidden">
-            {children}
+          <div className="retablo-interior relative mx-[10px] lg:mx-[14px] mb-[10px] lg:mb-[14px] border-[8px] lg:border-[12px] border-[#3b1f10] rounded-xs flex-1 flex flex-col justify-center overflow-hidden">
+            <img
+              src="/retablo/fondo.png"
+              alt=""
+              aria-hidden="true"
+              className="absolute inset-0 z-0 h-full w-full object-cover opacity-40 pointer-events-none"
+              draggable={false}
+            />
+            <div className="relative z-10 flex h-full flex-col justify-center">
+              {children}
+            </div>
           </div>
 
           {/* ── PUERTA IZQUIERDA (50% ancho central) ── */}
@@ -348,10 +358,9 @@ const RetabloWrapper = ({ children }: { children: ReactNode }) => {
             >
               <div className="relative w-full h-full bg-white overflow-hidden">
                 <img
-                  src="/retablo-puerta.png"
+                  src="/retablo/puerta.png"
                   alt="Ilustración floral ayacuchana - Puerta Izquierda"
-                  className="w-full h-full"
-                  style={{ objectFit: "fill" }}
+                  className="absolute inset-0 block w-full h-full object-fill"
                   draggable={false}
                 />
               </div>
@@ -416,10 +425,10 @@ const RetabloWrapper = ({ children }: { children: ReactNode }) => {
             >
               <div className="relative w-full h-full bg-white overflow-hidden">
                 <img
-                  src="/retablo-puerta.png"
+                  src="/retablo/puerta.png"
                   alt="Ilustración floral ayacuchana - Puerta Derecha"
-                  className="w-full h-full"
-                  style={{ objectFit: "fill", transform: "scaleX(-1)" }}
+                  className="absolute inset-0 block w-full h-full object-fill"
+                  style={{ transform: "scaleX(-1)" }}
                   draggable={false}
                 />
               </div>
