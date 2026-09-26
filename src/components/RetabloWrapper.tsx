@@ -246,7 +246,7 @@ const RetabloWrapper = ({ children }: { children: ReactNode }) => {
             fill="#3b1f10"
           />
 
-          {/* 2. Fondo pergamino blanco interior para la ilustración floral */}
+          {/* 2. Fondo blanco interior para eliminar el efecto cuadriculado del copete */}
           <polygon
             points="500,36 948,226 52,226"
             fill="#ffffff"
@@ -254,12 +254,13 @@ const RetabloWrapper = ({ children }: { children: ReactNode }) => {
 
           {/* 3. Ilustración floral interior recortada por el clipPath */}
           <image
-            href="/retablo-copete.png"
+            href="/retablo-copete-blanco.png"
             x="0"
             y="0"
             width="1000"
             height="240"
-            preserveAspectRatio="none"
+            preserveAspectRatio="xMidYMid slice"
+            imageRendering="auto"
             clipPath="url(#copeteFlowerClip)"
           />
 

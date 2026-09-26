@@ -254,7 +254,6 @@ function ReservasPage() {
     firstName: "",
     lastName: "",
     email: "",
-    repeatEmail: "",
     phoneCountry: "+51",
     phone: "",
     comments: "",
@@ -420,7 +419,6 @@ function ReservasPage() {
         setForm((f) => ({
           ...f,
           email: newUser.email || f.email,
-          repeatEmail: newUser.email || f.repeatEmail,
           firstName: f.firstName || fName,
           lastName: f.lastName || lName,
           phone: f.phone || newUser.user_metadata?.phone || "",
@@ -449,7 +447,6 @@ function ReservasPage() {
         setForm((f) => ({
           ...f,
           email: newUser.email || f.email,
-          repeatEmail: newUser.email || f.repeatEmail,
           firstName: f.firstName || parts[0] || "",
           lastName: f.lastName || parts.slice(1).join(" ") || "",
           phone: f.phone || newUser.user_metadata?.phone || "",
@@ -586,8 +583,8 @@ function ReservasPage() {
       alert("Por favor, ingresa tu nombre y apellidos.");
       return;
     }
-    if (!form.email || form.email !== form.repeatEmail) {
-      alert("Los correos electrónicos no coinciden.");
+    if (!form.email) {
+      alert("Por favor, ingresa tu correo electrónico.");
       return;
     }
     if (!form.phone) {
@@ -1206,34 +1203,19 @@ function ReservasPage() {
                 </div>
               </div>
 
-              {/* Email & Repetir Email */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-xs uppercase tracking-wider font-semibold text-gray-700 mb-1">
-                    Email *
-                  </label>
-                  <input
-                    type="email"
-                    required
-                    value={form.email}
-                    onChange={(e) => setForm({ ...form, email: e.target.value })}
-                    placeholder="ejemplo@correo.com"
-                    className="w-full bg-[#fdf8f0] border border-gray-300 rounded-lg px-3.5 py-2.5 text-sm focus:outline-none focus:border-[#2e5339]"
-                  />
-                </div>
-                <div>
-                  <label className="block text-xs uppercase tracking-wider font-semibold text-gray-700 mb-1">
-                    Repetir email *
-                  </label>
-                  <input
-                    type="email"
-                    required
-                    value={form.repeatEmail}
-                    onChange={(e) => setForm({ ...form, repeatEmail: e.target.value })}
-                    placeholder="Confirmar email"
-                    className="w-full bg-white border border-gray-300 rounded-lg px-3.5 py-2.5 text-sm focus:outline-none focus:border-[#2e5339]"
-                  />
-                </div>
+              {/* Email */}
+              <div>
+                <label className="block text-xs uppercase tracking-wider font-semibold text-gray-700 mb-1">
+                  Email *
+                </label>
+                <input
+                  type="email"
+                  required
+                  value={form.email}
+                  onChange={(e) => setForm({ ...form, email: e.target.value })}
+                  placeholder="ejemplo@correo.com"
+                  className="w-full bg-[#fdf8f0] border border-gray-300 rounded-lg px-3.5 py-2.5 text-sm focus:outline-none focus:border-[#2e5339]"
+                />
               </div>
 
               {/* Prefijo y Teléfono */}
