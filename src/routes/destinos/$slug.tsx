@@ -34,7 +34,6 @@ export const Route = createFileRoute("/destinos/$slug")({
 
 function LugarDetailPage() {
   const lugar = Route.useLoaderData();
-  const invertido = lugar.id % 2 === 0;
   const consejoImagen = lugar.imagenSecundaria || lugar.imagen;
   const clipsPool = Array.from(
     new Set([lugar.imagen, lugar.imagenSecundaria, ...(lugar.galeria?.map((g) => g.imagen) ?? [])])
@@ -69,7 +68,7 @@ function LugarDetailPage() {
         {/* SECCIÓN — Título y descripción del lugar (izq) + mapa de Ayacucho (der) */}
         <section className="grid grid-cols-1 md:grid-cols-2">
           <div
-            className={`flex items-center px-6 md:px-16 py-16 md:py-24 ${invertido ? "md:order-2" : "md:order-1"}`}
+            className="flex items-start px-6 md:px-16 py-16 md:py-24 md:order-2"
           >
             <div className="max-w-lg">
               <span className="text-eucalipto text-[10px] uppercase tracking-[0.3em] font-semibold mb-4 block">
@@ -79,8 +78,20 @@ function LugarDetailPage() {
               <p className="text-nogal/80 text-base md:text-lg leading-relaxed">{lugar.descripcion}</p>
             </div>
           </div>
-          <div className={`h-[380px] md:h-[520px] flex items-center justify-center p-6 md:p-10 ${invertido ? "md:order-1" : "md:order-2"}`}>
-            <AyacuchoMiniMap lat={lugar.mapLat} lng={lugar.mapLng} nombre={lugar.nombre} />
+          <div
+            className={`flex items-start justify-center px-6 md:px-10 pt-16 md:pt-24 pb-6 md:pb-10 md:order-1 ${lugar.mapaImagen ? "h-[410px] md:h-[550px]" : "h-[380px] md:h-[520px]"}`}
+          >
+            {lugar.mapaImagen ? (
+              <img
+                src={lugar.mapaImagen}
+                alt={`Ubicación de ${lugar.nombre} en el mapa de Ayacucho`}
+                loading="lazy"
+                decoding="async"
+                className="max-h-full max-w-full object-contain"
+              />
+            ) : (
+              <AyacuchoMiniMap lat={lugar.mapLat} lng={lugar.mapLng} nombre={lugar.nombre} />
+            )}
           </div>
         </section>
 
