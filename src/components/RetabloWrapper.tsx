@@ -290,8 +290,17 @@ const RetabloWrapper = ({ children }: { children: ReactNode }) => {
         <div className="relative h-full flex flex-col overflow-visible" style={{ transformStyle: "preserve-3d" }}>
 
           {/* Interior crema con Marco Oscuro de 10-12px y Sombra Inset 3D */}
-          <div className="retablo-interior mx-[10px] lg:mx-[14px] mb-[10px] lg:mb-[14px] border-[8px] lg:border-[12px] border-[#3b1f10] rounded-xs flex-1 flex flex-col justify-center overflow-hidden">
-            {children}
+          <div className="retablo-interior relative mx-[10px] lg:mx-[14px] mb-[10px] lg:mb-[14px] border-[8px] lg:border-[12px] border-[#3b1f10] rounded-xs flex-1 flex flex-col justify-center overflow-hidden">
+            <img
+              src="/retablo/fondo.png"
+              alt=""
+              aria-hidden="true"
+              className="absolute inset-0 z-0 h-full w-full object-cover opacity-40 pointer-events-none"
+              draggable={false}
+            />
+            <div className="relative z-10 flex h-full flex-col justify-center">
+              {children}
+            </div>
           </div>
 
           {/* ── PUERTA IZQUIERDA (50% ancho central) ── */}
