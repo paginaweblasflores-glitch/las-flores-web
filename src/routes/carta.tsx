@@ -133,7 +133,7 @@ function CartaPage() {
       </div>
 
       {/* Main Content with Sidebar */}
-      <div className="flex flex-col md:flex-row max-w-7xl mx-auto w-full flex-1">
+      <div className="flex flex-col md:flex-row container-flores mx-auto w-full flex-1">
         {/* Vertical Category Sidebar (solo escritorio) */}
         <aside className="hidden md:block w-72 bg-piedra border-r border-nogal/10 flex-shrink-0 sticky top-24 h-[calc(100vh-100px)] overflow-y-auto z-20 scrollbar-none shadow-[6px_0_16px_-10px_rgba(0,0,0,0.15)]">
           <div className="flex flex-col py-8 pr-8">

@@ -88,7 +88,7 @@ export function SiteHeader({
         {showReservar && (
           <Link
             to="/reservas"
-            className={`pointer-events-auto px-4.5 py-1.5 md:px-5 md:py-2 text-[11px] md:text-xs font-bold uppercase tracking-widest transition-all rounded-full border ${
+            className={`pointer-events-auto px-4.5 py-1.5 md:px-5 md:py-2 text-[11px] md:text-xs font-bold uppercase tracking-widest transition-all rounded-md border ${
               solid
                 ? "border-nogal text-nogal hover:bg-nogal hover:text-white shadow-sm"
                 : "border-piedra/60 text-piedra hover:bg-piedra hover:text-nogal shadow-sm"

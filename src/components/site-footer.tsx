@@ -4,7 +4,7 @@ import { Instagram, Facebook, BookOpen, Lock } from "lucide-react";
 export function SiteFooter() {
   return (
     <footer className="bg-eucalipto-dark text-piedra/80 py-16 md:py-20 text-sm border-t border-cream/5">
-      <div className="max-w-7xl mx-auto px-6">
+      <div className="container-flores mx-auto px-6">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-8 pb-16">
           {/* Logo and Policies */}
           <div className="md:col-span-4 flex flex-col items-start space-y-6">

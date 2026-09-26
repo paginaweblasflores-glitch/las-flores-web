@@ -214,7 +214,7 @@ function GaleriaPage() {
 
       {/* ── FILTROS MÓVIL: sticky pegado al header (solo < lg) ── */}
       <div className="block lg:hidden sticky top-[56px] z-30 w-full bg-[#F9F8F3] border-b border-gray-200 shadow-sm">
-        <div className="max-w-7xl mx-auto pl-6">
+        <div className="container-flores mx-auto pl-6">
           <MobileCategoryFilter
             categories={GALLERY_CATEGORIES.map((cat) => ({ key: cat.id, label: cat.label }))}
             activeKey={activeCategory}
@@ -224,7 +224,7 @@ function GaleriaPage() {
       </div>
 
       {/* Main Content Area */}
-      <main className="max-w-7xl mx-auto px-6 py-12">
+      <main className="container-flores mx-auto px-6 py-12">
         {/* ── FILTROS DESKTOP: centrados dentro del contenido (solo lg+) ── */}
         <div className="hidden lg:flex justify-center gap-3 mb-12">
           {GALLERY_CATEGORIES.map((cat) => (

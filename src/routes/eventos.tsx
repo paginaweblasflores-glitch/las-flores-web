@@ -342,7 +342,7 @@ function EventosPage() {
 
       {/* ── TABS MÓVIL: sticky pegado al header (solo < lg) ── */}
       <div className="block lg:hidden sticky top-12 z-30 w-full bg-[#F9F8F3] border-b border-gray-200 shadow-sm">
-        <div className="max-w-7xl mx-auto pl-6">
+        <div className="container-flores mx-auto pl-6">
           <MobileCategoryFilter
             categories={EVENT_TABS.map((tab) => ({ key: tab.id, label: tab.label }))}
             activeKey={activeTab}
@@ -438,13 +438,13 @@ function EventosPage() {
                   <div className="hidden lg:flex w-fit px-4 flex-col justify-end items-center gap-3 pb-16">
                     <button
                       onClick={handlePrevSlide}
-                      className="w-12 h-12 border border-nogal/20 flex items-center justify-center text-nogal hover:bg-nogal/10 transition-colors"
+                      className="w-12 h-12 border-2 border-nogal rounded-md flex items-center justify-center text-nogal hover:bg-nogal/10 transition-colors"
                     >
                       <ChevronLeft size={20} strokeWidth={1.8} />
                     </button>
                     <button
                       onClick={handleNextSlide}
-                      className="w-12 h-12 border border-nogal/20 flex items-center justify-center text-nogal hover:bg-nogal/10 transition-colors"
+                      className="w-12 h-12 border-2 border-nogal rounded-md flex items-center justify-center text-nogal hover:bg-nogal/10 transition-colors"
                     >
                       <ChevronRight size={20} strokeWidth={1.8} />
                     </button>

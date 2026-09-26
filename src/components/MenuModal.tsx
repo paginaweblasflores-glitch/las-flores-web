@@ -289,7 +289,7 @@ export function MenuModal({ open, onClose }: MenuModalProps) {
 
         {/* Dishes Grid */}
         <div className="flex-1 overflow-y-auto p-6 md:p-10" style={{ background: `${R.crema}80` }}>
-          <div className="max-w-7xl mx-auto">
+          <div className="container-flores mx-auto">
             <div className="flex justify-between items-center mb-8 border-b border-black/5 pb-4">
               <h2 className="font-serif text-3xl md:text-4xl font-bold" style={{ color: R.morado }}>
                 {active?.label || "Cargando..."}
