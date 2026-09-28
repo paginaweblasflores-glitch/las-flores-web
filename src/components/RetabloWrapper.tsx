@@ -111,17 +111,17 @@ const RetabloWrapper = ({ children }: { children: ReactNode }) => {
   }, []);
 
   const doorAngle = isOpen ? 120 : 0;
+  const doorImageTransform = "translateX(-50%) scaleX(max(1, calc(100cqw / (100cqh * 208 / 489))))";
 
   return (
     <div
       ref={wrapperRef}
       /*
-       * La Fórmula Dorada (Desktop lg: >= 1024px):
-       * - Contenedor Central: w-[44vw] max-w-[900px]
-       * - Puertas (50% cada una): 22vw (max 450px cada una)
-       * - Retablo Abierto: 22vw + 44vw + 22vw = 88vw TOTAL (12vw de margen libre sin scrollbar)
+       * Tamaño responsivo (Desktop lg: >= 1024px):
+       * - Contenedor Central: hasta 900px, con margen para las puertas abiertas
+       * - En viewports más pequeños, el conjunto se reduce proporcionalmente
        */
-      className="relative mx-auto mt-0 lg:mt-12 mb-0 lg:mb-12 w-[90vw] max-w-xl lg:w-[44vw] lg:max-w-[900px] flex flex-col justify-center"
+      className="relative mx-auto mt-0 lg:mt-12 mb-0 lg:mb-12 w-[90vw] max-w-xl lg:w-[calc(50vw_-_40px)] lg:max-w-[900px] flex flex-col justify-center"
       style={{
         perspective: "1400px",
         perspectiveOrigin: "50% 40%",
@@ -129,9 +129,9 @@ const RetabloWrapper = ({ children }: { children: ReactNode }) => {
     >
       {/* ── CSS embebido ── */}
       <style>{`
-        /* Textura de madera oscura */
+        /* Textura de madera rojo cochinilla */
         .retablo-frame {
-          background-color: #3b1f10;
+          background-color: #8f1d35;
           background-image:
             repeating-linear-gradient(
               88deg,
@@ -201,7 +201,7 @@ const RetabloWrapper = ({ children }: { children: ReactNode }) => {
           position: absolute;
           inset: 0;
           z-index: 10;
-          background-color: #3b1f10;
+          background-color: #8f1d35;
           box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
         }
         .door-inner {
@@ -240,10 +240,10 @@ const RetabloWrapper = ({ children }: { children: ReactNode }) => {
             </clipPath>
           </defs>
 
-          {/* 1. Base triangular de madera caoba (#3b1f10) alineada 100% a ras (x: 0 a 1000) sin aleros */}
+          {/* 1. Base triangular de madera rojo cochinilla alineada 100% a ras (x: 0 a 1000) sin aleros */}
           <polygon
             points="500,0 1000,240 0,240"
-            fill="#3b1f10"
+            fill="#8f1d35"
           />
 
           {/* 2. Fondo blanco interior para eliminar el efecto cuadriculado del copete */}
@@ -264,11 +264,11 @@ const RetabloWrapper = ({ children }: { children: ReactNode }) => {
             clipPath="url(#copeteFlowerClip)"
           />
 
-          {/* 4. Bisel interior de separación de madera (#3b1f10) */}
+          {/* 4. Bisel interior de separación de madera rojo cochinilla */}
           <polygon
             points="500,36 948,226 52,226"
             fill="none"
-            stroke="#3b1f10"
+            stroke="#8f1d35"
             strokeWidth="3"
             strokeLinejoin="miter"
           />
@@ -290,14 +290,7 @@ const RetabloWrapper = ({ children }: { children: ReactNode }) => {
         <div className="relative h-full flex flex-col overflow-visible" style={{ transformStyle: "preserve-3d" }}>
 
           {/* Interior crema con Marco Oscuro de 10-12px y Sombra Inset 3D */}
-          <div className="retablo-interior relative mx-[10px] lg:mx-[14px] mb-[10px] lg:mb-[14px] border-[8px] lg:border-[12px] border-[#3b1f10] rounded-xs flex-1 flex flex-col justify-center overflow-hidden">
-            <img
-              src="/retablo/fondo.png"
-              alt=""
-              aria-hidden="true"
-              className="absolute inset-0 z-0 h-full w-full object-cover opacity-40 pointer-events-none"
-              draggable={false}
-            />
+          <div className="retablo-interior relative mx-[10px] lg:mx-[14px] mb-[10px] lg:mb-[14px] border-[8px] lg:border-[12px] border-[#5c1229] rounded-xs flex-1 flex flex-col justify-center overflow-hidden">
             <div className="relative z-10 flex h-full flex-col justify-center">
               {children}
             </div>
@@ -311,23 +304,23 @@ const RetabloWrapper = ({ children }: { children: ReactNode }) => {
               transformStyle: "preserve-3d",
             }}
           >
-            {/* Cara Exterior (CERRADO - rotateY 0deg + translateZ 1px): Madera caoba artesanal con Logo oficial en Pan de Oro */}
+            {/* Cara Exterior (CERRADO - rotateY 0deg + translateZ 1px): Madera rojo cochinilla con logo en pan de oro */}
             <div
-              className="door-face retablo-frame border-[10px] lg:border-[12px] border-[#3b1f10] overflow-hidden"
+              className="door-face retablo-frame border-[10px] lg:border-[12px] border-[#5c1229] overflow-hidden"
               style={{
                 transform: "rotateY(0deg) translateZ(1px)",
                 backfaceVisibility: "hidden",
                 WebkitBackfaceVisibility: "hidden",
-                backgroundColor: "#3b1f10",
+                backgroundColor: "#8f1d35",
                 zIndex: 10,
                 boxShadow: "inset 0 0 30px rgba(0,0,0,0.85)",
               }}
             >
-              {/* Madera caoba con doble filete dorado y Sello del Logo Oficial */}
+              {/* Madera rojo cochinilla con doble filete dorado y sello del logo oficial */}
               <div className="relative w-full h-full retablo-frame flex items-center justify-center p-3">
-                <div className="w-full h-full border-2 border-[#d4a373]/40 flex flex-col items-center justify-center p-4 bg-[#2d1b15]/50 shadow-inner">
+                <div className="w-full h-full border-2 border-[#d4a373]/40 flex flex-col items-center justify-center p-4 bg-[#5c1229]/50 shadow-inner">
                   {/* Medallón Pan de Oro con Logo Oficial Transparente - Tamaño Ampliado */}
-                  <div className="w-36 h-36 sm:w-40 sm:h-40 lg:w-48 lg:h-48 rounded-full border-[3px] border-[#f0d9b5]/70 flex items-center justify-center bg-[#3b1f10]/95 p-5 lg:p-6 shadow-2xl ring-4 ring-[#d4a373]/25 transition-transform">
+                  <div className="w-36 h-36 sm:w-40 sm:h-40 lg:w-48 lg:h-48 rounded-full border-[3px] border-[#f0d9b5]/70 flex items-center justify-center bg-[#8f1d35]/95 p-5 lg:p-6 shadow-2xl ring-4 ring-[#d4a373]/25 transition-transform">
                     <img
                       src="/images.png"
                       alt="Logo Las Flores"
@@ -344,7 +337,7 @@ const RetabloWrapper = ({ children }: { children: ReactNode }) => {
 
             {/* Cara Interior (ABIERTO - rotateY 180deg + translateZ -1px): Ilustración Floral con garantía nuclear de opacidad */}
             <div
-              className="door-inner bg-white border-[10px] lg:border-[12px] border-[#3b1f10] overflow-hidden"
+              className="door-inner bg-white border-[10px] lg:border-[12px] border-[#5c1229] overflow-hidden"
               style={{
                 transform: "rotateY(180deg) translateZ(-1px)",
                 backfaceVisibility: "hidden",
@@ -356,18 +349,19 @@ const RetabloWrapper = ({ children }: { children: ReactNode }) => {
                 transition: "opacity 0.4s ease 0.3s, visibility 0.4s ease 0.3s",
               }}
             >
-              <div className="relative w-full h-full bg-white overflow-hidden">
+              <div className="relative w-full h-full bg-white overflow-hidden" style={{ containerType: "size" }}>
                 <img
                   src="/retablo/puerta.png"
                   alt="Ilustración floral ayacuchana - Puerta Izquierda"
-                  className="absolute inset-0 block w-full h-full object-fill"
+                  className="absolute left-1/2 top-0 block h-full w-auto max-w-none"
+                  style={{ transform: doorImageTransform }}
                   draggable={false}
                 />
               </div>
             </div>
 
             {/* Bisagra derecha */}
-            <div className="absolute top-0 right-0 bottom-0 w-2 bg-gradient-to-r from-[#5D2E0C] via-[#8B4513] to-[#5D2E0C] z-30" />
+            <div className="absolute top-0 right-0 bottom-0 w-2 bg-gradient-to-r from-[#5c1229] via-[#a52a43] to-[#5c1229] z-30" />
           </div>
 
           {/* ── PUERTA DERECHA (50% ancho central) ── */}
@@ -378,23 +372,23 @@ const RetabloWrapper = ({ children }: { children: ReactNode }) => {
               transformStyle: "preserve-3d",
             }}
           >
-            {/* Cara Exterior (CERRADO - rotateY 0deg + translateZ 1px): Madera caoba artesanal con Logo oficial en Pan de Oro */}
+            {/* Cara Exterior (CERRADO - rotateY 0deg + translateZ 1px): Madera rojo cochinilla con logo en pan de oro */}
             <div
-              className="door-face retablo-frame border-[10px] lg:border-[12px] border-[#3b1f10] overflow-hidden"
+              className="door-face retablo-frame border-[10px] lg:border-[12px] border-[#5c1229] overflow-hidden"
               style={{
                 transform: "rotateY(0deg) translateZ(1px)",
                 backfaceVisibility: "hidden",
                 WebkitBackfaceVisibility: "hidden",
-                backgroundColor: "#3b1f10",
+                backgroundColor: "#8f1d35",
                 zIndex: 10,
                 boxShadow: "inset 0 0 30px rgba(0,0,0,0.85)",
               }}
             >
-              {/* Madera caoba con doble filete dorado y Sello del Logo Oficial */}
+              {/* Madera rojo cochinilla con doble filete dorado y sello del logo oficial */}
               <div className="relative w-full h-full retablo-frame flex items-center justify-center p-3">
-                <div className="w-full h-full border-2 border-[#d4a373]/40 flex flex-col items-center justify-center p-4 bg-[#2d1b15]/50 shadow-inner">
+                <div className="w-full h-full border-2 border-[#d4a373]/40 flex flex-col items-center justify-center p-4 bg-[#5c1229]/50 shadow-inner">
                   {/* Medallón Pan de Oro con Logo Oficial Transparente - Tamaño Ampliado */}
-                  <div className="w-36 h-36 sm:w-40 sm:h-40 lg:w-48 lg:h-48 rounded-full border-[3px] border-[#f0d9b5]/70 flex items-center justify-center bg-[#3b1f10]/95 p-5 lg:p-6 shadow-2xl ring-4 ring-[#d4a373]/25 transition-transform">
+                  <div className="w-36 h-36 sm:w-40 sm:h-40 lg:w-48 lg:h-48 rounded-full border-[3px] border-[#f0d9b5]/70 flex items-center justify-center bg-[#8f1d35]/95 p-5 lg:p-6 shadow-2xl ring-4 ring-[#d4a373]/25 transition-transform">
                     <img
                       src="/images.png"
                       alt="Logo Las Flores"
@@ -411,7 +405,7 @@ const RetabloWrapper = ({ children }: { children: ReactNode }) => {
 
             {/* Cara Interior (ABIERTO - rotateY 180deg + translateZ -1px): Ilustración Floral espejada sólida */}
             <div
-              className="door-inner bg-white border-[10px] lg:border-[12px] border-[#3b1f10] overflow-hidden"
+              className="door-inner bg-white border-[10px] lg:border-[12px] border-[#5c1229] overflow-hidden"
               style={{
                 transform: "rotateY(180deg) translateZ(-1px)",
                 backfaceVisibility: "hidden",
@@ -423,19 +417,19 @@ const RetabloWrapper = ({ children }: { children: ReactNode }) => {
                 transition: "opacity 0.4s ease 0.3s, visibility 0.4s ease 0.3s",
               }}
             >
-              <div className="relative w-full h-full bg-white overflow-hidden">
+              <div className="relative w-full h-full bg-white overflow-hidden" style={{ containerType: "size" }}>
                 <img
                   src="/retablo/puerta.png"
                   alt="Ilustración floral ayacuchana - Puerta Derecha"
-                  className="absolute inset-0 block w-full h-full object-fill"
-                  style={{ transform: "scaleX(-1)" }}
+                  className="absolute left-1/2 top-0 block h-full w-auto max-w-none"
+                  style={{ transform: `${doorImageTransform} scaleX(-1)` }}
                   draggable={false}
                 />
               </div>
             </div>
 
             {/* Bisagra izquierda */}
-            <div className="absolute top-0 left-0 bottom-0 w-2 bg-gradient-to-r from-[#5D2E0C] via-[#8B4513] to-[#5D2E0C] z-30" />
+            <div className="absolute top-0 left-0 bottom-0 w-2 bg-gradient-to-r from-[#5c1229] via-[#a52a43] to-[#5c1229] z-30" />
           </div>
 
         </div>
