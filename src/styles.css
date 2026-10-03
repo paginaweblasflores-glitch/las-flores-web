@@ -365,3 +365,33 @@
     max-width: 120rem; /* 1920px */
   }
 }
+
+/* Fauna Andina: deslizamiento lateral suave entre especies (la duración se fija desde el componente). */
+@keyframes fauna-entra-der {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+@keyframes fauna-sale-izq {
+  from { transform: translateX(0); }
+  to { transform: translateX(-100%); }
+}
+@keyframes fauna-entra-izq {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(0); }
+}
+@keyframes fauna-sale-der {
+  from { transform: translateX(0); }
+  to { transform: translateX(100%); }
+}
+@keyframes fauna-texto {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.fauna-entra-der { animation: fauna-entra-der 800ms cubic-bezier(0.65, 0, 0.35, 1) both; }
+.fauna-sale-izq { animation: fauna-sale-izq 800ms cubic-bezier(0.65, 0, 0.35, 1) both; }
+.fauna-entra-izq { animation: fauna-entra-izq 800ms cubic-bezier(0.65, 0, 0.35, 1) both; }
+.fauna-sale-der { animation: fauna-sale-der 800ms cubic-bezier(0.65, 0, 0.35, 1) both; }
+.fauna-texto { animation: fauna-texto 600ms ease-out both; }
+@media (prefers-reduced-motion: reduce) {
+  .fauna-entra-der, .fauna-sale-izq, .fauna-entra-izq, .fauna-sale-der, .fauna-texto { animation: none; }
+}

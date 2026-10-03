@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 interface EspecieFauna {
   nombre: string;
@@ -44,20 +44,39 @@ const ESPECIES: EspecieFauna[] = [
 ];
 
 const INTERVALO_MS = 5000;
+const TRANSICION_MS = 800;
+
+type Direccion = "adelante" | "atras";
 
 export function FaunaAndina() {
   const [activo, setActivo] = useState(0);
+  // Imagen que está saliendo mientras entra la nueva (deslizamiento lateral).
+  const [saliente, setSaliente] = useState<number | null>(null);
+  const [direccion, setDireccion] = useState<Direccion>("adelante");
   // Mientras el cursor (o el foco del teclado) está sobre el panel de texto, el avance automático se detiene para poder leer.
   const [leyendo, setLeyendo] = useState(false);
+  const limpiarSaliente = useRef<number | undefined>(undefined);
   const especie = ESPECIES[activo];
+
+  const irA = (nuevo: number, dir: Direccion) => {
+    if (nuevo === activo) return;
+    window.clearTimeout(limpiarSaliente.current);
+    setSaliente(activo);
+    setDireccion(dir);
+    setActivo(nuevo);
+    limpiarSaliente.current = window.setTimeout(() => setSaliente(null), TRANSICION_MS);
+  };
+
+  useEffect(() => () => window.clearTimeout(limpiarSaliente.current), []);
 
   useEffect(() => {
     if (leyendo) return;
     if (window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) return;
     const id = window.setTimeout(() => {
-      setActivo((a) => (a + 1) % ESPECIES.length);
+      irA((activo + 1) % ESPECIES.length, "adelante");
     }, INTERVALO_MS);
     return () => window.clearTimeout(id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activo, leyendo]);
 
   // Precarga la siguiente imagen para que el cambio sea instantáneo.
@@ -66,17 +85,27 @@ export function FaunaAndina() {
     img.src = ESPECIES[(activo + 1) % ESPECIES.length].imagen;
   }, [activo]);
 
+  const claseImagen = (i: number) => {
+    if (i === saliente) return direccion === "adelante" ? "fauna-sale-izq" : "fauna-sale-der";
+    if (saliente !== null) return direccion === "adelante" ? "fauna-entra-der" : "fauna-entra-izq";
+    return "";
+  };
+
   return (
     <div className="relative md:h-[750px]">
-      <div className="h-96 md:absolute md:inset-0 md:h-full">
-        <img
-          key={especie.imagen}
-          src={especie.imagen}
-          alt={especie.nombre}
-          loading="lazy"
-          decoding="async"
-          className="w-full h-full object-cover"
-        />
+      <div className="relative h-96 overflow-hidden md:absolute md:inset-0 md:h-full">
+        {[saliente, activo].map((i) =>
+          i === null ? null : (
+            <img
+              key={ESPECIES[i].imagen}
+              src={ESPECIES[i].imagen}
+              alt={ESPECIES[i].nombre}
+              decoding="async"
+              style={{ animationDuration: `${TRANSICION_MS}ms` }}
+              className={`absolute inset-0 w-full h-full object-cover ${claseImagen(i)}`}
+            />
+          ),
+        )}
       </div>
       <div
         onMouseEnter={() => setLeyendo(true)}
@@ -85,7 +114,7 @@ export function FaunaAndina() {
         onBlur={() => setLeyendo(false)}
         className="md:absolute md:bottom-0 md:left-8 md:w-full md:max-w-md bg-eucalipto text-piedra px-8 py-10 md:px-10 md:py-12 flex flex-col justify-between"
       >
-        <div>
+        <div key={especie.nombre} className="fauna-texto">
           {especie.quechua && (
             <span className="text-chilca text-[10px] uppercase tracking-[0.3em] font-semibold mb-4 block">
               {especie.quechua}
@@ -101,7 +130,7 @@ export function FaunaAndina() {
             <button
               key={e.nombre}
               type="button"
-              onClick={() => setActivo(i)}
+              onClick={() => irA(i, i > activo ? "adelante" : "atras")}
               aria-label={`Ver ${e.nombre}`}
               className={`w-9 h-9 rounded-md flex items-center justify-center text-xs font-semibold border-2 transition-colors ${
                 i === activo
