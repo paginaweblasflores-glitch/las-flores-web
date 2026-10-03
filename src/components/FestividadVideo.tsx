@@ -45,7 +45,8 @@ export function FestividadVideo({ src, poster, alt, className = "", priority = f
 
     // El video está "a la vista" si su caja toca la pantalla (con un margen para que ya esté corriendo al llegar).
     // Se mide la posición directamente en cada scroll: no depende de IntersectionObserver.
-    const MARGEN = 150;
+    // Hero: sin margen, se pausa justo al salir de pantalla y reanuda apenas asoma. Tarjetas: 150 px de anticipación.
+    const MARGEN = priority ? 0 : 150;
     const aLaVista = () => {
       const r = el.getBoundingClientRect();
       return r.bottom > -MARGEN && r.top < window.innerHeight + MARGEN;
@@ -98,8 +99,8 @@ export function FestividadVideo({ src, poster, alt, className = "", priority = f
     gestos.forEach((g) => window.addEventListener(g, sincronizar, { passive: true }));
     window.addEventListener("resize", sincronizar);
 
-    // Vigilante: si el navegador lo pausó con la pestaña visible (ahorro de energía, etc.), lo retoma.
-    const vigilante = window.setInterval(sincronizar, 1000);
+    // Vigilante (cada 250 ms): garantiza pausa/reanudación aunque no llegue un evento de scroll, y retoma si el navegador lo pausó.
+    const vigilante = window.setInterval(sincronizar, 250);
 
     return () => {
       activo = false;
