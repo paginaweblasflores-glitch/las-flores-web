@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 interface EspecieFauna {
   nombre: string;
@@ -43,9 +43,28 @@ const ESPECIES: EspecieFauna[] = [
   },
 ];
 
+const INTERVALO_MS = 5000;
+
 export function FaunaAndina() {
   const [activo, setActivo] = useState(0);
+  // Mientras el cursor (o el foco del teclado) está sobre el panel de texto, el avance automático se detiene para poder leer.
+  const [leyendo, setLeyendo] = useState(false);
   const especie = ESPECIES[activo];
+
+  useEffect(() => {
+    if (leyendo) return;
+    if (window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) return;
+    const id = window.setTimeout(() => {
+      setActivo((a) => (a + 1) % ESPECIES.length);
+    }, INTERVALO_MS);
+    return () => window.clearTimeout(id);
+  }, [activo, leyendo]);
+
+  // Precarga la siguiente imagen para que el cambio sea instantáneo.
+  useEffect(() => {
+    const img = new Image();
+    img.src = ESPECIES[(activo + 1) % ESPECIES.length].imagen;
+  }, [activo]);
 
   return (
     <div className="relative md:h-[750px]">
@@ -59,7 +78,13 @@ export function FaunaAndina() {
           className="w-full h-full object-cover"
         />
       </div>
-      <div className="md:absolute md:bottom-0 md:left-8 md:w-full md:max-w-md bg-eucalipto text-piedra px-8 py-10 md:px-10 md:py-12 flex flex-col justify-between">
+      <div
+        onMouseEnter={() => setLeyendo(true)}
+        onMouseLeave={() => setLeyendo(false)}
+        onFocus={() => setLeyendo(true)}
+        onBlur={() => setLeyendo(false)}
+        className="md:absolute md:bottom-0 md:left-8 md:w-full md:max-w-md bg-eucalipto text-piedra px-8 py-10 md:px-10 md:py-12 flex flex-col justify-between"
+      >
         <div>
           {especie.quechua && (
             <span className="text-chilca text-[10px] uppercase tracking-[0.3em] font-semibold mb-4 block">
