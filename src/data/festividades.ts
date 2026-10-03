@@ -19,6 +19,8 @@ export type Festividad = {
   escenas: string;
   dato: string;
   clipTags: [string, string, string, string];
+  /** Clips de video optimizados (hero de la página, tarjeta del inicio) y fotograma de portada. */
+  video: { hero: string; card: string; poster: string };
   /** Día a día (solo Semana Santa: 7 jornadas, se presentan con un selector numerado). */
   dias?: DiaItem[];
   /** Comparsas reales (solo Carnaval: se presentan paginadas de dos en dos). */
@@ -52,6 +54,11 @@ export const festividades: Festividad[] = [
       "Warakanakuy (duelo ritual)",
       "Huaynos de carnaval",
     ],
+    video: {
+      hero: "/videos/festividades/carnaval-ayacuchano.mp4",
+      card: "/videos/festividades/carnaval-ayacuchano-card.mp4",
+      poster: "/videos/festividades/carnaval-ayacuchano-poster.webp",
+    },
     comparsas: [
       {
         imagen: "/imagenes-reales/galeria/festividades/carnaval-uno.webp",
@@ -98,6 +105,11 @@ export const festividades: Festividad[] = [
     escenas: "Incienso, flores y fe: así se vive la Semana Santa en Huamanga.",
     dato: "Recibe hasta 80,000 visitantes cada año, con más de un siglo y medio de tradición ininterrumpida.",
     clipTags: ["Anda cargada entre flores", "Alfombras de flores", "Quema del Judas", "Jala Toro en la plaza"],
+    video: {
+      hero: "/videos/festividades/semana-santa.mp4",
+      card: "/videos/festividades/semana-santa-card.mp4",
+      poster: "/videos/festividades/semana-santa-poster.webp",
+    },
     dias: [
       {
         numero: "I",
@@ -195,6 +207,11 @@ export const festividades: Festividad[] = [
       "Ceremonia cívico-militar",
       "Toma aérea de la pampa",
     ],
+    video: {
+      hero: "/videos/festividades/9-de-diciembre.mp4",
+      card: "/videos/festividades/9-de-diciembre-card.mp4",
+      poster: "/videos/festividades/9-de-diciembre-poster.webp",
+    },
     cronologia: [
       {
         momento: "Víspera",

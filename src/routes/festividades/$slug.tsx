@@ -5,6 +5,7 @@ import { SiteFooter } from "@/components/site-footer";
 import { DiaSwitcher } from "@/components/DiaSwitcher";
 import { ComparsasPaginadas } from "@/components/ComparsasPaginadas";
 import { CronologiaBatalla } from "@/components/CronologiaBatalla";
+import { FestividadVideo } from "@/components/FestividadVideo";
 import { festividades } from "@/data/festividades";
 
 export const Route = createFileRoute("/festividades/$slug")({
@@ -55,16 +56,15 @@ function FestividadDetailPage() {
 
       {/* HERO — título evocador, no repite el nombre literal de la festividad */}
       <header className="relative h-[70vh] md:h-screen w-full overflow-hidden bg-eucalipto">
-        <img
+        <FestividadVideo
           key={fest.slug}
-          src={fest.imagen}
+          src={fest.video.hero}
+          poster={fest.video.poster}
           alt={fest.nombre}
-          loading="eager"
-          fetchPriority="high"
-          decoding="async"
-          className="absolute inset-0 w-full h-full object-cover animate-hero"
+          priority
+          className="absolute inset-0 w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-ink/90 via-ink/25 to-black/20" />
+        <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-ink/70 to-transparent" />
 
         <div className="relative z-10 h-full w-full flex flex-col justify-end px-6 md:px-16 pb-16 md:pb-20">
           <h1 className="font-serif italic text-4xl md:text-6xl text-piedra leading-tight max-w-3xl">

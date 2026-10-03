@@ -17,6 +17,7 @@ import { MenuModal } from "@/components/MenuModal";
 import { FamiliaLasFloresSection } from "../components/FamiliaLasFloresSection";
 import { getFestividadesDestacadas } from "../lib/festividadesLayout";
 import { FaunaAndina } from "@/components/FaunaAndina";
+import { FestividadVideo } from "@/components/FestividadVideo";
 import { lugares } from "@/data/lugares";
 import { festividades } from "@/data/festividades";
 
@@ -222,11 +223,10 @@ function FestividadesSlider() {
             className="group block text-left transition-transform duration-300 hover:-translate-y-1"
           >
             <div className="relative isolate overflow-hidden min-h-[280px] md:min-h-[360px] lg:min-h-[400px]">
-              <img
-                src={fest.imagen}
+              <FestividadVideo
+                src={fest.video.card}
+                poster={fest.video.poster}
                 alt={fest.nombre}
-                loading="lazy"
-                decoding="async"
                 className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
               />
               <span className="absolute top-4 right-4 bg-ink/70 text-piedra text-[10px] uppercase tracking-[0.25em] px-3 py-1.5">
