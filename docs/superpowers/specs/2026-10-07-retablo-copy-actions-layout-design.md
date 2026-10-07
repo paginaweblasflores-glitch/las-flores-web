@@ -14,7 +14,7 @@ Keep the retablo photograph and its narrative content together while giving the 
 
 ## Implementation boundaries
 
-The existing `RetabloWrapper` should remain responsible for the frame, doors, and animation. Adjust only the grid/layout classes of its home-page children in `src/routes/index.tsx`: the image and narrative stay as siblings in the content row, while the existing CTA group becomes a separate full-width row below them. Preserve responsive ordering as described above.
+The existing `RetabloWrapper` remains responsible for the frame, doors, and animation. Adjust the home-page children in `src/routes/index.tsx`: the image and narrative stay as siblings in the content row, while the existing CTA group becomes a separate full-width row below them. Also add `flex-1` to the existing inner panel-content wrapper in `src/components/RetabloWrapper.tsx`; browser measurements showed that wrapper currently shrinks below the panel's available height, preventing the new CTA row from reaching the bottom. This targeted flex-layout change must not alter the frame dimensions, content, artwork, or door transforms/animation.
 
 ## Verification
 
