@@ -18,6 +18,7 @@ import { FamiliaLasFloresSection } from "../components/FamiliaLasFloresSection";
 import { getFestividadesDestacadas } from "../lib/festividadesLayout";
 import { FaunaAndina } from "@/components/FaunaAndina";
 import { FestividadVideo } from "@/components/FestividadVideo";
+import { HeroVideo } from "@/components/HeroVideo";
 import { lugares } from "@/data/lugares";
 import { festividades } from "@/data/festividades";
 
@@ -404,26 +405,16 @@ function Index() {
 
       {/* HERO — Recorrido cinemático en Video por Ayacucho */}
       <header className="relative h-screen w-full overflow-hidden bg-eucalipto">
-        {/* Video cinemático de alta velocidad optimizado */}
-        <video
-          autoPlay
-          loop
-          muted
-          playsInline
-          preload="auto"
-          poster={ayacuchoHero}
-          className="absolute inset-0 w-full h-full object-cover opacity-75 scale-[1.02] pointer-events-none"
-        >
-          <source src="/inicio/videoweb.mp4" type="video/mp4" />
-
-          {/* Imagen de reserva si el navegador restringe video */}
-          <img
-            src={ayacuchoHero}
-            alt="Vista panorámica de Ayacucho al atardecer"
-            className="w-full h-full object-cover"
-          />
-        </video>
-        <div className="absolute inset-0 bg-gradient-to-b from-ink/60 via-ink/20 to-ink/90" />
+        {/* Video con audio opcional (botón de parlante); sin opacidad para mostrar su calidad original */}
+        <HeroVideo
+          srcDesktop="/videos/hero/inicio-hero.mp4"
+          srcMobile="/videos/hero/inicio-hero-mobile.mp4"
+          srcAudio="/videos/hero/inicio-hero-audio.m4a"
+          poster="/videos/hero/inicio-hero-poster.webp"
+          alt="Vista panorámica de Ayacucho"
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-ink/40 via-transparent to-ink/60 pointer-events-none" />
         <div className="relative h-full flex flex-col items-center justify-center text-center px-6">
           <span className="text-chilca/90 uppercase tracking-[0.4em] text-xs md:text-sm mb-6 animate-reveal font-semibold">
             Huamanga · Perú
