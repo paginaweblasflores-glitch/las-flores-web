@@ -121,7 +121,7 @@ const RetabloWrapper = ({ children }: { children: ReactNode }) => {
        * - Contenedor Central: hasta 900px, con margen para las puertas abiertas
        * - En viewports más pequeños, el conjunto se reduce proporcionalmente
        */
-      className="relative mx-auto mt-0 lg:mt-12 mb-0 lg:mb-12 w-[90vw] max-w-xl lg:w-[calc(50vw_-_40px)] lg:max-w-[900px] flex flex-col justify-center"
+      className="relative mx-auto mt-0 lg:mt-12 mb-0 lg:mb-12 min-h-[700px] lg:min-h-[900px] w-[90vw] max-w-xl lg:w-[calc(50vw_-_40px)] lg:max-w-[900px] flex flex-col justify-center"
       style={{
         perspective: "1400px",
         perspectiveOrigin: "50% 40%",
@@ -291,7 +291,7 @@ const RetabloWrapper = ({ children }: { children: ReactNode }) => {
 
           {/* Interior crema con Marco Oscuro de 10-12px y Sombra Inset 3D */}
           <div className="retablo-interior relative mx-[10px] lg:mx-[14px] mb-[10px] lg:mb-[14px] border-[8px] lg:border-[12px] border-[#5c1229] rounded-xs flex-1 flex flex-col justify-center overflow-hidden">
-            <div className="relative z-10 flex h-full flex-col justify-center">
+            <div className="relative z-10 flex flex-1 h-full flex-col justify-center">
               {children}
             </div>
           </div>
@@ -306,34 +306,22 @@ const RetabloWrapper = ({ children }: { children: ReactNode }) => {
           >
             {/* Cara Exterior (CERRADO - rotateY 0deg + translateZ 1px): Madera rojo cochinilla con logo en pan de oro */}
             <div
-              className="door-face retablo-frame border-[10px] lg:border-[12px] border-[#5c1229] overflow-hidden"
+              className="door-face retablo-frame border-y-[10px] lg:border-y-[12px] border-l-[10px] lg:border-l-[12px] border-r-0 border-[#5c1229] overflow-hidden"
               style={{
                 transform: "rotateY(0deg) translateZ(1px)",
                 backfaceVisibility: "hidden",
                 WebkitBackfaceVisibility: "hidden",
                 backgroundColor: "#8f1d35",
                 zIndex: 10,
-                boxShadow: "inset 0 0 30px rgba(0,0,0,0.85)",
+                boxShadow:
+                  "inset 8px 0 18px -12px rgba(0,0,0,0.45), inset 0 8px 18px -12px rgba(0,0,0,0.45), inset 0 -8px 18px -12px rgba(0,0,0,0.45)",
+                backgroundImage: "url('/retablo/entrada.png')",
+                backgroundSize: "200% 100%",
+                backgroundPosition: "left center",
+                backgroundRepeat: "no-repeat",
+                backgroundOrigin: "border-box",
               }}
-            >
-              {/* Madera rojo cochinilla con doble filete dorado y sello del logo oficial */}
-              <div className="relative w-full h-full retablo-frame flex items-center justify-center p-3">
-                <div className="w-full h-full border-2 border-[#d4a373]/40 flex flex-col items-center justify-center p-4 bg-[#5c1229]/50 shadow-inner">
-                  {/* Medallón Pan de Oro con Logo Oficial Transparente - Tamaño Ampliado */}
-                  <div className="w-36 h-36 sm:w-40 sm:h-40 lg:w-48 lg:h-48 rounded-full border-[3px] border-[#f0d9b5]/70 flex items-center justify-center bg-[#8f1d35]/95 p-5 lg:p-6 shadow-2xl ring-4 ring-[#d4a373]/25 transition-transform">
-                    <img
-                      src="/images.png"
-                      alt="Logo Las Flores"
-                      className="w-full h-full object-contain"
-                      style={{
-                        filter: "brightness(0) saturate(100%) invert(88%) sepia(21%) saturate(940%) hue-rotate(345deg) brightness(98%) contrast(90%)",
-                      }}
-                      draggable={false}
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
+            />
 
             {/* Cara Interior (ABIERTO - rotateY 180deg + translateZ -1px): Ilustración Floral con garantía nuclear de opacidad */}
             <div
@@ -374,34 +362,22 @@ const RetabloWrapper = ({ children }: { children: ReactNode }) => {
           >
             {/* Cara Exterior (CERRADO - rotateY 0deg + translateZ 1px): Madera rojo cochinilla con logo en pan de oro */}
             <div
-              className="door-face retablo-frame border-[10px] lg:border-[12px] border-[#5c1229] overflow-hidden"
+              className="door-face retablo-frame border-y-[10px] lg:border-y-[12px] border-r-[10px] lg:border-r-[12px] border-l-0 border-[#5c1229] overflow-hidden"
               style={{
                 transform: "rotateY(0deg) translateZ(1px)",
                 backfaceVisibility: "hidden",
                 WebkitBackfaceVisibility: "hidden",
                 backgroundColor: "#8f1d35",
                 zIndex: 10,
-                boxShadow: "inset 0 0 30px rgba(0,0,0,0.85)",
+                boxShadow:
+                  "inset -8px 0 18px -12px rgba(0,0,0,0.45), inset 0 8px 18px -12px rgba(0,0,0,0.45), inset 0 -8px 18px -12px rgba(0,0,0,0.45)",
+                backgroundImage: "url('/retablo/entrada.png')",
+                backgroundSize: "200% 100%",
+                backgroundPosition: "right center",
+                backgroundRepeat: "no-repeat",
+                backgroundOrigin: "border-box",
               }}
-            >
-              {/* Madera rojo cochinilla con doble filete dorado y sello del logo oficial */}
-              <div className="relative w-full h-full retablo-frame flex items-center justify-center p-3">
-                <div className="w-full h-full border-2 border-[#d4a373]/40 flex flex-col items-center justify-center p-4 bg-[#5c1229]/50 shadow-inner">
-                  {/* Medallón Pan de Oro con Logo Oficial Transparente - Tamaño Ampliado */}
-                  <div className="w-36 h-36 sm:w-40 sm:h-40 lg:w-48 lg:h-48 rounded-full border-[3px] border-[#f0d9b5]/70 flex items-center justify-center bg-[#8f1d35]/95 p-5 lg:p-6 shadow-2xl ring-4 ring-[#d4a373]/25 transition-transform">
-                    <img
-                      src="/images.png"
-                      alt="Logo Las Flores"
-                      className="w-full h-full object-contain"
-                      style={{
-                        filter: "brightness(0) saturate(100%) invert(88%) sepia(21%) saturate(940%) hue-rotate(345deg) brightness(98%) contrast(90%)",
-                      }}
-                      draggable={false}
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
+            />
 
             {/* Cara Interior (ABIERTO - rotateY 180deg + translateZ -1px): Ilustración Floral espejada sólida */}
             <div
