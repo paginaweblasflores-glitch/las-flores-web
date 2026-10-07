@@ -53,6 +53,17 @@ function findRetabloWrapper(node: ts.Node): ts.JsxElement | undefined {
 }
 
 describe("home retablo content layout", () => {
+  it("adds enough desktop bottom space for the open doors to remain visible", () => {
+    const section = jsxDescendants(routeAst).find(
+      (element) =>
+        tagName(element) === "section" && element.getText().includes("<RetabloWrapper"),
+    );
+
+    expect(section).toBeDefined();
+    if (!section) throw new Error("Retablo section not found");
+    expect(attribute(section, "className")).toContain("lg:pb-40");
+  });
+
   it("allows the panel content to fill the central panel", () => {
     expect(wrapperSource).toContain(
       'className="relative z-10 flex flex-1 h-full flex-col justify-center"',

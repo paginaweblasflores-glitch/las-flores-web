@@ -439,7 +439,7 @@ function Index() {
       </header>
 
       {/* CULTURA Y TRADICIÓN */}
-      <section className="flex justify-center items-center w-full lg:min-h-screen overflow-x-hidden relative py-16 lg:pt-6 lg:pb-12">
+      <section className="flex justify-center items-center w-full lg:min-h-screen overflow-x-hidden relative py-16 lg:pt-6 lg:pb-40">
         <RetabloWrapper>
           {/* Texto sobre la imagen; botones anclados en la parte inferior */}
           <div className="flex flex-1 h-full flex-col p-5 lg:p-10">
