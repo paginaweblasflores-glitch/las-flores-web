@@ -438,36 +438,14 @@ function Index() {
       </header>
 
       {/* CULTURA Y TRADICIÓN */}
-      <section className="flex justify-center items-center w-full lg:min-h-screen overflow-x-hidden relative py-16 lg:pt-6 lg:pb-12">
+      <section className="flex justify-center items-center w-full lg:min-h-screen overflow-x-hidden relative py-16 lg:pt-6 lg:pb-40">
         <RetabloWrapper>
-          {/* Layout Responsivo: Vertical en Móvil (<lg), Side-by-Side en Desktop (lg: >=1024px) */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center p-5 lg:p-10 overflow-hidden">
+          {/* Texto sobre la imagen; botones anclados en la parte inferior */}
+          <div className="flex flex-1 h-full flex-col p-5 lg:p-10">
+            <div className="flex flex-1 flex-col items-center gap-4 lg:gap-5">
             
-            {/* Columna Izquierda: Foto del retablo */}
-            <div className="lg:col-span-5 w-full max-w-[220px] lg:max-w-none mx-auto shrink-0">
-              <div className="relative">
-                <div
-                  className="absolute -inset-2 z-0"
-                  style={{
-                    background: "linear-gradient(135deg, #5D2E0C 0%, #8B4513 50%, #5D2E0C 100%)",
-                    boxShadow: "0 6px 20px rgba(93,46,12,0.5)",
-                  }}
-                />
-                <img
-                  src={retabloImg}
-                  alt="Retablo ayacuchano tallado a mano con figuras policromadas"
-                  width={600}
-                  height={750}
-                  loading="lazy"
-                  decoding="async"
-                  className="relative z-10 w-full aspect-[4/5] object-cover shadow-lg"
-                  style={{ boxShadow: "inset 0 0 0 1px rgba(255,220,150,0.15)" }}
-                />
-              </div>
-            </div>
-
-            {/* Columna Derecha: Bloque Narrativo y CTAs */}
-            <div className="lg:col-span-7 flex flex-col gap-3 lg:gap-4 text-center lg:text-left">
+            {/* Bloque Narrativo */}
+            <div className="w-full flex flex-col gap-3 lg:gap-4 text-center">
               
               {/* Eyebrow label */}
               <span
@@ -490,10 +468,10 @@ function Index() {
               </h2>
 
               {/* Separador ornamental */}
-              <div className="flex items-center gap-2 justify-center lg:justify-start my-0.5" aria-hidden="true">
-                <span className="block h-px w-8 bg-[#8B4513]/40" />
+              <div className="flex w-full items-center gap-2 justify-center my-0.5" aria-hidden="true">
+                <span className="block h-px flex-1 bg-[#8B4513]/40" />
                 <AyacuchoFlowerInline />
-                <span className="block h-px w-8 bg-[#8B4513]/40" />
+                <span className="block h-px flex-1 bg-[#8B4513]/40" />
               </div>
 
               {/* Cuerpo de texto */}
@@ -511,52 +489,74 @@ function Index() {
                 olvidar su esencia.
               </p>
 
-              {/* CTAs */}
-              <div className="flex flex-col sm:flex-row gap-3 justify-center lg:justify-start mt-2">
-                <a
-                  href="/restaurante"
-                  className="group inline-flex items-center justify-center gap-2 px-6 py-2.5 font-sans font-semibold text-[10px] lg:text-[11px] uppercase tracking-[0.2em] transition-all duration-300"
-                  style={{
-                    background: "linear-gradient(135deg, #8B2500 0%, #C0392B 100%)",
-                    color: "#fdf8f0",
-                    boxShadow: "0 4px 14px rgba(139,37,0,0.35)",
-                    border: "1px solid #6B1A00",
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.transform = "translateY(-2px)";
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.transform = "translateY(0)";
-                  }}
-                >
-                  Descubrir la historia
-                  <svg width="12" height="12" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" className="group-hover:translate-x-1 transition-transform duration-300">
-                    <path d="M1 7H13M8 2L13 7L8 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
-                </a>
-                <a
-                  href="/carta"
-                  className="inline-flex items-center justify-center gap-2 px-6 py-2.5 font-sans font-semibold text-[10px] lg:text-[11px] uppercase tracking-[0.25em] transition-all duration-300"
-                  style={{
-                    background: "transparent",
-                    color: "#5D2E0C",
-                    border: "1px solid #8B4513",
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.background = "#5D2E0C";
-                    e.currentTarget.style.color = "#fdf8f0";
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.background = "transparent";
-                    e.currentTarget.style.color = "#5D2E0C";
-                  }}
-                >
-                  Ver el menú
-                </a>
-              </div>
-
             </div>
 
+            {/* Imagen ampliada debajo de todo el texto */}
+            <div className="w-full max-w-[240px] lg:max-w-[320px] mx-auto shrink-0">
+              <div className="relative">
+                <div
+                  className="absolute -inset-2 z-0"
+                  style={{
+                    background: "linear-gradient(135deg, #5D2E0C 0%, #8B4513 50%, #5D2E0C 100%)",
+                    boxShadow: "0 6px 20px rgba(93,46,12,0.5)",
+                  }}
+                />
+                <img
+                  src={retabloImg}
+                  alt="Retablo ayacuchano tallado a mano con figuras policromadas"
+                  width={600}
+                  height={750}
+                  loading="lazy"
+                  decoding="async"
+                  className="relative z-10 w-full aspect-[4/5] object-cover shadow-lg"
+                  style={{ boxShadow: "inset 0 0 0 1px rgba(255,220,150,0.15)" }}
+                />
+              </div>
+            </div>
+            </div>
+            {/* CTAs */}
+            <div className="mt-auto flex flex-col sm:flex-row gap-3 justify-center pt-4">
+              <a
+                href="/restaurante"
+                className="group inline-flex items-center justify-center gap-2 px-6 py-2.5 font-sans font-semibold text-[10px] lg:text-[11px] uppercase tracking-[0.2em] transition-all duration-300"
+                style={{
+                  background: "linear-gradient(135deg, #8B2500 0%, #C0392B 100%)",
+                  color: "#fdf8f0",
+                  boxShadow: "0 4px 14px rgba(139,37,0,0.35)",
+                  border: "1px solid #6B1A00",
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = "translateY(-2px)";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = "translateY(0)";
+                }}
+              >
+                Descubrir la historia
+                <svg width="12" height="12" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" className="group-hover:translate-x-1 transition-transform duration-300">
+                  <path d="M1 7H13M8 2L13 7L8 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </a>
+              <a
+                href="/carta"
+                className="inline-flex items-center justify-center gap-2 px-6 py-2.5 font-sans font-semibold text-[10px] lg:text-[11px] uppercase tracking-[0.25em] transition-all duration-300"
+                style={{
+                  background: "transparent",
+                  color: "#5D2E0C",
+                  border: "1px solid #8B4513",
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.background = "#5D2E0C";
+                  e.currentTarget.style.color = "#fdf8f0";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.background = "transparent";
+                  e.currentTarget.style.color = "#5D2E0C";
+                }}
+              >
+                Ver el menú
+              </a>
+            </div>
           </div>
         </RetabloWrapper>
       </section>
@@ -836,5 +836,3 @@ function Index() {
     </div>
   );
 }
-
-
