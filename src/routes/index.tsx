@@ -409,7 +409,6 @@ function Index() {
         <HeroVideo
           srcDesktop="/videos/hero/inicio-hero.mp4"
           srcMobile="/videos/hero/inicio-hero-mobile.mp4"
-          srcAudio="/videos/hero/inicio-hero-audio.m4a"
           poster="/videos/hero/inicio-hero-poster.webp"
           alt="Vista panorámica de Ayacucho"
           className="absolute inset-0 w-full h-full object-cover"
