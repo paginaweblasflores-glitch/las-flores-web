@@ -1,18 +1,20 @@
 import { useEffect, useRef, useState } from "react";
 import { Volume2, VolumeX } from "lucide-react";
+import {
+  alternarMusica,
+  getAudioMusica,
+  iniciarMusicaDesdeHero,
+  marcarHeroVisible,
+  useMusica,
+} from "@/lib/musicaFondo";
 
 interface HeroVideoProps {
   srcDesktop: string;
   srcMobile: string;
-  srcAudio: string;
   poster: string;
   alt: string;
   className?: string;
 }
-
-// Si el visitante silencia la música, se respeta mientras navega en esta visita (al volver al inicio no se
-// reactiva sola). Vive solo en memoria: en cada visita nueva a la web, la música vuelve a empezar activada.
-let silenciadoEnEstaVisita = false;
 
 function evitarVideo(): boolean {
   const reduceMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
@@ -27,45 +29,17 @@ function diferenciaCircular(a: number, b: number, duracion: number): number {
 }
 
 /**
- * Hero con música, activada por defecto.
+ * Hero con música (ver `lib/musicaFondo`).
  * - El video va siempre silenciado y solo corre mientras se ve (no gasta CPU/batería fuera de pantalla).
- * - El sonido viene de una pista de audio aparte (0.4 MB) que sigue sonando en toda la página principal,
- *   aunque bajes del hero. Al volver, el video se alinea con el audio.
- * - Los navegadores no permiten sonido hasta el primer clic/toque/tecla del visitante: se intenta sonar al
- *   cargar y, si lo bloquean, empieza en el primer gesto en cualquier parte de la página.
- * - El parlante silencia/activa (la elección se respeta solo durante la visita). Al salir de la página o ocultar la pestaña, se detiene.
+ * - El sonido es una pista de audio aparte, global: sigue sonando al bajar del hero y también al navegar a otras
+ *   páginas, hasta que el visitante la silencie. Al volver al hero, el video se alinea con el audio.
+ * - Se intenta sonar de inmediato al cargar. Si el navegador lo bloquea (sin interacción previa del visitante),
+ *   queda silenciado y el parlante lo activa, igual que en otros sitios con video de portada.
  */
-export function HeroVideo({ srcDesktop, srcMobile, srcAudio, poster, alt, className = "" }: HeroVideoProps) {
+export function HeroVideo({ srcDesktop, srcMobile, poster, alt, className = "" }: HeroVideoProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
-  const audioRef = useRef<HTMLAudioElement>(null);
-  // Intención del visitante (por defecto, con sonido). Puede estar activada sin que suene aún (bloqueo del navegador).
-  const quiereSonidoRef = useRef(true);
-  const bloqueadoRef = useRef(false);
   const [sinVideo, setSinVideo] = useState(false);
-  const [sonando, setSonando] = useState(false);
-  const [heroVisible, setHeroVisible] = useState(true);
-
-  // Arranca el audio alineado con el video. Si el navegador lo bloquea, queda a la espera del primer gesto.
-  const iniciarAudio = () => {
-    const audio = audioRef.current;
-    const el = videoRef.current;
-    if (!audio || !el || !audio.paused) return;
-    if (audio.preload !== "auto") {
-      audio.preload = "auto";
-      audio.load();
-    }
-    if (el.readyState >= 1 && Math.abs(audio.currentTime - el.currentTime) > 0.5) {
-      audio.currentTime = el.currentTime;
-    }
-    audio.play().then(
-      () => {
-        bloqueadoRef.current = false;
-      },
-      () => {
-        bloqueadoRef.current = true;
-      },
-    );
-  };
+  const { sonando } = useMusica();
 
   useEffect(() => {
     if (evitarVideo()) {
@@ -73,11 +47,7 @@ export function HeroVideo({ srcDesktop, srcMobile, srcAudio, poster, alt, classN
       return;
     }
     const el = videoRef.current;
-    const audio = audioRef.current;
-    if (!el || !audio) return;
-
-    quiereSonidoRef.current = !silenciadoEnEstaVisita;
-    if (quiereSonidoRef.current) audio.preload = "auto";
+    if (!el) return;
 
     el.muted = true;
     el.defaultMuted = true;
@@ -89,42 +59,34 @@ export function HeroVideo({ srcDesktop, srcMobile, srcAudio, poster, alt, classN
     el.load();
 
     let activo = true;
-    let visibleAntes = true;
+    let visibleAntes: boolean | null = null;
     const aLaVista = () => {
       const r = el.getBoundingClientRect();
       return r.bottom > 0 && r.top < window.innerHeight;
     };
 
     const sincronizar = () => {
-      if (!activo) return;
+      if (!activo || document.visibilityState === "hidden") return;
 
-      // Pestaña oculta: el audio se detiene (se retoma al volver).
-      if (document.visibilityState === "hidden") {
-        if (!audio.paused) audio.pause();
-        return;
-      }
-
-      // Audio: si el visitante lo quiere y el navegador no lo está bloqueando, debe estar sonando.
-      if (quiereSonidoRef.current && audio.paused && !bloqueadoRef.current) iniciarAudio();
-
-      // Video: solo corre mientras se ve.
       const visible = aLaVista();
       if (visible !== visibleAntes) {
         visibleAntes = visible;
-        setHeroVisible(visible);
+        marcarHeroVisible(visible);
       }
+
       if (visible) {
         // Solo se salta cuando hay desfase real (>0.35 s); saltar a cada pausa provocaba un ciclo infinito de pausa/salto.
+        const audio = getAudioMusica();
         const desfasado =
-          quiereSonidoRef.current &&
+          !!audio &&
           !audio.paused &&
           el.readyState >= 2 &&
           diferenciaCircular(el.currentTime, audio.currentTime, el.duration) > 0.35;
         if (el.paused) {
-          // Al volver con sonido activo, el video se alinea con el audio (que nunca se detuvo).
-          if (desfasado) el.currentTime = audio.currentTime;
+          // Al volver (de otra sección o de otra página) el video se alinea con el audio, que nunca se detuvo.
+          if (desfasado && audio) el.currentTime = audio.currentTime;
           el.play().catch(() => {});
-        } else if (desfasado && !el.seeking) {
+        } else if (desfasado && audio && !el.seeking) {
           el.currentTime = audio.currentTime;
         }
       } else if (!el.paused) {
@@ -132,23 +94,9 @@ export function HeroVideo({ srcDesktop, srcMobile, srcAudio, poster, alt, classN
       }
     };
 
-    // Primer gesto del visitante (clic, toque o tecla): el navegador ya permite sonido, así que arranca la música.
-    const gestos = ["pointerdown", "pointerup", "touchend", "keydown"] as const;
-    const alGesto = (e: Event) => {
-      if (!quiereSonidoRef.current || !audio.paused) return;
-      // Si el gesto es sobre el propio parlante, el botón decide.
-      if ((e.target as Element | null)?.closest?.("[data-hero-sonido]")) return;
-      bloqueadoRef.current = false;
-      iniciarAudio();
-    };
-    gestos.forEach((g) => window.addEventListener(g, alGesto, { capture: true, passive: true }));
-
-    const alSonar = () => setSonando(true);
-    const alPausar = () => setSonando(false);
-    audio.addEventListener("playing", alSonar);
-    audio.addEventListener("pause", alPausar);
-
-    sincronizar(); // intenta sonar de inmediato (funciona si el navegador ya lo permite)
+    // Intenta sonar de inmediato (funciona si el navegador ya lo permite); si lo bloquea, queda en silencio.
+    iniciarMusicaDesdeHero(el.currentTime);
+    sincronizar();
 
     const eventosMedia = ["loadeddata", "canplay", "pause", "stalled", "suspend"] as const;
     eventosMedia.forEach((ev) => el.addEventListener(ev, sincronizar));
@@ -162,72 +110,33 @@ export function HeroVideo({ srcDesktop, srcMobile, srcAudio, poster, alt, classN
     return () => {
       activo = false;
       window.clearInterval(vigilante);
-      gestos.forEach((g) => window.removeEventListener(g, alGesto, { capture: true }));
-      audio.removeEventListener("playing", alSonar);
-      audio.removeEventListener("pause", alPausar);
       eventosMedia.forEach((ev) => el.removeEventListener(ev, sincronizar));
       document.removeEventListener("visibilitychange", sincronizar);
       window.removeEventListener("pageshow", sincronizar);
       window.removeEventListener("focus", sincronizar);
       window.removeEventListener("scroll", sincronizar);
       window.removeEventListener("resize", sincronizar);
-      // Al salir de la página principal, la música se detiene.
-      quiereSonidoRef.current = false;
-      audio.pause();
+      // El audio NO se detiene: sigue sonando en otras páginas. Solo se avisa que el hero ya no está.
+      marcarHeroVisible(false);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [srcDesktop, srcMobile]);
-
-  const alternarSonido = () => {
-    const audio = audioRef.current;
-    if (!audio) return;
-
-    if (!audio.paused) {
-      quiereSonidoRef.current = false;
-      silenciadoEnEstaVisita = true;
-      audio.pause();
-      return;
-    }
-    quiereSonidoRef.current = true;
-    silenciadoEnEstaVisita = false;
-    bloqueadoRef.current = false;
-    iniciarAudio();
-  };
 
   if (sinVideo) {
     return <img src={poster} alt={alt} decoding="async" className={className} />;
   }
 
-  const textoBoton = sonando ? "Silenciar la música" : "Activar el sonido del video";
-
   return (
     <>
       <video ref={videoRef} poster={poster} muted loop playsInline preload="auto" aria-label={alt} className={className} />
-      <audio ref={audioRef} src={srcAudio} loop preload="none" />
-
       <button
         type="button"
-        data-hero-sonido
-        onClick={alternarSonido}
-        aria-label={textoBoton}
+        onClick={() => alternarMusica(videoRef.current?.currentTime)}
+        aria-label={sonando ? "Silenciar la música" : "Activar el sonido del video"}
         aria-pressed={sonando}
         className="absolute bottom-8 right-6 md:bottom-10 md:right-16 z-20 flex h-11 w-11 items-center justify-center rounded-full border border-piedra/60 bg-black/30 text-piedra backdrop-blur-sm transition-colors hover:bg-black/50"
       >
         {sonando ? <Volume2 size={20} /> : <VolumeX size={20} />}
       </button>
-
-      {/* Mientras suena y el hero ya no se ve, este botón flotante permite silenciar desde cualquier parte de la página. */}
-      {sonando && !heroVisible && (
-        <button
-          type="button"
-          data-hero-sonido
-          onClick={alternarSonido}
-          aria-label="Silenciar la música"
-          className="fixed bottom-5 right-5 z-40 flex h-11 w-11 items-center justify-center rounded-full border border-piedra/30 bg-ink/85 text-piedra shadow-lg backdrop-blur-sm transition-colors hover:bg-ink"
-        >
-          <Volume2 size={20} />
-        </button>
-      )}
     </>
   );
 }
