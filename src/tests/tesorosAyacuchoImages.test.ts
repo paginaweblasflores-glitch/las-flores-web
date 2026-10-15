@@ -38,4 +38,46 @@ describe("imágenes de Tesoros de Ayacucho", () => {
       }),
     ).toBe(true);
   });
+
+  it("usa la imagen riti de productosAyacucho en el encabezado", () => {
+    const routeSource = readFileSync(routePath, "utf8");
+    const heroImage = "/imagenes-reales/productosAyacucho/riti.png";
+
+    expect(existsSync(resolve(publicPath, heroImage.slice(1)))).toBe(true);
+    expect(routeSource).toContain(`src="${heroImage}"`);
+  });
+
+  it("encuadra la imagen del encabezado hacia los cerros", () => {
+    const routeSource = readFileSync(routePath, "utf8");
+
+    expect(routeSource).toContain("object-[center_35%]");
+  });
+
+  it("muestra solo la altitud máxima sobre el nivel del mar en los 20 productos", () => {
+    const routeSource = readFileSync(routePath, "utf8");
+    const activeCatalog = routeSource.match(
+      /const productosPorTemporada: Record<string, Producto\[]> = \{([\s\S]*?)\r?\n\};\r?\n\r?\nfunction/,
+    )?.[1] ?? "";
+    const products = [
+      ...activeCatalog.matchAll(
+        /\{\s*nombre:\s*"([^"]+)"[\s\S]*?rangoAltitud:\s*"([^"]+)"/g,
+      ),
+    ];
+
+    expect(products).toHaveLength(20);
+    expect(
+      products.every((product) =>
+        /^[\d.]+\s*m s\. n\. m\.$/.test(product[2]),
+      ),
+    ).toBe(true);
+  });
+
+  it("muestra el rango de altitud junto al nombre del producto", () => {
+    const routeSource = readFileSync(routePath, "utf8");
+
+    expect(routeSource).toMatch(
+      /\{producto\.nombre\}\s*-\s*\{producto\.rangoAltitud\}/,
+    );
+    expect(routeSource).not.toContain("producto.usos.map");
+  });
 });

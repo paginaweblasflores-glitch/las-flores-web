@@ -196,7 +196,7 @@ export function AdminOrderDetailModal({
               <p className="font-semibold text-gray-900 text-sm">
                 {order.order_type === 'delivery' 
                   ? (order.address || order.delivery_address || "Sin dirección especificada") 
-                  : "Recojo en local - Jr. Dos de Mayo 208"}
+                  : "Recojo en local - Jr. José Olaya 106"}
                 {order.reference ? ` (${order.reference})` : ""}
               </p>
               {order.notes && (
@@ -323,4 +323,3 @@ export function AdminOrderDetailModal({
     </div>
   );
 }
-

@@ -179,7 +179,7 @@ function LibroReclamacionesPage() {
                 <span className="font-bold text-eucalipto text-sm">RESTAURANTE TURÍSTICO LAS FLORES</span>
                 <span className="bg-cream px-3 py-1 rounded-full border border-black/5 font-semibold">Razón Social: RESTAURANTE LAS FLORES S.A.C.</span>
               </div>
-              <p>RUC: <strong>20608514921</strong> • Domicilio: Jr. Lima 304, Centro Histórico de Huamanga, Ayacucho, Perú.</p>
+              <p>RUC: <strong>20608514921</strong> • Domicilio: Jr. José Olaya 106, Huamanga, Ayacucho, Perú.</p>
               <p className="text-xs text-gray-500 italic">
                 * Conforme al D.S. N° 011-2011-PCM y la Ley N° 29571, ponemos a su disposición este formato para registrar formalmente su Reclamo o Queja.
               </p>

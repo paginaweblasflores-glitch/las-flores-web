@@ -699,20 +699,16 @@ function Index() {
       </section>
 
       {/* PREMIOS */}
-      <section className="py-16 md:py-32 px-6">
+      <section className="py-12 md:py-20 px-6">
         <div className="container-flores mx-auto grid grid-cols-1 md:grid-cols-12 gap-12 items-center">
           <div className="md:col-span-6">
             <span className="text-eucalipto font-medium uppercase tracking-[0.3em] text-xs mb-6 block">
               Excelencia Reconocida
             </span>
             <h2 className="font-serif text-3xl sm:text-4xl md:text-6xl leading-[1.05] text-balance mb-8">
-              Reconocidos por nuestro compromiso con la calidad.
+              Reconocidos por
             </h2>
-            <p className="text-base sm:text-lg leading-[1.7] text-pretty max-w-[48ch] text-nogal/75 mb-10">
-              Ser el mejor restaurante de Ayacucho no es solo un título, es una responsabilidad.
-              Estos galardones reflejan nuestro respeto inquebrantable por la herencia culinaria.
-            </p>
-            <ul className="space-y-6 max-w-md">
+            <ul className="space-y-6 max-w-md mt-8">
               <li className="flex items-start gap-5 w-full">
                 <span className="w-px h-10 bg-cochinilla shrink-0 mt-1" />
                 <div className="w-full">
@@ -784,7 +780,7 @@ function Index() {
               height={1200}
               loading="lazy"
               decoding="async"
-              className="w-full h-full min-h-[500px] md:min-h-[600px] object-cover rounded-3xl shadow-2xl border border-nogal/10"
+              className="w-full h-[360px] md:h-[460px] object-cover rounded-3xl shadow-2xl border border-nogal/10"
             />
           </div>
         </div>
