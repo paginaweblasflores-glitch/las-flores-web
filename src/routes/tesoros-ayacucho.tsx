@@ -26,7 +26,7 @@ export const Route = createFileRoute("/tesoros-ayacucho")({
   component: TesorosAyacuchoPage,
 });
 
-type Producto = {
+type ProductoAnterior = {
   nombre: string;
   nombreCientifico?: string;
   descripcion: string;
@@ -36,7 +36,16 @@ type Producto = {
   usos: string[];
 };
 
-const productosPorTemporadaAnterior: Record<string, Producto[]> = {
+type Producto = {
+  nombre: string;
+  nombreCientifico?: string;
+  temporada: string;
+  meses: string;
+  imagen: string;
+  rangoAltitud: string;
+};
+
+const productosPorTemporadaAnterior: Record<string, ProductoAnterior[]> = {
   Verano: [
     {
       nombre: "Tuna",
@@ -512,169 +521,149 @@ const productosPorTemporada: Record<string, Producto[]> = {
   Verano: [
     {
       nombre: "Ají Amarillo",
-      descripcion: "Ají aromático y de sabor intenso, esencial en la cocina ayacuchana.",
+      rangoAltitud: "2.500 m s. n. m.",
       temporada: "Verano",
       meses: "Diciembre - Marzo",
       imagen: "/imagenes-reales/productosAyacucho/Verano/aji amarillo.webp",
-      usos: ["Salsas", "Aderezos", "Guisos", "Cremas"],
     },
     {
       nombre: "Granadilla",
-      descripcion: "Fruta dulce y aromática, ideal para bebidas y postres frescos.",
+      rangoAltitud: "2.700 m s. n. m.",
       temporada: "Verano",
       meses: "Diciembre - Marzo",
       imagen: "/imagenes-reales/productosAyacucho/Verano/granadilla.webp",
-      usos: ["Fresco", "Jugos", "Postres", "Mermeladas"],
     },
     {
       nombre: "Lucuma",
-      descripcion: "Fruta andina cremosa y de dulzor natural, protagonista de postres tradicionales.",
+      rangoAltitud: "2.500 m s. n. m.",
       temporada: "Verano",
       meses: "Diciembre - Mayo",
       imagen: "/imagenes-reales/productosAyacucho/Verano/lucuma.webp",
-      usos: ["Helados", "Postres", "Batidos", "Dulces"],
     },
     {
       nombre: "Maiz",
-      descripcion: "Cereal andino de cosecha tierna, base de humitas y preparaciones tradicionales.",
+      rangoAltitud: "3.500 m s. n. m.",
       temporada: "Verano",
       meses: "Enero - Mayo",
       imagen: "/imagenes-reales/productosAyacucho/Verano/maiz.webp",
-      usos: ["Sancochado", "Humitas", "Sopas", "Guisos"],
     },
     {
       nombre: "Tuna",
-      descripcion: "Fruto del nopal, dulce y refrescante, rico en vitamina C y fibra.",
+      rangoAltitud: "3.000 m s. n. m.",
       temporada: "Verano",
       meses: "Diciembre - Marzo",
       imagen: "/imagenes-reales/productosAyacucho/Verano/tuna.webp",
-      usos: ["Fresco", "Jugos", "Mermeladas", "Postres"],
     },
     {
       nombre: "Yuca",
-      descripcion: "Raiz de textura firme y sabor suave, base de preparaciones tradicionales.",
+      rangoAltitud: "1.800 m s. n. m.",
       temporada: "Verano",
       meses: "Diciembre - Marzo",
       imagen: "/imagenes-reales/productosAyacucho/Verano/yuca.webp",
-      usos: ["Sancochado", "Guisos", "Frituras", "Acompanamientos"],
     },
   ],
   Otoño: [
     {
       nombre: "Calabaza",
-      descripcion: "Fruto de pulpa suave, apreciado en sopas, guisos y dulces andinos.",
+      rangoAltitud: "2.500 m s. n. m.",
       temporada: "Otoño",
       meses: "Marzo - Agosto",
       imagen: "/imagenes-reales/productosAyacucho/Otoño/calabaza.webp",
-      usos: ["Mazamorras", "Sopas", "Guisos", "Dulces"],
     },
     {
       nombre: "Camote",
-      descripcion: "Tuberculo dulce y nutritivo, versatil para preparaciones tradicionales.",
+      rangoAltitud: "2.500 m s. n. m.",
       temporada: "Otoño",
       meses: "Marzo - Junio",
       imagen: "/imagenes-reales/productosAyacucho/Otoño/camote.webp",
-      usos: ["Sancochado", "Guisos", "Postres", "Acompanamientos"],
     },
     {
       nombre: "Chirimoya",
-      descripcion: "Fruta de pulpa cremosa y aroma delicado, perfecta para postres frescos.",
+      rangoAltitud: "2.400 m s. n. m.",
       temporada: "Otoño",
       meses: "Marzo - Junio",
       imagen: "/imagenes-reales/productosAyacucho/Otoño/chirimoya.webp",
-      usos: ["Fresco", "Jugos", "Batidos", "Postres"],
     },
     {
       nombre: "Oca",
-      descripcion: "Tuberculo dulce andino que acompana la cocina tradicional de Ayacucho.",
+      rangoAltitud: "4.000 m s. n. m.",
       temporada: "Otoño",
       meses: "Marzo - Junio",
       imagen: "/imagenes-reales/productosAyacucho/Otoño/oca.webp",
-      usos: ["Sancochado", "Guisos", "Mermeladas", "Postres"],
     },
     {
       nombre: "Olluco",
-      descripcion: "Tuberculo fresco de cosecha estacional, infaltable en guisos andinos.",
+      rangoAltitud: "4.000 m s. n. m.",
       temporada: "Otoño",
       meses: "Marzo - Julio",
       imagen: "/imagenes-reales/productosAyacucho/Otoño/olluco.webp",
-      usos: ["Guisos", "Sopas", "Acompanamientos", "Ensaladas"],
     },
     {
       nombre: "Papa",
-      descripcion: "Tuberculo ancestral, base fundamental de la gastronomia ayacuchana.",
+      rangoAltitud: "4.200 m s. n. m.",
       temporada: "Otoño",
       meses: "Abril - Junio",
       imagen: "/imagenes-reales/productosAyacucho/Otoño/papa.webp",
-      usos: ["Guisos", "Sopas", "Puca picante", "Papas fritas"],
     },
   ],
   Invierno: [
     {
       nombre: "Aguaymanto",
-      descripcion: "Fruto andino de sabor dulce y acido, ideal para bebidas y postres.",
+      rangoAltitud: "3.000 m s. n. m.",
       temporada: "Invierno",
       meses: "Junio - Agosto",
       imagen: "/imagenes-reales/productosAyacucho/Invierno/aguaymanto.webp",
-      usos: ["Fresco", "Jugos", "Postres", "Mermeladas"],
     },
     {
       nombre: "Brocoli",
-      descripcion: "Hortaliza nutritiva y fresca para sopas, ensaladas y guisos.",
+      rangoAltitud: "2.500 m s. n. m.",
       temporada: "Invierno",
       meses: "Junio - Agosto",
       imagen: "/imagenes-reales/productosAyacucho/Invierno/brocoli.webp",
-      usos: ["Sopas", "Ensaladas", "Guisos", "Acompanamientos"],
     },
     {
       nombre: "Haba",
-      descripcion: "Legumbre nutritiva de los valles, presente en sopas y guisos caseros.",
+      rangoAltitud: "3.500 m s. n. m.",
       temporada: "Invierno",
       meses: "Abril - Agosto",
       imagen: "/imagenes-reales/productosAyacucho/Invierno/haba.webp",
-      usos: ["Guisos", "Sopas", "Arroces", "Ensaladas"],
     },
   ],
   Primavera: [
     {
       nombre: "Eucalipto",
-      descripcion: "Arbol aromatico usado tradicionalmente en infusiones y preparaciones naturales.",
+      rangoAltitud: "3.500 m s. n. m.",
       temporada: "Primavera",
       meses: "Septiembre - Noviembre",
       imagen: "/imagenes-reales/productosAyacucho/Primavera/eucalipto.webp",
-      usos: ["Infusiones", "Bebidas", "Aromas", "Digestivos"],
     },
     {
       nombre: "Hierba Buena",
-      descripcion: "Hierba aromatica fresca para bebidas, sopas y el tradicional mondongo.",
+      rangoAltitud: "2.500 m s. n. m.",
       temporada: "Primavera",
       meses: "Septiembre - Marzo",
       imagen: "/imagenes-reales/productosAyacucho/Primavera/hierba buena.webp",
-      usos: ["Mondongo", "Sopas", "Bebidas", "Aderezos"],
     },
     {
       nombre: "Manzanilla",
-      descripcion: "Flor aromatica tradicional, apreciada en infusiones y bebidas calientes.",
+      rangoAltitud: "3.000 m s. n. m.",
       temporada: "Primavera",
       meses: "Septiembre - Noviembre",
       imagen: "/imagenes-reales/productosAyacucho/Primavera/manzanilla.webp",
-      usos: ["Infusiones", "Bebidas", "Digestivos", "Aromas"],
     },
     {
       nombre: "Muna",
-      descripcion: "Hierba digestiva ancestral de aroma intenso y refrescante.",
+      rangoAltitud: "4.000 m s. n. m.",
       temporada: "Primavera",
       meses: "Septiembre - Marzo",
       imagen: "/imagenes-reales/productosAyacucho/Primavera/muña.webp",
-      usos: ["Infusiones", "Sopas", "Aderezos", "Digestivos"],
     },
     {
       nombre: "Romero",
-      descripcion: "Hierba aromatica de sabor profundo para aderezos y preparaciones saladas.",
+      rangoAltitud: "2.000 m s. n. m.",
       temporada: "Primavera",
       meses: "Septiembre - Noviembre",
       imagen: "/imagenes-reales/productosAyacucho/Primavera/romero.webp",
-      usos: ["Aderezos", "Salsas", "Guisos", "Infusiones"],
     },
   ],
 };
@@ -690,12 +679,12 @@ function TesorosAyacuchoPage() {
       {/* Hero */}
       <header className="relative min-h-[60vh] w-full overflow-hidden bg-eucalipto flex items-center pt-32 pb-24">
         <img
-          src="/imagenes-reales/productosAyacucho/temporadas.webp"
-          alt="Tesoros de Ayacucho — productos nativos de temporada"
+          src="/imagenes-reales/productosAyacucho/riti.png"
+          alt="Paisaje de Riti, Ayacucho"
           loading="eager"
           decoding="async"
           fetchPriority="high"
-          className="absolute inset-0 w-full h-full object-cover opacity-65 filter brightness-105 saturate-[1.1]"
+          className="absolute inset-0 w-full h-full object-cover object-[center_35%] opacity-65 filter brightness-105 saturate-[1.1]"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-ink/90 via-ink/45 to-black/30" />
 
@@ -773,7 +762,7 @@ function TesorosAyacuchoPage() {
                   {/* Título y nombre científico (Aparece con leve movimiento arriba en desktop) */}
                   <div className="transform md:translate-y-4 group-hover:!translate-y-0 md:group-hover:-translate-y-2 transition-all duration-500 ease-out">
                     <h3 className="font-serif text-3xl text-white font-bold mb-1 drop-shadow-md">
-                      {producto.nombre}
+                      {producto.nombre} - {producto.rangoAltitud}
                     </h3>
                     {producto.nombreCientifico && (
                       <p className="text-sm italic text-white/70 mb-2">{producto.nombreCientifico}</p>
@@ -786,21 +775,7 @@ function TesorosAyacuchoPage() {
                       Temporada: {producto.meses}
                     </span>
                   </div>
-                  
-                  {/* Etiquetas de usos (Visible en móvil, Delay 2 en desktop) */}
-                  <div className="transform translate-y-0 opacity-100 md:translate-y-8 md:opacity-0 group-hover:!translate-y-0 group-hover:!opacity-100 transition-all duration-500 md:delay-200 ease-out">
-                    <div className="flex flex-wrap gap-2">
-                      {producto.usos.map((uso, i) => (
-                        <span
-                          key={i}
-                          className="text-[10px] uppercase tracking-wider px-3 py-1 bg-white/10 backdrop-blur-md text-white rounded-full border border-white/20"
-                        >
-                          {uso}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                  
+
                 </div>
               </article>
             ))}

@@ -1,0 +1,38 @@
+import { readFileSync } from "node:fs";
+import { resolve } from "node:path";
+import { describe, expect, it } from "vitest";
+
+const homeRoutePath = resolve(process.cwd(), "src/routes/index.tsx");
+
+describe("sección de premios de la página de inicio", () => {
+  it("reduce el espacio vertical y la altura de la imagen", () => {
+    const routeSource = readFileSync(homeRoutePath, "utf8");
+    const awardsSection =
+      routeSource.match(/\{\/\* PREMIOS \*\/\}([\s\S]*?)\{\/\* CTA FINAL \*\/\}/)?.[1] ?? "";
+
+    expect(awardsSection).toContain('className="py-12 md:py-20 px-6"');
+    expect(awardsSection).toContain('className="space-y-6 max-w-md mt-8"');
+    expect(awardsSection).toContain("h-[360px] md:h-[460px]");
+    expect(awardsSection).not.toContain("min-h-[500px] md:min-h-[600px]");
+  });
+
+  it("muestra el título, separa los premios y omite el texto explicativo", () => {
+    const routeSource = readFileSync(homeRoutePath, "utf8");
+    const awardsSection =
+      routeSource.match(/\{\/\* PREMIOS \*\/\}([\s\S]*?)\{\/\* CTA FINAL \*\/\}/)?.[1] ?? "";
+    const headingStart = awardsSection.indexOf("<h2");
+    const headingEnd = awardsSection.indexOf("</h2>", headingStart);
+    const awardPosition = awardsSection.indexOf("Mejor Restaurante Regional", headingEnd);
+    const listStart = awardsSection.indexOf("<ul", headingEnd);
+
+    expect(awardsSection.slice(headingStart, headingEnd)).toContain(
+      "Reconocidos por",
+    );
+    expect(
+      awardsSection.slice(headingStart, headingEnd),
+    ).not.toContain("nuestro compromiso");
+    expect(awardPosition).toBeGreaterThan(headingEnd);
+    expect(listStart).toBeGreaterThan(headingEnd);
+    expect(awardsSection).not.toContain("Ser el mejor restaurante de Ayacucho");
+  });
+});
