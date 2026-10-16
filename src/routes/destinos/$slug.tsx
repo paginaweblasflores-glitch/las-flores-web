@@ -3,6 +3,7 @@ import { ArrowLeft, ArrowRight } from "lucide-react";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/site-footer";
 import { AyacuchoMiniMap } from "@/components/AyacuchoMiniMap";
+import { FestividadVideo } from "@/components/FestividadVideo";
 import { lugares } from "@/data/lugares";
 
 export const Route = createFileRoute("/destinos/$slug")({
@@ -46,16 +47,33 @@ function LugarDetailPage() {
 
       {/* HERO — título evocador, no repite el nombre literal del lugar */}
       <header className="relative h-[70vh] md:h-screen w-full overflow-hidden bg-eucalipto">
-        <img
-          key={lugar.slug}
-          src={lugar.imagen}
-          alt={lugar.nombre}
-          loading="eager"
-          fetchPriority="high"
-          decoding="async"
-          className="absolute inset-0 w-full h-full object-cover animate-hero"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-ink/90 via-ink/25 to-black/20" />
+        {lugar.video ? (
+          <>
+            <FestividadVideo
+              key={lugar.slug}
+              src={lugar.video.hero}
+              srcMobile={lugar.video.heroMobile}
+              poster={lugar.video.poster}
+              alt={lugar.nombre}
+              priority
+              className="absolute inset-0 w-full h-full object-cover"
+            />
+            <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-ink/70 to-transparent pointer-events-none" />
+          </>
+        ) : (
+          <>
+            <img
+              key={lugar.slug}
+              src={lugar.imagen}
+              alt={lugar.nombre}
+              loading="eager"
+              fetchPriority="high"
+              decoding="async"
+              className="absolute inset-0 w-full h-full object-cover animate-hero"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-ink/90 via-ink/25 to-black/20" />
+          </>
+        )}
 
         <div className="relative z-10 h-full w-full flex flex-col justify-end px-6 md:px-16 pb-16 md:pb-20">
           <h1 className="font-serif italic text-4xl md:text-6xl text-piedra leading-tight max-w-3xl">

@@ -19,6 +19,8 @@ export type Lugar = {
   mapLng: number;
   /** Mapa ilustrado de Ayacucho con el punto marcado (generado por encargo). Si falta, se usa el AyacuchoMiniMap trazado a mano. */
   mapaImagen?: string;
+  /** Video del hero (opcional). Si falta, el hero usa `imagen`. */
+  video?: { hero: string; heroMobile: string; poster: string };
   /** Solo presente cuando hay suficiente material fotográfico real para una mini-galería. */
   galeria?: GaleriaItem[];
 };
@@ -43,6 +45,11 @@ export const lugares: Lugar[] = [
     mapLat: -13.7207,
     mapLng: -74.1339,
     mapaImagen: "/imagenes-reales/mapas/aguas-turquesas.webp",
+    video: {
+      hero: "/videos/hero/aguas-turquesas.mp4",
+      heroMobile: "/videos/hero/aguas-turquesas-mobile.mp4",
+      poster: "/videos/hero/aguas-turquesas-poster.webp",
+    },
     galeria: [
       {
         imagen: "/imagenes-reales/seccion-turs/millpu.webp",
@@ -127,6 +134,11 @@ export const lugares: Lugar[] = [
     mapLat: -13.42917,
     mapLng: -74.69167,
     mapaImagen: "/imagenes-reales/mapas/ritipata.webp",
+    video: {
+      hero: "/videos/hero/ritipata.mp4",
+      heroMobile: "/videos/hero/ritipata-mobile.mp4",
+      poster: "/videos/hero/ritipata-poster.webp",
+    },
     galeria: [
       {
         imagen: "/imagenes-reales/seccion-turs/ritipata-vicuna.webp",

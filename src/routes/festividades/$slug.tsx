@@ -127,14 +127,27 @@ function FestividadDetailPage() {
 
         {/* SECCIÓN — Solo imagen/clip a pantalla completa (aquí irá el video de 5-15s) */}
         <section className="relative h-[60vh] md:h-[90vh] w-full overflow-hidden">
-          <img
-            src={fest.imagen}
-            alt={fest.nombre}
-            loading="lazy"
-            decoding="async"
-            className="absolute inset-0 w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-ink/10" />
+          {fest.videoSeccion ? (
+            <FestividadVideo
+              key={fest.slug}
+              src={fest.videoSeccion.src}
+              srcMobile={fest.videoSeccion.srcMobile}
+              poster={fest.videoSeccion.poster}
+              alt={fest.nombre}
+              className="absolute inset-0 w-full h-full object-cover"
+            />
+          ) : (
+            <>
+              <img
+                src={fest.imagen}
+                alt={fest.nombre}
+                loading="lazy"
+                decoding="async"
+                className="absolute inset-0 w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-ink/10" />
+            </>
+          )}
           <span className="absolute bottom-6 left-6 md:bottom-10 md:left-10 text-piedra text-[10px] uppercase tracking-[0.35em] font-semibold drop-shadow">
             {fest.nombre}
           </span>

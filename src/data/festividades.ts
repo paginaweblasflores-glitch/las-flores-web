@@ -21,6 +21,8 @@ export type Festividad = {
   clipTags: [string, string, string, string];
   /** Clips de video optimizados (hero de la página, tarjeta del inicio) y fotograma de portada. */
   video: { hero: string; card: string; poster: string };
+  /** Video a pantalla completa que reemplaza la foto de la sección bajo las comparsas (opcional). */
+  videoSeccion?: { src: string; srcMobile: string; poster: string };
   /** Día a día (solo Semana Santa: 7 jornadas, se presentan con un selector numerado). */
   dias?: DiaItem[];
   /** Comparsas reales (solo Carnaval: se presentan paginadas de dos en dos). */
@@ -59,15 +61,20 @@ export const festividades: Festividad[] = [
       card: "/videos/festividades/carnaval-ayacuchano-card.mp4",
       poster: "/videos/festividades/carnaval-ayacuchano-poster.webp",
     },
+    videoSeccion: {
+      src: "/videos/lugares-visitar/abuelos-quinua.mp4",
+      srcMobile: "/videos/lugares-visitar/abuelos-quinua-mobile.mp4",
+      poster: "/videos/lugares-visitar/abuelos-quinua-poster.webp",
+    },
     comparsas: [
       {
-        imagen: "/imagenes-reales/galeria/festividades/carnaval-uno.webp",
+        imagen: "/imagenes-reales/carnaval-ayacucho/abuelos-quinua.webp",
         nombre: "Los Abuelos de Quinua",
         descripcion:
           "Comparsa legendaria que representa a los ancianos (\"machus\") de la zona oriental de Ayacucho — un clásico inmortal del carnaval huamanguino.",
       },
       {
-        imagen: "/imagenes-reales/galeria/festividades/carnaval-tres.webp",
+        imagen: "/imagenes-reales/carnaval-ayacucho/cangallo-senorial.webp",
         nombre: "Cangallo Corazón",
         descripcion:
           "Una de las comparsas más numerosas, con 200 a 300 bailarines representando a la provincia de Cangallo.",
