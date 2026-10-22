@@ -52,24 +52,26 @@ describe("RetabloWrapper", () => {
     const outerDoorFaces = markup.match(/<div class="door-face retablo-frame[^>]*>/g) ?? [];
 
     expect(outerDoorFaces).toHaveLength(2);
-    expect(
-      outerDoorFaces.every(
-        (face) => !face.includes("inset 0 0 30px rgba(0,0,0,0.85)"),
-      ),
-    ).toBe(true);
+    expect(outerDoorFaces.every((face) => !face.includes("inset 0 0 30px rgba(0,0,0,0.85)"))).toBe(
+      true,
+    );
     expect(outerDoorFaces[0]).toContain("inset 8px 0 18px -12px");
     expect(outerDoorFaces[1]).toContain("inset -8px 0 18px -12px");
   });
 
-  it("uses a desktop width that caps the retablo while fitting its open doors", () => {
+  it("uses a viewport-responsive desktop height and a capped desktop width", () => {
     const markup = renderToStaticMarkup(
       React.createElement(RetabloWrapper, null, React.createElement("p", null, "Contenido")),
     );
+    const wrapper = markup.match(/<div class="[^"]*mx-auto[^"]*"[^>]*>/)?.[0] ?? "";
 
-    expect(markup).toContain("lg:w-[calc(50vw_-_40px)]");
-    expect(markup).toContain("lg:max-w-[900px]");
-    expect(markup).toContain("min-h-[700px]");
-    expect(markup).toContain("lg:min-h-[900px]");
+    expect(wrapper).toContain("lg:w-[calc(50vw_-_40px)]");
+    expect(wrapper).toContain("lg:max-w-[900px]");
+    expect(wrapper).toContain("min-h-[700px]");
+    expect(wrapper).not.toContain("lg:min-h-[900px]");
+    expect(wrapper).toMatch(
+      /(?:\bmin-h-screen\b|\bmin-h-(?:dvh|svh|lvh)\b|\b(?:min-)?h-\[[^\]]*(?:dvh|svh|lvh|vh)[^\]]*\]|min-height:[^;]*(?:dvh|svh|lvh|vh))/i,
+    );
   });
 
   it("preserves the original door perspective and full opening bounds", () => {
@@ -80,7 +82,7 @@ describe("RetabloWrapper", () => {
 
     expect(markup).toContain("perspective:1400px");
     expect(markup).toContain("perspective-origin:50% 40%");
-    expect(markup).toContain("class=\"relative h-full flex flex-col overflow-visible\"");
+    expect(markup).toContain('class="relative h-full flex flex-col overflow-visible"');
     expect(doorPanels).toHaveLength(2);
     expect(doorPanels.every((panel) => panel.includes("top-0 bottom-0"))).toBe(true);
   });

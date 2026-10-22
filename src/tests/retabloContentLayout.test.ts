@@ -4,7 +4,10 @@ import * as ts from "typescript";
 import { describe, expect, it } from "vitest";
 
 const routeSource = readFileSync(resolve(process.cwd(), "src/routes/index.tsx"), "utf8");
-const wrapperSource = readFileSync(resolve(process.cwd(), "src/components/RetabloWrapper.tsx"), "utf8");
+const wrapperSource = readFileSync(
+  resolve(process.cwd(), "src/components/RetabloWrapper.tsx"),
+  "utf8",
+);
 const routeAst = ts.createSourceFile(
   "index.tsx",
   routeSource,
@@ -28,9 +31,7 @@ function jsxDescendants(node: ts.Node): ts.JsxElement[] {
 }
 
 function tagName(element: ts.JsxElement): string {
-  return ts.isIdentifier(element.openingElement.tagName)
-    ? element.openingElement.tagName.text
-    : "";
+  return ts.isIdentifier(element.openingElement.tagName) ? element.openingElement.tagName.text : "";
 }
 
 function attribute(element: ts.JsxElement, name: string): string | undefined {
@@ -53,15 +54,21 @@ function findRetabloWrapper(node: ts.Node): ts.JsxElement | undefined {
 }
 
 describe("home retablo content layout", () => {
-  it("adds enough desktop bottom space for the open doors to remain visible", () => {
+  it("uses viewport-responsive desktop bottom spacing for the open doors", () => {
     const section = jsxDescendants(routeAst).find(
-      (element) =>
-        tagName(element) === "section" && element.getText().includes("<RetabloWrapper"),
+      (element) => tagName(element) === "section" && element.getText().includes("<RetabloWrapper"),
     );
 
     expect(section).toBeDefined();
     if (!section) throw new Error("Retablo section not found");
-    expect(attribute(section, "className")).toContain("lg:pb-40");
+    const sectionClasses = attribute(section, "className") ?? "";
+    const desktopVerticalPaddingClasses =
+      sectionClasses.match(/(?:^|\s)lg:(?:py|pt|pb)-[^\s]+/g) ?? [];
+
+    expect(sectionClasses).not.toContain("lg:pb-40");
+    expect(
+      desktopVerticalPaddingClasses.some((classes) => /(?:dvh|svh|lvh|vh)/i.test(classes)),
+    ).toBe(true);
   });
 
   it("allows the panel content to fill the central panel", () => {
