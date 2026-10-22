@@ -3,6 +3,9 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
 import RetabloWrapper from "../components/RetabloWrapper";
 
+const viewportHeightRule =
+  /\b(?:min-h|h)-(?:screen|dvh|svh|lvh)\b|\b(?:min-)?h-\[[^\]]*(?:dvh|svh|lvh|vh)[^\]]*\]|min-height:[^;]*(?:dvh|svh|lvh|vh)/i;
+
 describe("RetabloWrapper", () => {
   it("removes the decorative interior background image", () => {
     const markup = renderToStaticMarkup(
@@ -69,9 +72,11 @@ describe("RetabloWrapper", () => {
     expect(wrapper).toContain("lg:max-w-[900px]");
     expect(wrapper).toContain("min-h-[700px]");
     expect(wrapper).not.toContain("lg:min-h-[900px]");
-    expect(wrapper).toMatch(
-      /(?:\bmin-h-screen\b|\bmin-h-(?:dvh|svh|lvh)\b|\b(?:min-)?h-\[[^\]]*(?:dvh|svh|lvh|vh)[^\]]*\]|min-height:[^;]*(?:dvh|svh|lvh|vh))/i,
-    );
+    expect(wrapper).toMatch(viewportHeightRule);
+  });
+
+  it.each(["h-screen", "h-dvh"])("accepts equivalent viewport height class %s", (heightClass) => {
+    expect(viewportHeightRule.test(heightClass)).toBe(true);
   });
 
   it("preserves the original door perspective and full opening bounds", () => {

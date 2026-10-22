@@ -37,3 +37,21 @@ Las fallas corresponden a los mínimos y espacios fijos que esta tarea debe dete
 ## Resultado
 
 Task 1 queda implementada como pruebas de regresión; el checkout conserva deliberadamente dos fallos esperados hasta que se adapte el layout en la tarea correspondiente.
+
+## FIX — ronda de revisión (base `253e65beb0b8332afc73334f4435ac4e11af2303`)
+
+- Se sustituyó el rechazo puntual de `lg:pb-40` por una comprobación de límite sobre todas las utilidades de padding vertical de escritorio `lg:p-*`, `lg:py-*`, `lg:pt-*` y `lg:pb-*`. El límite acepta valores fijos de hasta 2 rem (escala Tailwind 8) y rechaza valores superiores, incluso cuando hay otra regla viewport. Se cubrieron expresamente los casos coexistentes `lg:pb-[10vh] lg:pb-48`, `lg:py-40 lg:pb-[10vh]` y `lg:p-40 lg:pb-[10vh]`; el padding pequeño `lg:pt-6` con la regla viewport se admite.
+- El matcher de altura del wrapper ahora acepta `h-screen` y `h-dvh` además de las clases min-height, unidades viewport arbitrarias y estilo inline. Pruebas de regresión comprueban las dos clases equivalentes reportadas.
+- No se modificó ningún archivo de producción.
+
+### Comandos de la ronda FIX y resultados
+
+| Comando | Resultado |
+| --- | --- |
+| `npm test -- src/tests/retabloContentLayout.test.ts` | 1 fallo intencional: la sección existente excede el límite por `lg:pb-40`; 4 de 5 tests pasan, incluidos los casos de `pb-48`, `py-40`, `p-40` coexistiendo con padding viewport. |
+| `npm test -- src/tests/retabloWrapper.test.ts` | 1 fallo intencional: el wrapper todavía contiene `lg:min-h-[900px]`; 7 de 8 tests pasan, incluidas las comprobaciones de aceptación `h-screen` y `h-dvh`. |
+| `npx eslint src/tests/retabloWrapper.test.ts src/tests/retabloContentLayout.test.ts` | Correcto. |
+| `npx prettier --check src/tests/retabloWrapper.test.ts src/tests/retabloContentLayout.test.ts` | `All matched files use Prettier code style!` |
+| `git diff --check` | Correcto. |
+
+Las dos fallas que permanecen son las regresiones esperadas ante el layout de producción actual; no se buscaron resultados verdes porque esta tarea no incluye implementar el layout.

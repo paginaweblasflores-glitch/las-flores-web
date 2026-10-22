@@ -8,6 +8,29 @@ const wrapperSource = readFileSync(
   resolve(process.cwd(), "src/components/RetabloWrapper.tsx"),
   "utf8",
 );
+const hasExcessiveFixedVerticalPadding = (classes: string) => {
+  const spacingClasses = [...classes.matchAll(/(?:^|\s)lg:(?:p|py|pt|pb)-([^\s]+)/g)].map(
+    ([, spacing]) => spacing,
+  );
+
+  return spacingClasses.some((spacing) => {
+    if (/(?:dvh|svh|lvh|vh)/i.test(spacing)) return false;
+
+    const value = spacing.match(/^(?:\[([^\]]+)\]|(\d+(?:\.\d+)?))$/);
+    if (!value) return true;
+
+    const [, arbitraryValue, spacingScale] = value;
+    if (spacingScale) return Number(spacingScale) > 8;
+
+    if (arbitraryValue === "px") return false;
+
+    const length = arbitraryValue.match(/^(\d+(?:\.\d+)?)(px|rem)$/);
+    if (!length) return true;
+
+    const [, amount, unit] = length;
+    return unit === "px" ? Number(amount) > 32 : Number(amount) > 2;
+  });
+};
 const routeAst = ts.createSourceFile(
   "index.tsx",
   routeSource,
@@ -63,12 +86,19 @@ describe("home retablo content layout", () => {
     if (!section) throw new Error("Retablo section not found");
     const sectionClasses = attribute(section, "className") ?? "";
     const desktopVerticalPaddingClasses =
-      sectionClasses.match(/(?:^|\s)lg:(?:py|pt|pb)-[^\s]+/g) ?? [];
+      sectionClasses.match(/(?:^|\s)lg:(?:p|py|pt|pb)-[^\s]+/g) ?? [];
 
-    expect(sectionClasses).not.toContain("lg:pb-40");
+    expect(hasExcessiveFixedVerticalPadding(sectionClasses)).toBe(false);
     expect(
       desktopVerticalPaddingClasses.some((classes) => /(?:dvh|svh|lvh|vh)/i.test(classes)),
     ).toBe(true);
+  });
+
+  it("rejects excessive fixed desktop padding even alongside viewport padding", () => {
+    expect(hasExcessiveFixedVerticalPadding("lg:pb-[10vh] lg:pb-48")).toBe(true);
+    expect(hasExcessiveFixedVerticalPadding("lg:py-40 lg:pb-[10vh]")).toBe(true);
+    expect(hasExcessiveFixedVerticalPadding("lg:p-40 lg:pb-[10vh]")).toBe(true);
+    expect(hasExcessiveFixedVerticalPadding("lg:pt-6 lg:pb-[10vh]")).toBe(false);
   });
 
   it("allows the panel content to fill the central panel", () => {
