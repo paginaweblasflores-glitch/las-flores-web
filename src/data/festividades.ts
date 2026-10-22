@@ -47,9 +47,9 @@ export const festividades: Festividad[] = [
       "Nacido de la fusión entre los carnavales medievales españoles y el antiguo Pukllay andino —el juego ritual previo a la siembra—, el Carnaval Ayacuchano reúne comparsas de cada barrio, música de huayno y competencias tradicionales como el warakanakuy, en una de las fiestas más coloridas del sur peruano. Fue declarado Patrimonio Cultural de la Nación en 2003.",
     consejo:
       "Llevar ropa que se pueda mojar: el agua, el talco y la espuma son parte esencial de la fiesta.",
-    frase: "Un duelo festivo donde nadie pierde, solo se celebra.",
+    frase: "Cómo vivir el Carnaval Ayacuchano",
     escenas: "Color, música y comparsas: así se vive el Carnaval Ayacuchano.",
-    dato: "Sus huaynos de carnaval tienen melodías propias, reconocidas a nivel internacional.",
+    dato: "Cada año, las comparsas de Huamanga, Cangallo, Huanta y otras provincias renuevan sus canciones para el carnaval.",
     clipTags: [
       "Comparsas en la plaza",
       "Yunza y corta-montes",
@@ -108,10 +108,10 @@ export const festividades: Festividad[] = [
       "Declarada Patrimonio Cultural de la Nación por el Ministerio de Cultura en 2022, la Semana Santa de Ayacucho es la fiesta religiosa más grande del Perú y la segunda más espectacular del mundo, después de la de Sevilla. Con raíces coloniales del siglo XVI y consolidada a mediados del siglo XIX, comienza el Viernes de Dolores y culmina el Domingo de Resurrección: diez días de procesiones ininterrumpidas por las calles de Huamanga.",
     consejo:
       "Llegar con anticipación a la Plaza Mayor para presenciar la salida de las procesiones; los hospedajes se llenan con semanas de anticipación.",
-    frase: "Una ciudad entera convertida en altar, noche tras noche.",
+    frase: "Cómo vivir la Semana Santa de Ayacucho",
     escenas: "Incienso, flores y fe: así se vive la Semana Santa en Huamanga.",
-    dato: "Recibe hasta 80,000 visitantes cada año, con más de un siglo y medio de tradición ininterrumpida.",
-    clipTags: ["Anda cargada entre flores", "Alfombras de flores", "Quema del Judas", "Jala Toro en la plaza"],
+    dato: "Huamanga, la ciudad de las 33 iglesias, vive la Semana Santa con procesiones que parten desde distintos templos.",
+    clipTags: ["Anda cargada entre flores", "Alfombras de flores", "Fogatas de chamizo", "Pascua Toro por las calles"],
     video: {
       hero: "/videos/festividades/semana-santa.mp4",
       card: "/videos/festividades/semana-santa-card.mp4",
@@ -202,10 +202,10 @@ export const festividades: Festividad[] = [
     imagen: "/imagenes-reales/seccion-turs/pampa-quinua.webp",
     imagenSecundaria: "/imagenes-reales/galeria/destino/Quinua1.webp",
     descripcion:
-      "El 9 de diciembre de 1824, en la Pampa de Ayacucho (Quinua), el Ejército Unido Libertador al mando de Antonio José de Sucre venció a un ejército realista casi el doble de numeroso, sellando la independencia de todo el continente sudamericano. Hoy es feriado nacional: cada año, el obelisco erigido en el campo de batalla recibe una ceremonia cívico-militar y una escenificación histórica.",
+      "El 9 de diciembre de 1824, en la Pampa de Ayacucho (Quinua), el Ejército Unido Libertador al mando de Antonio José de Sucre venció a un ejército realista más numeroso, sellando la independencia de todo el continente sudamericano. Hoy es feriado nacional: cada año, el obelisco erigido en el campo de batalla recibe una ceremonia cívico-militar y una escenificación histórica.",
     consejo:
       "Asistir temprano a la ceremonia oficial en el Santuario Histórico Pampa de Ayacucho y complementar con una visita a Quinua, Pueblo con Encanto, y sus ceramistas.",
-    frase: "Un campo de batalla convertido en santuario de la libertad.",
+    frase: "Cómo vivir el 9 de Diciembre",
     escenas: "Historia, memoria y libertad: así se vive el 9 de Diciembre.",
     dato: "El obelisco conmemorativo lleva las esculturas de los seis generales que lideraron la contienda.",
     clipTags: [
@@ -221,23 +221,23 @@ export const festividades: Festividad[] = [
     },
     cronologia: [
       {
-        momento: "Víspera",
-        hora: "8 de diciembre",
+        momento: "Te Deum y parada militar",
+        hora: "9 de diciembre, por la mañana",
         texto:
-          "Te Deum y desfile militar en la Plaza Mayor de Huamanga, seguido de sesión solemne en el Concejo Municipal.",
+          "Misa Te Deum y parada militar en la Plaza Mayor de Huamanga, antes de la ceremonia en la Pampa de Ayacucho.",
         imagen: "/imagenes-reales/galeria/destino/Plaza3.webp",
       },
       {
         momento: "Ceremonia central",
-        hora: "9 de diciembre, 11:00 a.m.",
+        hora: "9 de diciembre",
         texto: "Acto oficial de conmemoración en el Santuario Histórico Pampa de Ayacucho.",
         imagen: "/imagenes-reales/galeria/destino/Quinua2.webp",
       },
       {
         momento: "Escenificación",
-        hora: "9 de diciembre, 12:30 p.m.",
+        hora: "9 de diciembre",
         texto:
-          "Más de 2,000 actores recrean la batalla en el cerro Condorcunca, ante miles de espectadores.",
+          "Más de mil actores recrean la batalla en el Santuario Histórico, ante miles de espectadores.",
         imagen: "/imagenes-reales/seccion-festividades/monumento-sucre.webp",
       },
     ],

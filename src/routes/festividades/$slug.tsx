@@ -1,5 +1,4 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import { ArrowLeft, ArrowRight } from "lucide-react";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/site-footer";
 import { DiaSwitcher } from "@/components/DiaSwitcher";
@@ -67,7 +66,7 @@ function FestividadDetailPage() {
         <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-ink/70 to-transparent" />
 
         <div className="relative z-10 h-full w-full flex flex-col justify-end px-6 md:px-16 pb-16 md:pb-20">
-          <h1 className="font-serif italic text-4xl md:text-6xl text-piedra leading-tight max-w-3xl">
+          <h1 className="font-serif text-4xl md:text-6xl text-piedra leading-tight max-w-3xl">
             {fest.heroTitulo}
           </h1>
         </div>
@@ -75,7 +74,7 @@ function FestividadDetailPage() {
 
       <main>
         {/* SECCIÓN — Descripción (izq) + Datos clave, sin mapa (no aplica a una festividad) */}
-        <section className="grid grid-cols-1 md:grid-cols-2">
+        <section className="grid grid-cols-1 md:grid-cols-2 md:min-h-[100svh]">
           <div
             className={`flex items-center px-6 md:px-16 py-16 md:py-24 ${invertido ? "md:order-2" : "md:order-1"}`}
           >
@@ -126,7 +125,7 @@ function FestividadDetailPage() {
         {fest.cronologia && <CronologiaBatalla momentos={fest.cronologia} />}
 
         {/* SECCIÓN — Solo imagen/clip a pantalla completa (aquí irá el video de 5-15s) */}
-        <section className="relative h-[60vh] md:h-[90vh] w-full overflow-hidden">
+        <section className="relative h-[115svh] min-h-[34rem] w-full overflow-hidden">
           {fest.videoSeccion ? (
             <FestividadVideo
               key={fest.slug}
@@ -184,7 +183,7 @@ function FestividadDetailPage() {
         </section>
 
         {/* SECCIÓN — Consejo de visita: foto a pantalla completa + panel sólido superpuesto */}
-        <section className="relative h-[70vh] md:h-[80vh] w-full overflow-hidden">
+        <section className="relative h-[115svh] min-h-[36rem] w-full overflow-hidden">
           <img
             src={consejoImagen}
             alt={fest.nombre}
@@ -192,38 +191,14 @@ function FestividadDetailPage() {
             decoding="async"
             className="absolute inset-0 w-full h-full object-cover"
           />
-          <div className="absolute bottom-0 left-0 w-full max-w-md bg-eucalipto text-piedra px-8 py-10 md:px-10 md:py-12">
-            <span className="text-chilca text-[10px] uppercase tracking-[0.3em] font-semibold mb-4 block">
-              Consejo de visita
-            </span>
-            <p className="font-serif italic text-xl md:text-2xl leading-snug mb-4">{fest.frase}</p>
-            <p className="text-sm md:text-base leading-relaxed text-piedra/90">{fest.consejo}</p>
-          </div>
-        </section>
-
-        {/* CTA — vuelve la narrativa hacia Las Flores */}
-        <section className="px-6 md:px-16 py-20 md:py-28 text-center">
-          <h2 className="font-serif text-3xl md:text-4xl max-w-2xl mx-auto leading-tight mb-5">
-            Vive la festividad y luego siéntate a la mesa
-          </h2>
-          <p className="text-nogal/70 max-w-xl mx-auto mb-8 leading-relaxed">
-            Cada tradición que conoces en Ayacucho tiene un sabor esperándote en Las Flores. Reserva
-            tu mesa y cierra el día como se merece.
-          </p>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Link
-              to="/reservas"
-              className="inline-flex items-center gap-3 bg-cochinilla text-piedra text-[11px] uppercase tracking-[0.25em] font-bold px-7 py-4 rounded-md hover:bg-cochinilla/90 transition-colors"
-            >
-              Reservar una mesa <ArrowRight size={14} />
-            </Link>
-            <Link
-              to="/"
-              hash="festividades-de-huamanga"
-              className="inline-flex items-center gap-3 text-nogal text-[11px] uppercase tracking-[0.25em] font-bold border-2 border-nogal rounded-md hover:bg-nogal/5 transition-colors px-7 py-4"
-            >
-              <ArrowLeft size={14} /> Volver a Festividades de Huamanga
-            </Link>
+          <div className="absolute bottom-0 left-4 right-4 md:right-auto md:left-10 md:w-[30rem] md:h-[min(38rem,78svh)] flex flex-col justify-center gap-6 bg-eucalipto text-piedra px-6 py-8 md:px-10 md:py-12 overflow-y-auto">
+            <div>
+              <span className="text-chilca text-[10px] uppercase tracking-[0.3em] font-semibold mb-4 block">
+                Consejo de visita
+              </span>
+              <p className="font-serif text-xl md:text-3xl leading-snug">{fest.frase}</p>
+            </div>
+            <p className="text-sm md:text-lg leading-relaxed text-piedra/90">{fest.consejo}</p>
           </div>
         </section>
       </main>
