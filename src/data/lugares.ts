@@ -15,8 +15,9 @@ export type Lugar = {
   escenas: string;
   /** Etiquetas de 2-4 palabras para los 4 clips de video (brief de rodaje para Marketing). */
   clipTags: [string, string, string, string];
-  mapLat: number;
-  mapLng: number;
+  /** Coordenadas para el mini-mapa trazado a mano; solo hacen falta si no hay `mapaImagen`. */
+  mapLat?: number;
+  mapLng?: number;
   /** Mapa ilustrado de Ayacucho con el punto marcado (generado por encargo). Si falta, se usa el AyacuchoMiniMap trazado a mano. */
   mapaImagen?: string;
   /** Video del hero (opcional). Si falta, el hero usa `imagen`. */
@@ -191,43 +192,46 @@ export const lugares: Lugar[] = [
   },
   {
     id: 6,
-    slug: "titankayocc",
+    slug: "abismo-puncupata",
     numeral: "V",
-    nombre: "Bosque de Titankayocc",
-    categoria: "Flora Andina",
-    heroTitulo: "Donde la reina de los Andes florece una vez en un siglo",
-    imagen: "/imagenes-reales/galeria/destino/Pullas1.webp",
-    imagenSecundaria: "/imagenes-reales/galeria/destino/Pullas2.webp",
+    nombre: "Abismo de Puncupata",
+    categoria: "Paisaje Andino",
+    heroTitulo: "Donde el cielo se asoma al abismo",
+    imagen: "/imagenes-reales/abismo-puncupata/acantilado.webp",
+    imagenSecundaria: "/imagenes-reales/abismo-puncupata/cornisa.webp",
     descripcion:
-      "A poco más de 2 horas de Huamanga, en el distrito de Vischongo (provincia de Vilcas Huamán) y a 3,800 m.s.n.m., Titankayocc alberga el bosque de Puyas de Raimondi más grande y denso del planeta: 1,200 hectáreas declaradas Área de Conservación Regional. Cada planta alcanza entre 8 y 12 metros de altura y, al florecer una sola vez en su vida, produce una espiga con hasta 5,000 flores y 6 millones de semillas. El bosque es también refugio de 56 especies de aves, entre ellas el colibrí gigante, de hasta 30 centímetros.",
+      "A unos 76 km de Huamanga —cerca de hora y media por carretera asfaltada— el Abismo de Puncupata se abre a 4,200 m.s.n.m. como uno de los desfiladeros más imponentes de Ayacucho. Un sendero peatonal habilitado por la comunidad local, de cerca de un kilómetro, lleva hasta su borde: un mirador natural con vistas a pueblos como Ccaccamarca y Chumbes. En el camino pastan vicuñas y, sobre el acantilado, planean las aves de altura. Se le conoce también como la “Puerta Celestial”, nombre que alude a su profundidad y a sus vistas panorámicas.",
     consejo:
-      "Llevar ropa abrigadora y aclimatarse previamente a la altitud para disfrutar de este santuario único en el mundo.",
-    frase: "Una flor que espera cien años para abrirse una sola vez.",
-    escenas: "Gigantes verdes, cielo abierto y cien años de espera: así se vive Titankayocc.",
+      "Lleva ropa abrigadora e impermeable, botas firmes, agua y algo de comer: a 4,200 m el clima cambia rápido. Camina con calma por el sendero, sigue a tu guía local y, si sufres de vértigo, mantén distancia del borde.",
+    frase: "Una puerta abierta al cielo, al borde del abismo.",
+    escenas: "Acantilados, vicuñas y cielo abierto: así se vive el Abismo de Puncupata.",
     clipTags: [
-      "Espigas de 10 metros",
-      "Colibrí gigante andino",
-      "Puma andino en la puna",
-      "Amanecer entre puyas",
+      "Borde del acantilado",
+      "Vicuñas en la puna",
+      "Ave sobre el abismo",
+      "Mirador a 4,200 m",
     ],
-    mapLat: -13.6508,
-    mapLng: -73.9522,
-    mapaImagen: "/imagenes-reales/mapas/bosque-titankayocc.webp",
+    mapaImagen: "/imagenes-reales/mapas/abismo-puncupata.webp",
+    video: {
+      hero: "/videos/hero/abismo-puncupata.mp4",
+      heroMobile: "/videos/hero/abismo-puncupata-mobile.mp4",
+      poster: "/videos/hero/abismo-puncupata-poster.webp",
+    },
     galeria: [
       {
-        imagen: "/imagenes-reales/galeria/destino/Pullas1.webp",
-        titulo: "El bosque más grande del mundo",
-        descripcion: "1,200 hectáreas de puyas en el distrito de Vischongo.",
+        imagen: "/imagenes-reales/abismo-puncupata/borde-del-abismo.webp",
+        titulo: "El borde del abismo",
+        descripcion: "Un sendero comunitario recorre el filo del acantilado, a 4,200 m.s.n.m.",
       },
       {
-        imagen: "/imagenes-reales/galeria/destino/Pullas2.webp",
-        titulo: "Espigas centenarias",
-        descripcion: "Cada planta florece una sola vez, tras 80 a 100 años de vida.",
+        imagen: "/imagenes-reales/abismo-puncupata/vicunas.webp",
+        titulo: "Vicuñas en la puna",
+        descripcion: "Es común cruzarse con ellas en el tramo final del camino.",
       },
       {
-        imagen: "/imagenes-reales/galeria/destino/Pullas3.webp",
-        titulo: "Refugio de fauna alto andina",
-        descripcion: "Hogar del colibrí gigante, el puma y el gato andino.",
+        imagen: "/imagenes-reales/abismo-puncupata/ave-sobre-el-abismo.webp",
+        titulo: "Cielo de altura",
+        descripcion: "Las aves planean sobre las paredes del desfiladero.",
       },
     ],
   },

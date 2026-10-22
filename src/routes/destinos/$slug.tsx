@@ -107,9 +107,9 @@ function LugarDetailPage() {
                 decoding="async"
                 className="max-h-full max-w-full object-contain"
               />
-            ) : (
+            ) : lugar.mapLat !== undefined && lugar.mapLng !== undefined ? (
               <AyacuchoMiniMap lat={lugar.mapLat} lng={lugar.mapLng} nombre={lugar.nombre} />
-            )}
+            ) : null}
           </div>
         </section>
 
