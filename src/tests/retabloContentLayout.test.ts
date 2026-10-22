@@ -15,14 +15,13 @@ const hasExcessiveFixedVerticalPadding = (classes: string) => {
 
   return spacingClasses.some((spacing) => {
     if (/(?:dvh|svh|lvh|vh)/i.test(spacing)) return false;
+    if (spacing === "px") return false;
 
     const value = spacing.match(/^(?:\[([^\]]+)\]|(\d+(?:\.\d+)?))$/);
     if (!value) return true;
 
     const [, arbitraryValue, spacingScale] = value;
     if (spacingScale) return Number(spacingScale) > 8;
-
-    if (arbitraryValue === "px") return false;
 
     const length = arbitraryValue.match(/^(\d+(?:\.\d+)?)(px|rem)$/);
     if (!length) return true;
@@ -99,6 +98,7 @@ describe("home retablo content layout", () => {
     expect(hasExcessiveFixedVerticalPadding("lg:py-40 lg:pb-[10vh]")).toBe(true);
     expect(hasExcessiveFixedVerticalPadding("lg:p-40 lg:pb-[10vh]")).toBe(true);
     expect(hasExcessiveFixedVerticalPadding("lg:pt-6 lg:pb-[10vh]")).toBe(false);
+    expect(hasExcessiveFixedVerticalPadding("lg:py-px lg:pb-[10vh]")).toBe(false);
   });
 
   it("allows the panel content to fill the central panel", () => {

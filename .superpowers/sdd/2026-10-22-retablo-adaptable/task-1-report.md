@@ -55,3 +55,18 @@ Task 1 queda implementada como pruebas de regresión; el checkout conserva delib
 | `git diff --check` | Correcto. |
 
 Las dos fallas que permanecen son las regresiones esperadas ante el layout de producción actual; no se buscaron resultados verdes porque esta tarea no incluye implementar el layout.
+
+## FIX — falsa alarma de `lg:py-px`
+
+- Se añadió una aserción de regresión que acepta `lg:py-px` aunque coexista con padding basado en viewport.
+- El clasificador ahora reconoce el token de escala `px` como el padding mínimo de 1 px antes de intentar parsearlo como escala numérica o valor arbitrario. Sin ese caso, el token se clasificaba como valor desconocido y excesivo.
+- No se modificó producción.
+
+### Comandos y resultados
+
+| Comando | Resultado |
+| --- | --- |
+| `npm test -- src/tests/retabloContentLayout.test.ts` | 1 fallo RED esperado: el layout actual sigue excediendo el límite por `lg:pb-40`; 4 de 5 tests pasan. La aserción nueva `lg:py-px` pasa. |
+| `npx eslint src/tests/retabloContentLayout.test.ts src/tests/retabloWrapper.test.ts` | Correcto. |
+| `npx prettier --check src/tests/retabloContentLayout.test.ts src/tests/retabloWrapper.test.ts` | `All matched files use Prettier code style!` |
+| `git diff --check` | Correcto. |
