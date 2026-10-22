@@ -38,13 +38,13 @@ export const festividades: Festividad[] = [
     nombre: "Carnaval Ayacuchano",
     categoria: "Música y Tradición",
     fecha: "Febrero / Marzo",
-    reconocimiento: "Patrimonio Cultural de la Nación",
+    reconocimiento: "Patrimonio Cultural de la Nación (2003)",
     lugarPrincipal: "Plaza Mayor y barrios de Huamanga",
     heroTitulo: "Donde el juego andino se viste de mil colores",
     imagen: "/imagenes-reales/galeria/festividades/carnaval-uno.webp",
     imagenSecundaria: "/imagenes-reales/galeria/festividades/carnaval-tres.webp",
     descripcion:
-      "Nacido de la fusión entre los carnavales medievales españoles y el antiguo Pukllay andino —el juego ritual previo a la siembra—, el Carnaval Ayacuchano reúne comparsas de cada barrio, música de huayno y competencias tradicionales como el warakanakuy, en una de las fiestas más coloridas del sur peruano.",
+      "Nacido de la fusión entre los carnavales medievales españoles y el antiguo Pukllay andino —el juego ritual previo a la siembra—, el Carnaval Ayacuchano reúne comparsas de cada barrio, música de huayno y competencias tradicionales como el warakanakuy, en una de las fiestas más coloridas del sur peruano. Fue declarado Patrimonio Cultural de la Nación en 2003.",
     consejo:
       "Llevar ropa que se pueda mojar: el agua, el talco y la espuma son parte esencial de la fiesta.",
     frase: "Un duelo festivo donde nadie pierde, solo se celebra.",
@@ -96,7 +96,7 @@ export const festividades: Festividad[] = [
   {
     id: 1,
     slug: "semana-santa",
-    nombre: "Semana Santa Ayacuchana",
+    nombre: "Semana Santa de Ayacucho",
     categoria: "Fe y Tradición",
     fecha: "Marzo / Abril",
     reconocimiento: "Patrimonio Cultural de la Nación (2022)",
@@ -105,7 +105,7 @@ export const festividades: Festividad[] = [
     imagen: "/imagenes-reales/galeria/festividades/samana-santa-uno.webp",
     imagenSecundaria: "/imagenes-reales/galeria/festividades/semana-santa-tres.webp",
     descripcion:
-      "Con raíces coloniales del siglo XVI y consolidada a mediados del siglo XIX, la Semana Santa Ayacuchana es una de las celebraciones religiosas más multitudinarias de Latinoamérica, superada solo por Sevilla. Comienza el Viernes de Dolores y culmina el Domingo de Resurrección: diez días de procesiones ininterrumpidas por las calles de Huamanga.",
+      "Declarada Patrimonio Cultural de la Nación por el Ministerio de Cultura en 2022, la Semana Santa de Ayacucho es la fiesta religiosa más grande del Perú y la segunda más espectacular del mundo, después de la de Sevilla. Con raíces coloniales del siglo XVI y consolidada a mediados del siglo XIX, comienza el Viernes de Dolores y culmina el Domingo de Resurrección: diez días de procesiones ininterrumpidas por las calles de Huamanga.",
     consejo:
       "Llegar con anticipación a la Plaza Mayor para presenciar la salida de las procesiones; los hospedajes se llenan con semanas de anticipación.",
     frase: "Una ciudad entera convertida en altar, noche tras noche.",
@@ -196,15 +196,15 @@ export const festividades: Festividad[] = [
     nombre: "Batalla de Ayacucho",
     categoria: "Historia Viva",
     fecha: "Diciembre",
-    reconocimiento: "Feriado Nacional",
-    lugarPrincipal: "Santuario Histórico de la Pampa de Quinua",
+    reconocimiento: "Feriado Nacional (Ley 31381)",
+    lugarPrincipal: "Santuario Histórico Pampa de Ayacucho",
     heroTitulo: "El día en que un continente dejó de ser colonia",
     imagen: "/imagenes-reales/seccion-turs/pampa-quinua.webp",
     imagenSecundaria: "/imagenes-reales/galeria/destino/Quinua1.webp",
     descripcion:
-      "El 9 de diciembre de 1824, en la Pampa de Quinua, el Ejército Unido Libertador al mando de Antonio José de Sucre venció a un ejército realista casi el doble de numeroso, sellando la independencia de todo el continente sudamericano. Cada año, el obelisco erigido en el campo de batalla recibe una ceremonia cívico-militar y una escenificación histórica.",
+      "El 9 de diciembre de 1824, en la Pampa de Ayacucho (Quinua), el Ejército Unido Libertador al mando de Antonio José de Sucre venció a un ejército realista casi el doble de numeroso, sellando la independencia de todo el continente sudamericano. Hoy es feriado nacional: cada año, el obelisco erigido en el campo de batalla recibe una ceremonia cívico-militar y una escenificación histórica.",
     consejo:
-      "Asistir temprano a la ceremonia oficial en la Pampa de Quinua y complementar con una visita al pueblo de Quinua y sus ceramistas.",
+      "Asistir temprano a la ceremonia oficial en el Santuario Histórico Pampa de Ayacucho y complementar con una visita a Quinua, Pueblo con Encanto, y sus ceramistas.",
     frase: "Un campo de batalla convertido en santuario de la libertad.",
     escenas: "Historia, memoria y libertad: así se vive el 9 de Diciembre.",
     dato: "El obelisco conmemorativo lleva las esculturas de los seis generales que lideraron la contienda.",
@@ -230,7 +230,7 @@ export const festividades: Festividad[] = [
       {
         momento: "Ceremonia central",
         hora: "9 de diciembre, 11:00 a.m.",
-        texto: "Acto oficial de conmemoración en el Santuario Histórico de la Pampa de Quinua.",
+        texto: "Acto oficial de conmemoración en el Santuario Histórico Pampa de Ayacucho.",
         imagen: "/imagenes-reales/galeria/destino/Quinua2.webp",
       },
       {

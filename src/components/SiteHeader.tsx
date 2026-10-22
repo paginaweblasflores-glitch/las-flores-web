@@ -5,6 +5,9 @@ import { AnimatedCartButton } from "./AnimatedCartButton";
 import { useCart } from "../context/CartContext";
 import { getDeliveryButtonVisibilityClass } from "../utils/siteHeader";
 
+const LOGO_BLANCO = "/imagenes-reales/logo/logo-las-flores-white.webp";
+const LOGO_COLOR = "/imagenes-reales/logo/logo-las-flores-black.webp";
+
 interface SiteHeaderProps {
   isAlwaysSolid?: boolean;
   onDeliveryClick?: () => void;
@@ -35,6 +38,11 @@ export function SiteHeader({
 
   const solid = isAlwaysSolid || isScrolled;
 
+  // Precarga la versión que aún no se muestra para que el cambio al hacer scroll sea instantáneo.
+  useEffect(() => {
+    new Image().src = solid ? LOGO_BLANCO : LOGO_COLOR;
+  }, [solid]);
+
   return (
     <nav
       className={`fixed top-0 left-0 right-0 z-50 flex items-center justify-between gap-3 px-4 md:px-10 py-2 md:py-3 transition-all duration-300 pointer-events-none ${
@@ -56,19 +64,11 @@ export function SiteHeader({
         aria-label="Ir al inicio de Restaurante Las Flores"
       >
         <img
-          src="/images.png"
+          src={solid ? LOGO_COLOR : LOGO_BLANCO}
           alt="Restaurante Las Flores Logo"
           className={`w-auto object-contain transition-all duration-300 ${
-            solid ? "h-8" : "h-10 md:h-12 brightness-0 invert"
+            solid ? "h-8" : "h-10 md:h-12"
           }`}
-          style={
-            solid
-              ? {
-                  filter:
-                    "brightness(0) saturate(100%) invert(19%) sepia(16%) saturate(740%) hue-rotate(346deg) brightness(96%) contrast(89%)",
-                }
-              : undefined
-          }
         />
       </Link>
 
