@@ -438,14 +438,67 @@ function Index() {
       </header>
 
       {/* CULTURA Y TRADICIÓN */}
-      <section className="flex justify-center items-center w-full lg:min-h-screen overflow-x-hidden relative py-16 lg:pt-6 lg:pb-40">
+      <section className="retablo-section flex justify-center items-center w-full lg:min-h-screen overflow-x-hidden relative py-16 lg:pt-[min(1.5rem,2dvh)] lg:pb-[min(2.5rem,3dvh)]">
+        <style>{`
+          @media (min-width: 1024px) and (max-height: 850px) {
+            .retablo-content-shell {
+              padding: clamp(1rem, 2.5dvh, 2.5rem);
+            }
+
+            .retablo-content-stack {
+              gap: clamp(0.5rem, 1.5dvh, 1rem);
+            }
+
+            .retablo-content-narrative {
+              gap: clamp(0.5rem, 1.2dvh, 0.75rem);
+            }
+
+            .retablo-content-image {
+              max-width: min(320px, 22dvh);
+            }
+
+            .retablo-actions {
+              gap: clamp(0.5rem, 1.2dvh, 0.75rem);
+              padding-top: clamp(0.25rem, 1dvh, 0.75rem);
+            }
+
+            .retablo-actions > a {
+              padding: clamp(0.375rem, 0.9dvh, 0.625rem)
+                clamp(0.75rem, 1.5dvh, 1.5rem);
+            }
+          }
+
+          @media (min-width: 1024px) and (max-height: 700px) {
+            .retablo-content-shell {
+              padding: 0.75rem;
+            }
+
+            .retablo-content-stack,
+            .retablo-content-narrative {
+              gap: 0.375rem;
+            }
+
+            .retablo-content-image {
+              max-width: min(260px, 18dvh);
+            }
+
+            .retablo-actions {
+              gap: 0.375rem;
+              padding-top: 0.25rem;
+            }
+
+            .retablo-actions > a {
+              padding: 0.25rem 0.625rem;
+            }
+          }
+        `}</style>
         <RetabloWrapper>
           {/* Texto sobre la imagen; botones anclados en la parte inferior */}
-          <div className="flex flex-1 h-full flex-col p-5 lg:p-10">
-            <div className="flex flex-1 flex-col items-center gap-4 lg:gap-5">
+          <div className="retablo-content-shell flex flex-1 h-full flex-col p-5 lg:p-10">
+            <div className="retablo-content-stack flex flex-1 flex-col items-center gap-4 lg:gap-5">
             
             {/* Bloque Narrativo */}
-            <div className="w-full flex flex-col gap-3 lg:gap-4 text-center">
+            <div className="retablo-content-narrative w-full flex flex-col gap-3 lg:gap-4 text-center">
               
               {/* Eyebrow label */}
               <span
@@ -492,7 +545,7 @@ function Index() {
             </div>
 
             {/* Imagen ampliada debajo de todo el texto */}
-            <div className="w-full max-w-[240px] lg:max-w-[320px] mx-auto shrink-0">
+            <div className="retablo-content-image w-full max-w-[240px] lg:max-w-[320px] mx-auto shrink-0">
               <div className="relative">
                 <div
                   className="absolute -inset-2 z-0"
@@ -515,7 +568,7 @@ function Index() {
             </div>
             </div>
             {/* CTAs */}
-            <div className="mt-auto flex flex-col sm:flex-row gap-3 justify-center pt-4">
+            <div className="retablo-actions mt-auto flex flex-col sm:flex-row gap-3 justify-center pt-4">
               <a
                 href="/restaurante"
                 className="group inline-flex items-center justify-center gap-2 px-6 py-2.5 font-sans font-semibold text-[10px] lg:text-[11px] uppercase tracking-[0.2em] transition-all duration-300"

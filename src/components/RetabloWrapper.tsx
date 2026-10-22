@@ -121,7 +121,7 @@ const RetabloWrapper = ({ children }: { children: ReactNode }) => {
        * - Contenedor Central: hasta 900px, con margen para las puertas abiertas
        * - En viewports más pequeños, el conjunto se reduce proporcionalmente
        */
-      className="relative mx-auto mt-0 lg:mt-12 mb-0 lg:mb-12 min-h-[700px] lg:min-h-[900px] w-[90vw] max-w-xl lg:w-[calc(50vw_-_40px)] lg:max-w-[900px] flex flex-col justify-center"
+      className="relative mx-auto mt-0 lg:mt-[min(3rem,3dvh)] mb-0 lg:mb-[min(3rem,3dvh)] min-h-[700px] lg:h-[min(900px,calc(100dvh_-_4rem))] w-[90vw] max-w-xl lg:w-[calc(50vw_-_40px)] lg:max-w-[900px] flex flex-col justify-center"
       style={{
         perspective: "1400px",
         perspectiveOrigin: "50% 40%",
@@ -290,7 +290,7 @@ const RetabloWrapper = ({ children }: { children: ReactNode }) => {
         <div className="relative h-full flex flex-col overflow-visible" style={{ transformStyle: "preserve-3d" }}>
 
           {/* Interior crema con Marco Oscuro de 10-12px y Sombra Inset 3D */}
-          <div className="retablo-interior relative mx-[10px] lg:mx-[14px] mb-[10px] lg:mb-[14px] border-[8px] lg:border-[12px] border-[#5c1229] rounded-xs flex-1 flex flex-col justify-center overflow-hidden">
+          <div className="retablo-interior relative mx-[10px] lg:mx-[14px] mb-[10px] lg:mb-[14px] border-[8px] lg:border-[12px] border-[#5c1229] rounded-xs flex-1 flex flex-col justify-center">
             <div className="relative z-10 flex flex-1 h-full flex-col justify-center">
               {children}
             </div>
