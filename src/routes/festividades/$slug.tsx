@@ -120,7 +120,9 @@ function FestividadDetailPage() {
         </section>
 
         {/* SECCIÓN — Estructura propia de cada festividad (no una galería genérica) */}
-        {fest.dias && <DiaSwitcher dias={fest.dias} />}
+        {fest.dias && (
+          <DiaSwitcher dias={fest.dias} titulo={fest.diasTitulo} texto={fest.diasTexto} />
+        )}
 
         {fest.comparsas && (
           <ComparsasPaginadas
