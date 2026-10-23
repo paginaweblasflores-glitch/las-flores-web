@@ -75,7 +75,7 @@ export const festividades: Festividad[] = [
       },
       {
         imagen: "/imagenes-reales/carnaval-ayacucho/cangallo-senorial.webp",
-        nombre: "Cangallo Corazón",
+        nombre: "Cangallo Señorial",
         descripcion:
           "Una de las comparsas más numerosas, con 200 a 300 bailarines representando a la provincia de Cangallo.",
       },

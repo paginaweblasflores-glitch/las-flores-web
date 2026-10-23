@@ -88,10 +88,10 @@ export function SiteHeader({
         {showReservar && (
           <Link
             to="/reservas"
-            className={`pointer-events-auto px-4.5 py-1.5 md:px-5 md:py-2 text-[11px] md:text-xs font-bold uppercase tracking-widest transition-all rounded-md border ${
+            className={`pointer-events-auto px-4.5 py-1.5 md:px-5 md:py-2 text-[11px] md:text-xs font-semibold uppercase tracking-[0.2em] transition-colors duration-300 rounded-md border ${
               solid
-                ? "border-nogal text-nogal hover:bg-nogal hover:text-white shadow-sm"
-                : "border-piedra/60 text-piedra hover:bg-piedra hover:text-nogal shadow-sm"
+                ? "border-nogal/50 text-nogal hover:border-nogal hover:bg-nogal/10"
+                : "border-piedra/50 text-piedra hover:border-piedra/80 hover:bg-piedra/15"
             }`}
           >
             Reservar

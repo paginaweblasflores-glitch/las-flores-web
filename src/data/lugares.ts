@@ -29,6 +29,8 @@ export type Lugar = {
   mapaImagen?: string;
   /** Video del hero (opcional). Si falta, el hero usa `imagen`. */
   video?: { hero: string; heroMobile: string; poster: string };
+  /** Foto de la sección a pantalla completa (si falta se usa `imagen`); no se usa si hay `videoSeccion`. */
+  imagenPantalla?: string;
   /** Video a pantalla completa que reemplaza la foto de la sección bajo la galería; `etiqueta` sustituye al nombre del lugar (opcional). */
   videoSeccion?: { src: string; srcMobile: string; poster: string; etiqueta?: string };
   /** Tarjetas (clip, título y descripción) para el bloque de escenas; si faltan se usan los clips genéricos. */
@@ -252,16 +254,16 @@ export const lugares: Lugar[] = [
     numeral: "V",
     nombre: "Nevado Ritipata",
     categoria: "Alta Montaña",
-    heroTitulo: "Un abra silenciosa en el techo de los Andes",
-    imagen: "/imagenes-reales/seccion-turs/ritipata.webp",
-    imagenSecundaria: "/imagenes-reales/seccion-turs/ritipata-vicuna.webp",
+    heroTitulo: "Ritipata, el apu sagrado que se viste de nieve",
+    imagen: "/videos/hero/ritipata-poster.webp",
+    imagenSecundaria: "/imagenes-reales/ritipata/laguna-nevado.webp",
     descripcion:
-      "A más de 3 horas de Huamanga, en el distrito de Paras, provincia de Cangallo, el Nevado Ritipata —del quechua riti, “nieve”, y pata, “lugar elevado”— es un imponente nevado de casi 5,000 m.s.n.m. de la cordillera Chonta. A sus pies se extiende la laguna Ñawi, de aguas turquesas, rodeada de vicuñas y vizcachas en estado salvaje. La mejor época para visitarlo es entre junio y septiembre, cuando el frío mantiene la nieve y el color de sus lagunas en su punto máximo.",
+      "Considerado sagrado, el Apu Ritipata es el nevado más alto de su zona: se alza a casi 5,000 m.s.n.m. en la cordillera Chonta, en el distrito de Paras (provincia de Cangallo), a poco más de tres horas de Huamanga. Su nombre quechua une riti, “nieve”, y pata, “lugar elevado”. La nieve cubre sus laderas entre diciembre y abril; de junio a septiembre, con el cielo más despejado, es la mejor época para recorrer sus lagunas, como la laguna Ñawi, y las cataratas cercanas. Desde el abra, sobre los 4,900 m, una caminata de media hora conduce hasta el nevado, cuyo deshielo abastece de agua a la zona. En sus faldas viven comunidades alpaqueras y, en el abra, se avistan vicuñas y vizcachas silvestres.",
     consejo:
-      "Aclimatarse previamente a la altitud, llevar ropa de abrigo y cámara fotográfica para las vicuñas.",
-    frase: "Prepárate para la altura del Nevado Ritipata",
-    escenas: "Nieve, silencio y altura pura: así se vive el Nevado Ritipata.",
-    clipTags: ["Vicuñas en la puna", "Nieve en el abra", "Lagunas de altura", "Silencio absoluto"],
+      "Para ver la nieve, visita entre diciembre y abril; para recorrer las lagunas y cataratas, de junio a septiembre. Lleva ropa de abrigo (gorro, guantes y chaqueta), poncho impermeable, bloqueador, abundante agua y comida, porque no hay restaurantes en el lugar. Aclimátate antes a la altura y usa calzado cómodo para la caminata.",
+    frase: "Cuándo ir y qué llevar al Apu Ritipata",
+    escenas: "Nieve, lagunas de altura y alpacas: así se vive el Apu Ritipata.",
+    clipTags: ["Camino al abra", "Lagunas de Ritipata", "Cumbres y valles andinos", "Alpacas de las faldas"],
     mapLat: -13.42917,
     mapLng: -74.69167,
     mapaImagen: "/imagenes-reales/mapas/ritipata.webp",
@@ -270,16 +272,57 @@ export const lugares: Lugar[] = [
       heroMobile: "/videos/hero/ritipata-mobile.mp4",
       poster: "/videos/hero/ritipata-poster.webp",
     },
+    videoSeccion: {
+      src: "/videos/lugares-visitar/ritipata-abra.mp4",
+      srcMobile: "/videos/lugares-visitar/ritipata-abra-mobile.mp4",
+      poster: "/videos/lugares-visitar/ritipata-abra-poster.webp",
+      etiqueta: "Abra de Ritipata",
+    },
+    seccionImagen: {
+      imagen: "/imagenes-reales/ritipata/laguna-nevado.webp",
+      etiqueta: "Lagunas de Ritipata",
+    },
+    galeriaTitulo: "Más allá de las cumbres: el agua de Cangallo",
+    galeriaTexto:
+      "La provincia de Cangallo guarda también cascadas y pozas donde el agua baja entre praderas y roca: la Cascada de Ruqruqa y la Catarata de Pumapaqcha, dos paradas para completar el viaje, mejor de junio a septiembre.",
     galeria: [
       {
-        imagen: "/imagenes-reales/seccion-turs/ritipata-vicuna.webp",
-        titulo: "Vicuñas de Ritipata",
-        descripcion: "Manadas de vicuñas silvestres habitan el abra, sobre los 4,900 m.s.n.m.",
+        imagen: "/imagenes-reales/ritipata/ruqruqa.webp",
+        titulo: "Cascada de Ruqruqa",
+        descripcion:
+          "A unas 3 horas y media de Huamanga, en la comunidad de Quispillaccta (distrito de Chuschi, provincia de Cangallo), la Cascada de Ruqruqa forma pozas turquesas escalonadas para refrescarse y nadar en aguas cristalinas. Lleva ropa de baño y calzado antideslizante para recorrer sus senderos.",
       },
       {
-        imagen: "/imagenes-reales/seccion-turs/ritipata.webp",
-        titulo: "Lagunas del Nevado Ritipata",
-        descripcion: "Espejos de agua entre la nieve y la roca andina, a media hora de caminata desde el abra.",
+        imagen: "/imagenes-reales/ritipata/pumapaqcha.webp",
+        titulo: "Catarata de Pumapaqcha",
+        descripcion:
+          "En el distrito de Cangallo, la Catarata de Pumapaqcha cae unos 10 metros hasta una laguna natural donde es posible refrescarse. Se llega tras una caminata de media hora desde la carretera Ayacucho–Cangallo.",
+      },
+    ],
+    escenasCards: [
+      {
+        imagen: "/imagenes-reales/ritipata/escena-ruta.webp",
+        titulo: "Camino al abra",
+        descripcion: "Una ruta de tierra sube entre cerros nevados hasta el abra de Ritipata, sobre los 4,900 m.s.n.m.",
+        video: "/videos/lugares-visitar/ritipata-ruta.mp4",
+      },
+      {
+        imagen: "/imagenes-reales/ritipata/escena-lagunas.webp",
+        titulo: "Lagunas de Ritipata",
+        descripcion: "Espejos de agua al pie de la nieve, a media hora de caminata desde el abra.",
+        video: "/videos/lugares-visitar/ritipata-lagunas.mp4",
+      },
+      {
+        imagen: "/imagenes-reales/ritipata/escena-valle.webp",
+        titulo: "Cumbres y valles andinos",
+        descripcion: "Desde lo alto, el paisaje se abre en valles, laderas rojizas y caminos de tierra.",
+        video: "/videos/lugares-visitar/ritipata-valle.mp4",
+      },
+      {
+        imagen: "/imagenes-reales/ritipata/escena-alpacas.webp",
+        titulo: "Alpacas de las faldas",
+        descripcion: "En las faldas del nevado viven comunidades alpaqueras; sus alpacas pastan junto a las lagunas.",
+        video: "/videos/lugares-visitar/ritipata-alpacas.mp4",
       },
     ],
   },
@@ -289,39 +332,70 @@ export const lugares: Lugar[] = [
     numeral: "VI",
     nombre: "Aguas Turquesas de Millpu",
     categoria: "Naturaleza",
-    heroTitulo: "Un cañón donde el agua se vuelve turquesa",
-    imagen: "/imagenes-reales/seccion-turs/millpu.webp",
+    heroTitulo: "Millpu, la joya oculta de Ayacucho",
+    imagen: "/imagenes-reales/aguas-turquesas/aguas-turquesas-card.webp",
     imagenSecundaria: "/imagenes-reales/galeria/destino/Turquesa3.webp",
     descripcion:
       "A unas 4 horas de Huamanga, en la comunidad de Circamarca (distrito de Huancaraylla, provincia de Víctor Fajardo), las Aguas Turquesas de Millpu forman uno de los atractivos naturales más emblemáticos de Ayacucho: un circuito de cerca de 20 piscinas naturales escalonadas, a más de 3,600 m.s.n.m. en el interior de un cañón de paredes rocosas. Su color turquesa nace de la combinación de los minerales del agua y la luz del sol. El nombre viene del quechua millp'u (\"tragar\" o \"garganta\"): la leyenda local decía que sus aguas nacían de la boca del diablo, por lo que pocos se atrevían a visitarlas.",
     consejo:
       "Visitar de mayo a noviembre para disfrutar del vibrante color y llevar calzado de trekking. Para proteger el ecosistema, no está permitido nadar en las pozas.",
     frase: "Cuándo ir y qué llevar a Millpu",
-    escenas: "Turquesa, piedra y agua en movimiento: así se vive Millpu.",
-    clipTags: ["Piscinas turquesa", "Cañón de Millpu", "Vizcachas al amanecer", "Aves rapaces andinas"],
+    escenas: "Pozas escalonadas, cascadas y paredes de roca: así se vive Millpu.",
+    clipTags: ["Pozas escalonadas", "Caídas de agua entre terrazas", "Cañón de Millpu", "Poza al pie de la caída"],
     mapLat: -13.7207,
     mapLng: -74.1339,
     mapaImagen: "/imagenes-reales/mapas/aguas-turquesas.webp",
+    seccionImagen: {
+      imagen: "/imagenes-reales/aguas-turquesas/millpu-opt.webp",
+      etiqueta: "Aguas Turquesas de Millpu",
+    },
     video: {
       hero: "/videos/hero/aguas-turquesas.mp4",
       heroMobile: "/videos/hero/aguas-turquesas-mobile.mp4",
       poster: "/videos/hero/aguas-turquesas-poster.webp",
     },
+    imagenPantalla: "/imagenes-reales/aguas-turquesas/turquesa-sec.webp",
+    galeriaTitulo: "Más allá de las pozas: Sarhua, agua y tradición viva",
+    galeriaTexto:
+      "En la misma provincia de Víctor Fajardo, el distrito de Sarhua —distinguido por el Mincetur como Pueblo con Encanto— suma dos razones para seguir el viaje: una sucesión de cascadas entre cerros andinos y las Tablas de Sarhua, una pintura tradicional reconocida como Patrimonio Cultural de la Nación.",
     galeria: [
       {
-        imagen: "/imagenes-reales/seccion-turs/millpu.webp",
-        titulo: "Piscinas naturales escalonadas",
-        descripcion: "Cerca de 20 pozas de agua turquesa descienden en terrazas dentro del cañón.",
+        imagen: "/imagenes-reales/aguas-turquesas/cascadas-sarhua.webp",
+        titulo: "Cascada de Sarhua",
+        descripcion:
+          "A unas 4 horas de Huamanga, en el distrito de Sarhua, las Cascadas de Sarhua —también llamadas Campanayuq— forman una sucesión de caídas de agua entre cerros verdes, a más de 3,600 m.s.n.m., ideales para el ecoturismo y la desconexión. Se recomienda visitarlas a primera hora y con calzado antideslizante: una excursión que enriquece la estadía.",
       },
       {
-        imagen: "/imagenes-reales/seccion-turs/millpu-aves-rapaces.webp",
-        titulo: "Aves rapaces de Millpu",
-        descripcion: "Aves rapaces sobrevuelan las paredes de roca del cañón.",
+        imagen: "/imagenes-reales/aguas-turquesas/tabla-sarhua.webp",
+        titulo: "Las Tablas de Sarhua",
+        descripcion:
+          "Patrimonio Cultural de la Nación desde 2018, esta pintura tradicional de Sarhua cuenta en tablas de madera la historia de las familias y su entorno, con figuras y textos en castellano y quechua. Se elaboran en el distrito de Sarhua, provincia de Víctor Fajardo.",
+      },
+    ],
+    escenasCards: [
+      {
+        imagen: "/imagenes-reales/aguas-turquesas/escena-pozas.webp",
+        titulo: "Pozas escalonadas",
+        descripcion: "Cerca de 20 pozas de agua turquesa descienden en terrazas, a más de 3,600 m.s.n.m.",
+        video: "/videos/lugares-visitar/aguas-turquesas-pozas.mp4",
       },
       {
-        imagen: "/imagenes-reales/galeria/destino/Turquesa3.webp",
+        imagen: "/imagenes-reales/aguas-turquesas/escena-cascadas.webp",
+        titulo: "Caídas de agua entre terrazas",
+        descripcion: "El agua baja por terrazas de roca clara y se acumula en nuevas pozas.",
+        video: "/videos/lugares-visitar/aguas-turquesas-cascadas.mp4",
+      },
+      {
+        imagen: "/imagenes-reales/aguas-turquesas/escena-canon.webp",
         titulo: "Cañón de Millpu",
-        descripcion: "Paredes rocosas rodeadas de vegetación andina, a más de 3,600 m.s.n.m.",
+        descripcion: "Paredes rocosas rodeadas de vegetación andina encierran el recorrido del agua.",
+        video: "/videos/lugares-visitar/aguas-turquesas-canon.mp4",
+      },
+      {
+        imagen: "/imagenes-reales/aguas-turquesas/escena-caida.webp",
+        titulo: "Poza al pie de la caída",
+        descripcion: "Entre las paredes del cañón, el agua se precipita y forma una poza de intenso turquesa.",
+        video: "/videos/lugares-visitar/aguas-turquesas-caida.mp4",
       },
     ],
   },

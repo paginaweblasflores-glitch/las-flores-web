@@ -42,13 +42,9 @@ function LugarDetailPage() {
   );
   const clips = Array.from({ length: 4 }, (_, i) => clipsPool[i % clipsPool.length]);
 
-  // Sección "Siente el lugar antes de llegar": va arriba, antes de la imagen con el Consejo; con tarjetas verticales y a la altura de la pantalla si el lugar tiene escenas con clip.
+  // Sección "Siente el lugar antes de llegar": va arriba, antes de la imagen con el Consejo; con tarjetas verticales y a la altura de la pantalla (igual en todos los lugares; con clips si el lugar los tiene, con fotos si no).
   const escenasSection = (
-          <section
-            className={`px-6 md:px-16 py-16 md:py-24 ${
-              lugar.escenasCards ? "md:min-h-[100svh] md:flex md:flex-col md:justify-center" : ""
-            }`}
-          >
+          <section className="px-6 md:px-16 py-16 md:py-24 md:min-h-[100svh] md:flex md:flex-col md:justify-center">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
               <h2 className="font-serif text-3xl md:text-5xl leading-tight">
                 Siente el lugar antes de llegar
@@ -89,7 +85,7 @@ function LugarDetailPage() {
                   ))
                 : clips.map((src, i) => (
                     <div key={i}>
-                      <div className="aspect-4/3 overflow-hidden">
+                      <div className="aspect-3/4 overflow-hidden">
                         <img
                           src={src}
                           alt={lugar.clipTags[i]}
@@ -265,7 +261,7 @@ function LugarDetailPage() {
           ) : (
             <>
               <img
-                src={lugar.imagen}
+                src={lugar.imagenPantalla ?? lugar.imagen}
                 alt={lugar.nombre}
                 loading="lazy"
                 decoding="async"
