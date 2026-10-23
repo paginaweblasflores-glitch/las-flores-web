@@ -122,7 +122,13 @@ function FestividadDetailPage() {
         {/* SECCIÓN — Estructura propia de cada festividad (no una galería genérica) */}
         {fest.dias && <DiaSwitcher dias={fest.dias} />}
 
-        {fest.comparsas && <ComparsasPaginadas comparsas={fest.comparsas} />}
+        {fest.comparsas && (
+          <ComparsasPaginadas
+            comparsas={fest.comparsas}
+            titulo={fest.comparsasTitulo}
+            texto={fest.comparsasTexto}
+          />
+        )}
 
         {fest.cronologia && <CronologiaBatalla momentos={fest.cronologia} />}
 

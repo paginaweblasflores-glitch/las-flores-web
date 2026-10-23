@@ -35,6 +35,9 @@ export type Festividad = {
   dias?: DiaItem[];
   /** Comparsas reales (solo Carnaval: se presentan paginadas de dos en dos). */
   comparsas?: ComparsaItem[];
+  /** Título y descripción de la sección de comparsas (opcionales). */
+  comparsasTitulo?: string;
+  comparsasTexto?: string;
   /** Cronología de la jornada (solo 9 de Diciembre: línea de tiempo, sin fotos). */
   cronologia?: MomentoItem[];
 };
@@ -48,7 +51,7 @@ export const festividades: Festividad[] = [
     fecha: "Febrero / Marzo",
     reconocimiento: "Patrimonio Cultural de la Nación (2003)",
     lugarPrincipal: "Plaza Mayor y barrios de Huamanga",
-    heroTitulo: "Donde el juego andino se viste de mil colores",
+    heroTitulo: "Carnaval Ayacuchano, Patrimonio Cultural de la Nación",
     imagen: "/imagenes-reales/galeria/festividades/carnaval-uno.webp",
     imagenSecundaria: "/imagenes-reales/galeria/festividades/carnaval-tres.webp",
     descripcion:
@@ -142,6 +145,9 @@ export const festividades: Festividad[] = [
           "Una idea: desayuna o almuerza en Las Flores (a 7 minutos de la Plaza Mayor), vive las comparsas y termina el día descansando en Umaru (a 10 minutos). Así disfrutas la fiesta y la cierras en calma.",
       },
     ],
+    comparsasTitulo: "Las comparsas, el alma del Carnaval",
+    comparsasTexto:
+      "Más de 200 comparsas de los barrios de Huamanga y de provincias como Cangallo, Huanta y Víctor Fajardo renuevan cada año sus canciones para llenar de música y baile las calles. Conoce algunas de ellas.",
     comparsas: [
       {
         imagen: "/imagenes-reales/carnaval-ayacucho/abuelos-quinua.webp",

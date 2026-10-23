@@ -3,20 +3,25 @@ import type { ComparsaItem } from "@/data/festividades";
 
 interface ComparsasPaginadasProps {
   comparsas: ComparsaItem[];
+  titulo?: string;
+  texto?: string;
 }
 
 const POR_PAGINA = 2;
 
-export function ComparsasPaginadas({ comparsas }: ComparsasPaginadasProps) {
+export function ComparsasPaginadas({ comparsas, titulo, texto }: ComparsasPaginadasProps) {
   const [page, setPage] = useState(0);
   const totalPaginas = Math.ceil(comparsas.length / POR_PAGINA);
   const visibles = comparsas.slice(page * POR_PAGINA, page * POR_PAGINA + POR_PAGINA);
 
   return (
     <section className="px-6 md:px-16 py-16 md:py-24">
-      <span className="text-eucalipto text-[10px] uppercase tracking-[0.3em] font-semibold mb-8 block">
-        Comparsas del Carnaval
-      </span>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+        <h2 className="font-serif text-3xl md:text-5xl leading-tight">{titulo ?? "Comparsas del Carnaval"}</h2>
+        {texto && (
+          <p className="text-nogal/70 text-base md:text-lg leading-relaxed self-center">{texto}</p>
+        )}
+      </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-x-3 gap-y-10 md:gap-x-5 mb-10">
         {visibles.map((c) => (
           <figure key={c.nombre}>
