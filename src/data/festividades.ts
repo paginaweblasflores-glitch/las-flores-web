@@ -87,7 +87,7 @@ export const festividades: Festividad[] = [
       {
         video: "/videos/festividades/carnaval-escena-1.mp4",
         imagen: "/imagenes-reales/carnaval-ayacuchano/escena-1.webp",
-        alt: "Danzantes de celeste bailando al compás del acordeón",
+        alt: "Vista aérea de la plaza con bailarinas de colores durante el carnaval",
       },
       {
         video: "/videos/festividades/carnaval-escena-2.mp4",
