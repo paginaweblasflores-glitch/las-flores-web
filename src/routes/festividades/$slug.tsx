@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/site-footer";
@@ -37,7 +38,8 @@ export const Route = createFileRoute("/festividades/$slug")({
 function FestividadDetailPage() {
   const fest = Route.useLoaderData();
   const invertido = fest.id % 2 === 0;
-  const consejoImagen = fest.imagenSecundaria || fest.imagen;
+  // Acordeón de preguntas: solo una respuesta abierta a la vez; al elegir otra, la anterior se cierra.
+  const [preguntaAbierta, setPreguntaAbierta] = useState<string | null>(null);
   const clipsPool = Array.from(
     new Set([
       fest.imagen,
@@ -132,7 +134,7 @@ function FestividadDetailPage() {
               src={fest.videoSeccion.src}
               srcMobile={fest.videoSeccion.srcMobile}
               poster={fest.videoSeccion.poster}
-              alt={fest.nombre}
+              alt={fest.videoSeccion.etiqueta ?? fest.nombre}
               className="absolute inset-0 w-full h-full object-cover"
             />
           ) : (
@@ -148,58 +150,98 @@ function FestividadDetailPage() {
             </>
           )}
           <span className="absolute bottom-6 left-6 md:bottom-10 md:left-10 text-piedra text-[10px] uppercase tracking-[0.35em] font-semibold drop-shadow">
-            {fest.nombre}
+            {fest.videoSeccion?.etiqueta ?? fest.nombre}
           </span>
         </section>
 
-        {/* SECCIÓN — Adelanto en video: distintos clips de la misma festividad */}
-        <section className="px-6 md:px-16 py-16 md:py-24">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-            <h2 className="font-serif text-3xl md:text-5xl leading-tight">
-              Siente la festividad antes de vivirla
-            </h2>
-            <p className="text-nogal/70 text-base md:text-lg leading-relaxed self-center">
-              {fest.escenas}
-            </p>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-5">
-            {clips.map((src, i) => (
-              <div key={i}>
-                <div className="aspect-4/3 overflow-hidden">
+        {/* SECCIÓN — Preguntas y respuestas de la festividad (opcional) */}
+        {fest.preguntas && fest.preguntas.length > 0 && (
+          <section className="px-6 md:px-16 py-16 md:py-24">
+            <div className="grid grid-cols-1 md:grid-cols-[1fr_1.4fr] gap-10 md:gap-16">
+              <div className="md:sticky md:top-28 md:self-start">
+                <h2 className="font-serif text-3xl md:text-5xl leading-tight mb-5">
+                  {fest.preguntasTitulo ?? "Preguntas frecuentes"}
+                </h2>
+                {fest.preguntasTexto && (
+                  <p className="text-nogal/70 text-base md:text-lg leading-relaxed max-w-md">
+                    {fest.preguntasTexto}
+                  </p>
+                )}
+                {fest.preguntasImagen && (
+                  <img
+                    src={fest.preguntasImagen.src}
+                    alt={fest.preguntasImagen.alt}
+                    loading="lazy"
+                    decoding="async"
+                    className="mt-8 md:mt-10 w-full aspect-[3/2] object-cover"
+                  />
+                )}
+              </div>
+              <div className="border-t border-nogal/25">
+                {fest.preguntas.map((item) => (
+                  <details
+                    key={item.pregunta}
+                    open={preguntaAbierta === item.pregunta}
+                    className="group border-b border-nogal/25"
+                  >
+                    <summary
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setPreguntaAbierta((actual) => (actual === item.pregunta ? null : item.pregunta));
+                      }}
+                      className="flex cursor-pointer list-none items-center justify-between gap-6 py-5 md:py-6 [&::-webkit-details-marker]:hidden"
+                    >
+                      <span className="font-serif text-lg md:text-2xl leading-snug">{item.pregunta}</span>
+                      <span
+                        aria-hidden
+                        className="shrink-0 text-2xl leading-none text-nogal/60 transition-transform duration-300 group-open:rotate-45"
+                      >
+                        +
+                      </span>
+                    </summary>
+                    <div className="pb-6 pr-10">
+                      <p className="text-nogal/70 text-base md:text-lg leading-relaxed">{item.respuesta}</p>
+                      {item.carta && (
+                        <Link
+                          to="/carta"
+                          className="mt-3 inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.2em] font-semibold text-eucalipto hover:text-nogal transition-colors"
+                        >
+                          Ver la carta <span aria-hidden>→</span>
+                        </Link>
+                      )}
+                    </div>
+                  </details>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
+
+        {/* SECCIÓN — Cuatro imágenes verticales pegadas, a ancho completo y sin texto */}
+        <section className="grid grid-cols-2 lg:grid-cols-4">
+          {clips.map((src, i) => {
+            const clip = fest.escenasClips?.[i];
+            return (
+              <div key={i} className="relative aspect-[3/4] overflow-hidden">
+                {clip ? (
+                  <FestividadVideo
+                    src={clip.video}
+                    poster={clip.imagen}
+                    alt={clip.alt}
+                    className="absolute inset-0 w-full h-full object-cover"
+                  />
+                ) : (
                   <img
                     src={src}
                     alt={fest.clipTags[i]}
                     loading="lazy"
                     decoding="async"
-                    className="w-full h-full object-cover"
+                    className="absolute inset-0 w-full h-full object-cover"
                   />
-                </div>
-                <p className="text-[11px] uppercase tracking-[0.2em] font-semibold text-nogal/60 mt-3">
-                  {fest.clipTags[i]}
-                </p>
+                )}
               </div>
-            ))}
-          </div>
-        </section>
-
-        {/* SECCIÓN — Consejo de visita: foto a pantalla completa + panel sólido superpuesto */}
-        <section className="relative h-[115svh] min-h-[36rem] w-full overflow-hidden">
-          <img
-            src={consejoImagen}
-            alt={fest.nombre}
-            loading="lazy"
-            decoding="async"
-            className="absolute inset-0 w-full h-full object-cover"
-          />
-          <div className="absolute bottom-0 left-4 right-4 md:right-auto md:left-10 md:w-[30rem] md:h-[min(38rem,78svh)] flex flex-col justify-center gap-6 bg-eucalipto text-piedra px-6 py-8 md:px-10 md:py-12 overflow-y-auto">
-            <div>
-              <span className="text-chilca text-[10px] uppercase tracking-[0.3em] font-semibold mb-4 block">
-                Consejo de visita
-              </span>
-              <p className="font-serif text-xl md:text-3xl leading-snug">{fest.frase}</p>
-            </div>
-            <p className="text-sm md:text-lg leading-relaxed text-piedra/90">{fest.consejo}</p>
-          </div>
+            );
+          })}
         </section>
       </main>
 

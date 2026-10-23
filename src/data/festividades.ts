@@ -22,7 +22,15 @@ export type Festividad = {
   /** Clips de video optimizados (hero de la página, tarjeta del inicio) y fotograma de portada. */
   video: { hero: string; card: string; poster: string };
   /** Video a pantalla completa que reemplaza la foto de la sección bajo las comparsas (opcional). */
-  videoSeccion?: { src: string; srcMobile: string; poster: string };
+  videoSeccion?: { src: string; srcMobile: string; poster: string; etiqueta?: string };
+  /** Preguntas y respuestas (acordeón) bajo la sección de pantalla completa; título y texto de encabezado opcionales. */
+  preguntasTitulo?: string;
+  preguntasTexto?: string;
+  preguntas?: { pregunta: string; respuesta: string; carta?: boolean }[];
+  /** Imagen bajo el encabezado de las preguntas (rellena el espacio de la columna izquierda). */
+  preguntasImagen?: { src: string; alt: string };
+  /** Cuatro clips cortos (sin texto) para las tiras verticales finales; si faltan se usan fotos. `imagen` es el póster. */
+  escenasClips?: { video: string; imagen: string; alt: string }[];
   /** Día a día (solo Semana Santa: 7 jornadas, se presentan con un selector numerado). */
   dias?: DiaItem[];
   /** Comparsas reales (solo Carnaval: se presentan paginadas de dos en dos). */
@@ -65,7 +73,75 @@ export const festividades: Festividad[] = [
       src: "/videos/lugares-visitar/abuelos-quinua.mp4",
       srcMobile: "/videos/lugares-visitar/abuelos-quinua-mobile.mp4",
       poster: "/videos/lugares-visitar/abuelos-quinua-poster.webp",
+      etiqueta: "Los Abuelos de Quinua",
     },
+    preguntasTitulo: "Antes de salir a bailar",
+    preguntasImagen: {
+      src: "/imagenes-reales/carnaval-ayacuchano/danzantes-carnaval.webp",
+      alt: "Tres danzantes del carnaval con trajes de cintas de colores",
+    },
+    escenasClips: [
+      {
+        video: "/videos/festividades/carnaval-escena-1.mp4",
+        imagen: "/imagenes-reales/carnaval-ayacuchano/escena-1.webp",
+        alt: "Danzantes de celeste bailando al compás del acordeón",
+      },
+      {
+        video: "/videos/festividades/carnaval-escena-2.mp4",
+        imagen: "/imagenes-reales/carnaval-ayacuchano/escena-2.webp",
+        alt: "Danza de una comparsa frente a la Catedral de Ayacucho",
+      },
+      {
+        video: "/videos/festividades/carnaval-escena-3.mp4",
+        imagen: "/imagenes-reales/carnaval-ayacuchano/escena-3.webp",
+        alt: "Comparsa con cintas de colores y matracas en pleno desfile",
+      },
+      {
+        video: "/videos/festividades/carnaval-escena-4.mp4",
+        imagen: "/imagenes-reales/carnaval-ayacuchano/escena-4.webp",
+        alt: "Vista aérea del desfile de comparsas en la Plaza Mayor, con filas de bailarinas de blanco",
+      },
+    ],
+    preguntasTexto:
+      "Cinco días de música, color y comparsas en el corazón de Huamanga. Todo lo que tiene que saber antes de vivirlo.",
+    preguntas: [
+      {
+        pregunta: "¿Dónde se vive el Carnaval Ayacuchano?",
+        respuesta:
+          "En el corazón de Huamanga. La Plaza Mayor es el punto de encuentro: allí ingresa el Ño Carnavalón y se despide la fiesta. Desde 2026 las comparsas recorren la avenida Mariscal Cáceres, y toda la ciudad se llena de música, baile y juego con agua y talco.",
+      },
+      {
+        pregunta: "¿Cuántos días dura?",
+        respuesta:
+          "Cinco días centrales, precedidos por concursos y actividades previas: en 2026 fueron del 14 al 18 de febrero. Las fechas cambian cada año porque dependen del calendario litúrgico, así que confirma el cronograma oficial de la Municipalidad de Huamanga o de Dircetur Ayacucho antes de viajar.",
+      },
+      {
+        pregunta: "¿Cuántas comparsas desfilan y cuáles no se lo puede perder?",
+        respuesta:
+          "Más de 200 comparsas, según la Municipalidad de Huamanga. La cifra exacta cambia cada año. Y las comparsas que no debes perderte son: Los Legendarios Abuelos de Quinua, Cangallo Señorial, Cangallo Corazón, Sentimiento Fajardino y el Centro Cultural UQIS de Quispillacta.",
+      },
+      {
+        pregunta: "¿Cómo se despide el Carnaval?",
+        respuesta:
+          "Con la lectura del testamento y la quema del Ño Carnavalón en la Plaza Mayor, un cierre simbólico hasta el año siguiente.",
+      },
+      {
+        pregunta: "Antes de bailar, ¿dónde comer sabor ayacuchano?",
+        respuesta:
+          "En el Restaurante Las Flores, a 7 minutos de la Plaza Mayor. Desde 1980 sirve desayuno y almuerzo con cocina ayacuchana, para empezar el día con energía antes de salir a bailar. Revisa nuestra carta: hay muchos más platos para elegir.",
+        carta: true,
+      },
+      {
+        pregunta: "¿Dónde descansar tranquilo después de la fiesta?",
+        respuesta:
+          "En el Hotel Umaru, a 10 minutos de la Plaza de Armas, en el valle de Huatatas: un escape tranquilo rodeado de naturaleza, con piscina al aire libre, jardines y terrazas con vista al valle, lejos del bullicio del centro.",
+      },
+      {
+        pregunta: "¿Cómo organizo mi día de carnaval?",
+        respuesta:
+          "Una idea: desayuna o almuerza en Las Flores (a 7 minutos de la Plaza Mayor), vive las comparsas y termina el día descansando en Umaru (a 10 minutos). Así disfrutas la fiesta y la cierras en calma.",
+      },
+    ],
     comparsas: [
       {
         imagen: "/imagenes-reales/carnaval-ayacucho/abuelos-quinua.webp",

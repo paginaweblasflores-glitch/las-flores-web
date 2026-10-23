@@ -133,7 +133,7 @@ export const lugares: Lugar[] = [
     numeral: "III",
     nombre: "Abismo de Puncupata",
     categoria: "Paisaje Andino",
-    heroTitulo: "Donde el cielo se asoma al abismo",
+    heroTitulo: "Abismo de Puncupata, Puerta Celestial",
     imagen: "/imagenes-reales/abismo-puncupata/acantilado.webp",
     imagenSecundaria: "/imagenes-reales/abismo-puncupata/cornisa.webp",
     descripcion:
@@ -141,12 +141,12 @@ export const lugares: Lugar[] = [
     consejo:
       "Lleva ropa abrigadora e impermeable, botas firmes, agua y algo de comer: a 4,200 m el clima cambia rápido. Camina con calma por el sendero, sigue a tu guía local y, si sufres de vértigo, mantén distancia del borde.",
     frase: "Prepárate para el borde del Abismo de Puncupata",
-    escenas: "Acantilados, vicuñas y cielo abierto: así se vive el Abismo de Puncupata.",
+    escenas: "Acantilados, vicuñas y paredes de roca entre la niebla: así se vive el Abismo de Puncupata.",
     clipTags: [
-      "Borde del acantilado",
+      "Al filo del acantilado",
       "Vicuñas en la puna",
-      "Ave sobre el abismo",
-      "Mirador a 4,200 m",
+      "Laderas del desfiladero",
+      "Paredes entre la niebla",
     ],
     mapaImagen: "/imagenes-reales/mapas/abismo-puncupata.webp",
     video: {
@@ -154,21 +154,53 @@ export const lugares: Lugar[] = [
       heroMobile: "/videos/hero/abismo-puncupata-mobile.mp4",
       poster: "/videos/hero/abismo-puncupata-poster.webp",
     },
+    videoSeccion: {
+      src: "/videos/lugares-visitar/pachapupum.mp4",
+      srcMobile: "/videos/lugares-visitar/pachapupum-mobile.mp4",
+      poster: "/videos/lugares-visitar/pachapupum-poster.webp",
+      etiqueta: "Volcán inactivo de Pachapupum",
+    },
+    galeriaTitulo: "Más allá del abismo: laberintos de roca y vicuñas",
+    galeriaTexto:
+      "Antes o después de asomarte al abismo, Huamanga y su puna ofrecen dos experiencias más: los Cañones de Qorihuillca, un laberinto de pasadizos de roca a solo 40 minutos de la ciudad, y los pastizales altoandinos donde viven las vicuñas silvestres.",
     galeria: [
       {
-        imagen: "/imagenes-reales/abismo-puncupata/borde-del-abismo.webp",
-        titulo: "Borde del Abismo de Puncupata",
-        descripcion: "Un sendero comunitario recorre el filo del acantilado, a 4,200 m.s.n.m.",
+        imagen: "/imagenes-reales/abismo-puncupata/canones-de-qorihuillca.webp",
+        titulo: "Cañones de Qorihuillca",
+        descripcion:
+          "A 40 minutos de Huamanga, los Cañones de Qorihuillca conforman un imponente laberinto rocoso de pasadizos oscuros, ideal para el turismo de aventura. Se sugiere visitarlos durante la mañana, siendo indispensable el acompañamiento de un guía especializado y equipo de seguridad.",
       },
       {
-        imagen: "/imagenes-reales/abismo-puncupata/vicunas.webp",
-        titulo: "Vicuñas de Puncupata",
-        descripcion: "Es común cruzarse con ellas en el tramo final del camino.",
+        imagen: "/imagenes-reales/abismo-puncupata/vicuna-habitat.webp",
+        titulo: "Hábitat natural de las vicuñas",
+        descripcion:
+          "En las punas de Ayacucho, a más de 4,000 m.s.n.m., viven vicuñas silvestres, y en el camino a Puncupata es común cruzarse con ellas. Cada año, de mayo a noviembre, las comunidades de la región realizan el chaccu, un ritual ancestral que esquila a las vicuñas con más fibra y las devuelve a su hábitat sin dañarlas.",
+      },
+    ],
+    escenasCards: [
+      {
+        imagen: "/imagenes-reales/abismo-puncupata/escena-borde.webp",
+        titulo: "Al filo del acantilado",
+        descripcion: "A 4,200 m.s.n.m., un sendero comunitario de cerca de un kilómetro bordea el desfiladero.",
+        video: "/videos/lugares-visitar/abismo-puncupata-borde.mp4",
       },
       {
-        imagen: "/imagenes-reales/abismo-puncupata/ave-sobre-el-abismo.webp",
-        titulo: "Aves sobre el desfiladero",
-        descripcion: "Las aves planean sobre las paredes del desfiladero.",
+        imagen: "/imagenes-reales/abismo-puncupata/escena-vicunas.webp",
+        titulo: "Vicuñas en la puna",
+        descripcion: "En el tramo final del camino es común cruzarse con vicuñas silvestres.",
+        video: "/videos/lugares-visitar/abismo-puncupata-vicunas.mp4",
+      },
+      {
+        imagen: "/imagenes-reales/abismo-puncupata/escena-laderas.webp",
+        titulo: "Laderas del desfiladero",
+        descripcion: "Desde el borde, las laderas descienden en pliegues dorados hacia el fondo.",
+        video: "/videos/lugares-visitar/abismo-puncupata-laderas.mp4",
+      },
+      {
+        imagen: "/imagenes-reales/abismo-puncupata/escena-paredes.webp",
+        titulo: "Paredes entre la niebla",
+        descripcion: "La roca se alza sobre el vacío mientras las aves planean frente al acantilado.",
+        video: "/videos/lugares-visitar/abismo-puncupata-paredes.mp4",
       },
     ],
   },
@@ -178,7 +210,7 @@ export const lugares: Lugar[] = [
     numeral: "IV",
     nombre: "Vilcas Huamán",
     categoria: "Arqueología Inca",
-    heroTitulo: "La ciudad del halcón sagrado, corazón inca de Ayacucho",
+    heroTitulo: "Vilcas Huamán, la ciudad del halcón sagrado",
     imagen: "/imagenes-reales/vilcas-huaman/ushnu-aereo.webp",
     imagenSecundaria: "/imagenes-reales/vilcas-huaman/vilcas-huaman-parque.webp",
     descripcion:
