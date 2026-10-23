@@ -173,15 +173,15 @@ export const festividades: Festividad[] = [
       },
       {
         imagen: "/imagenes-reales/seccion-festividades/carnaval-musica.webp",
-        nombre: "Comparsa de Chuschi",
+        nombre: "Cangallo Corazón",
         descripcion:
-          "Representa la Qachwa, el ritual de la cosecha compartido con Totos, Paras y Pomabamba, en la provincia de Cangallo — una danza que mezcla los antiguos ritos agrícolas con el carnaval.",
+          "Fundada en Huamanga el 8 de febrero de 1987 por residentes de Cangallo, la Asociación Cultural Cangallo Corazón ganó cinco concursos de carnaval consecutivos y en 2008 obtuvo el título de Comparsa Señorial.",
       },
       {
         imagen: "/imagenes-reales/seccion-festividades/carnaval-ayacuchano.webp",
-        nombre: "Comparsa de Totos",
+        nombre: "Sentimiento Fajardino",
         descripcion:
-          "Una de las más fotografiadas del desfile: cada año, los clubes de residentes de Totos, en Cangallo, la traen de vuelta a las calles de Huamanga.",
+          "Comparsa de la provincia de Víctor Fajardo que lleva a Huamanga el pumpín fajardino, Patrimonio Cultural de la Nación, con letras de picardía y crítica social. Reúne a unos 320 músicos y danzantes y se reconoce por sus trajes morados.",
       },
     ],
   },
