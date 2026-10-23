@@ -37,7 +37,7 @@ export const Route = createFileRoute("/festividades/$slug")({
 
 function FestividadDetailPage() {
   const fest = Route.useLoaderData();
-  const invertido = fest.id % 2 === 0;
+  const invertido = fest.invertido ?? fest.id % 2 === 0;
   // Acordeón de preguntas: solo una respuesta abierta a la vez; al elegir otra, la anterior se cierra.
   const [preguntaAbierta, setPreguntaAbierta] = useState<string | null>(null);
   const clipsPool = Array.from(
@@ -132,7 +132,13 @@ function FestividadDetailPage() {
           />
         )}
 
-        {fest.cronologia && <CronologiaBatalla momentos={fest.cronologia} />}
+        {fest.cronologia && (
+          <CronologiaBatalla
+            momentos={fest.cronologia}
+            titulo={fest.cronologiaTitulo}
+            texto={fest.cronologiaTexto}
+          />
+        )}
 
         {/* SECCIÓN — Solo imagen/clip a pantalla completa (aquí irá el video de 5-15s) */}
         <section className="relative h-[115svh] min-h-[34rem] w-full overflow-hidden">
@@ -148,7 +154,7 @@ function FestividadDetailPage() {
           ) : (
             <>
               <img
-                src={fest.imagen}
+                src={fest.imagenSeccion ?? fest.imagen}
                 alt={fest.nombre}
                 loading="lazy"
                 decoding="async"

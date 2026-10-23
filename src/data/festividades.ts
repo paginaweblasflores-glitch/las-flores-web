@@ -1,6 +1,6 @@
 export type DiaItem = { numero: string; dia: string; texto: string; imagen: string };
 export type ComparsaItem = { imagen: string; nombre: string; descripcion: string };
-export type MomentoItem = { momento: string; hora: string; texto: string; imagen: string };
+export type MomentoItem = { momento: string; texto: string; imagen: string };
 
 export type Festividad = {
   id: number;
@@ -21,6 +21,10 @@ export type Festividad = {
   clipTags: [string, string, string, string];
   /** Clips de video optimizados (hero de la página, tarjeta del inicio) y fotograma de portada. */
   video: { hero: string; card: string; poster: string };
+  /** Fuerza el orden de la primera sección: true = datos clave a la izquierda; por defecto alterna según el id. */
+  invertido?: boolean;
+  /** Foto de la sección a pantalla completa si no es la imagen principal (opcional). */
+  imagenSeccion?: string;
   /** Video a pantalla completa que reemplaza la foto de la sección bajo las comparsas (opcional). */
   videoSeccion?: { src: string; srcMobile: string; poster: string; etiqueta?: string };
   /** Preguntas y respuestas (acordeón) bajo la sección de pantalla completa; título y texto de encabezado opcionales. */
@@ -41,6 +45,9 @@ export type Festividad = {
   /** Título y descripción de la sección de comparsas (opcionales). */
   comparsasTitulo?: string;
   comparsasTexto?: string;
+  /** Título y descripción de la cronología (opcionales). */
+  cronologiaTitulo?: string;
+  cronologiaTexto?: string;
   /** Cronología de la jornada (solo 9 de Diciembre: línea de tiempo, sin fotos). */
   cronologia?: MomentoItem[];
 };
@@ -181,6 +188,7 @@ export const festividades: Festividad[] = [
   {
     id: 1,
     slug: "semana-santa",
+    invertido: true,
     nombre: "Semana Santa de Ayacucho",
     categoria: "Fe y Tradición",
     fecha: "Marzo / Abril",
@@ -352,14 +360,16 @@ export const festividades: Festividad[] = [
   {
     id: 3,
     slug: "9-de-diciembre",
+    invertido: true,
     nombre: "Batalla de Ayacucho",
     categoria: "Historia Viva",
     fecha: "Diciembre",
     reconocimiento: "Feriado Nacional (Ley 31381)",
     lugarPrincipal: "Santuario Histórico Pampa de Ayacucho",
-    heroTitulo: "El día en que un continente dejó de ser colonia",
+    heroTitulo: "9 de diciembre, Día de la Batalla de Ayacucho",
     imagen: "/imagenes-reales/seccion-turs/pampa-quinua.webp",
     imagenSecundaria: "/imagenes-reales/galeria/destino/Quinua1.webp",
+    imagenSeccion: "/imagenes-reales/9-de-diciembre/escenificacion-9-de-diciembre.webp",
     descripcion:
       "El 9 de diciembre de 1824, en la Pampa de Ayacucho (Quinua), el Ejército Unido Libertador al mando de Antonio José de Sucre venció a un ejército realista más numeroso, sellando la independencia de todo el continente sudamericano. Hoy es feriado nacional: cada año, el obelisco erigido en el campo de batalla recibe una ceremonia cívico-militar y una escenificación histórica.",
     consejo:
@@ -378,26 +388,87 @@ export const festividades: Festividad[] = [
       card: "/videos/festividades/9-de-diciembre-card.mp4",
       poster: "/videos/festividades/9-de-diciembre-poster.webp",
     },
+    cronologiaTitulo: "Cronograma del 9 de diciembre",
+    cronologiaTexto:
+      "Las actividades de la conmemoración de la Batalla de Ayacucho en el Santuario Histórico Pampa de Ayacucho, en Quinua.",
     cronologia: [
       {
-        momento: "Te Deum y parada militar",
-        hora: "9 de diciembre, por la mañana",
-        texto:
-          "Misa Te Deum y parada militar en la Plaza Mayor de Huamanga, antes de la ceremonia en la Pampa de Ayacucho.",
-        imagen: "/imagenes-reales/galeria/destino/Plaza3.webp",
-      },
-      {
         momento: "Ceremonia central",
-        hora: "9 de diciembre",
         texto: "Acto oficial de conmemoración en el Santuario Histórico Pampa de Ayacucho.",
-        imagen: "/imagenes-reales/galeria/destino/Quinua2.webp",
+        imagen: "/imagenes-reales/9-de-diciembre/ceremonia-central.webp",
       },
       {
         momento: "Escenificación",
-        hora: "9 de diciembre",
         texto:
           "Más de mil actores recrean la batalla en el Santuario Histórico, ante miles de espectadores.",
-        imagen: "/imagenes-reales/seccion-festividades/monumento-sucre.webp",
+        imagen: "/imagenes-reales/9-de-diciembre/escenificacion.webp",
+      },
+    ],
+    escenasClips: [
+      {
+        video: "/videos/festividades/9-de-diciembre-escena-2.mp4",
+        imagen: "/imagenes-reales/9-de-diciembre/escena-2.webp",
+        alt: "Vuelo de dron al atardecer hacia el obelisco de la Pampa de Ayacucho, entre pastizales dorados",
+      },
+      {
+        video: "/videos/festividades/9-de-diciembre-escena-1.mp4",
+        imagen: "/imagenes-reales/9-de-diciembre/escena-1.webp",
+        alt: "Visitante fotografiando las vitrinas de un museo con sables, fusiles y una pintura de la batalla",
+      },
+      {
+        video: "/videos/festividades/9-de-diciembre-escena-4.mp4",
+        imagen: "/imagenes-reales/9-de-diciembre/escena-4.webp",
+        alt: "Oficial a caballo con el sable en alto, gritando durante la escenificación de la batalla",
+      },
+      {
+        video: "/videos/festividades/9-de-diciembre-escena-3.mp4",
+        imagen: "/imagenes-reales/9-de-diciembre/escena-3.webp",
+        alt: "Vista aérea de la escenificación de la batalla en la Pampa de Ayacucho",
+      },
+    ],
+    preguntasTitulo: "Antes de ir a la Pampa de Ayacucho",
+    preguntasTexto:
+      "Un día de historia entre Huamanga y la Pampa de Ayacucho. Todo lo que tiene que saber antes de vivirlo.",
+    preguntasImagen: {
+      src: "/imagenes-reales/9-de-diciembre/obelisco-de-quinua.webp",
+      alt: "Visitantes frente al obelisco de la Pampa de Ayacucho, en Quinua",
+    },
+    preguntas: [
+      {
+        pregunta: "¿Qué se conmemora el 9 de diciembre?",
+        respuesta:
+          "La Batalla de Ayacucho de 1824, en la que el Ejército Unido Libertador, al mando de Antonio José de Sucre, venció a un ejército realista más numeroso y selló la independencia de Sudamérica. Es feriado nacional (Ley 31381).",
+      },
+      {
+        pregunta: "¿Dónde se vive la conmemoración?",
+        respuesta:
+          "En el Santuario Histórico Pampa de Ayacucho, en Quinua, el mismo campo donde se libró la batalla. Allí se realizan la ceremonia oficial y la escenificación, con más de mil actores.",
+      },
+      {
+        pregunta: "¿Cómo llego a la Pampa de Ayacucho?",
+        respuesta:
+          "El Santuario está en el distrito de Quinua, a unos 37 km de la ciudad de Huamanga, al pie del cerro Condorcunca. Se llega por carretera, en auto o con un tour desde Huamanga. Para el 9 de diciembre, confirma los accesos y el horario de la ceremonia con la Municipalidad de Huamanga o el Gobierno Regional de Ayacucho.",
+      },
+      {
+        pregunta: "¿Qué puedo ver en el Santuario?",
+        respuesta:
+          "El obelisco de mármol de 44 metros, con las esculturas de los seis generales que lideraron la contienda, en la planicie donde se libró la batalla y que fue declarada Santuario Histórico en 1980. Muy cerca, Quinua, Pueblo con Encanto, es conocido por sus ceramistas.",
+      },
+      {
+        pregunta: "Antes de la ceremonia, ¿dónde comer sabor ayacuchano?",
+        respuesta:
+          "En el Restaurante Las Flores, a 7 minutos de la Plaza Mayor. Desde 1980 sirve desayuno y almuerzo con cocina ayacuchana, para empezar el día con energía antes de salir rumbo a la Pampa. Revisa nuestra carta: hay muchos más platos para elegir.",
+        carta: true,
+      },
+      {
+        pregunta: "¿Dónde descansar tranquilo después de la jornada?",
+        respuesta:
+          "En el Hotel Umaru, a 10 minutos de la Plaza de Armas, en el valle de Huatatas: un escape tranquilo rodeado de naturaleza, con piscina al aire libre, jardines y terrazas con vista al valle, lejos del bullicio del centro.",
+      },
+      {
+        pregunta: "¿Cómo organizo mi día del 9 de diciembre?",
+        respuesta:
+          "Una idea: desayuna o almuerza en Las Flores (a 7 minutos de la Plaza Mayor), viaja a la Pampa de Ayacucho para la ceremonia y la escenificación, y termina el día descansando en Umaru (a 10 minutos). Así vives la historia en el lugar donde ocurrió y la cierras en calma.",
       },
     ],
   },
