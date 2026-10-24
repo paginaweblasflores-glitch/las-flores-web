@@ -105,7 +105,7 @@ describe("home retablo content layout", () => {
     expect(wrapperSource).toContain("lg:mt-0");
   });
 
-  it("removes mobile section padding so the retablo reaches the viewport edges", () => {
+  it("separates the retablo from the previous section on mobile", () => {
     const section = jsxDescendants(routeAst).find(
       (element) => tagName(element) === "section" && element.getText().includes("<RetabloWrapper"),
     );
@@ -113,7 +113,10 @@ describe("home retablo content layout", () => {
     expect(section).toBeDefined();
     if (!section) throw new Error("Retablo section not found");
 
-    expect(attribute(section, "className")).toContain("relative py-0");
+    const sectionClasses = attribute(section, "className") ?? "";
+    expect(sectionClasses).toContain("pt-6");
+    expect(sectionClasses).toContain("pb-0");
+    expect(sectionClasses).toContain("lg:pt-[2.3cm]");
   });
 
   it("uses viewport-responsive desktop bottom spacing for the open doors", () => {

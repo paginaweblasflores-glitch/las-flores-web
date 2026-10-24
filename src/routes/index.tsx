@@ -454,7 +454,7 @@ function Index() {
       </header>
 
       {/* CULTURA Y TRADICIÓN */}
-      <section className="retablo-section flex flex-col justify-center items-center w-full lg:min-h-screen overflow-x-hidden relative py-0 lg:items-center lg:pt-[2.3cm] lg:pb-[calc(min(2.5rem,3dvh)_+_4rem)]">
+      <section className="retablo-section flex flex-col justify-center items-center w-full lg:min-h-screen overflow-x-hidden relative pt-6 pb-0 lg:items-center lg:pt-[2.3cm] lg:pb-[calc(min(2.5rem,3dvh)_+_4rem)]">
         <style>{`
           .retablo-content-image {
             width: calc(100% - min(6cm, 4vw));
