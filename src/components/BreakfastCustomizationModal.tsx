@@ -116,10 +116,17 @@ export function BreakfastCustomizationModal({ dish, open, onClose }: BreakfastCu
     const itemUniqueId = `custom-${dish.name.replace(/\s+/g, "-")}-${Date.now()}`;
 
     const formattedCustomizations: Record<string, string> = {};
+    const customizationSelections: Record<string, string> = {};
     sectionsList.forEach((s) => {
       const key = s.title.replace(/^\d+\.\s*/, "");
       const val = selections[s.id || s.title];
-      if (val) formattedCustomizations[key] = val;
+      if (val) {
+        formattedCustomizations[key] = val;
+        const option = s.options.find(
+          (item: any) => item.name === val || item.id === val,
+        );
+        if (s.id && option?.id) customizationSelections[s.id] = option.id;
+      }
     });
 
     addItem({
@@ -129,6 +136,7 @@ export function BreakfastCustomizationModal({ dish, open, onClose }: BreakfastCu
       price: resolveSelectedPrice(),
       image: dish.image,
       customizations: formattedCustomizations,
+      customizationSelections,
     });
 
     onClose();
@@ -315,4 +323,3 @@ export function BreakfastCustomizationModal({ dish, open, onClose }: BreakfastCu
     document.body
   );
 }
-

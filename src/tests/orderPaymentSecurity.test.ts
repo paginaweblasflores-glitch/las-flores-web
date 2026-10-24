@@ -102,6 +102,10 @@ vi.mocked(createClient).mockImplementation((_url: string, key: string) => {
           error: token === "access-token" ? null : new Error("Invalid token"),
         })),
       },
+      rpc: vi.fn(async (name: string, args: Record<string, unknown>) => {
+        mockState.rpcCalls.push({ name, args });
+        return { data: { id: ORDER_ID, delivery_fee: 5, total: 45 }, error: null };
+      }),
     } as never;
   }
 
@@ -213,6 +217,19 @@ beforeEach(() => {
 });
 
 describe("secure order pricing SQL", () => {
+  it("recalculates delivery pricing from coordinates and records the derived distance", () => {
+    for (const { file, sql } of sqlByFile) {
+      const definition = getCreateOrderSecure(sql);
+      expect(definition).not.toBe("");
+      expect(definition).not.toMatch(/COALESCE\s*\(\s*p_delivery_fee/i);
+      expect(definition).toMatch(
+        /IF p_order_type = 'delivery' THEN[\s\S]*?calculate_delivery_fee\s*\(\s*p_latitude\s*,\s*p_longitude\s*\)/i,
+      );
+      expect(definition).toMatch(/p_latitude\s*,\s*p_longitude\s*,\s*v_distance\s*,/i);
+      expect(sql, file).toMatch(/ALTER TABLE public\.orders REPLICA IDENTITY FULL;/i);
+    }
+  });
+
   it.each(sqlByFile)("uses the UI spaghetti-pesto section ID in $file", ({ sql }) => {
     const spaghettiPestoSeed =
       sql.match(
@@ -375,6 +392,43 @@ describe("secure order pricing SQL", () => {
       /GRANT EXECUTE ON FUNCTION public\.create_order_secure TO anon/i,
     );
     expectMatch(sql, /GRANT EXECUTE ON FUNCTION public\.create_order_secure TO authenticated/i);
+  });
+
+  it("passes structured customizations to the public order RPC", async () => {
+    const { createOrder } = await import("../lib/supabase");
+    await createOrder({
+      order_number: "LF-1234",
+      order_type: "pickup",
+      client_name: "Buyer",
+      client_email: "buyer@example.com",
+      client_phone: "555",
+      subtotal: 30,
+      delivery_fee: 0,
+      total: 30,
+      payment_method: "cash",
+      items: [
+        {
+          product_id: PRODUCT_ID,
+          product_name: "Pasta",
+          unit_price: 30,
+          quantity: 1,
+          subtotal: 30,
+          customizations: { proteina: "pollo_grill" },
+        },
+      ],
+    });
+
+    expect(mockState.rpcCalls).toContainEqual({
+      name: "create_order_secure",
+      args: expect.objectContaining({
+        p_items: [
+          expect.objectContaining({
+            id: PRODUCT_ID,
+            customizations: { proteina: "pollo_grill" },
+          }),
+        ],
+      }),
+    });
   });
 
   it.each(sqlByFile)("keeps paid-order RPCs service-role only in $file", ({ sql }) => {

@@ -68,6 +68,8 @@ const schema = `
   CREATE TABLE public.driver_pins (order_id UUID, pin_code TEXT);
   CREATE FUNCTION public.calculate_delivery_fee(NUMERIC, NUMERIC)
   RETURNS NUMERIC LANGUAGE SQL AS 'SELECT 0::NUMERIC';
+  CREATE SCHEMA auth;
+  CREATE FUNCTION auth.uid() RETURNS UUID LANGUAGE SQL STABLE AS 'SELECT NULL::UUID';
 `;
 
 let databases: PGlite[] = [];
@@ -78,6 +80,137 @@ afterEach(async () => {
 });
 
 describe.each(sqlByFile)("billing SQL runtime: $file", ({ sql }) => {
+  it("ignores forged delivery values and prices structured options from the trusted catalog", async () => {
+    const database = new PGlite();
+    databases.push(database);
+    await database.exec(schema);
+
+    const distanceFunction = getFunction(sql, "calculate_delivery_distance_km");
+    const deliveryFeeFunction = getFunction(sql, "calculate_delivery_fee");
+    const createOrderFunction = getFunction(sql, "create_order_secure");
+    const couponFunction =
+      getFunction(sql, "apply_coupon_secure") ||
+      getFunction(
+        sqlByFile.find(({ file }) => file.endsWith("full_schema_v2.sql"))!.sql,
+        "apply_coupon_secure",
+      );
+    const replicaIdentity = sql.match(
+      /ALTER TABLE public\.orders REPLICA IDENTITY FULL;/i,
+    )?.[0];
+    expect(distanceFunction).not.toBe("");
+    expect(deliveryFeeFunction).not.toBe("");
+    expect(createOrderFunction).not.toBe("");
+    expect(couponFunction).not.toBe("");
+    expect(replicaIdentity).toBeDefined();
+    await database.exec(
+      [
+        distanceFunction,
+        deliveryFeeFunction,
+        couponFunction,
+        replicaIdentity,
+        createOrderFunction,
+      ].join("\n"),
+    );
+    expect(
+      (
+        await database.query(
+          `SELECT relreplident FROM pg_class WHERE oid = 'public.orders'::regclass`,
+        )
+      ).rows[0],
+    ).toEqual({ relreplident: "f" });
+
+    await database.query(
+      `INSERT INTO public.products VALUES ($1, 'Catalog pasta', 30, $2::jsonb, TRUE)`,
+      [
+        PRODUCT_ID,
+        JSON.stringify([
+          {
+            id: "proteina",
+            options: [{ id: "pollo_grill", name: "Pollo al grill", price: 40 }],
+          },
+        ]),
+      ],
+    );
+
+    const result = await database.query(
+      `SELECT public.create_order_secure(
+        'Buyer', 'buyer@example.com', '555', 'delivery', 'cash',
+        $1::jsonb, 'Address', NULL, -13.1628496, -74.2178801, 8, 0, NULL, NULL
+      ) AS result`,
+      [
+        JSON.stringify([
+          {
+            id: PRODUCT_ID,
+            quantity: 1,
+            product_name: "Pasta",
+            unit_price: 0.01,
+            customizations: { proteina: "pollo_grill" },
+          },
+        ]),
+      ],
+    );
+    const order = (result.rows[0] as { result: { id: string; subtotal: number; delivery_fee: number; total: number } }).result;
+    expect(order).toMatchObject({ subtotal: 40, delivery_fee: 5, total: 45 });
+    const stored = await database.query(
+      `SELECT distance_km, delivery_fee, total FROM public.orders WHERE id = $1`,
+      [order.id],
+    );
+    expect(
+      Object.fromEntries(
+        Object.entries(stored.rows[0] as Record<string, unknown>).map(([key, value]) => [
+          key,
+          Number(value),
+        ]),
+      ),
+    ).toMatchObject({ distance_km: 0, delivery_fee: 5, total: 45 });
+    const storedItem = await database.query(
+      `SELECT unit_price, subtotal FROM public.order_items WHERE order_id = $1`,
+      [order.id],
+    );
+    expect(
+      Object.fromEntries(
+        Object.entries(storedItem.rows[0] as Record<string, unknown>).map(([key, value]) => [
+          key,
+          Number(value),
+        ]),
+      ),
+    ).toMatchObject({ unit_price: 40, subtotal: 40 });
+    await expect(
+      database.query(
+        `SELECT public.create_order_secure(
+          'Buyer', 'buyer@example.com', '555', 'delivery', 'cash',
+          $1::jsonb, 'Address', NULL, -13.1628496, -74.2178801, 0, 100, NULL, NULL
+        )`,
+        [
+          JSON.stringify([
+            {
+              id: PRODUCT_ID,
+              quantity: 1,
+              customizations: { proteina: "missing-option" },
+            },
+          ]),
+        ],
+      ),
+    ).rejects.toThrow(/personalización inválida/i);
+    await expect(
+      database.query(
+        `SELECT public.create_order_secure(
+          'Buyer', 'buyer@example.com', '555', 'delivery', 'cash',
+          $1::jsonb, 'Address', NULL, 10, 10, 0, 0, NULL, NULL
+        )`,
+        [
+          JSON.stringify([
+            {
+              id: PRODUCT_ID,
+              quantity: 1,
+              customizations: { proteina: "pollo_grill" },
+            },
+          ]),
+        ],
+      ),
+    ).rejects.toThrow(/fuera de la zona/i);
+  }, 30_000);
+
   it("calculates trusted totals, validates completion, replays, and releases failed reservations once", async () => {
     const database = new PGlite();
     databases.push(database);

@@ -19,6 +19,7 @@ export interface CartItem {
   quantity: number;
   image?: string;
   customizations?: CartCustomizations;
+  customizationSelections?: Record<string, string>;
 }
 
 export function removeUnavailableCartItems(items: CartItem[], unavailableIds: Set<string>): CartItem[] {
@@ -102,9 +103,12 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const addItem = (newItem: Omit<CartItem, "quantity">) => {
     setItems((prev) => {
       // Generar clave única que incluye las personalizaciones
-      const customKey = newItem.customizations
-        ? Object.values(newItem.customizations).filter(Boolean).sort().join("|")
-        : "";
+      const customKey = Object.values(
+        newItem.customizationSelections || newItem.customizations || {},
+      )
+        .filter(Boolean)
+        .sort()
+        .join("|");
       const uniqueId = customKey ? `${newItem.id}__${customKey}` : newItem.id;
 
       const existing = prev.find((i) => i.id === uniqueId);

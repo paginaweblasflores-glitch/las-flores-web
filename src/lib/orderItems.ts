@@ -7,6 +7,7 @@ export interface OrderItemPayload {
   quantity: number;
   subtotal: number;
   notes?: string;
+  customizations?: Record<string, string>;
 }
 
 const customizationLabels: Record<string, string> = {
@@ -42,5 +43,8 @@ export function buildOrderItem(item: CartItem): OrderItemPayload {
     quantity: item.quantity,
     subtotal: item.price * item.quantity,
     ...(notes ? { notes } : {}),
+    ...(item.customizationSelections
+      ? { customizations: item.customizationSelections }
+      : {}),
   };
 }

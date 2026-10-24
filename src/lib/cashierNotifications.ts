@@ -29,6 +29,7 @@ export function shouldNotifyCashierOrder(payload: OrderPayload) {
   const paymentMethod = String(payload.new.payment_method || "").toLowerCase();
   return (
     (paymentMethod === "card" || paymentMethod === "culqi") &&
+    payload.old.payment_status === "pending" &&
     payload.new.payment_status === "paid" &&
     !isCashierOrderReady(payload.old)
   );

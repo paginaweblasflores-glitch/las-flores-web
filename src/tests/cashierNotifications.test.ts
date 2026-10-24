@@ -18,8 +18,29 @@ describe("cashier order notifications", () => {
     expect(
       shouldNotifyCashierOrder({
         eventType: "UPDATE",
+        old: { payment_method: "card", payment_status: "failed" },
+        new: { payment_method: "card", payment_status: "paid" },
+      }),
+    ).toBe(false);
+    expect(
+      shouldNotifyCashierOrder({
+        eventType: "UPDATE",
+        old: { payment_method: "card", payment_status: null },
+        new: { payment_method: "card", payment_status: "paid" },
+      }),
+    ).toBe(false);
+    expect(
+      shouldNotifyCashierOrder({
+        eventType: "UPDATE",
         old: { payment_method: "card", payment_status: "paid" },
         new: { payment_method: "card", payment_status: "paid", status: "preparing" },
+      }),
+    ).toBe(false);
+    expect(
+      shouldNotifyCashierOrder({
+        eventType: "UPDATE",
+        old: {},
+        new: { payment_method: "card", payment_status: "paid" },
       }),
     ).toBe(false);
     expect(

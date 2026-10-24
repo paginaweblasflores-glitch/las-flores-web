@@ -96,6 +96,7 @@ export interface OrderPayload {
     quantity: number;
     subtotal: number;
     notes?: string;
+    customizations?: Record<string, string>;
   }>;
 }
 
@@ -404,6 +405,7 @@ export async function createOrder(
           product_name: item.product_name,
           unit_price: item.unit_price,
           notes: item.notes || null,
+          customizations: item.customizations || {},
         })),
         p_address: orderData.address || null,
         p_reference: orderData.reference || null,

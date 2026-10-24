@@ -625,6 +625,52 @@ CREATE TRIGGER orders_payment_fields_service_only
   FOR EACH ROW
   EXECUTE FUNCTION public.prevent_unverified_card_payment_edits();
 
+CREATE OR REPLACE FUNCTION public.calculate_delivery_distance_km(
+    p_latitude NUMERIC, p_longitude NUMERIC
+)
+RETURNS NUMERIC
+LANGUAGE plpgsql IMMUTABLE SET search_path = public AS $$
+DECLARE
+    c_lat CONSTANT NUMERIC := -13.1628496;
+    c_lng CONSTANT NUMERIC := -74.2178801;
+BEGIN
+    IF p_latitude IS NULL OR p_longitude IS NULL
+       OR p_latitude NOT BETWEEN -90 AND 90
+       OR p_longitude NOT BETWEEN -180 AND 180 THEN
+        RAISE EXCEPTION 'La ubicación de entrega no es válida.';
+    END IF;
+
+    RETURN 2 * 6371 * ASIN(SQRT(
+        POWER(SIN(RADIANS(p_latitude - c_lat) / 2), 2) +
+        COS(RADIANS(c_lat)) * COS(RADIANS(p_latitude)) *
+        POWER(SIN(RADIANS(p_longitude - c_lng) / 2), 2)
+    ));
+END;
+$$;
+GRANT EXECUTE ON FUNCTION public.calculate_delivery_distance_km(NUMERIC, NUMERIC) TO anon, authenticated;
+
+CREATE OR REPLACE FUNCTION public.calculate_delivery_fee(
+    p_latitude NUMERIC, p_longitude NUMERIC
+)
+RETURNS NUMERIC
+LANGUAGE plpgsql IMMUTABLE SET search_path = public AS $$
+DECLARE
+    c_base CONSTANT NUMERIC := 5.0;
+    c_per_km CONSTANT NUMERIC := 1.5;
+    c_max_km CONSTANT NUMERIC := 8.0;
+    v_distance NUMERIC;
+BEGIN
+    v_distance := public.calculate_delivery_distance_km(p_latitude, p_longitude);
+    IF v_distance > c_max_km THEN
+        RAISE EXCEPTION 'La dirección está fuera de la zona de cobertura (%.1f km).', v_distance;
+    END IF;
+    RETURN ROUND(c_base + (v_distance * c_per_km), 1);
+END;
+$$;
+GRANT EXECUTE ON FUNCTION public.calculate_delivery_fee(NUMERIC, NUMERIC) TO anon, authenticated;
+
+ALTER TABLE public.orders REPLICA IDENTITY FULL;
+
 CREATE OR REPLACE FUNCTION public.create_order_secure(
     p_client_name TEXT, p_client_email TEXT, p_client_phone TEXT,
     p_order_type TEXT, p_payment_method TEXT,
@@ -644,6 +690,7 @@ DECLARE
     v_subtotal       NUMERIC(10,2) := 0;
     v_discount       NUMERIC(10,2) := 0;
     v_fee            NUMERIC(10,2) := 0;
+    v_distance       NUMERIC(5,2) := 0;
     v_total          NUMERIC(10,2) := 0;
     v_item           JSONB;
     v_priced_items   JSONB := '[]'::jsonb;
@@ -677,7 +724,10 @@ BEGIN
     END IF;
 
     v_order_number := 'LF-' || LPAD((FLOOR(RANDOM() * 9000) + 1000)::TEXT, 4, '0');
-    v_fee := CASE WHEN p_order_type = 'delivery' THEN GREATEST(0, COALESCE(p_delivery_fee, 0)) ELSE 0 END;
+    IF p_order_type = 'delivery' THEN
+        v_fee := public.calculate_delivery_fee(p_latitude, p_longitude);
+        v_distance := public.calculate_delivery_distance_km(p_latitude, p_longitude);
+    END IF;
 
     FOR v_item IN SELECT * FROM jsonb_array_elements(p_items) LOOP
         v_product_id := (v_item->>'id')::UUID;
@@ -743,7 +793,7 @@ BEGIN
     ) VALUES (
         v_order_id, v_order_number, v_tracking, v_user_id, p_order_type,
         p_client_name, p_client_email, p_client_phone, p_address, p_reference,
-        p_latitude, p_longitude, p_distance_km, v_subtotal, v_discount,
+        p_latitude, p_longitude, v_distance, v_subtotal, v_discount,
         p_coupon_code, v_fee, v_total, p_payment_method, 'received', p_notes
     );
 
