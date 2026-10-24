@@ -114,10 +114,61 @@ CREATE TABLE IF NOT EXISTS public.products (
     is_available BOOLEAN DEFAULT TRUE,
     is_featured BOOLEAN DEFAULT FALSE,
     sort_order INT DEFAULT 0,
+    custom_options JSONB NOT NULL DEFAULT '[]'::jsonb,
     created_at TIMESTAMPTZ DEFAULT NOW()
 );
+ALTER TABLE public.products
+    ADD COLUMN IF NOT EXISTS custom_options JSONB NOT NULL DEFAULT '[]'::jsonb;
 CREATE INDEX IF NOT EXISTS idx_products_category  ON public.products(category_id);
 CREATE INDEX IF NOT EXISTS idx_products_available ON public.products(is_available);
+
+UPDATE public.products
+SET custom_options = CASE
+  WHEN name ILIKE '%filet%mignon%' THEN $options$[
+    {"id": "carbohidrato", "title": "1. Carbohidrato", "options": [
+      {"id": "papas_fritas_francesas", "name": "Papas fritas francesas", "price": 0},
+      {"id": "papas_salteadas_mantequilla", "name": "Papas salteadas en mantequilla", "price": 0}
+    ]},
+    {"id": "ensalada", "title": "2. Ensalada", "options": [
+      {"id": "ensalada_organica", "name": "Ensalada orgánica", "price": 0},
+      {"id": "ensalada_sancochada", "name": "Ensalada sancochada", "price": 0}
+    ]}
+  ]$options$::jsonb
+  WHEN name ILIKE '%espagueti%pesto%' THEN $options$[
+    {"id": "1._proteína", "title": "1. Proteína", "options": [
+      {"id": "milanesa", "name": "Milanesa", "price": 42},
+      {"id": "pollo_grill", "name": "Pollo al grill", "price": 40},
+      {"id": "filet_mignon", "name": "Filet mignon", "price": 46}
+    ]}
+  ]$options$::jsonb
+  WHEN (name ILIKE '%fetuchini%' OR name ILIKE '%fetuccini%' OR name ILIKE '%fettuccini%')
+    AND (name ILIKE '%huancaina%' OR name ILIKE '%huancaína%') THEN $options$[
+    {"id": "1._proteína", "title": "1. Proteína", "options": [
+      {"id": "pollo_grill", "name": "Pollo al grill", "price": 40},
+      {"id": "lomo_saltado", "name": "Lomo saltado", "price": 44}
+    ]}
+  ]$options$::jsonb
+  WHEN name ILIKE '%cuy las flores%deshuesado%' THEN $options$[
+    {"id": "tamano", "title": "1. Tamaño", "options": [
+      {"id": "medio_cuy", "name": "Medio cuy", "price": 42},
+      {"id": "cuy_entero", "name": "Cuy entero", "price": 72}
+    ]}
+  ]$options$::jsonb
+  WHEN name ILIKE '%cuy las flores%' THEN $options$[
+    {"id": "tamano", "title": "1. Tamaño", "options": [
+      {"id": "medio_cuy", "name": "Medio cuy", "price": 38},
+      {"id": "cuy_entero", "name": "Cuy entero", "price": 68}
+    ]}
+  ]$options$::jsonb
+  WHEN name ILIKE '%mixto%' THEN $options$[
+    {"id": "1._tipo", "title": "1. Tipo", "options": [
+      {"id": "mixto_clasico", "name": "Clásico", "price": 52},
+      {"id": "mixto_deshuesado", "name": "Deshuesado", "price": 58}
+    ]}
+  ]$options$::jsonb
+  ELSE custom_options
+END
+WHERE custom_options IS NULL OR custom_options = '[]'::jsonb;
 
 -- ============================================================
 -- 5. ZONAS Y BLACKOUTS
@@ -539,32 +590,79 @@ DECLARE
     v_fee            NUMERIC(10,2) := 0;
     v_total          NUMERIC(10,2) := 0;
     v_item           JSONB;
+    v_priced_items   JSONB := '[]'::jsonb;
     v_product_id     UUID;
     v_quantity       INT;
     v_price          NUMERIC(10,2);
+    v_custom_options JSONB;
+    v_option_price   NUMERIC(10,2);
     v_prod_name      TEXT;
     v_custom_name    TEXT;
     v_custom_notes   TEXT;
     v_available      BOOLEAN;
     v_pin            TEXT;
     v_coupon_res     RECORD;
+    v_customization  RECORD;
+    v_item_count     INT;
 BEGIN
+    IF p_items IS NULL OR jsonb_typeof(p_items) <> 'array' OR jsonb_array_length(p_items) = 0 THEN
+        RAISE EXCEPTION 'El pedido no contiene ítems válidos.';
+    END IF;
+    IF p_order_type IS NULL OR p_order_type NOT IN ('delivery', 'pickup') THEN
+        RAISE EXCEPTION 'Tipo de pedido inválido.';
+    END IF;
+    IF p_payment_method IS NULL OR p_payment_method NOT IN ('yape', 'card', 'cash', 'culqi', 'efectivo') THEN
+        RAISE EXCEPTION 'Método de pago inválido.';
+    END IF;
+
+    v_item_count := jsonb_array_length(p_items);
+    IF v_item_count > 100 THEN
+        RAISE EXCEPTION 'El pedido contiene demasiados ítems.';
+    END IF;
+
     v_order_number := 'LF-' || LPAD((FLOOR(RANDOM() * 9000) + 1000)::TEXT, 4, '0');
     v_fee := CASE WHEN p_order_type = 'delivery' THEN GREATEST(0, COALESCE(p_delivery_fee, 0)) ELSE 0 END;
 
     FOR v_item IN SELECT * FROM jsonb_array_elements(p_items) LOOP
         v_product_id := (v_item->>'id')::UUID;
         v_quantity   := (v_item->>'quantity')::INT;
-        IF v_quantity IS NULL OR v_quantity <= 0 THEN RAISE EXCEPTION 'Cantidad inválida.'; END IF;
-        SELECT name, price, is_available INTO v_prod_name, v_price, v_available
+        IF v_quantity IS NULL OR v_quantity <= 0 OR v_quantity > 99 THEN RAISE EXCEPTION 'Cantidad inválida.'; END IF;
+        SELECT name, price, custom_options, is_available
+          INTO v_prod_name, v_price, v_custom_options, v_available
           FROM public.products WHERE id = v_product_id;
         IF NOT FOUND THEN RAISE EXCEPTION 'Producto % no encontrado.', v_product_id; END IF;
         IF NOT v_available THEN RAISE EXCEPTION 'El producto "%" no está disponible.', v_prod_name; END IF;
-        v_price := COALESCE((v_item->>'unit_price')::NUMERIC, v_price);
+        IF v_item ? 'customizations' AND jsonb_typeof(v_item->'customizations') <> 'object' THEN
+            RAISE EXCEPTION 'Personalización inválida para el producto "%".', v_prod_name;
+        END IF;
+        FOR v_customization IN
+            SELECT key, value
+            FROM jsonb_each_text(COALESCE(v_item->'customizations', '{}'::jsonb))
+        LOOP
+            SELECT (custom_option.option_data->>'price')::NUMERIC
+              INTO v_option_price
+              FROM jsonb_array_elements(COALESCE(v_custom_options, '[]'::jsonb)) AS section(section_data)
+              CROSS JOIN LATERAL jsonb_array_elements(section.section_data->'options') AS custom_option(option_data)
+             WHERE section.section_data->>'id' = v_customization.key
+               AND custom_option.option_data->>'id' = v_customization.value;
+            IF NOT FOUND OR v_option_price IS NULL OR v_option_price < 0 THEN
+                RAISE EXCEPTION 'Opción de personalización inválida para el producto "%".', v_prod_name;
+            END IF;
+            IF v_option_price > 0 THEN
+                v_price := v_option_price;
+            END IF;
+        END LOOP;
         v_custom_name := NULLIF(TRIM(v_item->>'product_name'), '');
         v_custom_notes := NULLIF(TRIM(v_item->>'notes'), '');
         IF v_price < 0 THEN RAISE EXCEPTION 'Precio inválido para el producto "%".', v_prod_name; END IF;
         v_subtotal := v_subtotal + (v_price * v_quantity);
+        v_priced_items := v_priced_items || jsonb_build_array(jsonb_build_object(
+            'id', v_product_id,
+            'quantity', v_quantity,
+            'product_name', COALESCE(v_custom_name, v_prod_name),
+            'notes', v_custom_notes,
+            'price', v_price
+        ));
     END LOOP;
 
     IF p_coupon_code IS NOT NULL AND TRIM(p_coupon_code) <> '' THEN
@@ -590,17 +688,14 @@ BEGIN
         p_coupon_code, v_fee, v_total, p_payment_method, 'received', p_notes
     );
 
-    FOR v_item IN SELECT * FROM jsonb_array_elements(p_items) LOOP
+    FOR v_item IN SELECT * FROM jsonb_array_elements(v_priced_items) LOOP
         v_product_id := (v_item->>'id')::UUID;
         v_quantity   := (v_item->>'quantity')::INT;
-        SELECT name, price INTO v_prod_name, v_price FROM public.products WHERE id = v_product_id;
-        v_price := COALESCE((v_item->>'unit_price')::NUMERIC, v_price);
-        v_custom_name := NULLIF(TRIM(v_item->>'product_name'), '');
-        v_custom_notes := NULLIF(TRIM(v_item->>'notes'), '');
+        v_price := (v_item->>'price')::NUMERIC;
         INSERT INTO public.order_items
           (order_id, product_id, product_name, unit_price, quantity, subtotal, notes)
-          VALUES (v_order_id, v_product_id, COALESCE(v_custom_name, v_prod_name), v_price,
-                  v_quantity, (v_price * v_quantity), v_custom_notes);
+          VALUES (v_order_id, v_product_id, v_item->>'product_name', v_price,
+                  v_quantity, (v_price * v_quantity), v_item->>'notes');
     END LOOP;
 
     v_pin := LPAD((FLOOR(RANDOM() * 9000) + 1000)::TEXT, 4, '0');
