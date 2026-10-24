@@ -6,7 +6,9 @@ const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
 if (!supabaseUrl || !supabaseAnonKey) {
-  console.error("[Supabase] VITE_SUPABASE_URL y VITE_SUPABASE_ANON_KEY deben estar definidas en .env.local");
+  console.error(
+    "[Supabase] VITE_SUPABASE_URL y VITE_SUPABASE_ANON_KEY deben estar definidas en .env.local",
+  );
 }
 
 export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
@@ -129,13 +131,14 @@ export async function signInWithGoogle() {
   // La ventana se abre ANTES del await: si se abre después, el navegador ya
   // no lo reconoce como parte del gesto directo del clic del usuario y
   // bloquea el popup en silencio (sin error en consola).
-  const width = 500, height = 650;
+  const width = 500,
+    height = 650;
   const left = window.screenX + (window.outerWidth - width) / 2;
   const top = window.screenY + (window.outerHeight - height) / 2;
   const popup = window.open(
     "about:blank",
     "google_auth_popup",
-    `width=${width},height=${height},left=${left},top=${top},status=no,menubar=no,toolbar=no`
+    `width=${width},height=${height},left=${left},top=${top},status=no,menubar=no,toolbar=no`,
   );
 
   const { data, error } = await supabase.auth.signInWithOAuth({
@@ -207,7 +210,9 @@ export interface ProfileUpdatePayload {
  * Actualizar información de perfil del usuario en Supabase Auth
  */
 export async function updateUserProfile(payload: ProfileUpdatePayload) {
-  const { data: { user } } = await supabase.auth.getUser();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
 
   // 1. Actualizar user_metadata en Supabase Auth
   const { data: authData, error: authErr } = await supabase.auth.updateUser({
@@ -229,18 +234,12 @@ export async function updateUserProfile(payload: ProfileUpdatePayload) {
     if (payload.phone) updateObj.phone = payload.phone;
     if (payload.birth_date) updateObj.birth_date = payload.birth_date;
 
-    let { error: dbErr } = await supabase
-      .from("profiles")
-      .update(updateObj)
-      .eq("id", user.id);
+    let { error: dbErr } = await supabase.from("profiles").update(updateObj).eq("id", user.id);
 
     if (dbErr && payload.birth_date) {
       delete updateObj.birth_date;
       updateObj.birthdate = payload.birth_date;
-      const { error: err2 } = await supabase
-        .from("profiles")
-        .update(updateObj)
-        .eq("id", user.id);
+      const { error: err2 } = await supabase.from("profiles").update(updateObj).eq("id", user.id);
 
       if (err2 && payload.phone) {
         await supabase
@@ -284,7 +283,8 @@ export async function createReservation(payload: any) {
             if (reservation_date > endDate) return false;
           }
           if (b.blackout_type === "time_slot" && reservation_time && b.start_time && b.end_time) {
-            const slotTime = reservation_time.length === 5 ? `${reservation_time}:00` : reservation_time;
+            const slotTime =
+              reservation_time.length === 5 ? `${reservation_time}:00` : reservation_time;
             const startTime = b.start_time.length === 5 ? `${b.start_time}:00` : b.start_time;
             const endTime = b.end_time.length === 5 ? `${b.end_time}:00` : b.end_time;
             if (slotTime < startTime || slotTime > endTime) return false;
@@ -335,7 +335,8 @@ export async function createReservation(payload: any) {
   // Campos opcionales
   if (payload.zone_id) payloadToInsert.zone_id = payload.zone_id;
   if (payload.table_number) payloadToInsert.table_number = payload.table_number;
-  if (payload.client_phone || payload.phone) payloadToInsert.client_phone = payload.client_phone || payload.phone;
+  if (payload.client_phone || payload.phone)
+    payloadToInsert.client_phone = payload.client_phone || payload.phone;
   if (payload.notes) payloadToInsert.notes = payload.notes;
 
   try {
@@ -360,16 +361,15 @@ export async function createReservation(payload: any) {
     const fallbackPayload = { ...payloadToInsert };
     delete fallbackPayload.service_type;
 
-    const retryRes = await supabase
-      .from("reservations")
-      .insert([fallbackPayload])
-      .select();
+    const retryRes = await supabase.from("reservations").insert([fallbackPayload]).select();
 
     if (!retryRes.error && retryRes.data && retryRes.data.length > 0) {
       return retryRes.data[0];
     }
 
-    throw new Error(error.message || retryRes.error?.message || "No se pudo guardar la reserva en el servidor.");
+    throw new Error(
+      error.message || retryRes.error?.message || "No se pudo guardar la reserva en el servidor.",
+    );
   }
   return data;
 }
@@ -377,11 +377,18 @@ export async function createReservation(payload: any) {
 /**
  * Guardar un nuevo pedido en Supabase con sus ítems (Servidor seguro vía RPC)
  */
-export async function createOrder(payload: OrderPayload & { discount_amount?: number; coupon_code?: string }) {
+export async function createOrder(
+  payload: OrderPayload & { discount_amount?: number; coupon_code?: string },
+) {
+  if (["card", "culqi"].includes(payload.payment_method.toLowerCase())) {
+    throw new Error(
+      "Los pedidos pagados con tarjeta deben confirmarse desde el servicio de pagos.",
+    );
+  }
+
   const { items, ...orderData } = payload;
 
-  const hasValidUuids =
-    items.length > 0 && items.every((item) => isValidUuid(item.product_id));
+  const hasValidUuids = items.length > 0 && items.every((item) => isValidUuid(item.product_id));
 
   if (hasValidUuids) {
     try {
@@ -391,7 +398,7 @@ export async function createOrder(payload: OrderPayload & { discount_amount?: nu
         p_client_phone: orderData.client_phone,
         p_order_type: orderData.order_type,
         p_payment_method: orderData.payment_method,
-        p_items: items.map(item => ({
+        p_items: items.map((item) => ({
           id: item.product_id,
           quantity: item.quantity,
           product_name: item.product_name,
@@ -405,7 +412,7 @@ export async function createOrder(payload: OrderPayload & { discount_amount?: nu
         p_distance_km: orderData.distance_km || 0,
         p_delivery_fee: orderData.delivery_fee || 0,
         p_coupon_code: payload.coupon_code || null,
-        p_notes: orderData.notes || null
+        p_notes: orderData.notes || null,
       });
 
       if (!rpcError && rpcData) {
@@ -455,10 +462,7 @@ export async function getUserReservations(userId?: string, email?: string) {
   try {
     if (!userId && !email) return [];
 
-    let query = supabase
-      .from("reservations")
-      .select("*")
-      .order("created_at", { ascending: false });
+    let query = supabase.from("reservations").select("*").order("created_at", { ascending: false });
 
     if (email) {
       query = query.ilike("client_email", email.trim());
@@ -502,18 +506,14 @@ export async function getCategories() {
 }
 
 export async function createProduct(payload: Omit<Product, "id" | "created_at">) {
-  const { data, error } = await supabase
-    .from("products")
-    .insert([payload])
-    .select()
-    .single();
+  const { data, error } = await supabase.from("products").insert([payload]).select().single();
   if (error) throw error;
   return data;
 }
 
 export async function updateProduct(
   id: string,
-  payload: Partial<Omit<Product, "id" | "created_at">>
+  payload: Partial<Omit<Product, "id" | "created_at">>,
 ) {
   const { data, error } = await supabase
     .from("products")
@@ -566,13 +566,9 @@ export async function toggleProductAvailability(id: string, is_available: boolea
 }
 
 export async function getUserRole(
-  userId: string
+  userId: string,
 ): Promise<"client" | "staff" | "admin" | "delivery" | null> {
-  const { data, error } = await supabase
-    .from("profiles")
-    .select("role")
-    .eq("id", userId)
-    .single();
+  const { data, error } = await supabase.from("profiles").select("role").eq("id", userId).single();
   if (error) return null;
   return (data?.role as "client" | "staff" | "admin" | "delivery") ?? null;
 }

@@ -4,7 +4,11 @@ import { supabase, signOut } from "../lib/supabase";
 import { sendReviewRequestEmail } from "../lib/emailService";
 import { playOrderChime } from "../utils/audioAlert";
 import { AdminOrderDetailModal } from "../components/AdminOrderDetailModal";
-import { CashierTopBar, CashierKPIHeader, type CashierModule } from "../components/CashierKPIHeader";
+import {
+  CashierTopBar,
+  CashierKPIHeader,
+  type CashierModule,
+} from "../components/CashierKPIHeader";
 import { CashierKanbanView } from "../components/CashierKanbanView";
 import { CashierClientsSection } from "../components/CashierClientsSection";
 import { CashierAuditModal } from "../components/CashierAuditModal";
@@ -22,7 +26,13 @@ import {
   Building2,
   UserCheck,
 } from "lucide-react";
-import { getYapeConfig, saveYapeConfig, subscribeToYapeConfig, DEFAULT_YAPE_CONFIG, type YapeConfig } from "../lib/yapeService";
+import {
+  getYapeConfig,
+  saveYapeConfig,
+  subscribeToYapeConfig,
+  DEFAULT_YAPE_CONFIG,
+  type YapeConfig,
+} from "../lib/yapeService";
 
 const getLocalYYYYMMDD = (d?: Date | string) => {
   if (!d) return "";
@@ -34,6 +44,18 @@ const getLocalYYYYMMDD = (d?: Date | string) => {
 export const Route = createFileRoute("/caja")({
   component: CashierDashboardRoute,
 });
+
+function isCashierOrderReady(order: Record<string, unknown>) {
+  const paymentMethod = String(order.payment_method || "").toLowerCase();
+  if (paymentMethod === "card" || paymentMethod === "culqi") {
+    return order.payment_status === "paid";
+  }
+  return (
+    order.payment_status === null ||
+    order.payment_status === undefined ||
+    order.payment_status === "paid"
+  );
+}
 
 function CashierDashboardRoute() {
   const navigate = useNavigate();
@@ -107,7 +129,10 @@ function CashierDashboardRoute() {
 
   const checkAuth = async () => {
     try {
-      const { data: { user }, error: userError } = await supabase.auth.getUser();
+      const {
+        data: { user },
+        error: userError,
+      } = await supabase.auth.getUser();
 
       if (userError || !user) {
         navigate({ to: "/staff-login" });
@@ -121,7 +146,10 @@ function CashierDashboardRoute() {
         .single();
 
       const userRole = profile?.role?.toLowerCase();
-      if (profileError || (userRole !== "admin" && userRole !== "cashier" && userRole !== "staff")) {
+      if (
+        profileError ||
+        (userRole !== "admin" && userRole !== "cashier" && userRole !== "staff")
+      ) {
         console.warn("Acceso denegado a caja. Rol insuficiente:", userRole);
         navigate({ to: "/staff-login" });
         return;
@@ -155,6 +183,7 @@ function CashierDashboardRoute() {
         .from("orders")
         .select("*")
         .gte("created_at", dateFilter)
+        .or("payment_status.eq.paid,and(payment_status.is.null,payment_method.not.in.(card,culqi))")
         .order("created_at", { ascending: false })
         .limit(200);
 
@@ -166,10 +195,7 @@ function CashierDashboardRoute() {
               .from("order_items")
               .select("*, products(name, image_url)")
               .in("order_id", orderIds),
-            supabase
-              .from("driver_pins")
-              .select("order_id, pin_code")
-              .in("order_id", orderIds),
+            supabase.from("driver_pins").select("order_id, pin_code").in("order_id", orderIds),
           ]);
 
           if (itemsData) setOrderItems(itemsData);
@@ -216,30 +242,31 @@ function CashierDashboardRoute() {
   }, []);
 
   const soundEnabledRef = useRef(soundEnabled);
-  useEffect(() => { soundEnabledRef.current = soundEnabled; }, [soundEnabled]);
+  useEffect(() => {
+    soundEnabledRef.current = soundEnabled;
+  }, [soundEnabled]);
 
   useEffect(() => {
     // 1. Supabase Realtime WebSocket
     const channel = supabase
       .channel("cashier-realtime-all")
-      .on(
-        "postgres_changes",
-        { event: "*", schema: "public", table: "orders" },
-        (payload) => {
-          if (payload.eventType === "INSERT") {
-            const n = payload.new as any;
-            addNotification({
-              entityId: n.id || n.order_number,
-              type: "order",
-              title: "¡NUEVO PEDIDO RECIBIDO!",
-              subtitle: `#${n.order_number || "LF-NUEVO"}`,
-              detail: `${n.client_name || "Cliente"} — S/ ${Number(n.total || 0).toFixed(2)}`,
-              data: n,
-            });
-          }
-          fetchData(true);
+      .on("postgres_changes", { event: "*", schema: "public", table: "orders" }, (payload) => {
+        if (
+          payload.eventType === "INSERT" &&
+          isCashierOrderReady(payload.new as Record<string, unknown>)
+        ) {
+          const n = payload.new as any;
+          addNotification({
+            entityId: n.id || n.order_number,
+            type: "order",
+            title: "¡NUEVO PEDIDO RECIBIDO!",
+            subtitle: `#${n.order_number || "LF-NUEVO"}`,
+            detail: `${n.client_name || "Cliente"} — S/ ${Number(n.total || 0).toFixed(2)}`,
+            data: n,
+          });
         }
-      )
+        fetchData(true);
+      })
       .subscribe();
 
     // 2. Polling silencioso de respaldo cada 5 segundos para garantizar 100% de frescura
@@ -267,7 +294,8 @@ function CashierDashboardRoute() {
       if (s.includes("entregad") || s.includes("complet") || s.includes("delivered")) {
         const targetOrd = orders.find((o) => o.id === orderId);
         let emailToUse = targetOrd?.client_email || targetOrd?.customer_email || targetOrd?.email;
-        let nameToUse = targetOrd?.client_name || targetOrd?.customer_name || targetOrd?.name || "Cliente";
+        let nameToUse =
+          targetOrd?.client_name || targetOrd?.customer_name || targetOrd?.name || "Cliente";
 
         if (!emailToUse) {
           const { data: dbOrd } = await supabase
@@ -293,16 +321,21 @@ function CashierDashboardRoute() {
       await fetchData();
     } catch (err: any) {
       console.error("Error updating order status:", err);
-      alert(`No se pudo actualizar el estado del pedido: ${err?.message || "Revisa la política RLS en Supabase."}`);
+      alert(
+        `No se pudo actualizar el estado del pedido: ${err?.message || "Revisa la política RLS en Supabase."}`,
+      );
     }
   };
 
   const getNormalizedStatus = (status: string | null | undefined) => {
     if (!status) return "pendiente";
     const s = status.toLowerCase().trim();
-    if (s.includes("cocina") || s.includes("preparac") || s.includes("kitchen")) return "en_preparacion";
-    if (s.includes("camino") || s.includes("listo") || s.includes("way") || s.includes("pickup")) return "en_camino";
-    if (s.includes("entregad") || s.includes("complet") || s.includes("delivered")) return "entregado";
+    if (s.includes("cocina") || s.includes("preparac") || s.includes("kitchen"))
+      return "en_preparacion";
+    if (s.includes("camino") || s.includes("listo") || s.includes("way") || s.includes("pickup"))
+      return "en_camino";
+    if (s.includes("entregad") || s.includes("complet") || s.includes("delivered"))
+      return "entregado";
     if (s.includes("cancel") || s.includes("rechaz")) return "cancelado";
     return "pendiente";
   };
@@ -339,7 +372,7 @@ function CashierDashboardRoute() {
 
   const avgWaitMins = (() => {
     const active = [...pendingOrders, ...inKitchenOrders, ...onWayOrders];
-    
+
     // 1. Si hay pedidos en cola activa, calcular el tiempo de espera real transcurrido en vivo
     if (active.length > 0) {
       const totalMins = active.reduce((sum, o) => {
@@ -380,7 +413,6 @@ function CashierDashboardRoute() {
     return 20;
   })();
 
-
   if (loading || !isAuthorized) {
     return (
       <div className="min-h-screen bg-[#F9F8F3] flex items-center justify-center font-sans">
@@ -394,7 +426,6 @@ function CashierDashboardRoute() {
 
   return (
     <div className="doc-legible min-h-screen bg-[#F9F8F3] text-[#231A14] pb-20 font-sans selection:bg-[#D4AF37] selection:text-[#2D473C]">
-      
       {/* Floating Stacked Toast Notifications */}
       <div className="fixed top-4 right-4 z-50 flex flex-col gap-3 max-w-sm sm:max-w-md w-full pointer-events-none">
         {notifications.map((notif) => (
@@ -418,9 +449,7 @@ function CashierDashboardRoute() {
               <h4 className="font-serif font-black text-sm text-white truncate">
                 {notif.subtitle}
               </h4>
-              <p className="text-xs text-gray-300 truncate font-medium mt-0.5">
-                {notif.detail}
-              </p>
+              <p className="text-xs text-gray-300 truncate font-medium mt-0.5">{notif.detail}</p>
             </div>
 
             {/* Botón cerrar */}
@@ -454,103 +483,111 @@ function CashierDashboardRoute() {
 
       {/* Main Content Container */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 space-y-6">
+        {activeTab === "seguimiento" && (
+          <>
+            {/* View Mode Switcher Header Bar */}
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-4 bg-white p-2 rounded-2xl border border-gray-200 shadow-2xs">
+              {/* Main Module Bar (Comandas / Arqueo / Stock / Yape) */}
+              <div className="flex items-center gap-2 w-full sm:w-auto flex-wrap">
+                <span className="flex-1 sm:flex-none py-2.5 px-5 rounded-xl text-xs font-sans transition-all flex items-center justify-center gap-2 bg-[#2D473C] text-white shadow-md font-black border border-[#2D473C]">
+                  <ShoppingBag size={16} className="text-[#D4AF37]" />
+                  <span>Delivery ({pendingOrders.length} Pendientes)</span>
+                </span>
 
-      {activeTab === "seguimiento" && (
-        <>
-        {/* View Mode Switcher Header Bar */}
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 bg-white p-2 rounded-2xl border border-gray-200 shadow-2xs">
+                <button
+                  onClick={() => setIsAuditModalOpen(true)}
+                  className="py-2.5 px-4 rounded-xl text-xs font-sans font-bold transition-all flex items-center justify-center gap-2 bg-[#D4AF37]/15 text-[#2D473C] hover:bg-[#D4AF37]/25 border border-[#D4AF37]/40 cursor-pointer shadow-2xs"
+                >
+                  <TrendingUp size={16} className="text-[#2D473C]" />
+                  <span>Arqueo de Caja</span>
+                </button>
 
-          {/* Main Module Bar (Comandas / Arqueo / Stock / Yape) */}
-          <div className="flex items-center gap-2 w-full sm:w-auto flex-wrap">
-            <span className="flex-1 sm:flex-none py-2.5 px-5 rounded-xl text-xs font-sans transition-all flex items-center justify-center gap-2 bg-[#2D473C] text-white shadow-md font-black border border-[#2D473C]">
-              <ShoppingBag size={16} className="text-[#D4AF37]" />
-              <span>Delivery ({pendingOrders.length} Pendientes)</span>
-            </span>
+                <button
+                  onClick={() => setIsStockModalOpen(true)}
+                  className="py-2.5 px-4 rounded-xl text-xs font-sans font-bold transition-all flex items-center justify-center gap-2 bg-[#2D473C]/10 text-[#2D473C] hover:bg-[#2D473C]/20 border border-[#2D473C]/30 cursor-pointer shadow-2xs"
+                >
+                  <PackageX size={16} className="text-[#2D473C]" />
+                  <span>Control de Stock</span>
+                </button>
 
-            <button
-              onClick={() => setIsAuditModalOpen(true)}
-              className="py-2.5 px-4 rounded-xl text-xs font-sans font-bold transition-all flex items-center justify-center gap-2 bg-[#D4AF37]/15 text-[#2D473C] hover:bg-[#D4AF37]/25 border border-[#D4AF37]/40 cursor-pointer shadow-2xs"
-            >
-              <TrendingUp size={16} className="text-[#2D473C]" />
-              <span>Arqueo de Caja</span>
-            </button>
-
-            <button
-              onClick={() => setIsStockModalOpen(true)}
-              className="py-2.5 px-4 rounded-xl text-xs font-sans font-bold transition-all flex items-center justify-center gap-2 bg-[#2D473C]/10 text-[#2D473C] hover:bg-[#2D473C]/20 border border-[#2D473C]/30 cursor-pointer shadow-2xs"
-            >
-              <PackageX size={16} className="text-[#2D473C]" />
-              <span>Control de Stock</span>
-            </button>
-
-            {/* Switch / Botón Selector de QR Yape */}
-            <button
-              onClick={() => setIsYapeModalOpen(true)}
-              className={`py-2.5 px-4 rounded-xl text-xs font-sans font-bold transition-all flex items-center justify-center gap-2 border cursor-pointer shadow-2xs ${
-                yapeConfig.mode === "personal"
-                  ? "bg-purple-100/90 text-purple-900 border-purple-300 hover:bg-purple-200"
-                  : "bg-emerald-100/90 text-emerald-900 border-emerald-300 hover:bg-emerald-200"
-              }`}
-              title="Cambiar QR y titular de Yape (Empresa vs Personal)"
-            >
-              <QrCode size={16} className={yapeConfig.mode === "personal" ? "text-purple-700" : "text-emerald-700"} />
-              <span>QR Yape:</span>
-              <span className={`px-2 py-0.5 rounded-full text-xs font-black uppercase tracking-wider ${
-                yapeConfig.mode === "personal" ? "bg-purple-700 text-white" : "bg-emerald-700 text-white"
-              }`}>
-                {yapeConfig.mode === "personal" ? "Personal" : "Empresa"}
-              </span>
-            </button>
-          </div>
-
-          <button
-            onClick={() => fetchData()}
-            disabled={refreshing}
-            className="px-4 py-2.5 rounded-xl bg-gray-100 hover:bg-gray-200 text-gray-800 text-xs font-bold flex items-center gap-2 transition-colors disabled:opacity-50 whitespace-nowrap"
-          >
-            <RefreshCw size={14} className={refreshing ? "animate-spin text-[#2D473C]" : ""} />
-            Actualizar Datos
-          </button>
-        </div>
-
-        {/* ==================================================================== */}
-        {/* COMANDAS Y PEDIDOS */}
-        {/* ==================================================================== */}
-        <>
-            {loading ? (
-              <div className="py-20 text-center space-y-3">
-                <RefreshCw size={28} className="animate-spin text-[#2D473C] mx-auto" />
-                <p className="text-sm font-bold text-gray-600">Cargando comandas en tiempo real...</p>
+                {/* Switch / Botón Selector de QR Yape */}
+                <button
+                  onClick={() => setIsYapeModalOpen(true)}
+                  className={`py-2.5 px-4 rounded-xl text-xs font-sans font-bold transition-all flex items-center justify-center gap-2 border cursor-pointer shadow-2xs ${
+                    yapeConfig.mode === "personal"
+                      ? "bg-purple-100/90 text-purple-900 border-purple-300 hover:bg-purple-200"
+                      : "bg-emerald-100/90 text-emerald-900 border-emerald-300 hover:bg-emerald-200"
+                  }`}
+                  title="Cambiar QR y titular de Yape (Empresa vs Personal)"
+                >
+                  <QrCode
+                    size={16}
+                    className={
+                      yapeConfig.mode === "personal" ? "text-purple-700" : "text-emerald-700"
+                    }
+                  />
+                  <span>QR Yape:</span>
+                  <span
+                    className={`px-2 py-0.5 rounded-full text-xs font-black uppercase tracking-wider ${
+                      yapeConfig.mode === "personal"
+                        ? "bg-purple-700 text-white"
+                        : "bg-emerald-700 text-white"
+                    }`}
+                  >
+                    {yapeConfig.mode === "personal" ? "Personal" : "Empresa"}
+                  </span>
+                </button>
               </div>
-            ) : (
-              <CashierKanbanView
-                orders={orders}
-                orderItems={orderItems}
-                onStatusChange={handleUpdateOrderStatus}
-                onViewDetail={(ord) => {
-                  setSelectedOrder(ord);
-                  setIsDetailModalOpen(true);
-                }}
-              />
-            )}
-        </>
-        </>
-      )}
 
-      {activeTab === "analitica" && (
-        <CashierKPIHeader todayRevenue={todayRevenue} todayOrdersCount={todayOrdersCount} />
-      )}
+              <button
+                onClick={() => fetchData()}
+                disabled={refreshing}
+                className="px-4 py-2.5 rounded-xl bg-gray-100 hover:bg-gray-200 text-gray-800 text-xs font-bold flex items-center gap-2 transition-colors disabled:opacity-50 whitespace-nowrap"
+              >
+                <RefreshCw size={14} className={refreshing ? "animate-spin text-[#2D473C]" : ""} />
+                Actualizar Datos
+              </button>
+            </div>
 
-      {activeTab === "clientes" && (
-        <CashierClientsSection
-          orders={orders}
-          onViewDetail={(ord) => {
-            setSelectedOrder(ord);
-            setIsDetailModalOpen(true);
-          }}
-        />
-      )}
+            {/* ==================================================================== */}
+            {/* COMANDAS Y PEDIDOS */}
+            {/* ==================================================================== */}
+            <>
+              {loading ? (
+                <div className="py-20 text-center space-y-3">
+                  <RefreshCw size={28} className="animate-spin text-[#2D473C] mx-auto" />
+                  <p className="text-sm font-bold text-gray-600">
+                    Cargando comandas en tiempo real...
+                  </p>
+                </div>
+              ) : (
+                <CashierKanbanView
+                  orders={orders}
+                  orderItems={orderItems}
+                  onStatusChange={handleUpdateOrderStatus}
+                  onViewDetail={(ord) => {
+                    setSelectedOrder(ord);
+                    setIsDetailModalOpen(true);
+                  }}
+                />
+              )}
+            </>
+          </>
+        )}
 
+        {activeTab === "analitica" && (
+          <CashierKPIHeader todayRevenue={todayRevenue} todayOrdersCount={todayOrdersCount} />
+        )}
+
+        {activeTab === "clientes" && (
+          <CashierClientsSection
+            orders={orders}
+            onViewDetail={(ord) => {
+              setSelectedOrder(ord);
+              setIsDetailModalOpen(true);
+            }}
+          />
+        )}
       </main>
 
       {/* Detail & Printable Ticket Modal */}
@@ -569,10 +606,7 @@ function CashierDashboardRoute() {
       />
 
       {/* Control de Stock y Agotados Modal */}
-      <CashierStockModal
-        isOpen={isStockModalOpen}
-        onClose={() => setIsStockModalOpen(false)}
-      />
+      <CashierStockModal isOpen={isStockModalOpen} onClose={() => setIsStockModalOpen(false)} />
 
       {/* Modal Switcher / Selector de QR Yape (Empresa vs Personal) */}
       <YapeConfigModal
@@ -585,7 +619,6 @@ function CashierDashboardRoute() {
           saveYapeConfig(updated);
         }}
       />
-
     </div>
   );
 }
