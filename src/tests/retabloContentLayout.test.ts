@@ -4,7 +4,35 @@ import * as ts from "typescript";
 import { describe, expect, it } from "vitest";
 
 const routeSource = readFileSync(resolve(process.cwd(), "src/routes/index.tsx"), "utf8");
-const wrapperSource = readFileSync(resolve(process.cwd(), "src/components/RetabloWrapper.tsx"), "utf8");
+const wrapperSource = readFileSync(
+  resolve(process.cwd(), "src/components/RetabloWrapper.tsx"),
+  "utf8",
+);
+const hasExcessiveFixedVerticalPadding = (classes: string) => {
+  const spacingClasses = [...classes.matchAll(/(?:^|\s)lg:(?:p|py|pt|pb)-([^\s]+)/g)].map(
+    ([, spacing]) => spacing,
+  );
+
+  return spacingClasses.some((spacing) => {
+    if (/(?:dvh|svh|lvh|vh)/i.test(spacing)) return false;
+    if (spacing === "px") return false;
+
+    const value = spacing.match(/^(?:\[([^\]]+)\]|(\d+(?:\.\d+)?))$/);
+    if (!value) return true;
+
+    const [, arbitraryValue, spacingScale] = value;
+    if (spacingScale) return Number(spacingScale) > 8;
+
+    const length = arbitraryValue.match(/^(\d+(?:\.\d+)?)(px|rem|mm|cm)$/);
+    if (!length) return true;
+
+    const [, amount, unit] = length;
+    if (unit === "px") return Number(amount) > 32;
+    if (unit === "mm") return Number(amount) > 2;
+    if (unit === "cm") return Number(amount) > 2.3;
+    return Number(amount) > 2;
+  });
+};
 const routeAst = ts.createSourceFile(
   "index.tsx",
   routeSource,
@@ -28,9 +56,7 @@ function jsxDescendants(node: ts.Node): ts.JsxElement[] {
 }
 
 function tagName(element: ts.JsxElement): string {
-  return ts.isIdentifier(element.openingElement.tagName)
-    ? element.openingElement.tagName.text
-    : "";
+  return ts.isIdentifier(element.openingElement.tagName) ? element.openingElement.tagName.text : "";
 }
 
 function attribute(element: ts.JsxElement, name: string): string | undefined {
@@ -53,20 +79,109 @@ function findRetabloWrapper(node: ts.Node): ts.JsxElement | undefined {
 }
 
 describe("home retablo content layout", () => {
-  it("adds enough desktop bottom space for the open doors to remain visible", () => {
+  it("does not render action buttons beneath the retablo", () => {
+    const actionRows = jsxDescendants(routeAst).filter((element) =>
+      (attribute(element, "className") ?? "").includes("retablo-actions"),
+    );
+
+    expect(actionRows).toHaveLength(0);
+    expect(routeSource).not.toContain('href="/carta"');
+  });
+
+  it("budgets the open-door frame below the fixed header on shorter desktops", () => {
+    expect(routeSource).toContain("flex flex-col justify-center items-center");
+    expect(routeSource).toContain("lg:pt-[2.3cm]");
+    expect(routeSource).toContain("height: min(900px, calc(100dvh - 10rem), 80dvh)");
+    expect(routeSource).toContain("height: min(900px, 74dvh)");
+  });
+
+  it("leaves only a 2.3cm gap above the retablo within its section", () => {
     const section = jsxDescendants(routeAst).find(
-      (element) =>
-        tagName(element) === "section" && element.getText().includes("<RetabloWrapper"),
+      (element) => tagName(element) === "section" && element.getText().includes("<RetabloWrapper"),
+    );
+    const sectionClasses = section ? (attribute(section, "className") ?? "") : "";
+
+    expect(sectionClasses).toContain("lg:pt-[2.3cm]");
+    expect(wrapperSource).toContain("lg:mt-0");
+  });
+
+  it("separates the retablo from the previous section on mobile", () => {
+    const section = jsxDescendants(routeAst).find(
+      (element) => tagName(element) === "section" && element.getText().includes("<RetabloWrapper"),
     );
 
     expect(section).toBeDefined();
     if (!section) throw new Error("Retablo section not found");
-    expect(attribute(section, "className")).toContain("lg:pb-40");
+
+    const sectionClasses = attribute(section, "className") ?? "";
+    expect(sectionClasses).toContain("pt-6");
+    expect(sectionClasses).toContain("pb-0");
+    expect(sectionClasses).toContain("lg:pt-[2.3cm]");
+  });
+
+  it("uses viewport-responsive desktop bottom spacing for the open doors", () => {
+    const section = jsxDescendants(routeAst).find(
+      (element) => tagName(element) === "section" && element.getText().includes("<RetabloWrapper"),
+    );
+
+    expect(section).toBeDefined();
+    if (!section) throw new Error("Retablo section not found");
+    const sectionClasses = attribute(section, "className") ?? "";
+    const desktopVerticalPaddingClasses =
+      sectionClasses.match(/(?:^|\s)lg:(?:p|py|pt|pb)-[^\s]+/g) ?? [];
+
+    expect(hasExcessiveFixedVerticalPadding(sectionClasses)).toBe(false);
+    expect(
+      desktopVerticalPaddingClasses.some((classes) => /(?:dvh|svh|lvh|vh)/i.test(classes)),
+    ).toBe(true);
+  });
+
+  it("adds 4rem below the retablo doors on desktop", () => {
+    const section = jsxDescendants(routeAst).find(
+      (element) => tagName(element) === "section" && element.getText().includes("<RetabloWrapper"),
+    );
+
+    expect(section).toBeDefined();
+    if (!section) throw new Error("Retablo section not found");
+
+    expect(attribute(section, "className")).toContain("lg:pb-[calc(min(2.5rem,3dvh)_+_4rem)]");
+  });
+
+  it("removes the eyebrow without shifting the title out of the panel", () => {
+    const wrapper = findRetabloWrapper(routeAst);
+    expect(wrapper).toBeDefined();
+    if (!wrapper) throw new Error("RetabloWrapper not found in home route");
+
+    const [shell] = jsxChildren(wrapper);
+    expect(shell).toBeDefined();
+    if (!shell) throw new Error("Retablo content shell not found");
+
+    const [contentStack] = jsxChildren(shell);
+    expect(contentStack).toBeDefined();
+    if (!contentStack) throw new Error("Retablo content stack not found");
+
+    const narrative = jsxDescendants(contentStack).find((element) =>
+      (attribute(element, "className") ?? "").includes("retablo-content-narrative"),
+    );
+    expect(narrative).toBeDefined();
+    if (!narrative) throw new Error("Retablo narrative not found");
+
+    const narrativeClasses = attribute(narrative, "className") ?? "";
+    expect(narrativeClasses).not.toMatch(/(?:^|\s)-translate-y-/);
+    expect(narrative.getText()).not.toContain("Cultura y Tradición");
+  });
+
+  it("rejects excessive fixed desktop padding even alongside viewport padding", () => {
+    expect(hasExcessiveFixedVerticalPadding("lg:pb-[10vh] lg:pb-48")).toBe(true);
+    expect(hasExcessiveFixedVerticalPadding("lg:py-40 lg:pb-[10vh]")).toBe(true);
+    expect(hasExcessiveFixedVerticalPadding("lg:p-40 lg:pb-[10vh]")).toBe(true);
+    expect(hasExcessiveFixedVerticalPadding("lg:pt-6 lg:pb-[10vh]")).toBe(false);
+    expect(hasExcessiveFixedVerticalPadding("lg:py-px lg:pb-[10vh]")).toBe(false);
   });
 
   it("allows the panel content to fill the central panel", () => {
     expect(wrapperSource).toContain(
-      'className="relative z-10 flex flex-1 h-full flex-col justify-center"',
+      'className="relative z-10 min-h-0 flex flex-1 h-full flex-col justify-center"',
     );
   });
 
@@ -96,7 +211,7 @@ describe("home retablo content layout", () => {
     expect(lineClasses.every((classes) => classes.includes("flex-1"))).toBe(true);
   });
 
-  it("places the full narrative above an enlarged photo and keeps actions at the bottom", () => {
+  it("keeps the enlarged photo inside the retablo", () => {
     const wrapper = findRetabloWrapper(routeAst);
     expect(wrapper).toBeDefined();
     if (!wrapper) throw new Error("RetabloWrapper not found in home route");
@@ -105,16 +220,12 @@ describe("home retablo content layout", () => {
     expect(shell).toBeDefined();
     if (!shell) throw new Error("RetabloWrapper content shell not found");
 
-    const [contentRow, actionRow] = jsxChildren(shell);
-    expect(jsxChildren(shell)).toHaveLength(2);
+    const [contentRow] = jsxChildren(shell);
     expect(contentRow).toBeDefined();
-    expect(actionRow).toBeDefined();
-    if (!contentRow || !actionRow) throw new Error("Expected content and action rows");
+    if (!contentRow) throw new Error("Retablo content row not found");
 
     const contentClasses = attribute(contentRow, "className") ?? "";
-    const actionClasses = attribute(actionRow, "className") ?? "";
     const contentElements = jsxDescendants(contentRow);
-    const actionElements = jsxDescendants(actionRow);
 
     expect(contentClasses).toContain("flex-col");
     expect(contentRow.getText()).toContain("src={retabloImg}");
@@ -125,17 +236,34 @@ describe("home retablo content layout", () => {
     if (!heading || !paragraph) throw new Error("Expected narrative elements");
     const imagePosition = routeSource.indexOf("src={retabloImg}", contentRow.pos);
     expect(paragraph.end).toBeLessThan(imagePosition);
-    expect(contentRow.getText()).toContain("max-w-[240px]");
-    expect(contentRow.getText()).toContain("lg:max-w-[320px]");
-    expect(contentElements.filter((element) => tagName(element) === "a")).toHaveLength(0);
-    expect(actionClasses).toContain("mt-auto");
-    expect(actionClasses).toContain("pt-4");
-    expect(actionClasses).toContain("justify-center");
-    expect(
-      actionElements
-        .filter((element) => tagName(element) === "a")
-        .map((element) => attribute(element, "href"))
-        .sort(),
-    ).toEqual(["/carta", "/restaurante"]);
+    expect(routeSource).toContain("width: calc(100% - min(6cm, 4vw))");
+    expect(routeSource).toContain("max-width: 340px");
+    const imageContainer = contentElements.find((element) =>
+      (attribute(element, "className") ?? "").includes("retablo-content-image"),
+    );
+    expect(imageContainer).toBeDefined();
+    if (!imageContainer) throw new Error("Retablo image container not found");
+    expect(attribute(imageContainer, "className")).toContain("mb-8");
+    expect(contentRow.getText()).toContain(
+      'className="relative aspect-[4/3] -translate-y-[3mm] border-x-[6px] border-t-[6px] border-b-[10px] border-[#8f1d35] p-[3px] shadow-md"',
+    );
+    expect(contentRow.getText()).toContain(
+      'className="relative h-full w-full overflow-hidden border border-[#d4a373]"',
+    );
+    expect(contentRow.getText()).not.toContain("linear-gradient(135deg, #5D2E0C");
+    expect(contentRow.getText()).toContain(
+      'className="absolute inset-0 z-10 w-full max-w-none aspect-[4/3] object-cover"',
+    );
+  });
+
+  it("keeps the image responsive without viewport-height width caps", () => {
+    expect(routeSource).toContain("max-width: 340px");
+    expect(routeSource).not.toContain("max-width: min(320px, 20dvh)");
+    expect(routeSource).not.toContain("max-width: min(320px, 18dvh)");
+    expect(routeSource).not.toContain("max-width: min(320px, 22dvh)");
+    expect(routeSource).not.toContain("max-width: min(240px, 16dvh)");
+    expect(routeSource).not.toContain("45.36px");
+    expect(wrapperSource).toContain("w-screen");
+    expect(routeSource).not.toContain("onDoorsOpened");
   });
 });
