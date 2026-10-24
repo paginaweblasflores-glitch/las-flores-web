@@ -239,6 +239,9 @@ BEGIN
   END LOOP;
 
   IF p_coupon_code IS NOT NULL AND TRIM(p_coupon_code) <> '' THEN
+    PERFORM 1 FROM public.coupons
+     WHERE UPPER(code) = UPPER(TRIM(p_coupon_code))
+     FOR UPDATE;
     SELECT * INTO v_coupon_res FROM public.apply_coupon_secure(p_coupon_code, v_subtotal);
     IF v_coupon_res.valid THEN
       v_discount := v_coupon_res.discount_amount;
@@ -325,6 +328,7 @@ DECLARE
     v_custom_notes TEXT;
     v_customization RECORD;
     v_coupon RECORD;
+    v_coupon_code TEXT;
     v_pin TEXT;
 BEGIN
     IF p_checkout_attempt_id IS NULL OR p_user_id IS NULL THEN
@@ -414,9 +418,13 @@ BEGIN
     END LOOP;
 
     IF p_coupon_code IS NOT NULL AND TRIM(p_coupon_code) <> '' THEN
+        PERFORM 1 FROM public.coupons
+         WHERE UPPER(code) = UPPER(TRIM(p_coupon_code))
+         FOR UPDATE;
         SELECT * INTO v_coupon FROM public.apply_coupon_secure(p_coupon_code, v_subtotal);
         IF v_coupon.valid THEN
             v_discount := v_coupon.discount_amount;
+            v_coupon_code := p_coupon_code;
             UPDATE public.coupons SET current_uses = current_uses + 1
              WHERE UPPER(code) = UPPER(TRIM(p_coupon_code));
         END IF;
@@ -433,7 +441,7 @@ BEGIN
     ) VALUES (
         v_order_id, v_order_number, v_tracking, p_user_id, p_order_type,
         p_client_name, p_client_email, p_client_phone, p_address, p_reference,
-        p_latitude, p_longitude, v_distance, v_subtotal, v_discount, p_coupon_code,
+        p_latitude, p_longitude, v_distance, v_subtotal, v_discount, v_coupon_code,
         v_fee, v_total, 'card', 'pending', p_checkout_attempt_id, 'received', p_notes
     );
 
@@ -514,12 +522,17 @@ DECLARE
 BEGIN
     UPDATE public.orders SET payment_status = 'failed'
      WHERE checkout_attempt_id = p_checkout_attempt_id AND payment_status = 'pending'
-     RETURNING id, order_number, payment_status INTO v_order;
-    IF NOT FOUND THEN
+     RETURNING id, order_number, payment_status, coupon_code INTO v_order;
+    IF FOUND THEN
+        IF v_order.coupon_code IS NOT NULL AND TRIM(v_order.coupon_code) <> '' THEN
+            UPDATE public.coupons SET current_uses = GREATEST(current_uses - 1, 0)
+             WHERE UPPER(code) = UPPER(TRIM(v_order.coupon_code));
+        END IF;
+    ELSE
         SELECT id, order_number, payment_status INTO v_order
           FROM public.orders WHERE checkout_attempt_id = p_checkout_attempt_id;
+        IF NOT FOUND THEN RAISE EXCEPTION 'No se encontró el intento de pago.'; END IF;
     END IF;
-    IF NOT FOUND THEN RAISE EXCEPTION 'No se encontró el intento de pago.'; END IF;
     RETURN jsonb_build_object(
         'order_id', v_order.id, 'order_number', v_order.order_number,
         'payment_status', v_order.payment_status

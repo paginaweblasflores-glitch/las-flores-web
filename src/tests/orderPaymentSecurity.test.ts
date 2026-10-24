@@ -428,6 +428,34 @@ describe("secure order pricing SQL", () => {
   );
 
   it.each(sqlByFile)(
+    "serializes coupon reservations and releases only a failed pending reservation in $file",
+    ({ sql }) => {
+      const pendingOrder =
+        sql.match(
+          /CREATE OR REPLACE FUNCTION public\.create_pending_card_order\([\s\S]*?\$\$\s*;/i,
+        )?.[0] ?? "";
+      const publicOrder = getCreateOrderSecure(sql);
+      const failAttempt =
+        sql.match(
+          /CREATE OR REPLACE FUNCTION public\.fail_card_order_attempt\([\s\S]*?\$\$\s*;/i,
+        )?.[0] ?? "";
+
+      expectMatch(
+        publicOrder,
+        /PERFORM 1 FROM public\.coupons[\s\S]*?FOR UPDATE[\s\S]*?apply_coupon_secure/i,
+      );
+      expectMatch(
+        pendingOrder,
+        /PERFORM 1 FROM public\.coupons[\s\S]*?FOR UPDATE[\s\S]*?apply_coupon_secure/i,
+      );
+      expectMatch(
+        failAttempt,
+        /UPDATE public\.orders SET payment_status = 'failed'[\s\S]*?payment_status = 'pending'[\s\S]*?RETURNING[\s\S]*?coupon_code[\s\S]*?IF FOUND THEN[\s\S]*?UPDATE public\.coupons SET current_uses = GREATEST\(current_uses - 1, 0\)/i,
+      );
+    },
+  );
+
+  it.each(sqlByFile)(
     "blocks direct order inserts and unverified payment-state edits in $file",
     ({ sql }) => {
       expectMatch(

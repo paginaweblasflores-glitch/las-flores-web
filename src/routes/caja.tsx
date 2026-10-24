@@ -3,6 +3,7 @@ import { useEffect, useState, useRef } from "react";
 import { supabase, signOut } from "../lib/supabase";
 import { sendReviewRequestEmail } from "../lib/emailService";
 import { playOrderChime } from "../utils/audioAlert";
+import { shouldNotifyCashierOrder } from "../lib/cashierNotifications";
 import { AdminOrderDetailModal } from "../components/AdminOrderDetailModal";
 import {
   CashierTopBar,
@@ -44,18 +45,6 @@ const getLocalYYYYMMDD = (d?: Date | string) => {
 export const Route = createFileRoute("/caja")({
   component: CashierDashboardRoute,
 });
-
-function isCashierOrderReady(order: Record<string, unknown>) {
-  const paymentMethod = String(order.payment_method || "").toLowerCase();
-  if (paymentMethod === "card" || paymentMethod === "culqi") {
-    return order.payment_status === "paid";
-  }
-  return (
-    order.payment_status === null ||
-    order.payment_status === undefined ||
-    order.payment_status === "paid"
-  );
-}
 
 function CashierDashboardRoute() {
   const navigate = useNavigate();
@@ -251,10 +240,7 @@ function CashierDashboardRoute() {
     const channel = supabase
       .channel("cashier-realtime-all")
       .on("postgres_changes", { event: "*", schema: "public", table: "orders" }, (payload) => {
-        if (
-          payload.eventType === "INSERT" &&
-          isCashierOrderReady(payload.new as Record<string, unknown>)
-        ) {
+        if (shouldNotifyCashierOrder(payload as Parameters<typeof shouldNotifyCashierOrder>[0])) {
           const n = payload.new as any;
           addNotification({
             entityId: n.id || n.order_number,
