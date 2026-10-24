@@ -54,6 +54,7 @@ DROP POLICY IF EXISTS "Enable update for authenticated users"   ON public.orders
 DROP POLICY IF EXISTS "Enable read access for all users"        ON public.order_items;
 DROP POLICY IF EXISTS "Enable insert for all users"             ON public.order_items;
 DROP POLICY IF EXISTS "Enable update for authenticated users"   ON public.products;
+DROP POLICY IF EXISTS "Modificación de productos solo autenticados" ON public.products;
 DROP POLICY IF EXISTS "Enable read access for all users"        ON public.reservations;
 DROP POLICY IF EXISTS "Enable insert for all users"             ON public.reservations;
 
@@ -204,7 +205,7 @@ SET custom_options = CASE
     ]}
   ]$options$::jsonb
   WHEN name ILIKE '%espagueti%pesto%' THEN $options$[
-    {"id": "1._proteína", "title": "1. Proteína", "options": [
+    {"id": "proteina", "title": "1. Proteína", "options": [
       {"id": "milanesa", "name": "Milanesa", "price": 42},
       {"id": "pollo_grill", "name": "Pollo al grill", "price": 40},
       {"id": "filet_mignon", "name": "Filet mignon", "price": 46}
@@ -483,7 +484,8 @@ BEGIN
     NEW.price IS DISTINCT FROM OLD.price OR
     NEW.image_url IS DISTINCT FROM OLD.image_url OR
     NEW.is_featured IS DISTINCT FROM OLD.is_featured OR
-    NEW.sort_order IS DISTINCT FROM OLD.sort_order
+    NEW.sort_order IS DISTINCT FROM OLD.sort_order OR
+    NEW.custom_options IS DISTINCT FROM OLD.custom_options
   ) THEN
     RAISE EXCEPTION 'El personal de caja solo puede cambiar la disponibilidad del producto';
   END IF;

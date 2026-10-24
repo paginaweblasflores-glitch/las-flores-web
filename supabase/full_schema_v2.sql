@@ -116,7 +116,7 @@ SET custom_options = CASE
     ]}
   ]$options$::jsonb
   WHEN name ILIKE '%espagueti%pesto%' THEN $options$[
-    {"id": "1._proteína", "title": "1. Proteína", "options": [
+    {"id": "proteina", "title": "1. Proteína", "options": [
       {"id": "milanesa", "name": "Milanesa", "price": 42},
       {"id": "pollo_grill", "name": "Pollo al grill", "price": 40},
       {"id": "filet_mignon", "name": "Filet mignon", "price": 46}
@@ -333,6 +333,9 @@ REVOKE UPDATE (role) ON public.profiles FROM authenticated;
 CREATE POLICY "categories_select_public" ON public.categories FOR SELECT USING (true);
 CREATE POLICY "categories_admin_all" ON public.categories FOR ALL USING (public.is_admin());
 
+DROP POLICY IF EXISTS "Modificación de productos solo autenticados" ON public.products;
+DROP POLICY IF EXISTS "Enable update for authenticated users" ON public.products;
+DROP POLICY IF EXISTS "products_availability_staff_update" ON public.products;
 CREATE POLICY "products_select_public" ON public.products FOR SELECT USING (true);
 CREATE POLICY "products_admin_all" ON public.products FOR ALL USING (public.is_admin());
 

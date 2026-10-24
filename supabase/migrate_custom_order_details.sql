@@ -20,7 +20,7 @@ SET custom_options = CASE
     ]}
   ]$options$::jsonb
   WHEN name ILIKE '%espagueti%pesto%' THEN $options$[
-    {"id": "1._proteína", "title": "1. Proteína", "options": [
+    {"id": "proteina", "title": "1. Proteína", "options": [
       {"id": "milanesa", "name": "Milanesa", "price": 42},
       {"id": "pollo_grill", "name": "Pollo al grill", "price": 40},
       {"id": "filet_mignon", "name": "Filet mignon", "price": 46}
@@ -54,6 +54,27 @@ SET custom_options = CASE
   ELSE custom_options
 END
 WHERE custom_options IS NULL OR custom_options = '[]'::jsonb;
+
+CREATE OR REPLACE FUNCTION public.prevent_staff_custom_options_edits()
+RETURNS TRIGGER
+LANGUAGE plpgsql
+SECURITY DEFINER
+SET search_path = public
+AS $$
+BEGIN
+  IF NOT public.is_admin()
+     AND NEW.custom_options IS DISTINCT FROM OLD.custom_options THEN
+    RAISE EXCEPTION 'Solo los administradores pueden cambiar las opciones de personalización';
+  END IF;
+  RETURN NEW;
+END;
+$$;
+
+DROP TRIGGER IF EXISTS products_custom_options_admin_only ON public.products;
+CREATE TRIGGER products_custom_options_admin_only
+  BEFORE UPDATE ON public.products
+  FOR EACH ROW
+  EXECUTE FUNCTION public.prevent_staff_custom_options_edits();
 
 CREATE OR REPLACE FUNCTION public.create_order_secure(
   p_client_name TEXT, p_client_email TEXT, p_client_phone TEXT,
