@@ -454,7 +454,7 @@ function Index() {
       </header>
 
       {/* CULTURA Y TRADICIÓN */}
-      <section className="retablo-section flex flex-col justify-center items-center w-full lg:min-h-screen overflow-x-hidden relative py-16 lg:items-center lg:pt-[2.3cm] lg:pb-[calc(min(2.5rem,3dvh)_+_4rem)]">
+      <section className="retablo-section flex flex-col justify-center items-center w-full lg:min-h-screen overflow-x-hidden relative py-0 lg:items-center lg:pt-[2.3cm] lg:pb-[calc(min(2.5rem,3dvh)_+_4rem)]">
         <style>{`
           .retablo-content-image {
             width: calc(100% - min(6cm, 4vw));
@@ -523,14 +523,6 @@ function Index() {
             <div className="retablo-content-stack flex flex-1 flex-col items-center gap-4 lg:gap-5">
               {/* Bloque Narrativo */}
               <div className="retablo-content-narrative w-full flex flex-col gap-3 lg:gap-4 text-center">
-                {/* Eyebrow label */}
-                <span
-                  className="font-sans font-semibold uppercase tracking-[0.3em] text-[10px] lg:text-[11px]"
-                  style={{ color: "#8B4513" }}
-                >
-                  Cultura y Tradición
-                </span>
-
                 {/* Título Serif elegante */}
                 <h2
                   className="font-serif font-light leading-[1.08] text-balance"
@@ -569,8 +561,8 @@ function Index() {
               </div>
 
               {/* Imagen ampliada debajo de todo el texto */}
-              <div className="retablo-content-image mx-auto shrink-0">
-                <div className="relative aspect-[4/3] -translate-y-1 border-x-[6px] border-t-[6px] border-b-[10px] border-[#8f1d35] p-[3px] shadow-md">
+              <div className="retablo-content-image mx-auto mb-8 shrink-0">
+                <div className="relative aspect-[4/3] -translate-y-[3mm] border-x-[6px] border-t-[6px] border-b-[10px] border-[#8f1d35] p-[3px] shadow-md">
                   <div className="relative h-full w-full overflow-hidden border border-[#d4a373]">
                     <img
                       src={retabloImg}

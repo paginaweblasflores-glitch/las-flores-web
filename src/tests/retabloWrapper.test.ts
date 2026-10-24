@@ -83,6 +83,34 @@ describe("RetabloWrapper", () => {
     expect(wrapper).toMatch(viewportHeightRule);
   });
 
+  it("extends the retablo frame to the mobile viewport edges", () => {
+    const markup = renderToStaticMarkup(
+      React.createElement(RetabloWrapper, null, React.createElement("p", null, "Contenido")),
+    );
+    const wrapper = markup.match(/<div class="[^"]*retablo-wrapper[^"]*"[^>]*>/)?.[0] ?? "";
+
+    expect(wrapper).toContain("w-screen");
+    expect(wrapper).toContain("max-w-none");
+    expect(wrapper).toContain("lg:w-[calc(50vw_-_40px)]");
+    expect(wrapper).toContain("lg:max-w-[900px]");
+    expect(wrapper).not.toContain("w-[90vw]");
+  });
+
+  it("removes mobile gaps beneath the pediment and along the inner frame", () => {
+    const markup = renderToStaticMarkup(
+      React.createElement(RetabloWrapper, null, React.createElement("p", null, "Contenido")),
+    );
+    const contentLayer = markup.match(/<div class="relative z-10 min-h-0[^"]*"[^>]*>/)?.[0] ?? "";
+    const interior = markup.match(/<div class="retablo-interior[^"]*">/)?.[0] ?? "";
+
+    expect(contentLayer).not.toContain("pt-16");
+    expect(contentLayer).toContain("lg:pt-24");
+    expect(interior).not.toContain("mx-[10px]");
+    expect(interior).not.toContain("mb-[10px]");
+    expect(interior).toContain("lg:mx-[14px]");
+    expect(interior).toContain("lg:mb-[14px]");
+  });
+
   it.each(["h-screen", "h-dvh"])("accepts equivalent viewport height class %s", (heightClass) => {
     expect(viewportHeightRule.test(heightClass)).toBe(true);
   });
@@ -95,7 +123,7 @@ describe("RetabloWrapper", () => {
 
     expect(markup).toContain("perspective:1400px");
     expect(markup).toContain("perspective-origin:50% 40%");
-    expect(markup).toContain("min-h-0 pt-16 lg:pt-24");
+    expect(markup).toContain("min-h-0 lg:pt-24");
     expect(markup).toContain('class="relative h-full flex flex-col overflow-visible"');
     expect(doorPanels).toHaveLength(2);
     expect(doorPanels.every((panel) => panel.includes("top-0 bottom-0"))).toBe(true);

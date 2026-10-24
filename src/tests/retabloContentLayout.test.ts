@@ -105,6 +105,17 @@ describe("home retablo content layout", () => {
     expect(wrapperSource).toContain("lg:mt-0");
   });
 
+  it("removes mobile section padding so the retablo reaches the viewport edges", () => {
+    const section = jsxDescendants(routeAst).find(
+      (element) => tagName(element) === "section" && element.getText().includes("<RetabloWrapper"),
+    );
+
+    expect(section).toBeDefined();
+    if (!section) throw new Error("Retablo section not found");
+
+    expect(attribute(section, "className")).toContain("relative py-0");
+  });
+
   it("uses viewport-responsive desktop bottom spacing for the open doors", () => {
     const section = jsxDescendants(routeAst).find(
       (element) => tagName(element) === "section" && element.getText().includes("<RetabloWrapper"),
@@ -131,6 +142,30 @@ describe("home retablo content layout", () => {
     if (!section) throw new Error("Retablo section not found");
 
     expect(attribute(section, "className")).toContain("lg:pb-[calc(min(2.5rem,3dvh)_+_4rem)]");
+  });
+
+  it("removes the eyebrow without shifting the title out of the panel", () => {
+    const wrapper = findRetabloWrapper(routeAst);
+    expect(wrapper).toBeDefined();
+    if (!wrapper) throw new Error("RetabloWrapper not found in home route");
+
+    const [shell] = jsxChildren(wrapper);
+    expect(shell).toBeDefined();
+    if (!shell) throw new Error("Retablo content shell not found");
+
+    const [contentStack] = jsxChildren(shell);
+    expect(contentStack).toBeDefined();
+    if (!contentStack) throw new Error("Retablo content stack not found");
+
+    const narrative = jsxDescendants(contentStack).find((element) =>
+      (attribute(element, "className") ?? "").includes("retablo-content-narrative"),
+    );
+    expect(narrative).toBeDefined();
+    if (!narrative) throw new Error("Retablo narrative not found");
+
+    const narrativeClasses = attribute(narrative, "className") ?? "";
+    expect(narrativeClasses).not.toMatch(/(?:^|\s)-translate-y-/);
+    expect(narrative.getText()).not.toContain("Cultura y Tradición");
   });
 
   it("rejects excessive fixed desktop padding even alongside viewport padding", () => {
@@ -200,8 +235,14 @@ describe("home retablo content layout", () => {
     expect(paragraph.end).toBeLessThan(imagePosition);
     expect(routeSource).toContain("width: calc(100% - min(6cm, 4vw))");
     expect(routeSource).toContain("max-width: 340px");
+    const imageContainer = contentElements.find((element) =>
+      (attribute(element, "className") ?? "").includes("retablo-content-image"),
+    );
+    expect(imageContainer).toBeDefined();
+    if (!imageContainer) throw new Error("Retablo image container not found");
+    expect(attribute(imageContainer, "className")).toContain("mb-8");
     expect(contentRow.getText()).toContain(
-      'className="relative aspect-[4/3] -translate-y-1 border-x-[6px] border-t-[6px] border-b-[10px] border-[#8f1d35] p-[3px] shadow-md"',
+      'className="relative aspect-[4/3] -translate-y-[3mm] border-x-[6px] border-t-[6px] border-b-[10px] border-[#8f1d35] p-[3px] shadow-md"',
     );
     expect(contentRow.getText()).toContain(
       'className="relative h-full w-full overflow-hidden border border-[#d4a373]"',
@@ -219,7 +260,7 @@ describe("home retablo content layout", () => {
     expect(routeSource).not.toContain("max-width: min(320px, 22dvh)");
     expect(routeSource).not.toContain("max-width: min(240px, 16dvh)");
     expect(routeSource).not.toContain("45.36px");
-    expect(wrapperSource).toContain("w-[90vw]");
+    expect(wrapperSource).toContain("w-screen");
     expect(routeSource).not.toContain("onDoorsOpened");
   });
 });
