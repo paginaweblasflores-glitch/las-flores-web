@@ -1,8 +1,14 @@
 import React from "react";
+import { readFileSync } from "node:fs";
+import { resolve } from "node:path";
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
 import RetabloWrapper from "../components/RetabloWrapper";
 
+const wrapperSource = readFileSync(
+  resolve(process.cwd(), "src/components/RetabloWrapper.tsx"),
+  "utf8",
+);
 const viewportHeightRule =
   /\b(?:min-h|h)-(?:screen|dvh|svh|lvh)\b|\b(?:min-)?h-\[[^\]]*(?:dvh|svh|lvh|vh)[^\]]*\]|min-height:[^;]*(?:dvh|svh|lvh|vh)/i;
 
@@ -62,7 +68,7 @@ describe("RetabloWrapper", () => {
     expect(outerDoorFaces[1]).toContain("inset -8px 0 18px -12px");
   });
 
-  it("uses a viewport-responsive desktop height and a capped desktop width", () => {
+  it("fits the retablo height to the viewport below the sticky header", () => {
     const markup = renderToStaticMarkup(
       React.createElement(RetabloWrapper, null, React.createElement("p", null, "Contenido")),
     );
@@ -70,7 +76,9 @@ describe("RetabloWrapper", () => {
 
     expect(wrapper).toContain("lg:w-[calc(50vw_-_40px)]");
     expect(wrapper).toContain("lg:max-w-[900px]");
-    expect(wrapper).toContain("min-h-[700px]");
+    expect(wrapper).toContain("lg:mt-0");
+    expect(wrapper).toContain("lg:min-h-[min(700px,calc(100dvh_-_10rem))]");
+    expect(wrapper).toContain("lg:h-[min(900px,calc(100dvh_-_10rem))]");
     expect(wrapper).not.toContain("lg:min-h-[900px]");
     expect(wrapper).toMatch(viewportHeightRule);
   });
@@ -87,9 +95,22 @@ describe("RetabloWrapper", () => {
 
     expect(markup).toContain("perspective:1400px");
     expect(markup).toContain("perspective-origin:50% 40%");
+    expect(markup).toContain("min-h-0 pt-16 lg:pt-24");
     expect(markup).toContain('class="relative h-full flex flex-col overflow-visible"');
     expect(doorPanels).toHaveLength(2);
     expect(doorPanels.every((panel) => panel.includes("top-0 bottom-0"))).toBe(true);
+  });
+
+  it("preserves the automatic door opening animation", () => {
+    expect(wrapperSource).toContain("const doorAngle = isOpen ? 120 : 0;");
+    expect(wrapperSource).toContain("transform: `rotateY(-${doorAngle}deg)`");
+    expect(wrapperSource).toContain("transform: `rotateY(${doorAngle}deg)`");
+  });
+
+  it("opens automatically without adding callbacks to the door transitions", () => {
+    expect(wrapperSource).not.toContain("onDoorsOpened");
+    expect(wrapperSource).not.toContain("handleDoorTransitionEnd");
+    expect(wrapperSource).toContain("threshold: 0.65");
   });
 
   it("uses a cochineal-red wood frame", () => {

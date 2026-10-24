@@ -6,10 +6,19 @@ import React, { ReactNode, useEffect, useRef, useState } from "react";
 
 /** Pequeña flor para usar como separador ornamental inline */
 export const AyacuchoFlowerInline = () => (
-  <svg viewBox="0 0 24 24" width="18" height="18" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <svg
+    viewBox="0 0 24 24"
+    width="18"
+    height="18"
+    xmlns="http://www.w3.org/2000/svg"
+    aria-hidden="true"
+  >
     {[0, 45, 90, 135, 180, 225, 270, 315].map((angle, i) => (
       <g key={i} transform={`rotate(${angle} 12 12)`}>
-        <path d="M12 3 C9 7, 8 10, 12 12 C16 10, 15 7, 12 3 Z" fill={i % 2 === 0 ? "#8B2500" : "#C0392B"} />
+        <path
+          d="M12 3 C9 7, 8 10, 12 12 C16 10, 15 7, 12 3 Z"
+          fill={i % 2 === 0 ? "#8B2500" : "#C0392B"}
+        />
       </g>
     ))}
     <circle cx="12" cy="12" r="3" fill="#F39C12" />
@@ -35,19 +44,36 @@ const AyacuchoFlower = ({
   accent?: string;
   outline?: string;
 }) => (
-  <svg viewBox="0 0 120 120" className={className} xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <svg
+    viewBox="0 0 120 120"
+    className={className}
+    xmlns="http://www.w3.org/2000/svg"
+    aria-hidden="true"
+  >
     {/* Hojas diagonales */}
     {[45, 135, 225, 315].map((angle, i) => (
       <g key={i} transform={`rotate(${angle} 60 60)`}>
         <ellipse cx="60" cy="22" rx="6" ry="18" fill={leaf} stroke={outline} strokeWidth="0.8" />
-        <line x1="60" y1="10" x2="60" y2="40" stroke={outline} strokeWidth="0.6" strokeDasharray="2,2" />
+        <line
+          x1="60"
+          y1="10"
+          x2="60"
+          y2="40"
+          stroke={outline}
+          strokeWidth="0.6"
+          strokeDasharray="2,2"
+        />
       </g>
     ))}
     {/* 8 pétalos */}
     {[0, 45, 90, 135, 180, 225, 270, 315].map((angle, i) => (
       <g key={i} transform={`rotate(${angle} 60 60)`}>
-        <path d="M60 12 C52 28, 48 42, 60 50 C72 42, 68 28, 60 12 Z"
-          fill={i % 2 === 0 ? primary : secondary} stroke={outline} strokeWidth="0.8" />
+        <path
+          d="M60 12 C52 28, 48 42, 60 50 C72 42, 68 28, 60 12 Z"
+          fill={i % 2 === 0 ? primary : secondary}
+          stroke={outline}
+          strokeWidth="0.8"
+        />
         <line x1="60" y1="16" x2="60" y2="44" stroke={outline} strokeWidth="0.5" opacity="0.5" />
       </g>
     ))}
@@ -58,21 +84,46 @@ const AyacuchoFlower = ({
     {/* Estambres */}
     {[0, 60, 120, 180, 240, 300].map((a, i) => {
       const rad = (a * Math.PI) / 180;
-      return <circle key={i} cx={60 + 12 * Math.cos(rad)} cy={60 + 12 * Math.sin(rad)} r="1.8" fill={outline} />;
+      return (
+        <circle
+          key={i}
+          cx={60 + 12 * Math.cos(rad)}
+          cy={60 + 12 * Math.sin(rad)}
+          r="1.8"
+          fill={outline}
+        />
+      );
     })}
   </svg>
 );
 
 /** Enredadera de relleno para las puertas */
 const VinePattern = () => (
-  <svg className="w-full h-full opacity-25" viewBox="0 0 80 200" preserveAspectRatio="xMidYMid slice"
-    xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-    <path d="M40 0 Q 55 20 40 40 Q 25 60 40 80 Q 55 100 40 120 Q 25 140 40 160 Q 55 180 40 200"
-      stroke="#27AE60" strokeWidth="2" fill="none" />
+  <svg
+    className="w-full h-full opacity-25"
+    viewBox="0 0 80 200"
+    preserveAspectRatio="xMidYMid slice"
+    xmlns="http://www.w3.org/2000/svg"
+    aria-hidden="true"
+  >
+    <path
+      d="M40 0 Q 55 20 40 40 Q 25 60 40 80 Q 55 100 40 120 Q 25 140 40 160 Q 55 180 40 200"
+      stroke="#27AE60"
+      strokeWidth="2"
+      fill="none"
+    />
     {[20, 60, 100, 140, 180].map((y, i) => (
-      <ellipse key={i} cx={i % 2 === 0 ? 55 : 25} cy={y} rx="8" ry="4"
-        fill="#2ECC71" stroke="#27AE60" strokeWidth="0.5"
-        transform={`rotate(${i % 2 === 0 ? 30 : -30} ${i % 2 === 0 ? 55 : 25} ${y})`} />
+      <ellipse
+        key={i}
+        cx={i % 2 === 0 ? 55 : 25}
+        cy={y}
+        rx="8"
+        ry="4"
+        fill="#2ECC71"
+        stroke="#27AE60"
+        strokeWidth="0.5"
+        transform={`rotate(${i % 2 === 0 ? 30 : -30} ${i % 2 === 0 ? 55 : 25} ${y})`}
+      />
     ))}
   </svg>
 );
@@ -101,7 +152,7 @@ const RetabloWrapper = ({ children }: { children: ReactNode }) => {
           }, 400);
         }
       },
-      { threshold: 0.65 }
+      { threshold: 0.65 },
     );
     if (wrapperRef.current) observer.observe(wrapperRef.current);
     return () => {
@@ -121,7 +172,7 @@ const RetabloWrapper = ({ children }: { children: ReactNode }) => {
        * - Contenedor Central: hasta 900px, con margen para las puertas abiertas
        * - En viewports más pequeños, el conjunto se reduce proporcionalmente
        */
-      className="relative mx-auto mt-0 lg:mt-[min(3rem,3dvh)] mb-0 lg:mb-[min(3rem,3dvh)] min-h-[700px] lg:h-[min(900px,calc(100dvh_-_4rem))] w-[90vw] max-w-xl lg:w-[calc(50vw_-_40px)] lg:max-w-[900px] flex flex-col justify-center"
+      className="retablo-wrapper relative mx-auto mt-0 lg:mt-0 mb-0 lg:mb-[min(3rem,2dvh)] min-h-[700px] lg:min-h-[min(700px,calc(100dvh_-_10rem))] lg:h-[min(900px,calc(100dvh_-_10rem))] w-[90vw] max-w-xl lg:w-[calc(50vw_-_40px)] lg:max-w-[900px] flex flex-col justify-center"
       style={{
         perspective: "1400px",
         perspectiveOrigin: "50% 40%",
@@ -228,11 +279,7 @@ const RetabloWrapper = ({ children }: { children: ReactNode }) => {
         className="absolute top-0 left-0 right-0 z-50 h-16 lg:h-24 pointer-events-none overflow-hidden"
         aria-hidden="true"
       >
-        <svg
-          className="w-full h-full block"
-          viewBox="0 0 1000 240"
-          preserveAspectRatio="none"
-        >
+        <svg className="w-full h-full block" viewBox="0 0 1000 240" preserveAspectRatio="none">
           <defs>
             {/* ClipPath para la ilustración floral recortada exactamente dentro del marco */}
             <clipPath id="copeteFlowerClip">
@@ -241,16 +288,10 @@ const RetabloWrapper = ({ children }: { children: ReactNode }) => {
           </defs>
 
           {/* 1. Base triangular de madera rojo cochinilla alineada 100% a ras (x: 0 a 1000) sin aleros */}
-          <polygon
-            points="500,0 1000,240 0,240"
-            fill="#8f1d35"
-          />
+          <polygon points="500,0 1000,240 0,240" fill="#8f1d35" />
 
           {/* 2. Fondo blanco interior para eliminar el efecto cuadriculado del copete */}
-          <polygon
-            points="500,36 948,226 52,226"
-            fill="#ffffff"
-          />
+          <polygon points="500,36 948,226 52,226" fill="#ffffff" />
 
           {/* 3. Ilustración floral interior recortada por el clipPath */}
           <image
@@ -286,12 +327,17 @@ const RetabloWrapper = ({ children }: { children: ReactNode }) => {
       </div>
 
       {/* CAPA 3: Contenido rectangular — z-10 (overflow-visible para despliegue 3D) */}
-      <div className="relative z-10 pt-16 lg:pt-24 flex-1 flex flex-col justify-center overflow-visible" style={{ transformStyle: "preserve-3d" }}>
-        <div className="relative h-full flex flex-col overflow-visible" style={{ transformStyle: "preserve-3d" }}>
-
+      <div
+        className="relative z-10 min-h-0 pt-16 lg:pt-24 flex-1 flex flex-col justify-center overflow-visible"
+        style={{ transformStyle: "preserve-3d" }}
+      >
+        <div
+          className="relative h-full flex flex-col overflow-visible"
+          style={{ transformStyle: "preserve-3d" }}
+        >
           {/* Interior crema con Marco Oscuro de 10-12px y Sombra Inset 3D */}
-          <div className="retablo-interior relative mx-[10px] lg:mx-[14px] mb-[10px] lg:mb-[14px] border-[8px] lg:border-[12px] border-[#5c1229] rounded-xs flex-1 flex flex-col justify-center">
-            <div className="relative z-10 flex flex-1 h-full flex-col justify-center">
+          <div className="retablo-interior relative min-h-0 mx-[10px] lg:mx-[14px] mb-[10px] lg:mb-[14px] border-[8px] lg:border-[12px] border-[#5c1229] rounded-xs flex-1 flex flex-col justify-center overflow-hidden">
+            <div className="relative z-10 min-h-0 flex flex-1 h-full flex-col justify-center">
               {children}
             </div>
           </div>
@@ -337,7 +383,10 @@ const RetabloWrapper = ({ children }: { children: ReactNode }) => {
                 transition: "opacity 0.4s ease 0.3s, visibility 0.4s ease 0.3s",
               }}
             >
-              <div className="relative w-full h-full bg-white overflow-hidden" style={{ containerType: "size" }}>
+              <div
+                className="relative w-full h-full bg-white overflow-hidden"
+                style={{ containerType: "size" }}
+              >
                 <img
                   src="/retablo/puerta.png"
                   alt="Ilustración floral ayacuchana - Puerta Izquierda"
@@ -393,7 +442,10 @@ const RetabloWrapper = ({ children }: { children: ReactNode }) => {
                 transition: "opacity 0.4s ease 0.3s, visibility 0.4s ease 0.3s",
               }}
             >
-              <div className="relative w-full h-full bg-white overflow-hidden" style={{ containerType: "size" }}>
+              <div
+                className="relative w-full h-full bg-white overflow-hidden"
+                style={{ containerType: "size" }}
+              >
                 <img
                   src="/retablo/puerta.png"
                   alt="Ilustración floral ayacuchana - Puerta Derecha"
@@ -407,7 +459,6 @@ const RetabloWrapper = ({ children }: { children: ReactNode }) => {
             {/* Bisagra izquierda */}
             <div className="absolute top-0 left-0 bottom-0 w-2 bg-gradient-to-r from-[#5c1229] via-[#a52a43] to-[#5c1229] z-30" />
           </div>
-
         </div>
       </div>
     </div>

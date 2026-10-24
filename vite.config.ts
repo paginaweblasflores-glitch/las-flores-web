@@ -19,6 +19,11 @@ export default defineConfig({
   resolve: {
     tsconfigPaths: true,
   },
+  server: {
+    watch: {
+      ignored: ["**/dist-temp/**"],
+    },
+  },
   build: {
     chunkSizeWarningLimit: 1200,
     cssCodeSplit: true,

@@ -4,8 +4,7 @@ import { SiteHeader } from "../components/SiteHeader";
 import { useState, useEffect, useRef } from "react";
 const ayacuchoHero = "/imagenes-reales/premios/ayacucho.webp";
 const culturaImg = "/imagenes-reales/ARTE Y CULTURA LISTO/CERAMICA/CERAMICA-AYACUCHANA.webp";
-const retabloImg =
-  "/imagenes-reales/ARTE Y CULTURA LISTO/RETABLO AYACUCHANO/LopezA.webp";
+const retabloImg = "/imagenes-reales/ARTE Y CULTURA LISTO/RETABLO AYACUCHANO/LopezA.webp";
 const platoPucaImg = "/imagenes-reales/seccion-gastronomia/puca-picante.webp";
 const platoCuyImg = "/imagenes-reales/seccion-gastronomia/cuy-frito-ayacuchano.webp";
 const platoMondongoImg = "/imagenes-reales/seccion-gastronomia/mondongo ayacuchano.webp";
@@ -36,7 +35,10 @@ export const Route = createFileRoute("/")({
         content:
           "restaurante las flores, restaurante las flores ayacucho, restaurantes ayacucho, restaurantes en ayacucho, donde comer en ayacucho, mejor restaurante ayacucho, restaurante turistico ayacucho, puca picante ayacucho, cuy frito ayacucho, desayunos ayacucho, delivery ayacucho, reservas restaurante ayacucho",
       },
-      { property: "og:title", content: "Restaurante Las Flores Ayacucho — Dónde Comer en Ayacucho" },
+      {
+        property: "og:title",
+        content: "Restaurante Las Flores Ayacucho — Dónde Comer en Ayacucho",
+      },
       {
         property: "og:description",
         content:
@@ -58,54 +60,62 @@ export const Route = createFileRoute("/")({
         children: JSON.stringify({
           "@context": "https://schema.org",
           "@type": "Restaurant",
-          "name": "Restaurante Las Flores",
-          "alternateName": ["Las Flores Ayacucho", "Restaurante Turístico Las Flores"],
-          "url": "https://www.restaurantelasflores.com",
-          "logo": "https://www.restaurantelasflores.com/images.png",
-          "image": "https://www.restaurantelasflores.com/images.png",
-          "telephone": "+51980723422",
-          "priceRange": "S/ 30 - S/ 80",
-          "address": {
+          name: "Restaurante Las Flores",
+          alternateName: ["Las Flores Ayacucho", "Restaurante Turístico Las Flores"],
+          url: "https://www.restaurantelasflores.com",
+          logo: "https://www.restaurantelasflores.com/images.png",
+          image: "https://www.restaurantelasflores.com/images.png",
+          telephone: "+51980723422",
+          priceRange: "S/ 30 - S/ 80",
+          address: {
             "@type": "PostalAddress",
-            "streetAddress": "Jr. José Olaya 106",
-            "addressLocality": "Huamanga",
-            "addressRegion": "Ayacucho",
-            "postalCode": "05001",
-            "addressCountry": "PE"
+            streetAddress: "Jr. José Olaya 106",
+            addressLocality: "Huamanga",
+            addressRegion: "Ayacucho",
+            postalCode: "05001",
+            addressCountry: "PE",
           },
-          "geo": {
+          geo: {
             "@type": "GeoCoordinates",
-            "latitude": -13.1628496,
-            "longitude": -74.2178801
+            latitude: -13.1628496,
+            longitude: -74.2178801,
           },
-          "openingHoursSpecification": [
+          openingHoursSpecification: [
             {
               "@type": "OpeningHoursSpecification",
-              "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-              "opens": "07:00",
-              "closes": "17:30"
+              dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+              opens: "07:00",
+              closes: "17:30",
             },
             {
               "@type": "OpeningHoursSpecification",
-              "dayOfWeek": ["Saturday", "Sunday"],
-              "opens": "07:00",
-              "closes": "18:00"
-            }
+              dayOfWeek: ["Saturday", "Sunday"],
+              opens: "07:00",
+              closes: "18:00",
+            },
           ],
-          "servesCuisine": ["Peruana", "Ayacuchana", "Tradicional", "Parrillas", "Desayunos", "Almuerzos", "Cenas"],
-          "acceptsReservations": "True",
-          "hasMenu": "https://www.restaurantelasflores.com/carta",
-          "aggregateRating": {
+          servesCuisine: [
+            "Peruana",
+            "Ayacuchana",
+            "Tradicional",
+            "Parrillas",
+            "Desayunos",
+            "Almuerzos",
+            "Cenas",
+          ],
+          acceptsReservations: "True",
+          hasMenu: "https://www.restaurantelasflores.com/carta",
+          aggregateRating: {
             "@type": "AggregateRating",
-            "ratingValue": "4.0",
-            "bestRating": "5",
-            "reviewCount": "1564"
+            ratingValue: "4.0",
+            bestRating: "5",
+            reviewCount: "1564",
           },
-          "sameAs": [
+          sameAs: [
             "https://www.facebook.com/restaurantelasfloressac",
             "https://www.instagram.com/restaurantelasflores/",
-            "https://www.tiktok.com/@lasfloresayacucho"
-          ]
+            "https://www.tiktok.com/@lasfloresayacucho",
+          ],
         }),
       },
       {
@@ -113,40 +123,40 @@ export const Route = createFileRoute("/")({
         children: JSON.stringify({
           "@context": "https://schema.org",
           "@type": "FAQPage",
-          "mainEntity": [
+          mainEntity: [
             {
               "@type": "Question",
-              "name": "¿Cuál es el mejor lugar para comer en Ayacucho?",
-              "acceptedAnswer": {
+              name: "¿Cuál es el mejor lugar para comer en Ayacucho?",
+              acceptedAnswer: {
                 "@type": "Answer",
-                "text": "Restaurante Las Flores es uno de los mejores y más emblemáticos lugares para comer en Ayacucho. Ofrece gastronomía típica ayacuchana como Puca Picante, Cuy Frito, Mondongo y Parrillas en un ambiente tradicional en Jr. José Olaya 106, Huamanga."
-              }
+                text: "Restaurante Las Flores es uno de los mejores y más emblemáticos lugares para comer en Ayacucho. Ofrece gastronomía típica ayacuchana como Puca Picante, Cuy Frito, Mondongo y Parrillas en un ambiente tradicional en Jr. José Olaya 106, Huamanga.",
+              },
             },
             {
               "@type": "Question",
-              "name": "¿Dónde tomar desayuno en Ayacucho?",
-              "acceptedAnswer": {
+              name: "¿Dónde tomar desayuno en Ayacucho?",
+              acceptedAnswer: {
                 "@type": "Answer",
-                "text": "En Restaurante Las Flores servimos desayunos tradicionales ayacuchanos con pan chapla, queso ayacuchano, caldos tradicionales y café artesanal todos los días desde las 07:00 a.m."
-              }
+                text: "En Restaurante Las Flores servimos desayunos tradicionales ayacuchanos con pan chapla, queso ayacuchano, caldos tradicionales y café artesanal todos los días desde las 07:00 a.m.",
+              },
             },
             {
               "@type": "Question",
-              "name": "¿Cuáles son los platos típicos de Ayacucho?",
-              "acceptedAnswer": {
+              name: "¿Cuáles son los platos típicos de Ayacucho?",
+              acceptedAnswer: {
                 "@type": "Answer",
-                "text": "Los platos típicos de Ayacucho incluyen el Puca Picante, Cuy Frito, Mondongo Ayacuchano, Pachamanca y Qapchi, todos preparados con insumos autóctonos en Restaurante Las Flores."
-              }
+                text: "Los platos típicos de Ayacucho incluyen el Puca Picante, Cuy Frito, Mondongo Ayacuchano, Pachamanca y Qapchi, todos preparados con insumos autóctonos en Restaurante Las Flores.",
+              },
             },
             {
               "@type": "Question",
-              "name": "¿Qué restaurantes hay cerca de la Plaza de Armas de Ayacucho?",
-              "acceptedAnswer": {
+              name: "¿Qué restaurantes hay cerca de la Plaza de Armas de Ayacucho?",
+              acceptedAnswer: {
                 "@type": "Answer",
-                "text": "Restaurante Las Flores se encuentra ubicado a pocas cuadras del centro histórico en Jr. José Olaya 106, Huamanga — Ayacucho."
-              }
-            }
-          ]
+                text: "Restaurante Las Flores se encuentra ubicado a pocas cuadras del centro histórico en Jr. José Olaya 106, Huamanga — Ayacucho.",
+              },
+            },
+          ],
         }),
       },
     ],
@@ -158,7 +168,11 @@ export const Route = createFileRoute("/")({
 
 // ─── PLATOS TÍPICOS — Tap-to-reveal en móvil ─────────────────────────────────
 
-function PlatosTipicosGrid({ platos }: { platos: { img: string; nombre: string; desc: string }[] }) {
+function PlatosTipicosGrid({
+  platos,
+}: {
+  platos: { img: string; nombre: string; desc: string }[];
+}) {
   const [activeNombre, setActiveNombre] = useState<string | null>(null);
 
   const handleCardClick = (nombre: string) => {
@@ -272,7 +286,7 @@ function LugaresAccordion() {
         if (visible.length === 0) return;
 
         const bestEntry = visible.reduce((best, current) =>
-          current.intersectionRatio > best.intersectionRatio ? current : best
+          current.intersectionRatio > best.intersectionRatio ? current : best,
         );
 
         const id = Number(bestEntry.target.getAttribute("data-lugar-id"));
@@ -284,7 +298,7 @@ function LugaresAccordion() {
         root: null,
         rootMargin: "-45% 0px -45% 0px",
         threshold: 0.5,
-      }
+      },
     );
 
     itemRefs.current.forEach((node) => node && observer.observe(node));
@@ -297,13 +311,15 @@ function LugaresAccordion() {
         const isExpanded = isMobile
           ? lugar.id === activeId
           : hovered === null
-          ? i === 0
-          : hovered === lugar.id;
+            ? i === 0
+            : hovered === lugar.id;
 
         return (
           <div
             key={lugar.id}
-            ref={(el) => { itemRefs.current[i] = el; }}
+            ref={(el) => {
+              itemRefs.current[i] = el;
+            }}
             data-lugar-id={lugar.id}
             onMouseEnter={() => setHovered(lugar.id)}
             className={`relative overflow-hidden transition-all duration-500 ease-out shadow-sm group ${
@@ -438,11 +454,22 @@ function Index() {
       </header>
 
       {/* CULTURA Y TRADICIÓN */}
-      <section className="retablo-section flex justify-center items-center w-full lg:min-h-screen overflow-x-hidden relative py-16 lg:pt-[min(1.5rem,2dvh)] lg:pb-[min(2.5rem,3dvh)]">
+      <section className="retablo-section flex flex-col justify-center items-center w-full lg:min-h-screen overflow-x-hidden relative py-16 lg:items-center lg:pt-[2.3cm] lg:pb-[calc(min(2.5rem,3dvh)_+_4rem)]">
         <style>{`
+          .retablo-content-image {
+            width: calc(100% - min(6cm, 4vw));
+            max-width: 340px;
+          }
+
           @media (min-width: 1024px) and (max-height: 850px) {
+            .retablo-section .retablo-wrapper {
+              height: min(900px, calc(100dvh - 10rem), 80dvh);
+              min-height: min(700px, calc(100dvh - 10rem), 80dvh);
+              width: min(calc(50vw - 40px), calc(min(calc(100dvh - 10rem), 80dvh) * 0.9));
+            }
+
             .retablo-content-shell {
-              padding: clamp(1rem, 2.5dvh, 2.5rem);
+              padding: clamp(0.5rem, 1.2dvh, 1rem);
             }
 
             .retablo-content-stack {
@@ -453,162 +480,110 @@ function Index() {
               gap: clamp(0.5rem, 1.2dvh, 0.75rem);
             }
 
-            .retablo-content-image {
-              max-width: min(320px, 22dvh);
-            }
-
-            .retablo-actions {
-              gap: clamp(0.5rem, 1.2dvh, 0.75rem);
-              padding-top: clamp(0.25rem, 1dvh, 0.75rem);
-            }
-
-            .retablo-actions > a {
-              padding: clamp(0.375rem, 0.9dvh, 0.625rem)
-                clamp(0.75rem, 1.5dvh, 1.5rem);
-            }
           }
 
-          @media (min-width: 1024px) and (max-height: 700px) {
+          @media (min-width: 1024px) and (min-height: 851px) and (max-height: 1400px) {
+            .retablo-section .retablo-wrapper {
+              height: min(900px, 74dvh);
+              min-height: min(700px, 74dvh);
+              width: min(calc(50vw - 40px), calc(74dvh * 0.9));
+            }
+
             .retablo-content-shell {
-              padding: 0.75rem;
+              padding: clamp(1rem, 2dvh, 1.5rem);
             }
 
             .retablo-content-stack,
             .retablo-content-narrative {
-              gap: 0.375rem;
+              gap: clamp(0.5rem, 1dvh, 1rem);
             }
 
-            .retablo-content-image {
-              max-width: min(260px, 18dvh);
-            }
-
-            .retablo-actions {
-              gap: 0.375rem;
-              padding-top: 0.25rem;
-            }
-
-            .retablo-actions > a {
-              padding: 0.25rem 0.625rem;
-            }
           }
+
+          @media (min-width: 1024px) and (max-height: 700px) {
+            .retablo-content-shell {
+              padding: 0.375rem;
+            }
+
+            .retablo-content-stack,
+            .retablo-content-narrative {
+              gap: 0.25rem;
+            }
+
+            .retablo-content-narrative p {
+              line-height: 1.35;
+            }
+
+          }
+
         `}</style>
         <RetabloWrapper>
-          {/* Texto sobre la imagen; botones anclados en la parte inferior */}
-          <div className="retablo-content-shell flex flex-1 h-full flex-col p-5 lg:p-10">
+          {/* Narrativa e imagen dentro del panel */}
+          <div className="retablo-content-shell min-h-0 flex flex-1 h-full flex-col p-5 lg:p-10">
             <div className="retablo-content-stack flex flex-1 flex-col items-center gap-4 lg:gap-5">
-            
-            {/* Bloque Narrativo */}
-            <div className="retablo-content-narrative w-full flex flex-col gap-3 lg:gap-4 text-center">
-              
-              {/* Eyebrow label */}
-              <span
-                className="font-sans font-semibold uppercase tracking-[0.3em] text-[10px] lg:text-[11px]"
-                style={{ color: "#8B4513" }}
-              >
-                Cultura y Tradición
-              </span>
+              {/* Bloque Narrativo */}
+              <div className="retablo-content-narrative w-full flex flex-col gap-3 lg:gap-4 text-center">
+                {/* Eyebrow label */}
+                <span
+                  className="font-sans font-semibold uppercase tracking-[0.3em] text-[10px] lg:text-[11px]"
+                  style={{ color: "#8B4513" }}
+                >
+                  Cultura y Tradición
+                </span>
 
-              {/* Título Serif elegante */}
-              <h2
-                className="font-serif font-light leading-[1.08] text-balance"
-                style={{
-                  fontSize: "clamp(1.5rem, 2.8vw, 2.5rem)",
-                  color: "#2d1b15",
-                  letterSpacing: "-0.01em",
-                }}
-              >
-                El retablo, la <span className="italic">textilería</span> y el fogón
-              </h2>
-
-              {/* Separador ornamental */}
-              <div className="flex w-full items-center gap-2 justify-center my-0.5" aria-hidden="true">
-                <span className="block h-px flex-1 bg-[#8B4513]/40" />
-                <AyacuchoFlowerInline />
-                <span className="block h-px flex-1 bg-[#8B4513]/40" />
-              </div>
-
-              {/* Cuerpo de texto */}
-              <p
-                className="font-sans font-light leading-[1.65] text-pretty"
-                style={{
-                  fontSize: "clamp(0.8rem, 1.05vw, 0.95rem)",
-                  color: "#3d2010",
-                }}
-              >
-                En Ayacucho el arte y la comida comparten origen: manos que tallan
-                retablos, tejen mantas y avivan el fogón con la misma paciencia.
-                Cada grano de maíz morado, cada aroma a leña y cada textura de la
-                piedra volcánica cuentan la historia de una tierra que se niega a
-                olvidar su esencia.
-              </p>
-
-            </div>
-
-            {/* Imagen ampliada debajo de todo el texto */}
-            <div className="retablo-content-image w-full max-w-[240px] lg:max-w-[320px] mx-auto shrink-0">
-              <div className="relative">
-                <div
-                  className="absolute -inset-2 z-0"
+                {/* Título Serif elegante */}
+                <h2
+                  className="font-serif font-light leading-[1.08] text-balance"
                   style={{
-                    background: "linear-gradient(135deg, #5D2E0C 0%, #8B4513 50%, #5D2E0C 100%)",
-                    boxShadow: "0 6px 20px rgba(93,46,12,0.5)",
+                    fontSize: "clamp(1.25rem, min(2.8vw, 3.5dvh), 2.5rem)",
+                    color: "#2d1b15",
+                    letterSpacing: "-0.01em",
                   }}
-                />
-                <img
-                  src={retabloImg}
-                  alt="Retablo ayacuchano tallado a mano con figuras policromadas"
-                  width={600}
-                  height={750}
-                  loading="lazy"
-                  decoding="async"
-                  className="relative z-10 w-full aspect-[4/5] object-cover shadow-lg"
-                  style={{ boxShadow: "inset 0 0 0 1px rgba(255,220,150,0.15)" }}
-                />
+                >
+                  El retablo, la <span className="italic">textilería</span> y el fogón
+                </h2>
+
+                {/* Separador ornamental */}
+                <div
+                  className="flex w-full items-center gap-2 justify-center my-0.5"
+                  aria-hidden="true"
+                >
+                  <span className="block h-px flex-1 bg-[#8B4513]/40" />
+                  <AyacuchoFlowerInline />
+                  <span className="block h-px flex-1 bg-[#8B4513]/40" />
+                </div>
+
+                {/* Cuerpo de texto */}
+                <p
+                  className="font-sans font-light leading-[1.65] text-pretty"
+                  style={{
+                    fontSize: "clamp(0.75rem, min(1.05vw, 2dvh), 0.95rem)",
+                    color: "#3d2010",
+                  }}
+                >
+                  En Ayacucho el arte y la comida comparten origen: manos que tallan retablos, tejen
+                  mantas y avivan el fogón con la misma paciencia. Cada grano de maíz morado, cada
+                  aroma a leña y cada textura de la piedra volcánica cuentan la historia de una
+                  tierra que se niega a olvidar su esencia.
+                </p>
               </div>
-            </div>
-            </div>
-            {/* CTAs */}
-            <div className="retablo-actions mt-auto flex flex-col sm:flex-row gap-3 justify-center pt-4">
-              <a
-                href="/restaurante"
-                className="group inline-flex items-center justify-center gap-2 px-6 py-2.5 font-sans font-semibold text-[10px] lg:text-[11px] uppercase tracking-[0.2em] transition-all duration-300"
-                style={{
-                  background: "linear-gradient(135deg, #8B2500 0%, #C0392B 100%)",
-                  color: "#fdf8f0",
-                  boxShadow: "0 4px 14px rgba(139,37,0,0.35)",
-                  border: "1px solid #6B1A00",
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = "translateY(-2px)";
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = "translateY(0)";
-                }}
-              >
-                Descubrir la historia
-                <svg width="12" height="12" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" className="group-hover:translate-x-1 transition-transform duration-300">
-                  <path d="M1 7H13M8 2L13 7L8 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-              </a>
-              <a
-                href="/carta"
-                className="inline-flex items-center justify-center gap-2 px-6 py-2.5 font-sans font-semibold text-[10px] lg:text-[11px] uppercase tracking-[0.25em] transition-all duration-300"
-                style={{
-                  background: "transparent",
-                  color: "#5D2E0C",
-                  border: "1px solid #8B4513",
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.background = "#5D2E0C";
-                  e.currentTarget.style.color = "#fdf8f0";
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.background = "transparent";
-                  e.currentTarget.style.color = "#5D2E0C";
-                }}
-              >
-                Ver el menú
-              </a>
+
+              {/* Imagen ampliada debajo de todo el texto */}
+              <div className="retablo-content-image mx-auto shrink-0">
+                <div className="relative aspect-[4/3] -translate-y-1 border-x-[6px] border-t-[6px] border-b-[10px] border-[#8f1d35] p-[3px] shadow-md">
+                  <div className="relative h-full w-full overflow-hidden border border-[#d4a373]">
+                    <img
+                      src={retabloImg}
+                      alt="Retablo ayacuchano tallado a mano con figuras policromadas"
+                      width={600}
+                      height={750}
+                      loading="lazy"
+                      decoding="async"
+                      className="absolute inset-0 z-10 w-full max-w-none aspect-[4/3] object-cover"
+                    />
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </RetabloWrapper>
@@ -768,15 +743,38 @@ function Index() {
                     Mejor Restaurante Regional
                   </h4>
                   <div className="flex items-start justify-between gap-4 w-full min-w-0">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="w-10 h-10 flex-none text-nogal/70" fill="none" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M14 2v6h6" />
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      className="w-10 h-10 flex-none text-nogal/70"
+                      fill="none"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="1.5"
+                        d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"
+                      />
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="1.5"
+                        d="M14 2v6h6"
+                      />
                     </svg>
                     <div className="flex-1">
                       <div className="text-sm font-semibold">Documento en PDF</div>
-                      <div className="text-xs text-nogal/50">Municipalidad distrital de Andres Avelino Cáceres Dorregaray</div>
+                      <div className="text-xs text-nogal/50">
+                        Municipalidad distrital de Andres Avelino Cáceres Dorregaray
+                      </div>
                     </div>
-                    <a href="/docs/resolucion_andres_avelino.pdf" target="_blank" rel="noopener noreferrer" className="self-start inline-flex items-center justify-center flex-none w-36 h-10 bg-eucalipto text-white rounded-md text-sm text-center">
+                    <a
+                      href="/docs/resolucion_andres_avelino.pdf"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="self-start inline-flex items-center justify-center flex-none w-36 h-10 bg-eucalipto text-white rounded-md text-sm text-center"
+                    >
                       Ver documento
                     </a>
                   </div>
@@ -789,15 +787,36 @@ function Index() {
                     Guardianes de la Tradición
                   </h4>
                   <div className="flex items-start justify-between gap-4 w-full min-w-0">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="w-10 h-10 flex-none text-nogal/70" fill="none" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M14 2v6h6" />
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      className="w-10 h-10 flex-none text-nogal/70"
+                      fill="none"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="1.5"
+                        d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"
+                      />
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="1.5"
+                        d="M14 2v6h6"
+                      />
                     </svg>
                     <div className="flex-1">
                       <div className="text-sm font-semibold">Documento en PDF</div>
                       <div className="text-xs text-nogal/50">Camara de Comercio</div>
                     </div>
-                    <a href="/docs/documento_camara_comercio.pdf" target="_blank" rel="noopener noreferrer" className="self-start inline-flex items-center justify-center flex-none w-36 h-10 bg-eucalipto text-white rounded-md text-sm text-center">
+                    <a
+                      href="/docs/documento_camara_comercio.pdf"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="self-start inline-flex items-center justify-center flex-none w-36 h-10 bg-eucalipto text-white rounded-md text-sm text-center"
+                    >
                       Ver documento
                     </a>
                   </div>
@@ -808,15 +827,38 @@ function Index() {
                 <div className="w-full">
                   <h4 className="font-serif text-xl font-semibold mb-0.5">Excelencia Sanitaria</h4>
                   <div className="flex items-start justify-between gap-4 w-full min-w-0">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="w-10 h-10 flex-none text-nogal/70" fill="none" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M14 2v6h6" />
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      className="w-10 h-10 flex-none text-nogal/70"
+                      fill="none"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="1.5"
+                        d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"
+                      />
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="1.5"
+                        d="M14 2v6h6"
+                      />
                     </svg>
                     <div className="flex-1">
                       <div className="text-sm font-semibold">Documento en PDF</div>
-                      <div className="text-xs text-nogal/50">Municipalidad distrital de Andres Avelino Cáceres Dorregaray</div>
+                      <div className="text-xs text-nogal/50">
+                        Municipalidad distrital de Andres Avelino Cáceres Dorregaray
+                      </div>
                     </div>
-                    <a href="/docs/Resolucion_andres_avelino_caceres.pdf" target="_blank" rel="noopener noreferrer" className="self-start inline-flex items-center justify-center flex-none w-36 h-10 bg-eucalipto text-white rounded-md text-sm text-center">
+                    <a
+                      href="/docs/Resolucion_andres_avelino_caceres.pdf"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="self-start inline-flex items-center justify-center flex-none w-36 h-10 bg-eucalipto text-white rounded-md text-sm text-center"
+                    >
                       Ver documento
                     </a>
                   </div>
