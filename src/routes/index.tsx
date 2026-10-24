@@ -306,7 +306,7 @@ function LugaresAccordion() {
   }, [isMobile]);
 
   return (
-    <div className="flex flex-col md:flex-row h-[750px] md:h-[500px] w-full gap-3 md:gap-5 overflow-hidden">
+    <div className="flex flex-col md:flex-row h-[820px] md:h-[500px] w-full gap-3 md:gap-5 overflow-hidden">
       {lugares.map((lugar, i) => {
         const isExpanded = isMobile
           ? lugar.id === activeId

@@ -81,10 +81,9 @@ export function SiteNavigationMenu({
         {/* ── Header con logo centrado + botón cerrar ── */}
         <div className="relative flex items-center justify-center px-8 pt-6 pb-4 shrink-0">
           <img
-            src="/images.png"
+            src="/imagenes-reales/logo/logo-las-flores-black.webp"
             alt="Restaurante Las Flores"
             className="h-10 md:h-12 w-auto object-contain mx-auto"
-            style={{ filter: 'brightness(0) saturate(100%) invert(19%) sepia(16%) saturate(740%) hue-rotate(346deg) brightness(96%) contrast(89%)' }}
           />
           <button
             onClick={() => setIsOpen(false)}

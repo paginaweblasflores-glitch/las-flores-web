@@ -580,7 +580,7 @@ function EventosPage() {
                 <div className="w-8" />
 
                 <img
-                  src="/images.png"
+                  src="/imagenes-reales/logo/logo-las-flores-black.webp"
                   alt="Logo Las Flores"
                   className="h-9 object-contain drop-shadow-sm scale-[1.25] origin-center"
                 />

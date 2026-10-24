@@ -4,12 +4,14 @@ import type { DiaItem } from "@/data/festividades";
 
 interface DiaSwitcherProps {
   dias: DiaItem[];
+  titulo?: string;
+  texto?: string;
 }
 
 const VISIBLES = 3;
 const GAP = 20;
 
-export function DiaSwitcher({ dias }: DiaSwitcherProps) {
+export function DiaSwitcher({ dias, titulo, texto }: DiaSwitcherProps) {
   const trackRef = useRef<HTMLDivElement>(null);
   const maxStart = Math.max(dias.length - VISIBLES, 0);
   const [start, setStart] = useState(0);
@@ -31,9 +33,12 @@ export function DiaSwitcher({ dias }: DiaSwitcherProps) {
 
   return (
     <section className="px-6 md:px-16 py-16 md:py-24">
-      <span className="text-eucalipto text-[10px] uppercase tracking-[0.3em] font-semibold mb-8 block">
-        Los 10 días de Semana Santa
-      </span>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+        <h2 className="font-serif text-3xl md:text-5xl leading-tight">{titulo ?? "Los 10 días de Semana Santa"}</h2>
+        {texto && (
+          <p className="text-nogal/70 text-base md:text-lg leading-relaxed self-center">{texto}</p>
+        )}
+      </div>
       <div className="relative md:px-14">
         <button
           type="button"

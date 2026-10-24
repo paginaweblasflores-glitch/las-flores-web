@@ -14,9 +14,9 @@ export function SiteFooter() {
               onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
             >
               <img
-                src="/images.png"
+                src="/imagenes-reales/logo/logo-las-flores-white.webp"
                 alt="Las Flores Logo"
-                className="h-12 md:h-16 w-auto object-contain brightness-0 invert"
+                className="h-12 md:h-16 w-auto object-contain"
               />
             </Link>
 

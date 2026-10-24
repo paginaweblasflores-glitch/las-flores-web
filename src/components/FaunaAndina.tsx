@@ -55,6 +55,10 @@ export function FaunaAndina() {
   const [direccion, setDireccion] = useState<Direccion>("adelante");
   // Mientras el cursor (o el foco del teclado) está sobre el panel de texto, el avance automático se detiene para poder leer.
   const [leyendo, setLeyendo] = useState(false);
+  // El carrusel y la entrada del texto esperan a que la sección llegue a la pantalla (no arrancan al cargar la página).
+  const [visible, setVisible] = useState(false);
+  const [visto, setVisto] = useState(false);
+  const raiz = useRef<HTMLDivElement>(null);
   const limpiarSaliente = useRef<number | undefined>(undefined);
   const especie = ESPECIES[activo];
 
@@ -70,14 +74,32 @@ export function FaunaAndina() {
   useEffect(() => () => window.clearTimeout(limpiarSaliente.current), []);
 
   useEffect(() => {
-    if (leyendo) return;
+    const el = raiz.current;
+    if (!el || typeof IntersectionObserver === "undefined") {
+      setVisible(true);
+      setVisto(true);
+      return;
+    }
+    const observador = new IntersectionObserver(
+      ([entrada]) => {
+        setVisible(entrada.isIntersecting);
+        if (entrada.isIntersecting) setVisto(true);
+      },
+      { threshold: 0.4 },
+    );
+    observador.observe(el);
+    return () => observador.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (leyendo || !visible) return;
     if (window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) return;
     const id = window.setTimeout(() => {
       irA((activo + 1) % ESPECIES.length, "adelante");
     }, INTERVALO_MS);
     return () => window.clearTimeout(id);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activo, leyendo]);
+  }, [activo, leyendo, visible]);
 
   // Precarga la siguiente imagen para que el cambio sea instantáneo.
   useEffect(() => {
@@ -92,7 +114,7 @@ export function FaunaAndina() {
   };
 
   return (
-    <div className="relative md:h-[750px]">
+    <div ref={raiz} className="relative md:h-[750px]">
       <div className="relative h-96 overflow-hidden md:absolute md:inset-0 md:h-full">
         {[saliente, activo].map((i) =>
           i === null ? null : (
@@ -114,7 +136,7 @@ export function FaunaAndina() {
         onBlur={() => setLeyendo(false)}
         className="md:absolute md:bottom-0 md:left-8 md:w-full md:max-w-md bg-eucalipto text-piedra px-8 py-10 md:px-10 md:py-12 flex flex-col justify-between"
       >
-        <div key={especie.nombre} className="fauna-texto">
+        <div key={especie.nombre} className={visto ? "fauna-texto" : "opacity-0"}>
           {especie.quechua && (
             <span className="text-chilca text-[10px] uppercase tracking-[0.3em] font-semibold mb-4 block">
               {especie.quechua}

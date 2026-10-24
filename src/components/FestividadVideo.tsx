@@ -2,6 +2,8 @@ import { useEffect, useRef, useState } from "react";
 
 interface FestividadVideoProps {
   src: string;
+  /** Versión liviana (720p) para pantallas pequeñas; si se omite se usa `src` en todas. */
+  srcMobile?: string;
   poster: string;
   alt: string;
   className?: string;
@@ -15,7 +17,7 @@ function evitarVideo(): boolean {
   return Boolean(reduceMotion || conn?.saveData);
 }
 
-export function FestividadVideo({ src, poster, alt, className = "", priority = false }: FestividadVideoProps) {
+export function FestividadVideo({ src, srcMobile, poster, alt, className = "", priority = false }: FestividadVideoProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [sinVideo, setSinVideo] = useState(false);
 
@@ -38,7 +40,7 @@ export function FestividadVideo({ src, poster, alt, className = "", priority = f
     const cargarSiFalta = () => {
       if (!el.getAttribute("src")) {
         el.preload = "auto";
-        el.src = src;
+        el.src = srcMobile && window.matchMedia("(max-width: 767px)").matches ? srcMobile : src;
         el.load();
       }
     };
@@ -113,7 +115,7 @@ export function FestividadVideo({ src, poster, alt, className = "", priority = f
       gestos.forEach((g) => window.removeEventListener(g, sincronizar));
       window.removeEventListener("resize", sincronizar);
     };
-  }, [src, priority]);
+  }, [src, srcMobile, priority]);
 
   if (sinVideo) {
     return <img src={poster} alt={alt} decoding="async" className={className} />;
@@ -122,7 +124,7 @@ export function FestividadVideo({ src, poster, alt, className = "", priority = f
   return (
     <video
       ref={videoRef}
-      src={priority ? src : undefined}
+      src={priority && !srcMobile ? src : undefined}
       poster={poster}
       muted
       loop
