@@ -96,13 +96,13 @@ describe("RetabloWrapper", () => {
     expect(wrapper).not.toContain("w-[90vw]");
   });
 
-  it("does not reserve an empty lower frame area on mobile", () => {
+  it("preserves the mobile minimum height of the retablo frame", () => {
     const markup = renderToStaticMarkup(
       React.createElement(RetabloWrapper, null, React.createElement("p", null, "Contenido")),
     );
     const wrapper = markup.match(/<div class="[^"]*retablo-wrapper[^"]*"[^>]*>/)?.[0] ?? "";
 
-    expect(wrapper).not.toContain("min-h-[700px]");
+    expect(wrapper).toContain("min-h-[700px]");
     expect(wrapper).toContain("lg:min-h-[min(700px,calc(100dvh_-_10rem))]");
   });
 
