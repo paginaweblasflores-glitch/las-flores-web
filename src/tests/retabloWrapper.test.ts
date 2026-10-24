@@ -112,9 +112,13 @@ describe("RetabloWrapper", () => {
     );
     const contentLayer = markup.match(/<div class="relative z-10 min-h-0[^"]*"[^>]*>/)?.[0] ?? "";
     const interior = markup.match(/<div class="retablo-interior[^"]*">/)?.[0] ?? "";
+    const pediment =
+      markup.match(/<div class="absolute top-0 left-0 right-0[^"]*"[^>]*>/)?.[0] ?? "";
 
-    expect(contentLayer).not.toContain("pt-16");
+    expect(contentLayer).toContain("pt-16");
     expect(contentLayer).toContain("lg:pt-24");
+    expect(pediment).toContain("h-16");
+    expect(pediment).toContain("lg:h-24");
     expect(interior).not.toContain("mx-[10px]");
     expect(interior).not.toContain("mb-[10px]");
     expect(interior).toContain("lg:mx-[14px]");
@@ -133,7 +137,7 @@ describe("RetabloWrapper", () => {
 
     expect(markup).toContain("perspective:1400px");
     expect(markup).toContain("perspective-origin:50% 40%");
-    expect(markup).toContain("min-h-0 lg:pt-24");
+    expect(markup).toContain("min-h-0 pt-16 lg:pt-24");
     expect(markup).toContain('class="relative h-full flex flex-col overflow-visible"');
     expect(doorPanels).toHaveLength(2);
     expect(doorPanels.every((panel) => panel.includes("top-0 bottom-0"))).toBe(true);

@@ -328,7 +328,7 @@ const RetabloWrapper = ({ children }: { children: ReactNode }) => {
 
       {/* CAPA 3: Contenido rectangular — z-10 (overflow-visible para despliegue 3D) */}
       <div
-        className="relative z-10 min-h-0 lg:pt-24 flex-1 flex flex-col justify-center overflow-visible"
+        className="relative z-10 min-h-0 pt-16 lg:pt-24 flex-1 flex flex-col justify-center overflow-visible"
         style={{ transformStyle: "preserve-3d" }}
       >
         <div
