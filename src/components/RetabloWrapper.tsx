@@ -172,7 +172,7 @@ const RetabloWrapper = ({ children }: { children: ReactNode }) => {
        * - Contenedor Central: hasta 900px, con margen para las puertas abiertas
        * - En viewports más pequeños, el conjunto se reduce proporcionalmente
        */
-      className="retablo-wrapper relative mx-auto mt-0 lg:mt-0 mb-0 lg:mb-[min(3rem,2dvh)] min-h-[700px] lg:min-h-[min(700px,calc(100dvh_-_10rem))] lg:h-[min(900px,calc(100dvh_-_10rem))] w-screen max-w-none lg:w-[calc(50vw_-_40px)] lg:max-w-[900px] flex flex-col justify-center"
+      className="retablo-wrapper relative mx-auto mt-0 lg:mt-0 mb-0 lg:mb-[min(3rem,2dvh)] lg:min-h-[min(700px,calc(100dvh_-_10rem))] lg:h-[min(900px,calc(100dvh_-_10rem))] w-screen max-w-none lg:w-[calc(50vw_-_40px)] lg:max-w-[900px] flex flex-col justify-center"
       style={{
         perspective: "1400px",
         perspectiveOrigin: "50% 40%",
