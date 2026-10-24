@@ -175,3 +175,39 @@ Only the four Task 1 SQL files and regression test were staged in this commit.
 
 - No `psql` or `pg_format` executable was available, so the SQL was reviewed and regression-tested as source but was not executed against a live PostgreSQL/Supabase database.
 - The migration backfill seeds products that exist when the SQL runs and preserves nonempty admin-managed `custom_options`. New products added later must have their approved server-side choices populated in `products.custom_options`.
+
+## Fix round: review findings
+
+### Changes
+
+- `supabase/hardening_rls.sql`: corrected the spaghetti-pesto section ID to `proteina`, added `custom_options` to the non-admin immutable-field trigger, and removed the legacy permissive authenticated product-update policy.
+- `supabase/migrate_new_db.sql` and `supabase/full_schema_v2.sql`: corrected the spaghetti-pesto section ID and remove legacy authenticated/staff update policies before installing admin-only product update policies.
+- `supabase/migrate_custom_order_details.sql`: corrected the spaghetti-pesto section ID and added an idempotent `BEFORE UPDATE` trigger that rejects non-admin `custom_options` changes, covering this existing-database migration even when run without the hardening script.
+- `src/tests/orderPaymentSecurity.test.ts`: added regressions for the exact UI section ID, the hardening trigger guard, the existing-database migration guard, and admin-only product update policies.
+- This report file records the review-fix round.
+
+### TDD and verification
+
+RED command: `npm test -- --run src/tests/orderPaymentSecurity.test.ts`
+
+Result before SQL changes: **20 tests, 8 failed**. All four SQL seed assertions failed on the mismatched section ID; the hardening and existing-database migration guard assertions failed because `custom_options` was not protected; both admin-only policy-path assertions failed because permissive legacy/staff policies were not dropped.
+
+GREEN command: `npm test -- --run src/tests/orderPaymentSecurity.test.ts`
+
+Result after changes: **1 test file passed, 20 tests passed**.
+
+Additional commands:
+
+- `npx eslint src/tests/orderPaymentSecurity.test.ts` — exited 0 with no output.
+- `git diff --check` — exited 0.
+
+### Commit
+
+- SHA: `04636c61f61e631d3dd003b6dfc7d553068ca4e9`
+- Subject: `fix: align order options and protect admin pricing`
+
+Only the four SQL files and focused regression test were staged for the fix commit. Existing unrelated local modifications were left unstaged and untouched.
+
+### Concern
+
+The SQL was verified with focused source regression tests; it was not executed against a live PostgreSQL/Supabase database.
