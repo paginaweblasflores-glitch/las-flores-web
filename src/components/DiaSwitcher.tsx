@@ -34,7 +34,7 @@ export function DiaSwitcher({ dias, titulo, texto }: DiaSwitcherProps) {
   return (
     <section className="px-6 md:px-16 py-16 md:py-24">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-        <h2 className="font-serif text-3xl md:text-5xl leading-tight">{titulo ?? "Los 10 días de Semana Santa"}</h2>
+        <h2 className="font-serif text-3xl md:text-5xl leading-tight">{titulo ?? "Los días de Semana Santa"}</h2>
         {texto && (
           <p className="text-nogal/70 text-base md:text-lg leading-relaxed self-center">{texto}</p>
         )}
@@ -69,7 +69,7 @@ export function DiaSwitcher({ dias, titulo, texto }: DiaSwitcherProps) {
                 <div className="aspect-4/3 overflow-hidden relative">
                   <img
                     src={d.imagen}
-                    alt={d.dia}
+                    alt={d.titulo ?? d.dia}
                     loading="lazy"
                     decoding="async"
                     className="w-full h-full object-cover"
@@ -79,8 +79,15 @@ export function DiaSwitcher({ dias, titulo, texto }: DiaSwitcherProps) {
                   </span>
                 </div>
                 <figcaption className="mt-4">
-                  <p className="font-serif text-lg">{d.dia}</p>
-                  <p className="text-sm text-nogal/60 mt-1 leading-relaxed">{d.texto}</p>
+                  {d.titulo && (
+                    <p className="text-eucalipto text-[10px] uppercase tracking-[0.25em] font-semibold mb-1">
+                      {d.dia}
+                    </p>
+                  )}
+                  <p className="font-serif text-lg">{d.titulo ?? d.dia}</p>
+                  <p className="text-sm text-nogal/60 mt-1 leading-relaxed">
+                    {d.texto.split(/\*(.+?)\*/g).map((trozo, j) => (j % 2 === 1 ? <em key={j}>{trozo}</em> : trozo))}
+                  </p>
                 </figcaption>
               </figure>
             ))}

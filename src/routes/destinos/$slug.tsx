@@ -42,12 +42,12 @@ function LugarDetailPage() {
   );
   const clips = Array.from({ length: 4 }, (_, i) => clipsPool[i % clipsPool.length]);
 
-  // Sección "Siente el lugar antes de llegar": va arriba, antes de la imagen con el Consejo; con tarjetas verticales y a la altura de la pantalla (igual en todos los lugares; con clips si el lugar los tiene, con fotos si no).
+  // Sección "Un vistazo al destino": va arriba, antes de la imagen con el Consejo; con tarjetas verticales y a la altura de la pantalla (igual en todos los lugares; con clips si el lugar los tiene, con fotos si no).
   const escenasSection = (
           <section className="px-6 md:px-16 py-16 md:py-24 md:min-h-[100svh] md:flex md:flex-col md:justify-center">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
               <h2 className="font-serif text-3xl md:text-5xl leading-tight">
-                Siente el lugar antes de llegar
+                Un vistazo al destino
               </h2>
               <p className="text-nogal/70 text-base md:text-lg leading-relaxed self-center">
                 {lugar.escenas}
@@ -155,7 +155,11 @@ function LugarDetailPage() {
                 {lugar.categoria}
               </span>
               <h2 className="font-serif text-3xl md:text-4xl leading-tight mb-5">{lugar.nombre}</h2>
-              <p className="text-nogal/80 text-base md:text-lg leading-relaxed">{lugar.descripcion}</p>
+              {lugar.descripcion.split("\n\n").map((parrafo, i) => (
+                <p key={i} className={`text-nogal/80 text-base md:text-lg leading-relaxed ${i > 0 ? "mt-4" : ""}`}>
+                  {parrafo.split(/\*(.+?)\*/g).map((trozo, j) => (j % 2 === 1 ? <em key={j}>{trozo}</em> : trozo))}
+                </p>
+              ))}
             </div>
           </div>
           <div
@@ -178,7 +182,7 @@ function LugarDetailPage() {
         {escenasSection}
 
         {/* SECCIÓN — Imagen a pantalla completa con etiqueta (entre el mapa y la galería) */}
-        {(lugar.seccionImagen || (lugar.consejo && lugar.frase)) && (
+        {(lugar.seccionImagen || lugar.consejo) && (
           <section className="relative h-[115svh] min-h-[34rem] w-full overflow-hidden">
             <img
               src={imagenConsejo.imagen}
@@ -187,20 +191,15 @@ function LugarDetailPage() {
               decoding="async"
               className="absolute inset-0 w-full h-full object-cover"
             />
-            {lugar.consejo && lugar.frase && (
+            {lugar.consejo && (
               <div className="absolute bottom-0 left-4 right-4 md:right-auto md:left-10 md:w-[30rem] md:h-[min(38rem,78svh)] flex flex-col justify-center gap-6 bg-eucalipto text-piedra px-6 py-8 md:px-10 md:py-12 overflow-y-auto">
-                <div>
-                  <span className="text-chilca text-[10px] uppercase tracking-[0.3em] font-semibold mb-4 block">
-                    Consejo de visita
-                  </span>
-                  <p className="font-serif text-xl md:text-3xl leading-snug">{lugar.frase}</p>
-                </div>
+                <h2 className="font-serif text-xl md:text-3xl leading-snug">Consejo de visita</h2>
                 <p className="text-sm md:text-lg leading-relaxed text-piedra/90">{lugar.consejo}</p>
               </div>
             )}
             <span
               className={`absolute bottom-6 md:bottom-10 text-piedra text-[10px] uppercase tracking-[0.35em] font-semibold drop-shadow ${
-                lugar.consejo && lugar.frase ? "right-6 md:right-10" : "left-6 md:left-10"
+                lugar.consejo ? "right-6 md:right-10" : "left-6 md:left-10"
               }`}
             >
               {imagenConsejo.etiqueta}
@@ -289,7 +288,7 @@ function LugarDetailPage() {
                   className="group grid grid-cols-[1fr_auto] md:grid-cols-[1fr_16rem_auto] items-center gap-x-6 gap-y-1 py-5 md:py-7 transition-colors hover:bg-nogal/[0.03]"
                 >
                   <span className="font-serif text-xl md:text-3xl leading-snug transition-transform duration-300 group-hover:translate-x-2">
-                    {otro.nombre}
+                    {otro.nombreLista ?? otro.nombre}
                   </span>
                   <span className="hidden md:block text-[11px] uppercase tracking-[0.2em] font-semibold text-nogal/60">
                     {otro.categoria}
