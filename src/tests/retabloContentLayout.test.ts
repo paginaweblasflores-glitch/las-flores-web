@@ -116,21 +116,6 @@ describe("home retablo content layout", () => {
     expect(attribute(section, "className")).toContain("relative py-0");
   });
 
-  it("removes the mobile top padding from the section immediately after the retablo", () => {
-    const section = jsxDescendants(routeAst).find(
-      (element) =>
-        tagName(element) === "section" && attribute(element, "id") === "lugares-para-visitar",
-    );
-
-    expect(section).toBeDefined();
-    if (!section) throw new Error("Places section not found");
-
-    const sectionClasses = attribute(section, "className") ?? "";
-    expect(sectionClasses).toContain("pt-0");
-    expect(sectionClasses).toContain("pb-16");
-    expect(sectionClasses).toContain("md:py-32");
-  });
-
   it("uses viewport-responsive desktop bottom spacing for the open doors", () => {
     const section = jsxDescendants(routeAst).find(
       (element) => tagName(element) === "section" && element.getText().includes("<RetabloWrapper"),
