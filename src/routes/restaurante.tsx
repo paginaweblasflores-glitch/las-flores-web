@@ -193,7 +193,7 @@ function GenerationsSection() {
       <div className="container-flores mx-auto">
         <div className="max-w-3xl mb-8 md:mb-12">
           <h2 className="font-serif text-4xl md:text-5xl leading-[1.05] text-balance">
-            Las tres generaciones que comparten un mismo corazón
+            Las tres generaciones
           </h2>
         </div>
 
