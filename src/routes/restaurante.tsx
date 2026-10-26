@@ -192,11 +192,8 @@ function GenerationsSection() {
     <section id="historia" className="bg-piedra py-16 md:py-20 px-6">
       <div className="container-flores mx-auto">
         <div className="max-w-3xl mb-8 md:mb-12">
-          <span className="text-eucalipto font-medium uppercase tracking-[0.3em] text-xs mb-4 block">
-            Las Tres Generaciones
-          </span>
           <h2 className="font-serif text-4xl md:text-5xl leading-[1.05] text-balance">
-            La historia y el legado familiar de Las Flores
+            Las tres generaciones que comparten un mismo corazón
           </h2>
         </div>
 
@@ -354,14 +351,9 @@ function RestaurantePage() {
 
         <div className="relative z-10 mx-auto flex w-full max-w-6xl items-center justify-center px-4 sm:px-6 lg:px-8 text-piedra">
           <div className="max-w-3xl text-center">
-            <h1 className="font-serif text-4xl md:text-6xl text-piedra font-normal leading-tight animate-reveal [animation-delay:200ms]">
+            <h1 className="font-serif text-4xl md:text-6xl text-piedra font-normal leading-tight animate-reveal-left-to-right [animation-delay:200ms]">
               Bienvenido a Nuestra Casa
             </h1>
-            <p className="mx-auto mt-6 max-w-3xl text-base md:text-lg text-piedra/90 leading-relaxed">
-              Cruza la puerta de Las Flores y sé parte de la familia. Aquí, cada visita se recibe
-              con la misma calidez de siempre: tres generaciones cuidando cada plato, cada detalle
-              y cada historia que compartimos contigo desde el corazón de Huamanga.
-            </p>
           </div>
         </div>
 
@@ -382,7 +374,7 @@ function RestaurantePage() {
               Familia Las Flores
             </span>
             <h2 className="font-serif text-4xl md:text-5xl leading-[1.1] text-balance mb-6">
-              La familia detrás de cada plato
+              Una cocina con rostros e historias
             </h2>
             <p className="text-lg text-piedra/70 leading-[1.7] mb-8">
               Conoce a las personas que hacen posible la magia ayacuchana en cada servicio:
@@ -445,4 +437,3 @@ function RestaurantePage() {
     </div>
   );
 }
-
