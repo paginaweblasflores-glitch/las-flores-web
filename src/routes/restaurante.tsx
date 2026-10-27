@@ -5,7 +5,7 @@ const heroRestauranteImg = "/imagenes-reales/hero-paginas/hero-restaurante.webp"
 const cocinaImg = "/imagenes-reales/EQUIPO/02042026-DSC05081-opt.webp";
 import { SiteFooter } from "@/components/site-footer";
 import { useState, useTransition, useEffect, useRef } from "react";
-import { Calendar, CreditCard, ChevronRight, Check, ChevronDown } from "lucide-react";
+import { Calendar, CreditCard, ChevronRight, Check, Sparkles } from "lucide-react";
 import { SiteHeader } from "@/components/SiteHeader";
 import { MenuModal } from "@/components/MenuModal";
 import { MapaUbicacion } from "@/components/MapaUbicacion";
@@ -47,38 +47,29 @@ type GenerationStory = {
   image: string;
   alt: string;
   summary: string;
-  contribution: string;
 };
 
 const generationStories: GenerationStory[] = [
   {
-    generation: "Origen",
+    generation: "Primera generación",
     name: "Mamina",
     image: "/imagenes-reales/FAMILIA-HISTORIA/mamina.webp",
     alt: "Fundadora de Las Flores en la cocina",
-    summary:
-      "Mamina abrió la primera casa de sabor, donde la hospitalidad, el fuego y la memoria compartida dieron forma a la identidad de Las Flores.",
-    contribution:
-      "Puso la base de la cocina familiar y consolidó el vínculo entre tradición, hogar y mesa.",
+    summary: "Fundó Las Flores y puso la base de su cocina familiar.",
   },
   {
-    generation: "Consolidación",
+    generation: "Segunda generación",
     name: "Gloria",
     image: "/imagenes-reales/FAMILIA-HISTORIA/gloria.webp",
     alt: "Gloria en la etapa de consolidación del restaurante Las Flores",
-    summary:
-      "Gloria tomó las riendas y transformó el comedor familiar en un santuario gastronómico, formalizando el negocio y llevando el sabor de Ayacucho a nuevos horizontes sin perder la esencia.",
-    contribution: "Formalizó el negocio y proyectó la cocina de Ayacucho hacia nuevos horizontes.",
+    summary: "Formalizó el negocio y proyectó la cocina ayacuchana hacia nuevos públicos.",
   },
   {
-    generation: "Legado",
+    generation: "Tercera generación",
     name: "Mijail",
     image: "/imagenes-reales/FAMILIA-HISTORIA/mijail.webp",
     alt: "Mijail junto a la tercera generación de Las Flores",
-    summary:
-      "Mijail lidera la tercera generación, preservando el fuego original y llevando nuestra tradición culinaria hacia una experiencia contemporánea.",
-    contribution:
-      "Mantiene viva la esencia familiar mientras proyecta la cocina hacia el presente.",
+    summary: "Lidera el restaurante hoy y lleva la tradición a una propuesta contemporánea.",
   },
 ];
 
@@ -109,103 +100,50 @@ const chefRecommendations = [
   },
 ];
 
-function GenerationFlipCard({
-  generation,
-  isActive,
-  onSelect,
-}: {
-  generation: GenerationStory;
-  isActive: boolean;
-  onSelect: () => void;
-}) {
+function GenerationCard({ generation }: { generation: GenerationStory }) {
   return (
-    <article className="group h-full [perspective:1400px]">
-      <div
-        tabIndex={0}
-        role="button"
-        onClick={onSelect}
-        onKeyDown={(event) => {
-          if (event.key === "Enter" || event.key === " ") {
-            event.preventDefault();
-            onSelect();
-          }
-        }}
-        className="relative h-[380px] md:h-[420px] w-full overflow-hidden rounded-[2rem] bg-transparent text-left cursor-pointer focus:outline-none"
-      >
-        <div className={`relative h-full w-full transition-transform duration-700 ease-[cubic-bezier(0.25,1,0.5,1)] [transform-style:preserve-3d] md:group-hover:[transform:rotateY(180deg)] md:group-focus:[transform:rotateY(180deg)] ${isActive ? "[transform:rotateY(180deg)] md:[transform:none]" : ""} shadow-xl`}>
-          {/* Front Face */}
-          <div
-            className="absolute inset-0 h-full w-full rounded-[2rem] overflow-hidden bg-eucalipto"
-            style={{ backfaceVisibility: "hidden" }}
-          >
-            <img
-              src={generation.image}
-              alt={generation.alt}
-              loading="lazy"
-              decoding="async"
-              className="h-full w-full object-cover transition-transform duration-1000 group-hover:scale-110"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-ink/95 via-ink/30 to-transparent" />
-            <div className="absolute inset-x-0 bottom-0 p-8 text-piedra">
-              <span className="inline-flex rounded-full border border-piedra/30 bg-eucalipto/30 backdrop-blur-md px-4 py-1.5 text-[10px] uppercase tracking-[0.35em] text-piedra/90 mb-4">
-                {generation.generation}
-              </span>
-              <h3 className="font-serif text-3xl md:text-4xl leading-tight text-balance">
-                {generation.name}
-              </h3>
-            </div>
-          </div>
-
-          {/* Back Face */}
-          <div
-            className="absolute inset-0 flex h-full w-full flex-col justify-between rounded-[2rem] bg-[#f8f4e6] p-8 md:p-10 text-nogal shadow-inner border border-nogal/5"
-            style={{ backfaceVisibility: "hidden", transform: "rotateY(180deg)" }}
-          >
-            <div>
-              <span className="inline-flex rounded-full border border-nogal/20 bg-piedra px-4 py-1.5 text-[11px] uppercase tracking-[0.35em] text-nogal mb-5">
-                {generation.generation}
-              </span>
-              <h3 className="font-serif text-3xl leading-tight text-nogal text-balance mb-6">
-                {generation.name}
-              </h3>
-              <p className="text-base leading-relaxed text-nogal/90 text-pretty">
-                {generation.summary}
-              </p>
-            </div>
-
-            <div className="mt-auto pt-6 border-t border-nogal/10">
-              <span className="block text-[11px] uppercase tracking-[0.3em] text-nogal/85 mb-2 font-bold">
-                Su Legado
-              </span>
-              <p className="text-sm leading-relaxed text-nogal/90">{generation.contribution}</p>
-            </div>
-          </div>
-        </div>
+    <article className="group">
+      <div className="aspect-square overflow-hidden bg-eucalipto">
+        <img
+          src={generation.image}
+          alt={generation.alt}
+          loading="lazy"
+          decoding="async"
+          className="h-full w-full object-cover object-[center_20%] transition-transform duration-700 ease-out group-hover:scale-105"
+        />
+      </div>
+      <div className="pt-5">
+        <span className="block text-[11px] font-medium uppercase tracking-[0.3em] text-eucalipto">
+          {generation.generation}
+        </span>
+        <h3 className="mt-2 font-serif text-3xl leading-tight text-nogal">{generation.name}</h3>
+        <p className="mt-2 max-w-sm text-base leading-relaxed text-nogal/80 text-pretty">
+          {generation.summary}
+        </p>
       </div>
     </article>
   );
 }
 
 function GenerationsSection() {
-  const [activeIndex, setActiveIndex] = useState<number | null>(null);
-
   return (
     <section id="historia" className="bg-piedra py-16 md:py-20 px-6">
       <div className="container-flores mx-auto">
-        <div className="max-w-3xl mb-8 md:mb-12">
-          <h2 className="font-serif text-4xl md:text-5xl leading-[1.05] text-balance">
-            Las tres generaciones
-          </h2>
+        <div className="mb-8 md:mb-12 flex flex-col md:flex-row md:items-end md:justify-between gap-6">
+          <div>
+            <h2 className="font-serif text-4xl md:text-5xl leading-[1.05] text-balance max-w-[24ch]">
+              Tres generaciones al frente de Las Flores
+            </h2>
+          </div>
+          <p className="text-base text-nogal/60 leading-[1.7] max-w-[42ch] md:text-right">
+            Desde hace 45 años, en Las Flores mantenemos viva la tradición, compartiendo con cada
+            generación el sabor y la calidez de nuestra tierra, Ayacucho.
+          </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 xl:gap-8">
-          {generationStories.map((generation, index) => (
-            <GenerationFlipCard
-              key={generation.name}
-              generation={generation}
-              isActive={activeIndex === index}
-              onSelect={() => setActiveIndex((prev) => (prev === index ? null : index))}
-            />
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 xl:gap-10">
+          {generationStories.map((generation) => (
+            <GenerationCard key={generation.name} generation={generation} />
           ))}
         </div>
       </div>
@@ -338,7 +276,7 @@ function RestaurantePage() {
 
       <header
         id="historia"
-        className="relative min-h-[100svh] w-full overflow-hidden bg-eucalipto flex items-center pt-32 pb-24"
+        className="relative min-h-[75vh] w-full overflow-hidden bg-eucalipto flex items-center pt-32 pb-24"
       >
         <img
           src={heroRestauranteImg}
@@ -351,22 +289,21 @@ function RestaurantePage() {
         <div className="absolute inset-0 bg-gradient-to-b from-ink/70 via-ink/55 to-ink/90" />
 
         <div className="relative z-10 mx-auto flex w-full max-w-6xl items-center justify-center px-4 sm:px-6 lg:px-8 text-piedra">
-          <div className="max-w-3xl text-center">
+          <div className="max-w-3xl text-center space-y-6">
+            <span className="text-chilca font-medium uppercase tracking-[0.3em] text-xs flex items-center justify-center gap-2">
+              <Sparkles size={14} />
+              Nuestra Historia
+              <Sparkles size={14} />
+            </span>
             <h1 className="font-serif text-4xl md:text-6xl text-piedra font-normal leading-tight animate-reveal-left-to-right [animation-delay:200ms]">
               Bienvenido a Nuestra Casa
             </h1>
-            <p className="mx-auto mt-6 max-w-3xl text-base md:text-lg text-piedra leading-relaxed [text-shadow:0_1px_14px_rgba(14,10,8,0.55)]">
+            <p className="mx-auto max-w-3xl text-base md:text-lg text-piedra leading-relaxed [text-shadow:0_1px_14px_rgba(14,10,8,0.55)]">
               Cruza la puerta de Las Flores y sé parte de la familia. Aquí, cada visita se recibe
               con la misma calidez de siempre: tres generaciones cuidando cada plato, cada detalle
               y cada historia que compartimos contigo desde el corazón de Huamanga.
             </p>
           </div>
-        </div>
-
-        {/* Scroll Indicator */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2 animate-bounce">
-          <span className="text-piedra/85 text-[11px] uppercase tracking-[0.4em] font-medium">Desliza</span>
-          <ChevronDown size={24} className="text-piedra/85" strokeWidth={1.5} />
         </div>
       </header>
 

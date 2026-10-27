@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteFooter } from "@/components/site-footer";
 import { useState, useEffect } from "react";
 import { SiteHeader } from "../components/SiteHeader";
-import { Sparkles } from "lucide-react";
+import { Sparkles, Mountain } from "lucide-react";
 import { MobileCategoryFilter } from "@/components/MobileCategoryFilter";
 
 export const Route = createFileRoute("/tesoros-ayacucho")({
@@ -534,14 +534,14 @@ const productosPorTemporada: Record<string, Producto[]> = {
       imagen: "/imagenes-reales/productosAyacucho/Verano/granadilla.webp",
     },
     {
-      nombre: "Lucuma",
+      nombre: "Lúcuma",
       rangoAltitud: "2.500 m s. n. m.",
       temporada: "Verano",
       meses: "Diciembre - Mayo",
       imagen: "/imagenes-reales/productosAyacucho/Verano/lucuma.webp",
     },
     {
-      nombre: "Maiz",
+      nombre: "Maíz",
       rangoAltitud: "3.500 m s. n. m.",
       temporada: "Verano",
       meses: "Enero - Mayo",
@@ -615,7 +615,7 @@ const productosPorTemporada: Record<string, Producto[]> = {
       imagen: "/imagenes-reales/productosAyacucho/Invierno/aguaymanto.webp",
     },
     {
-      nombre: "Brocoli",
+      nombre: "Brócoli",
       rangoAltitud: "2.500 m s. n. m.",
       temporada: "Invierno",
       meses: "Junio - Agosto",
@@ -652,7 +652,7 @@ const productosPorTemporada: Record<string, Producto[]> = {
       imagen: "/imagenes-reales/productosAyacucho/Primavera/manzanilla.webp",
     },
     {
-      nombre: "Muna",
+      nombre: "Muña",
       rangoAltitud: "4.000 m s. n. m.",
       temporada: "Primavera",
       meses: "Septiembre - Marzo",
@@ -762,7 +762,7 @@ function TesorosAyacuchoPage() {
                   {/* Título y nombre científico (Aparece con leve movimiento arriba en desktop) */}
                   <div className="transform md:translate-y-4 group-hover:!translate-y-0 md:group-hover:-translate-y-2 transition-all duration-500 ease-out">
                     <h3 className="font-serif text-3xl text-white font-bold mb-1 drop-shadow-md">
-                      {producto.nombre} - {producto.rangoAltitud}
+                      {producto.nombre}
                     </h3>
                     {producto.nombreCientifico && (
                       <p className="text-sm italic text-white/70 mb-2">{producto.nombreCientifico}</p>
@@ -770,9 +770,13 @@ function TesorosAyacuchoPage() {
                   </div>
                   
                   {/* Temporada (Visible en móvil, Delay 1 en desktop) */}
-                  <div className="transform translate-y-0 opacity-100 md:translate-y-8 md:opacity-0 group-hover:!translate-y-0 group-hover:!opacity-100 transition-all duration-500 md:delay-100 ease-out mb-5 mt-3 md:mt-0">
+                  <div className="transform translate-y-0 opacity-100 md:translate-y-8 md:opacity-0 group-hover:!translate-y-0 group-hover:!opacity-100 transition-all duration-500 md:delay-100 ease-out mb-5 mt-3 md:mt-0 flex flex-wrap gap-2">
                     <span className="inline-block text-[11px] font-bold uppercase tracking-wider text-chilca bg-black/40 backdrop-blur-sm px-3 py-1.5 rounded-full border border-white/10">
                       Temporada: {producto.meses}
+                    </span>
+                    <span className="inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-chilca bg-black/40 backdrop-blur-sm px-3 py-1.5 rounded-full border border-white/10">
+                      <Mountain size={12} aria-hidden="true" />
+                      {producto.rangoAltitud}
                     </span>
                   </div>
 

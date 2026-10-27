@@ -72,12 +72,13 @@ describe("imágenes de Tesoros de Ayacucho", () => {
     ).toBe(true);
   });
 
-  it("muestra el rango de altitud junto al nombre del producto", () => {
+  it("muestra la altitud en una etiqueta aparte, no junto al nombre del producto", () => {
     const routeSource = readFileSync(routePath, "utf8");
 
-    expect(routeSource).toMatch(
+    expect(routeSource).not.toMatch(
       /\{producto\.nombre\}\s*-\s*\{producto\.rangoAltitud\}/,
     );
+    expect(routeSource).toContain("{producto.rangoAltitud}");
     expect(routeSource).not.toContain("producto.usos.map");
   });
 });

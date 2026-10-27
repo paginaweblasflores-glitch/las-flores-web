@@ -10,6 +10,7 @@ import { playSuccessChime } from "@/lib/soundUtils";
 import { Calendar, CheckCircle2, User as UserIcon, MapPin, Search, ChevronLeft, Check, AlertCircle, Sparkles, Sun, Wine, Utensils, Users, Award, Share2, CalendarPlus, QrCode, Heart, Coffee, ShieldCheck, X } from "lucide-react";
 import { AnimatedCartButton } from "@/components/AnimatedCartButton";
 import { LoginModal } from "@/components/LoginModal";
+import { TelefonoInput } from "@/components/TelefonoInput";
 import { getBlockedZonesForReservation, listRestaurantZones } from "@/features/zones/api";
 import { getReservationResumeState } from "@/lib/reservationResume";
 
@@ -134,16 +135,6 @@ const DESAYUNO_HOURS = [
 const ALMUERZO_HOURS = [
   "11:30", "12:00", "12:30", "13:00", "13:30", "14:00",
   "14:30", "15:00", "15:30", "16:00", "16:30", "17:00"
-];
-
-const COUNTRY_CODES = [
-  { code: "+51", iso: "pe", name: "Perú" },
-  { code: "+54", iso: "ar", name: "Argentina" },
-  { code: "+56", iso: "cl", name: "Chile" },
-  { code: "+57", iso: "co", name: "Colombia" },
-  { code: "+52", iso: "mx", name: "México" },
-  { code: "+1", iso: "us", name: "USA" },
-  { code: "+34", iso: "es", name: "España" },
 ];
 
 const PENDING_RESERVATION_ZONE_KEY = "reserva_pending_zone";
@@ -1218,37 +1209,17 @@ function ReservasPage() {
                 />
               </div>
 
-              {/* Prefijo y Teléfono */}
-              <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
-                <div className="md:col-span-4">
-                  <label className="block text-xs uppercase tracking-wider font-semibold text-gray-700 mb-1">
-                    Prefijo
-                  </label>
-                  <select
-                    value={form.phoneCountry}
-                    onChange={(e) => setForm({ ...form, phoneCountry: e.target.value })}
-                    className="w-full bg-white border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-[#2e5339]"
-                  >
-                    {COUNTRY_CODES.map((c) => (
-                      <option key={c.code} value={c.code}>
-                        {c.name} ({c.code})
-                      </option>
-                    ))}
-                  </select>
-                </div>
-                <div className="md:col-span-8">
-                  <label className="block text-xs uppercase tracking-wider font-semibold text-gray-700 mb-1">
-                    Teléfono *
-                  </label>
-                  <input
-                    type="tel"
-                    required
-                    value={form.phone}
-                    onChange={(e) => setForm({ ...form, phone: e.target.value })}
-                    placeholder="999654321"
-                    className="w-full bg-[#fdf8f0] border border-gray-300 rounded-lg px-3.5 py-2.5 text-sm focus:outline-none focus:border-[#2e5339]"
-                  />
-                </div>
+              {/* Teléfono (prefijo + número en un solo campo) */}
+              <div>
+                <label className="block text-xs uppercase tracking-wider font-semibold text-gray-700 mb-1">
+                  Teléfono *
+                </label>
+                <TelefonoInput
+                  prefijo={form.phoneCountry}
+                  numero={form.phone}
+                  onPrefijoChange={(phoneCountry) => setForm({ ...form, phoneCountry })}
+                  onNumeroChange={(phone) => setForm({ ...form, phone })}
+                />
               </div>
 
               {/* Checkboxes de Términos y Marketing */}

@@ -34,132 +34,109 @@ export const Route = createFileRoute("/galeria")({
   component: GaleriaPage,
 });
 
+type GalleryImage = {
+  src: string;
+  titulo: string;
+};
+
 type Category = {
   id: string;
   label: string;
-  images: string[];
+  images: GalleryImage[];
 };
+
+const foto = (carpeta: string, archivo: string, titulo: string): GalleryImage => ({
+  src: `/imagenes-reales/galeria/${carpeta}/${archivo}.webp`,
+  titulo,
+});
 
 const GALLERY_CATEGORIES: Category[] = [
   {
     id: "arte-cultura",
     label: "Arte y Cultura",
     images: [
-      "/imagenes-reales/galeria/arte-cultura/textil-uno.webp",
-      "/imagenes-reales/galeria/arte-cultura/textil-dos.webp",
-      "/imagenes-reales/galeria/arte-cultura/textil-tres.webp",
-      "/imagenes-reales/galeria/arte-cultura/ceramica-uno.webp",
-      "/imagenes-reales/galeria/arte-cultura/ceramica-dos.webp",
-      "/imagenes-reales/galeria/arte-cultura/ceramica-tres.webp",
-      "/imagenes-reales/galeria/arte-cultura/ceramica-cuatro.webp",
-      "/imagenes-reales/galeria/arte-cultura/retablo-uno.webp",
-      "/imagenes-reales/galeria/arte-cultura/retablo-dos.webp",
-      "/imagenes-reales/galeria/arte-cultura/retablo-tres.webp",
-      "/imagenes-reales/galeria/arte-cultura/piedra-huamanga-uno.webp",
-      "/imagenes-reales/galeria/arte-cultura/piedra-huamanga-dos.webp",
-      "/imagenes-reales/galeria/arte-cultura/piedra-huamanga-tres.webp",
-      "/imagenes-reales/galeria/arte-cultura/piedra-huamanga-cuatro.webp",
-      "/imagenes-reales/galeria/arte-cultura/cereria-uno.webp",
-      "/imagenes-reales/galeria/arte-cultura/cereria-dos.webp",
-      "/imagenes-reales/galeria/arte-cultura/cereria-tres.webp",
-      "/imagenes-reales/galeria/arte-cultura/telar-uno.webp",
-      "/imagenes-reales/galeria/arte-cultura/telar-dos.webp",
-      "/imagenes-reales/galeria/arte-cultura/telar-tres.webp",
-      "/imagenes-reales/galeria/arte-cultura/orfebreria-uno.webp",
-      "/imagenes-reales/galeria/arte-cultura/orfebreria-dos.webp",
+      foto("arte-cultura", "textil-uno", "Pollera ayacuchana"),
+      foto("arte-cultura", "textil-dos", "Chaqueta con bordado ayacuchano"),
+      foto("arte-cultura", "textil-tres", "Llavero con bordado ayacuchano"),
+      foto("arte-cultura", "ceramica-uno", "Proceso de modelado a mano de la cerámica tradicional de Quinua"),
+      foto("arte-cultura", "ceramica-dos", "Personajes costumbristas de la cerámica de Quinua"),
+      foto("arte-cultura", "ceramica-tres", "Iglesia de cerámica de Quinua"),
+      foto("arte-cultura", "ceramica-cuatro", "Músicos de cerámica tradicional de Quinua"),
+      foto("arte-cultura", "retablo-uno", "Casa Museo Joaquín López Antay"),
+      foto("arte-cultura", "retablo-tres", "Retablos Ayacuchanos tradicionales"),
+      foto("arte-cultura", "piedra-huamanga-uno", "Tallado en piedra de Huamanga"),
+      foto("arte-cultura", "piedra-huamanga-tres", "El descendimiento de la cruz tallado en piedra de Huamanga"),
+      foto("arte-cultura", "piedra-huamanga-cuatro", "Obelisco de la Pampa de Ayacucho talladas en piedra de Huamanga"),
+      foto("arte-cultura", "cereria-uno", "Maestro Cirilo Gálvez Ramos"),
+      foto("arte-cultura", "cereria-dos", "Cerería tradicional ayacuchana"),
+      foto("arte-cultura", "cereria-tres", "Virgen de los Dolores"),
+      foto("arte-cultura", "telar-uno", "Maestro tejedor Marcelino Pomataylla Bautista"),
+      foto("arte-cultura", "telar-dos", "Tapiz ayacuchano"),
+      foto("arte-cultura", "orfebreria-uno", "Flor de orfebrería"),
+      foto("arte-cultura", "orfebreria-dos", "Colibrí de orfebrería"),
     ],
   },
   {
     id: "festividades",
     label: "Festividades",
     images: [
-      "/imagenes-reales/galeria/festividades/carnaval-uno.webp",
-      "/imagenes-reales/galeria/festividades/carnaval-tres.webp",
-      "/imagenes-reales/galeria/festividades/samana-santa-uno.webp",
-      "/imagenes-reales/galeria/festividades/semana-santa-dos.webp",
-      "/imagenes-reales/galeria/festividades/semana-santa-tres.webp",
-      "/imagenes-reales/galeria/festividades/hatun-yacu-raymi-uno.webp",
-      "/imagenes-reales/galeria/festividades/hatun-yacu-raymi-dos.webp",
-      "/imagenes-reales/galeria/festividades/vilcas-raymi-uno.webp",
-      "/imagenes-reales/galeria/festividades/vilcas-raymi-dos.webp",
-      "/imagenes-reales/galeria/festividades/chaccu-uno.webp",
-      "/imagenes-reales/galeria/festividades/chaccu-dos.webp",
+      foto("festividades", "carnaval-uno", "Carnaval Ayacuchano"),
+      foto("festividades", "carnaval-tres", "Carnaval de Culluchaca"),
+      foto("festividades", "semana-santa-dos", "Miércoles de Encuentro de la Semana Santa de Ayacucho"),
+      foto("festividades", "semana-santa-tres", "Alfombras florales de Semana Santa"),
+      foto("festividades", "hatun-yacu-raymi-uno", "Hatun Yaku Raymi"),
+      foto("festividades", "hatun-yacu-raymi-dos", "Danza de las Tijeras"),
+      foto("festividades", "vilcas-raymi-uno", "Plaza principal de Vilcashuamán"),
+      foto("festividades", "vilcas-raymi-dos", "Escenificación del Vilcas Raymi"),
+      foto("festividades", "chaccu-uno", "Chaccu de vicuñas"),
+      foto("festividades", "chaccu-dos", "Ceremonia del chaccu"),
     ],
   },
   {
     id: "destino",
     label: "Destino",
     images: [
-      "/imagenes-reales/galeria/destino/Cañon1.webp",
-      "/imagenes-reales/galeria/destino/Cañon2.webp",
-      "/imagenes-reales/galeria/destino/Arco1.webp",
-      "/imagenes-reales/galeria/destino/Arco2.webp",
-      "/imagenes-reales/galeria/destino/Catedral1.webp",
-      "/imagenes-reales/galeria/destino/Catedral2.webp",
-      "/imagenes-reales/galeria/destino/Plaza1.webp",
-      "/imagenes-reales/galeria/destino/Plaza2.webp",
-      "/imagenes-reales/galeria/destino/Pullas1.webp",
-      "/imagenes-reales/galeria/destino/Pullas2.webp",
-      "/imagenes-reales/galeria/destino/Acuchimay1.webp",
-      "/imagenes-reales/galeria/destino/Acuchimay2.webp",
-      "/imagenes-reales/galeria/destino/Quinua1.webp",
-      "/imagenes-reales/galeria/destino/Quinua2.webp",
-      "/imagenes-reales/galeria/destino/Vilcas1.webp",
-      "/imagenes-reales/galeria/destino/Vilcas2.webp",
-      "/imagenes-reales/galeria/destino/Turquesa1.webp",
-      "/imagenes-reales/galeria/destino/Turquesa2.webp",
-      "/imagenes-reales/galeria/destino/Cascadas1.webp",
-      "/imagenes-reales/galeria/destino/Cascadas2.webp",
-      "/imagenes-reales/galeria/destino/Iglesia2.webp",
+      foto("destino", "Cañon2", "Cañones de Qorihuillca"),
+      foto("destino", "Arco1", "Jirón 28 de Julio"),
+      foto("destino", "Arco2", "Arco del Triunfo"),
+      foto("destino", "Catedral1", "Basílica Catedral iluminada"),
+      foto("destino", "Catedral2", "Retablos de pan de oro"),
+      foto("destino", "Plaza1", "Plaza Mayor de Huamanga"),
+      foto("destino", "Plaza2", "Monumento ecuestre al Mariscal Antonio José de Sucre"),
+      foto("destino", "Pullas2", "Puyas de Raimondi"),
+      foto("destino", "Acuchimay1", "Mirador de Acuchimay"),
+      foto("destino", "Quinua2", "Obelisco de la Pampa de Ayacucho"),
+      foto("destino", "Vilcas1", "Ushnu de Vilcashuamán"),
+      foto("destino", "Vilcas2", "Intihuatana de Pomacochas"),
+      foto("destino", "Turquesa1", "Aguas turquesas de Millpu"),
+      foto("destino", "Cascadas1", "Cascadas de Ruqruqa"),
+      foto("destino", "Cascadas2", "Cascadas de Sarhua"),
+      foto("destino", "Iglesia2", "Templo y Convento de San Francisco de Asís"),
     ],
   },
   {
     id: "postres-bebidas",
     label: "Postres y Bebidas",
     images: [
-      "/imagenes-reales/galeria/postres-bebidas/chicha-uno.webp",
-      "/imagenes-reales/galeria/postres-bebidas/chicha-dos.webp",
-      "/imagenes-reales/galeria/postres-bebidas/chicha-tres.webp",
-      "/imagenes-reales/galeria/postres-bebidas/chicha-cinco.webp",
-      "/imagenes-reales/galeria/postres-bebidas/panes-dos.webp",
-      "/imagenes-reales/galeria/postres-bebidas/wawa-uno.webp",
-      "/imagenes-reales/galeria/postres-bebidas/galleta-tres.webp",
-      "/imagenes-reales/galeria/postres-bebidas/galleta-cuatro.webp",
+      foto("postres-bebidas", "chicha-uno", "Chicha de molle"),
+      foto("postres-bebidas", "chicha-dos", "Chicha de jora"),
+      foto("postres-bebidas", "chicha-cinco", "Mazamorra de llipta"),
+      foto("postres-bebidas", "panes-dos", "Pan chapla"),
+      foto("postres-bebidas", "wawa-uno", "Tanta wawa"),
+      foto("postres-bebidas", "galleta-tres", "Suspiros ayacuchanos"),
+      foto("postres-bebidas", "galleta-cuatro", "Rosquitas de manteca"),
     ],
   },
   {
     id: "experiencia",
     label: "Experiencia",
     images: [
-      "/imagenes-reales/galeria/eventos/evento-01.webp",
-      "/imagenes-reales/galeria/eventos/evento-02.webp",
-      "/imagenes-reales/galeria/eventos/evento-03.webp",
-      "/imagenes-reales/galeria/eventos/evento-04.webp",
-      "/imagenes-reales/galeria/eventos/evento-05.webp",
-      "/imagenes-reales/galeria/eventos/evento-06.webp",
-      "/imagenes-reales/galeria/eventos/evento-07.webp",
-      "/imagenes-reales/galeria/eventos/evento-08.webp",
-      "/imagenes-reales/galeria/eventos/evento-09.webp",
-      "/imagenes-reales/galeria/eventos/evento-10.webp",
-      "/imagenes-reales/galeria/eventos/evento-11.webp",
-      "/imagenes-reales/galeria/eventos/evento-12.webp",
-      "/imagenes-reales/galeria/eventos/evento-13.webp",
-      "/imagenes-reales/galeria/eventos/evento-14.webp",
-      "/imagenes-reales/galeria/eventos/evento-15.webp",
-      "/imagenes-reales/galeria/eventos/evento-16.webp",
-      "/imagenes-reales/galeria/eventos/evento-17.webp",
-      "/imagenes-reales/galeria/eventos/evento-18.webp",
-      "/imagenes-reales/galeria/eventos/evento-19.webp",
-      "/imagenes-reales/galeria/eventos/evento-20.webp",
-      "/imagenes-reales/galeria/eventos/evento-21.webp",
-      "/imagenes-reales/galeria/eventos/evento-22.webp",
-      "/imagenes-reales/galeria/eventos/evento-23.webp",
-      "/imagenes-reales/galeria/eventos/evento-24.webp",
-      "/imagenes-reales/galeria/eventos/evento-25.webp",
-      "/imagenes-reales/galeria/eventos/evento-26.webp",
-      "/imagenes-reales/galeria/eventos/evento-27.webp",
+      foto("eventos", "evento-09", "Ceremonia de apertura"),
+      foto("eventos", "evento-08", "Equipo de cocina de Las Flores"),
+      foto("eventos", "evento-16", "Chicharrón Ayacuchano"),
+      foto("eventos", "evento-20", "Chef nacional Virgilio Martínez"),
     ],
-  }
+  },
 ];
 
 function GaleriaPage() {
@@ -251,14 +228,16 @@ function GaleriaPage() {
               className="relative aspect-[3/4] overflow-hidden group cursor-pointer shadow-md hover:shadow-xl transition-shadow duration-300"
             >
               <img
-                src={img}
-                alt={`${currentCategory.label} ${idx + 1}`}
+                src={img.src}
+                alt={img.titulo}
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 loading="lazy"
               />
               {/* Borde interno delgado */}
               <div className="absolute inset-3 border border-white/40 pointer-events-none" />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              <span className="absolute right-6 top-6 max-w-[calc(100%-3rem)] rounded-md bg-eucalipto-dark/95 px-3.5 py-2 text-right text-[11px] font-semibold uppercase leading-snug tracking-[0.14em] text-piedra shadow-md pointer-events-none">
+                {img.titulo}
+              </span>
             </div>
           ))}
         </div>
@@ -294,12 +273,16 @@ function GaleriaPage() {
           </button>
 
           {/* Imagen */}
-          <img
-            src={images[selectedIndex]}
-            alt="Vista ampliada"
-            className="max-w-full max-h-full object-contain"
-            onClick={(e) => e.stopPropagation()}
-          />
+          <figure className="flex max-h-full max-w-full flex-col items-center gap-3" onClick={(e) => e.stopPropagation()}>
+            <img
+              src={images[selectedIndex].src}
+              alt={images[selectedIndex].titulo}
+              className="max-w-full max-h-[calc(100vh-7rem)] object-contain"
+            />
+            <figcaption className="font-serif text-lg text-white/90 text-center">
+              {images[selectedIndex].titulo}
+            </figcaption>
+          </figure>
 
           {/* Flecha derecha */}
           <button
