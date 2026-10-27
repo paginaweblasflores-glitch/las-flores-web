@@ -50,3 +50,11 @@ supabase/.temp/
 /awasi/
 /docs/
 
+# Permitir versionar esta especificacion sin exponer otros documentos internos.
+!/docs/
+/docs/*
+!/docs/superpowers/
+/docs/superpowers/*
+!/docs/superpowers/specs/
+/docs/superpowers/specs/*
+!/docs/superpowers/specs/2026-10-27-pedidos-salon-design.md
