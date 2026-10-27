@@ -1,5 +1,5 @@
 /**
- * Mapa referencial de ubicación del restaurante: el contorno de Ayacucho de fondo y, al centro, el
+ * Mapa referencial de ubicación del restaurante: el mapa de Ayacucho con sus provincias de fondo y, al centro, el
  * restaurante con la Plaza Mayor y el aeropuerto a su alrededor. No está a escala: solo da una idea
  * de lo cerca que está todo (Plaza Mayor a 7 min, aeropuerto a 6 min, en auto).
  */
@@ -128,7 +128,7 @@ export function MapaUbicacion() {
 
         <rect width={ANCHO} height={ALTO} fill={FONDO} />
         <image
-          href="/imagenes-reales/mapas/ayacucho-contorno.webp"
+          href="/imagenes-reales/mapas/ayacucho-base.webp"
           x={MAPA.x}
           y={MAPA.y}
           width={MAPA.w}
