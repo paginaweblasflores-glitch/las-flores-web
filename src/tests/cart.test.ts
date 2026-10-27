@@ -44,6 +44,10 @@ describe("Pruebas Unitarias de Lógica de Carrito de Compras", () => {
           bebidaFria: "Jugo de mango",
           sandwich: "Pan con Chicharrón",
         },
+        customizationSelections: {
+          sec_1: "mango",
+          sec_3: "chicharron",
+        },
       }),
     ).toEqual({
       product_id: "product-1",
@@ -52,6 +56,10 @@ describe("Pruebas Unitarias de Lógica de Carrito de Compras", () => {
       quantity: 2,
       subtotal: 64,
       notes: "Fría: Jugo de mango; Sándwich: Pan con Chicharrón",
+      customizations: {
+        sec_1: "mango",
+        sec_3: "chicharron",
+      },
     });
   });
 
@@ -64,12 +72,14 @@ describe("Pruebas Unitarias de Lógica de Carrito de Compras", () => {
         price: 46,
         quantity: 1,
         customizations: { Proteína: "Filet mignon" },
+        customizationSelections: { proteina: "filet_mignon" },
       }),
     ).toMatchObject({
       product_name: "Espagueti al pesto",
       unit_price: 46,
       subtotal: 46,
       notes: "Proteína: Filet mignon",
+      customizations: { proteina: "filet_mignon" },
     });
   });
 });

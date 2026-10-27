@@ -1,11 +1,10 @@
 /**
  * Endpoint de cobro con Culqi.
  *
- * Regla de oro: el importe NUNCA se toma del cliente. Se recalcula aquí a
- * partir de los precios almacenados en Supabase y solo entonces se cobra.
- * El cliente envía la composición del pedido (ítems, tipo, ubicación, cupón)
- * y el `amount` que cree que debe pagar; si no coincide con el cálculo del
- * servidor, la petición se rechaza.
+ * El cliente nunca determina los precios ni el estado del pedido. La ruta
+ * valida la sesión, crea un intento pendiente mediante RPC con service role,
+ * cobra el total calculado por SQL y confirma el pedido solo tras verificar
+ * el cargo leído nuevamente desde Culqi.
  *
  * IMPORTANTE — por qué este archivo se repite a sí mismo:
  * Este módulo debe ser AUTOCONTENIDO, sin imports relativos a `src/`. El
@@ -15,11 +14,9 @@
  * admiten especificadores de paquete como `@supabase/supabase-js`, que se
  * resuelven desde node_modules.
  *
- * La contrapartida es que la lógica de precios está duplicada respecto a
- * `src/lib/pricing.ts` y `src/utils/deliveryUtils.ts`. Para que no se
- * desincronicen, las funciones puras se exportan y `src/tests/pricing.test.ts`
- * comprueba que ambas implementaciones dan el mismo resultado. Si cambias una
- * fórmula aquí, cámbiala allí también: el test fallará si no lo haces.
+ * Las funciones puras de precios que siguen en este módulo se exportan para
+ * las pruebas de paridad con `src/lib/pricing.ts` y `src/utils/deliveryUtils.ts`.
+ * El checkout real calcula sus precios, cupones y delivery dentro del RPC.
  */
 
 import { createClient } from "@supabase/supabase-js";
@@ -34,9 +31,6 @@ export const config = {
 
 const UUID_REGEX = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
-/** Tolerancia al comparar importes, para absorber redondeos de punto flotante. */
-const AMOUNT_TOLERANCE_CENTS = 1;
-
 /** Coordenadas del restaurante: Jr. José Olaya 106, Conchopata, Ayacucho. */
 const RESTAURANT_LOCATION = { lat: -13.1628496, lng: -74.2178801 };
 
@@ -49,6 +43,53 @@ const DELIVERY_CONFIG = {
 interface PricedItem {
   productId: string;
   quantity: number;
+  customizations?: Record<string, string>;
+}
+
+interface CustomOption {
+  id?: string;
+  name?: string;
+  price?: number;
+}
+
+interface CustomOptionSection {
+  id?: string;
+  title?: string;
+  options?: CustomOption[];
+}
+
+interface TrustedProduct {
+  id: string;
+  name: string;
+  is_available: boolean;
+  custom_options?: CustomOptionSection[] | null;
+}
+
+interface ProviderCharge {
+  object?: string;
+  id?: string;
+  paid?: boolean;
+  amount?: number;
+  currency_code?: string;
+  reference_code?: string;
+  metadata?: Record<string, unknown>;
+  user_message?: string;
+  merchant_message?: string;
+  code?: string;
+  type?: string;
+}
+
+interface ApiRequest {
+  method?: string;
+  body?: unknown;
+  headers?: Record<string, unknown>;
+}
+
+interface ApiResponse {
+  setHeader(name: string, value: string): void;
+  status(code: number): ApiResponse;
+  json(body: unknown): ApiResponse;
+  end(): ApiResponse;
 }
 
 interface CouponRule {
@@ -152,8 +193,76 @@ export function parseIncomingItems(raw: unknown): PricedItem[] {
       throw new Error("Cantidad de producto inválida.");
     }
 
-    return { productId, quantity };
+    const rawCustomizations = item.customizations;
+    let customizations: Record<string, string> | undefined;
+    if (rawCustomizations !== undefined) {
+      if (
+        !rawCustomizations ||
+        typeof rawCustomizations !== "object" ||
+        Array.isArray(rawCustomizations)
+      ) {
+        throw new Error("Las personalizaciones del pedido no son válidas.");
+      }
+      customizations = {};
+      for (const [section, option] of Object.entries(rawCustomizations)) {
+        if (!section.trim() || typeof option !== "string" || !option.trim()) {
+          throw new Error("Las personalizaciones del pedido no son válidas.");
+        }
+        customizations[section] = option;
+      }
+    }
+
+    return { productId, quantity, ...(customizations ? { customizations } : {}) };
   });
+}
+
+function normalizeOptionLabel(value: string): string {
+  return value
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/^\s*\d+\.\s*/, "")
+    .replace(/[^a-z0-9]/gi, "")
+    .toLowerCase();
+}
+
+export function resolveTrustedCustomizations(
+  selections: Record<string, string> | undefined,
+  customOptions: unknown,
+): Record<string, string> {
+  if (!selections || Object.keys(selections).length === 0) return {};
+  if (!Array.isArray(customOptions)) {
+    throw new Error("Las personalizaciones no están disponibles para este producto.");
+  }
+
+  const resolved: Record<string, string> = {};
+  for (const [sectionLabel, optionLabel] of Object.entries(selections)) {
+    const sections = customOptions as CustomOptionSection[];
+    const section = sections.find((entry) => {
+      const sectionId = typeof entry?.id === "string" ? entry.id : "";
+      const sectionTitle = typeof entry?.title === "string" ? entry.title : "";
+      return (
+        sectionId === sectionLabel ||
+        normalizeOptionLabel(sectionId) === normalizeOptionLabel(sectionLabel) ||
+        normalizeOptionLabel(sectionTitle) === normalizeOptionLabel(sectionLabel)
+      );
+    }) as { id?: string; options?: Array<{ id?: string; name?: string }> } | undefined;
+    const option = section?.options?.find((entry) => {
+      const optionId = typeof entry.id === "string" ? entry.id : "";
+      const optionName = typeof entry.name === "string" ? entry.name : "";
+      return (
+        optionId === optionLabel ||
+        normalizeOptionLabel(optionId) === normalizeOptionLabel(optionLabel) ||
+        normalizeOptionLabel(optionName) === normalizeOptionLabel(optionLabel)
+      );
+    });
+
+    if (!section?.id || !option?.id || resolved[section.id]) {
+      throw new Error("La opción de personalización seleccionada no es válida.");
+    }
+    resolved[section.id] = option.id;
+  }
+
+  return resolved;
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -182,7 +291,7 @@ function isAllowedOrigin(origin: string | undefined): boolean {
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
-function applyCors(req: any, res: any): void {
+function applyCors(req: ApiRequest, res: ApiResponse): void {
   const origin = req.headers?.origin as string | undefined;
   if (isAllowedOrigin(origin)) {
     res.setHeader("Access-Control-Allow-Origin", origin as string);
@@ -197,278 +306,432 @@ function applyCors(req: any, res: any): void {
 // Handler
 // ─────────────────────────────────────────────────────────────────────────────
 
-export default async function handler(req: any, res: any) {
+export default async function handler(req: ApiRequest, res: ApiResponse) {
   applyCors(req, res);
 
-  if (req.method === "OPTIONS") {
-    return res.status(204).end();
-  }
-
+  if (req.method === "OPTIONS") return res.status(204).end();
   if (req.method !== "POST") {
     return res.status(405).json({ success: false, error: "Method not allowed" });
   }
 
   const origin = req.headers?.origin as string | undefined;
-  // Un navegador siempre envía Origin en peticiones cross-site; si viene y no
-  // está autorizado, se corta. Las llamadas server-to-server (sin Origin) se
-  // permiten porque no las puede falsificar una página de terceros.
   if (origin && !isAllowedOrigin(origin)) {
     return res.status(403).json({ success: false, error: "Origen no autorizado" });
   }
 
+  let persistedAttempt: Record<string, unknown> | null = null;
   try {
-    const payload = typeof req.body === "string" ? JSON.parse(req.body) : req.body || {};
-
+    const payload = (
+      typeof req.body === "string" ? JSON.parse(req.body) : req.body || {}
+    ) as Record<string, unknown>;
     const secretKey = process.env.CULQI_SECRET_KEY;
+    const supabaseUrl = process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL;
+    const anonKey = process.env.SUPABASE_ANON_KEY || process.env.VITE_SUPABASE_ANON_KEY;
+    const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+
     if (!secretKey) {
-      console.error("[culqi-charge] CULQI_SECRET_KEY no configurada");
       return res.status(500).json({
         success: false,
         error: "La pasarela de pagos no está configurada. Contacta al restaurante.",
       });
     }
-
-    const supabaseUrl = process.env.VITE_SUPABASE_URL || process.env.SUPABASE_URL;
-    const supabaseKey =
-      process.env.VITE_SUPABASE_ANON_KEY || process.env.SUPABASE_ANON_KEY;
-    if (!supabaseUrl || !supabaseKey) {
+    if (!supabaseUrl || !anonKey || !serviceRoleKey) {
       console.error("[culqi-charge] Credenciales de Supabase no configuradas");
       return res.status(500).json({
         success: false,
-        error: "No se pudo validar el importe del pedido. Intenta más tarde.",
+        error: "El servicio seguro de pagos no está configurado. Contacta al restaurante.",
       });
     }
 
-    // ---- Validación de entrada ----
     const tokenId = typeof payload.tokenId === "string" ? payload.tokenId.trim() : "";
-    const email = typeof payload.email === "string" ? payload.email.trim() : "";
-    const orderType = payload.orderType === "delivery" ? "delivery" : "pickup";
+    const attemptId = payload.checkoutAttemptId;
+    const orderType = payload.orderType;
+    const authorization = req.headers?.authorization || req.headers?.Authorization || "";
+    const bearer =
+      typeof authorization === "string" ? authorization.match(/^Bearer\s+(.+)$/i) : null;
 
+    if (!bearer) {
+      return res.status(401).json({ success: false, error: "Debes iniciar sesión para pagar." });
+    }
     if (!tokenId) {
       return res.status(400).json({ success: false, error: "Falta el token de la tarjeta." });
     }
-    if (!EMAIL_REGEX.test(email)) {
-      return res.status(400).json({ success: false, error: "El correo electrónico no es válido." });
+    if (!isValidUuid(attemptId)) {
+      return res.status(400).json({ success: false, error: "El intento de pago no es válido." });
     }
-
-    const claimedAmount = Number(payload.amount);
-    if (!Number.isInteger(claimedAmount) || claimedAmount <= 0) {
-      return res.status(400).json({ success: false, error: "Importe inválido." });
+    if (orderType !== "delivery" && orderType !== "pickup") {
+      return res.status(400).json({ success: false, error: "Tipo de pedido inválido." });
     }
 
     let items: PricedItem[];
     try {
       items = parseIncomingItems(payload.items);
-    } catch (validationErr: any) {
-      return res.status(400).json({ success: false, error: validationErr.message });
+    } catch (error: unknown) {
+      return res.status(400).json({
+        success: false,
+        error: error instanceof Error ? error.message : "El pedido no es válido.",
+      });
     }
 
-    // ---- Recálculo del importe con datos de confianza ----
-    const supabase = createClient(supabaseUrl, supabaseKey, {
-      auth: { persistSession: false },
+    const authClient = createClient(supabaseUrl, anonKey, {
+      auth: { persistSession: false, autoRefreshToken: false },
     });
+    const { data: authData, error: authError } = await authClient.auth.getUser(bearer[1]);
+    const user = authData?.user;
+    if (authError || !user?.id || !user.email || !EMAIL_REGEX.test(user.email)) {
+      return res.status(401).json({ success: false, error: "La sesión no es válida." });
+    }
 
-    const productIds = [...new Set(items.map((i) => i.productId))];
+    const supabase = createClient(supabaseUrl, serviceRoleKey, {
+      auth: { persistSession: false, autoRefreshToken: false },
+    });
+    const productIds = [...new Set(items.map((item) => item.productId))];
     const { data: products, error: productsError } = await supabase
       .from("products")
-      .select("id, name, price, is_available")
+      .select("id, name, custom_options, is_available")
       .in("id", productIds);
 
     if (productsError) {
       console.error("[culqi-charge] Error consultando productos:", productsError.message);
-      return res.status(502).json({
-        success: false,
-        error: "No se pudo validar el pedido. Intenta nuevamente.",
-      });
+      return res.status(502).json({ success: false, error: "No se pudo validar el pedido." });
     }
-
     if (!products || products.length !== productIds.length) {
-      return res.status(400).json({
-        success: false,
-        error: "Algunos productos del pedido ya no existen en la carta.",
-      });
+      return res
+        .status(400)
+        .json({ success: false, error: "Algunos productos ya no existen en la carta." });
     }
 
-    const unavailable = products.filter((p: any) => p.is_available === false);
-    if (unavailable.length > 0) {
+    const productRows = products as TrustedProduct[];
+    const productById = new Map<string, TrustedProduct>(
+      productRows.map((product) => [product.id, product]),
+    );
+    const unavailable = productRows.filter((product) => product.is_available === false);
+    if (unavailable.length) {
       return res.status(409).json({
         success: false,
-        error: `Estos platos se agotaron: ${unavailable.map((p: any) => p.name).join(", ")}.`,
+        error: `Estos platos se agotaron: ${unavailable.map((product) => product.name).join(", ")}.`,
       });
     }
 
-    const unitPrices = new Map<string, number>(
-      products.map((p: any) => [p.id as string, Number(p.price)]),
-    );
+    let serverItems: Array<Record<string, unknown>>;
+    try {
+      serverItems = items.map((item) => {
+        const product = productById.get(item.productId);
+        if (!product) throw new Error("Producto no encontrado.");
+        const customizations = resolveTrustedCustomizations(
+          item.customizations,
+          product.custom_options,
+        );
+        const notes = Object.entries(customizations)
+          .map(([sectionId, optionId]) => {
+            const section = product.custom_options?.find((entry) => entry.id === sectionId);
+            const option = section?.options?.find((entry) => entry.id === optionId);
+            if (!section || !option) {
+              throw new Error("La opción de personalización no es válida.");
+            }
+            return `${String(section.title).replace(/^\s*\d+\.\s*/, "")}: ${option.name}`;
+          })
+          .join("; ");
+        return {
+          id: item.productId,
+          quantity: item.quantity,
+          product_name: product.name,
+          ...(notes ? { notes } : {}),
+          ...(Object.keys(customizations).length ? { customizations } : {}),
+        };
+      });
+    } catch (error: unknown) {
+      return res.status(400).json({
+        success: false,
+        error: error instanceof Error ? error.message : "La personalización no es válida.",
+      });
+    }
 
-    // El costo de delivery se deriva de las coordenadas, no de lo que diga el cliente.
-    let serverDeliveryFee = 0;
+    let latitude: number | null = null;
+    let longitude: number | null = null;
     let distanceKm = 0;
     if (orderType === "delivery") {
-      const lat = Number(payload.latitude);
-      const lng = Number(payload.longitude);
-      if (!Number.isFinite(lat) || !Number.isFinite(lng)) {
-        return res.status(400).json({
-          success: false,
-          error: "Falta la ubicación de entrega para calcular el delivery.",
-        });
+      latitude = Number(String(payload.latitude));
+      longitude = Number(String(payload.longitude));
+      if (!Number.isFinite(latitude) || !Number.isFinite(longitude)) {
+        return res.status(400).json({ success: false, error: "Falta la ubicación de entrega." });
       }
       distanceKm = calculateDistanceKm(
         RESTAURANT_LOCATION.lat,
         RESTAURANT_LOCATION.lng,
-        lat,
-        lng,
+        latitude,
+        longitude,
       );
       if (distanceKm > DELIVERY_CONFIG.maxRadiusKm) {
-        return res.status(400).json({
-          success: false,
-          error: "La dirección está fuera de nuestra zona de cobertura.",
-        });
+        return res
+          .status(400)
+          .json({ success: false, error: "La dirección está fuera de cobertura." });
       }
-      serverDeliveryFee = calculateDeliveryCost(distanceKm);
     }
 
-    // El cupón se relee de la base de datos; solo se aplica si sigue vigente.
-    let coupon: CouponRule | null = null;
+    const userName =
+      typeof user.user_metadata?.full_name === "string" && user.user_metadata.full_name.trim()
+        ? user.user_metadata.full_name.trim().slice(0, 100)
+        : user.email;
+    const phone =
+      typeof payload.customerPhone === "string"
+        ? payload.customerPhone.replace(/\D/g, "").slice(-9)
+        : "";
+    const address = typeof payload.address === "string" ? payload.address.trim().slice(0, 200) : "";
+    const notes = typeof payload.notes === "string" ? payload.notes.trim().slice(0, 500) : "";
     const couponCode =
       typeof payload.couponCode === "string" ? payload.couponCode.trim().toUpperCase() : "";
-    if (couponCode) {
-      const { data: couponRow } = await supabase
-        .from("coupons")
-        .select(
-          "code, discount_type, discount_value, min_order_total, is_active, valid_from, valid_until, max_uses, current_uses, used_count",
-        )
-        .ilike("code", couponCode)
-        .maybeSingle();
-
-      if (couponRow && couponRow.is_active !== false) {
-        const now = Date.now();
-        const from = couponRow.valid_from ? Date.parse(couponRow.valid_from) : null;
-        const until = couponRow.valid_until ? Date.parse(couponRow.valid_until) : null;
-        const uses = Number(couponRow.current_uses ?? couponRow.used_count ?? 0);
-        const maxUses = couponRow.max_uses === null ? null : Number(couponRow.max_uses);
-
-        const withinWindow =
-          (from === null || Number.isNaN(from) || now >= from) &&
-          (until === null || Number.isNaN(until) || now <= until);
-        const withinUses = maxUses === null || uses < maxUses;
-
-        if (withinWindow && withinUses) {
-          coupon = {
-            discount_type: couponRow.discount_type,
-            discount_value: Number(couponRow.discount_value),
-            min_order_total: Number(couponRow.min_order_total || 0),
-          };
-        }
-      }
+    const pendingResult = await supabase.rpc("create_pending_card_order", {
+      p_checkout_attempt_id: attemptId,
+      p_user_id: user.id,
+      p_client_name: userName,
+      p_client_email: user.email,
+      p_client_phone: phone || "000000000",
+      p_order_type: orderType,
+      p_items: serverItems,
+      p_address: orderType === "delivery" ? address || null : null,
+      p_reference:
+        orderType === "delivery" && typeof payload.reference === "string"
+          ? payload.reference.trim().slice(0, 200) || null
+          : null,
+      p_latitude: latitude,
+      p_longitude: longitude,
+      p_coupon_code: couponCode || null,
+      p_notes: notes || null,
+    });
+    if (pendingResult.error) {
+      console.error("[culqi-charge] Error creando intento de pago:", pendingResult.error.message);
+      return res
+        .status(409)
+        .json({ success: false, error: "No se pudo preparar el pedido para el pago." });
     }
 
-    const totals = computeOrderTotal({
-      items,
-      unitPrices,
-      deliveryFee: serverDeliveryFee,
-      coupon,
-    });
-    const expectedCents = formatAmountToCents(totals.total);
-
-    if (Math.abs(expectedCents - claimedAmount) > AMOUNT_TOLERANCE_CENTS) {
-      console.warn(
-        `[culqi-charge] Importe rechazado. Cliente: ${claimedAmount} · Servidor: ${expectedCents}`,
-      );
-      return res.status(409).json({
-        success: false,
-        error: "El total del pedido cambió. Vuelve a revisar tu carrito antes de pagar.",
-        expectedAmount: expectedCents,
+    const pending = Array.isArray(pendingResult.data) ? pendingResult.data[0] : pendingResult.data;
+    if (!pending || typeof pending !== "object") {
+      return res
+        .status(502)
+        .json({ success: false, error: "No se pudo confirmar el intento de pago." });
+    }
+    if (pending.created !== true) {
+      return res.status(200).json({
+        success: pending.payment_status === "paid",
+        paymentStatus: pending.payment_status,
+        orderId: pending.order_id,
+        orderNumber: pending.order_number,
+        total: pending.total,
+        order:
+          pending.payment_status === "paid"
+            ? {
+                id: pending.order_id,
+                order_number: pending.order_number,
+                payment_status: pending.payment_status,
+                subtotal: pending.subtotal,
+                discount_amount: pending.discount_amount,
+                delivery_fee: pending.delivery_fee,
+                total: pending.total,
+              }
+            : undefined,
+        verifiedTotals:
+          pending.payment_status === "paid"
+            ? {
+                subtotal: pending.subtotal,
+                discount: pending.discount_amount,
+                deliveryFee: pending.delivery_fee,
+                total: pending.total,
+              }
+            : undefined,
       });
     }
 
-    if (expectedCents < 100) {
-      return res
-        .status(400)
-        .json({ success: false, error: "El importe mínimo de cobro es S/ 1.00." });
+    persistedAttempt = pending;
+    if (pending.payment_status !== "pending" || !pending.order_id) {
+      return res.status(202).json({
+        success: false,
+        paymentStatus: pending.payment_status || "pending",
+        orderId: pending.order_id,
+        reconciliationRequired: true,
+      });
     }
 
-    // ---- Cobro en Culqi ----
-    const customerName =
-      typeof payload.customerName === "string" && payload.customerName.trim()
-        ? payload.customerName.trim().slice(0, 100)
-        : "Cliente";
-    const address =
-      typeof payload.address === "string" ? payload.address.trim().slice(0, 200) : "";
-    const cleanPhone = payload.customerPhone
-      ? String(payload.customerPhone).replace(/\D/g, "").slice(-9)
-      : "000000000";
+    const amountCents = formatAmountToCents(Number(pending.total));
+    if (!Number.isInteger(amountCents) || amountCents < 100) {
+      const failed = await supabase.rpc("fail_card_order_attempt", {
+        p_checkout_attempt_id: attemptId,
+        p_failure_reason: "invalid_server_total",
+      });
+      if (failed.error) {
+        return res.status(202).json({
+          success: false,
+          paymentStatus: "pending",
+          orderId: pending.order_id,
+          reconciliationRequired: true,
+        });
+      }
+      persistedAttempt = null;
+      return res
+        .status(400)
+        .json({ success: false, paymentStatus: "failed", error: "Importe mínimo inválido." });
+    }
 
-    const metadata: Record<string, string> = {
-      order_number: String(payload.orderNumber || "LF-ORDEN").slice(0, 50),
-      customer_name: customerName,
-    };
-    if (cleanPhone !== "000000000") metadata.customer_phone = cleanPhone;
-    if (address) metadata.delivery_address = address;
-
-    const chargeData = {
-      amount: expectedCents,
+    const customerName = userName || user.email;
+    const chargePayload = {
+      amount: amountCents,
       currency_code: "PEN",
-      email,
+      email: user.email,
       source_id: tokenId,
-      description: String(payload.description || "Pedido en Restaurante Las Flores").slice(0, 80),
-      metadata,
+      description: "Pedido en Restaurante Las Flores",
+      metadata: {
+        checkout_attempt_id: attemptId,
+        order_id: pending.order_id,
+        customer_name: customerName,
+        ...(phone ? { customer_phone: phone } : {}),
+        ...(address ? { delivery_address: address } : {}),
+      },
       antifraud_details: {
         first_name: customerName.split(" ")[0] || "Cliente",
         last_name: customerName.split(" ").slice(1).join(" ") || "Las Flores",
         address: address || "Ayacucho",
         address_city: "Ayacucho",
-        phone_number: cleanPhone,
+        phone_number: phone || "000000000",
         country_code: "PE",
       },
     };
 
-    const culqiRes = await fetch("https://api.culqi.com/v2/charges", {
+    const chargeResponse = await fetch("https://api.culqi.com/v2/charges", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${secretKey}`,
       },
-      body: JSON.stringify(chargeData),
+      body: JSON.stringify(chargePayload),
     });
-
-    const data: any = await culqiRes.json();
-
-    if (!culqiRes.ok || data.object === "error") {
-      // Se registra el detalle en el servidor, pero al cliente solo va el mensaje.
-      console.error("[culqi-charge] Culqi rechazó el cargo:", JSON.stringify(data));
-      const errorMsg =
-        data.user_message || data.merchant_message || "Error al procesar el pago con tu tarjeta.";
-      return res.status(culqiRes.status || 400).json({ success: false, error: errorMsg });
+    const createdCharge = (await chargeResponse.json()) as ProviderCharge;
+    if (!chargeResponse.ok || createdCharge.object === "error") {
+      console.error("[culqi-charge] Culqi respondió con error:", JSON.stringify(createdCharge));
+      if (chargeResponse.status >= 400 && chargeResponse.status < 500) {
+        const failed = await supabase.rpc("fail_card_order_attempt", {
+          p_checkout_attempt_id: attemptId,
+          p_failure_reason: String(
+            createdCharge.code || createdCharge.type || "culqi_declined",
+          ).slice(0, 200),
+        });
+        if (!failed.error) {
+          persistedAttempt = null;
+          return res.status(402).json({
+            success: false,
+            paymentStatus: "failed",
+            error:
+              createdCharge.user_message ||
+              createdCharge.merchant_message ||
+              "El pago fue rechazado.",
+          });
+        }
+      }
+      return res.status(202).json({
+        success: false,
+        paymentStatus: "pending",
+        orderId: pending.order_id,
+        reconciliationRequired: true,
+        error: "El pago requiere revisión. No vuelvas a intentarlo todavía.",
+      });
     }
 
+    const chargeId = typeof createdCharge.id === "string" ? createdCharge.id : "";
+    if (!chargeId) {
+      return res.status(202).json({
+        success: false,
+        paymentStatus: "pending",
+        orderId: pending.order_id,
+        reconciliationRequired: true,
+        error: "El pago requiere revisión. No vuelvas a intentarlo todavía.",
+      });
+    }
+
+    const verificationResponse = await fetch(
+      `https://api.culqi.com/v2/charges/${encodeURIComponent(chargeId)}`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${secretKey}`,
+          "Content-Type": "application/json",
+        },
+      },
+    );
+    const charge = (await verificationResponse.json()) as ProviderCharge;
+    if (
+      !verificationResponse.ok ||
+      charge.object === "error" ||
+      charge.id !== chargeId ||
+      charge.paid !== true ||
+      typeof charge.amount !== "number" ||
+      charge.currency_code !== "PEN" ||
+      charge.amount !== amountCents ||
+      charge.metadata?.checkout_attempt_id !== attemptId ||
+      charge.metadata?.order_id !== String(pending.order_id)
+    ) {
+      return res.status(202).json({
+        success: false,
+        paymentStatus: "pending",
+        orderId: pending.order_id,
+        reconciliationRequired: true,
+        error: "El pago requiere revisión. No vuelvas a intentarlo todavía.",
+      });
+    }
+
+    const completion = await supabase.rpc("complete_card_order_payment", {
+      p_order_id: pending.order_id,
+      p_checkout_attempt_id: attemptId,
+      p_charge_id: charge.id,
+      p_amount: charge.amount,
+      p_currency_code: charge.currency_code,
+    });
+    const completed = Array.isArray(completion.data) ? completion.data[0] : completion.data;
+    if (
+      completion.error ||
+      !completed ||
+      completed.payment_status !== "paid" ||
+      completed.order_id !== pending.order_id
+    ) {
+      return res.status(202).json({
+        success: false,
+        paymentStatus: "pending",
+        orderId: pending.order_id,
+        reconciliationRequired: true,
+        error: "El pago fue recibido y requiere conciliación antes de confirmar el pedido.",
+      });
+    }
+
+    persistedAttempt = null;
     return res.status(200).json({
       success: true,
-      chargeId: data.id,
-      amount: data.amount,
-      currency: data.currency_code,
-      referenceCode: data.reference_code,
-      authorizationCode: data.authorization_code,
-      cardBrand: data.source?.iin?.card_brand,
-      lastFour: data.source?.last_four,
+      paymentStatus: "paid",
+      chargeId: charge.id,
+      amount: charge.amount,
+      currency: charge.currency_code,
+      referenceCode: charge.reference_code,
+      order: { ...completed, id: completed.order_id },
       verifiedTotals: {
-        subtotal: totals.subtotal,
-        discount: totals.discount,
-        deliveryFee: totals.deliveryFee,
-        total: totals.total,
+        subtotal: completed.subtotal,
+        discount: completed.discount_amount,
+        deliveryFee: completed.delivery_fee,
+        total: completed.total,
         distanceKm: Math.round(distanceKm * 100) / 100,
       },
-      outcome: {
-        type: data.outcome?.type,
-        code: data.outcome?.code,
-        userMessage: data.outcome?.user_message,
-      },
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("[culqi-charge] Error inesperado:", error);
+    if (persistedAttempt) {
+      return res.status(202).json({
+        success: false,
+        paymentStatus: "pending",
+        orderId: persistedAttempt.order_id,
+        reconciliationRequired: true,
+        error: "El pago requiere revisión. No vuelvas a intentarlo todavía.",
+      });
+    }
     return res.status(500).json({
       success: false,
-      error: "Error interno al procesar el pago. No se realizó ningún cobro.",
+      error: "Error interno al preparar el pago. No se confirmó ningún cargo.",
     });
   }
 }
