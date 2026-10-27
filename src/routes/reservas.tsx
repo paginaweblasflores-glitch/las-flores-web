@@ -917,7 +917,7 @@ function ReservasPage() {
                           key={numStr}
                           type="button"
                           onClick={() => setForm((f) => ({ ...f, guests: numStr }))}
-                          className={`w-14 h-12 rounded-2xl transition-all duration-200 font-bold text-sm flex items-center justify-center shadow-2xs ${
+                          className={`w-14 h-12 rounded-none transition-all duration-200 font-bold text-sm flex items-center justify-center shadow-2xs ${
                             isSelected
                               ? "bg-[#2e5339] text-white shadow-md ring-2 ring-[#d4a373] scale-102"
                               : "bg-[#A32638] text-white hover:bg-[#7a1c29]"
@@ -930,7 +930,7 @@ function ReservasPage() {
 
                     {/* Si la capacidad máxima de la zona es mayor a 6 (ej. 10 o 13) */}
                     {selectedZona.maxCap > 6 && (
-                      <div className="flex items-center gap-2 bg-[#fdf8f0] px-4 py-2.5 rounded-2xl border border-[#d4a373]/40 shadow-2xs">
+                      <div className="flex items-center gap-2 bg-[#fdf8f0] px-4 py-2.5 rounded-none border border-[#d4a373]/40 shadow-2xs">
                         <span className="text-xs font-bold text-[#3b1f10] uppercase tracking-wider">MÁS:</span>
                         <select
                           value={parseInt(form.guests) > 6 ? form.guests : ""}
@@ -954,7 +954,7 @@ function ReservasPage() {
                   </div>
 
                   {/* Mensaje Informativo & WhatsApp para grupos mayores al límite de esta zona */}
-                  <div className="mt-4 p-4 bg-[#fdf8f0] rounded-2xl border border-[#d4a373]/30 text-xs text-gray-700 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+                  <div className="mt-4 p-4 bg-[#fdf8f0] rounded-none border border-[#d4a373]/30 text-xs text-gray-700 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
                     <div>
                       <p className="font-bold text-[#3b1f10] uppercase tracking-wider text-[10px] mb-0.5">
                         Capacidad Máxima del Ambiente ({selectedZona.nombre}): {selectedZona.maxCap} personas
@@ -976,7 +976,7 @@ function ReservasPage() {
                       }
                       target="_blank"
                       rel="noreferrer"
-                      className="bg-[#25D366] hover:bg-[#20bd5a] text-gray-950 font-bold px-4 py-2.5 rounded-xl text-xs flex items-center gap-1.5 shrink-0 shadow-2xs transition-all"
+                      className="bg-[#25D366] hover:bg-[#20bd5a] text-gray-950 font-bold px-4 py-2.5 rounded-none text-xs flex items-center gap-1.5 shrink-0 shadow-2xs transition-all"
                     >
                       <span>Coordinar por WhatsApp →</span>
                     </a>
@@ -1000,7 +1000,7 @@ function ReservasPage() {
                       input.click();
                     }
                   }}
-                  className="flex items-center gap-1.5 text-[11px] font-bold text-[#2e5339] border border-[#2e5339]/30 bg-[#2e5339]/10 hover:bg-[#2e5339]/20 rounded-lg px-3 py-1.5 transition-all cursor-pointer"
+                  className="flex items-center gap-1.5 text-[11px] font-bold text-[#2e5339] border border-[#2e5339]/30 bg-[#2e5339]/10 hover:bg-[#2e5339]/20 rounded-none px-3 py-1.5 transition-all cursor-pointer"
                   aria-label="Elegir otra fecha desde el calendario"
                 >
                   <Calendar size={14} />
@@ -1032,7 +1032,7 @@ function ReservasPage() {
                       key={item.iso}
                       type="button"
                       onClick={() => setForm((f) => ({ ...f, date: item.iso }))}
-                      className={`flex flex-col items-center justify-center min-w-[54px] py-2.5 rounded-xl transition-all text-center shadow-2xs ${
+                      className={`flex flex-col items-center justify-center min-w-[54px] py-2.5 rounded-none transition-all text-center shadow-2xs ${
                         isSelected
                           ? "bg-[#2e5339] text-white shadow-md ring-2 ring-[#d4a373] scale-102"
                           : "bg-[#A32638] text-white hover:bg-[#7a1c29]"
@@ -1062,7 +1062,7 @@ function ReservasPage() {
                         key={h}
                         type="button"
                         onClick={() => handleSelectTime(h, "desayuno")}
-                        className={`py-2.5 text-center text-xs font-bold rounded-xl transition-all shadow-2xs ${
+                        className={`py-2.5 text-center text-xs font-bold rounded-none transition-all shadow-2xs ${
                           hourBlackout
                             ? "bg-amber-50/90 text-amber-900/80 border border-amber-200/80 hover:bg-amber-100/90 cursor-pointer"
                             : isSelected
@@ -1093,7 +1093,7 @@ function ReservasPage() {
                         key={h}
                         type="button"
                         onClick={() => handleSelectTime(h, "almuerzo")}
-                        className={`py-2.5 text-center text-xs font-bold rounded-xl transition-all shadow-2xs ${
+                        className={`py-2.5 text-center text-xs font-bold rounded-none transition-all shadow-2xs ${
                           hourBlackout
                             ? "bg-amber-50/90 text-amber-900/80 border border-amber-200/80 hover:bg-amber-100/90 cursor-pointer"
                             : isSelected
@@ -1129,7 +1129,7 @@ function ReservasPage() {
                       type="button"
                       onClick={handleContinueToStep2}
                       disabled={!isStep1Complete}
-                      className={`w-full py-4 rounded-xl font-bold uppercase tracking-widest text-sm transition-all shadow-md active:scale-[0.99] flex items-center justify-center gap-2 cursor-pointer ${
+                      className={`w-full py-4 rounded-none font-bold uppercase tracking-widest text-sm transition-all shadow-md active:scale-[0.99] flex items-center justify-center gap-2 cursor-pointer ${
                         isStep1Complete
                           ? "bg-[#A32638] hover:bg-[#7a1c29] text-white cursor-pointer"
                           : "bg-gray-200 text-gray-500 cursor-not-allowed border border-gray-300/60 opacity-80"
@@ -1148,7 +1148,7 @@ function ReservasPage() {
         {mainStep === 2 && (
           <div className="animate-in fade-in duration-400 space-y-8">
             {/* Summary Bar */}
-            <div className="bg-[#fdf8f0] p-4 rounded-xl border border-[#d4a373]/30 flex flex-wrap items-center justify-between gap-4 text-xs">
+            <div className="bg-[#fdf8f0] p-4 rounded-none border border-[#d4a373]/30 flex flex-wrap items-center justify-between gap-4 text-xs">
               <div className="flex items-center gap-2">
                 <Calendar size={16} className="text-[#2e5339]" />
                 <span className="font-bold text-[#2e5339]">{form.date}, {form.time}h.</span>
@@ -1176,7 +1176,7 @@ function ReservasPage() {
                     value={form.firstName}
                     onChange={(e) => setForm({ ...form, firstName: e.target.value })}
                     placeholder="Tu nombre"
-                    className="w-full bg-white border border-gray-300 rounded-lg px-3.5 py-2.5 text-sm focus:outline-none focus:border-[#2e5339]"
+                    className="w-full bg-white border border-gray-300 rounded-none px-3.5 py-2.5 text-sm focus:outline-none focus:border-[#2e5339]"
                   />
                 </div>
                 <div>
@@ -1189,7 +1189,7 @@ function ReservasPage() {
                     value={form.lastName}
                     onChange={(e) => setForm({ ...form, lastName: e.target.value })}
                     placeholder="Tus apellidos"
-                    className="w-full bg-white border border-gray-300 rounded-lg px-3.5 py-2.5 text-sm focus:outline-none focus:border-[#2e5339]"
+                    className="w-full bg-white border border-gray-300 rounded-none px-3.5 py-2.5 text-sm focus:outline-none focus:border-[#2e5339]"
                   />
                 </div>
               </div>
@@ -1205,7 +1205,7 @@ function ReservasPage() {
                   value={form.email}
                   onChange={(e) => setForm({ ...form, email: e.target.value })}
                   placeholder="ejemplo@correo.com"
-                  className="w-full bg-[#fdf8f0] border border-gray-300 rounded-lg px-3.5 py-2.5 text-sm focus:outline-none focus:border-[#2e5339]"
+                  className="w-full bg-[#fdf8f0] border border-gray-300 rounded-none px-3.5 py-2.5 text-sm focus:outline-none focus:border-[#2e5339]"
                 />
               </div>
 
@@ -1263,7 +1263,7 @@ function ReservasPage() {
               <div className="pt-4">
                 <button
                   type="submit"
-                  className="w-full bg-[#A32638] hover:bg-[#7a1c29] text-white py-4 rounded-xl font-bold uppercase tracking-widest text-sm transition-all shadow-md active:scale-[0.99] cursor-pointer"
+                  className="w-full bg-[#A32638] hover:bg-[#7a1c29] text-white py-4 rounded-none font-bold uppercase tracking-widest text-sm transition-all shadow-md active:scale-[0.99] cursor-pointer"
                 >
                   Continuar a Experiencia →
                 </button>
@@ -1305,7 +1305,7 @@ function ReservasPage() {
                             isBirthday: isSelected ? "No" : ocasion,
                           }))
                         }
-                        className={`py-3 px-4 rounded-full border text-center font-serif text-sm font-medium transition-all ${
+                        className={`py-3 px-4 rounded-none border text-center font-serif text-sm font-medium transition-all ${
                           isSelected
                             ? "bg-[#2e5339] text-[#d4a373] border-[#2e5339] shadow-md font-bold ring-2 ring-[#d4a373]/30"
                             : "bg-white text-[#2c2a29] border-gray-200 hover:border-[#2e5339]/40 hover:bg-gray-50"
@@ -1335,7 +1335,7 @@ function ReservasPage() {
                     });
                   }}
                   placeholder="Ej. Celíaco (sin gluten), intolerante a la lactosa, mariscos..."
-                  className="w-full bg-[#fdf8f0] border border-gray-300 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#2e5339]"
+                  className="w-full bg-[#fdf8f0] border border-gray-300 rounded-none px-4 py-3 text-sm focus:outline-none focus:border-[#2e5339]"
                 />
               </div>
 
@@ -1349,7 +1349,7 @@ function ReservasPage() {
                   value={form.disability}
                   onChange={(e) => setForm({ ...form, disability: e.target.value })}
                   placeholder="Ej. Silla de ruedas, rampa preferencial, mesa tranquila..."
-                  className="w-full bg-white border border-gray-300 rounded-xl p-3 text-sm focus:outline-none focus:border-[#2e5339]"
+                  className="w-full bg-white border border-gray-300 rounded-none p-3 text-sm focus:outline-none focus:border-[#2e5339]"
                 />
               </div>
 
@@ -1359,7 +1359,7 @@ function ReservasPage() {
                   type="button"
                   onClick={handleFinalizeReservation}
                   disabled={isSubmitting}
-                  className="w-full bg-[#A32638] hover:bg-[#7a1c29] text-white py-4 rounded-xl font-bold uppercase tracking-widest text-sm transition-all shadow-md active:scale-[0.99] disabled:opacity-50 cursor-pointer"
+                  className="w-full bg-[#A32638] hover:bg-[#7a1c29] text-white py-4 rounded-none font-bold uppercase tracking-widest text-sm transition-all shadow-md active:scale-[0.99] disabled:opacity-50 cursor-pointer"
                 >
                   {isSubmitting ? "Procesando Reserva..." : "CONFIRMAR RESERVA"}
                 </button>

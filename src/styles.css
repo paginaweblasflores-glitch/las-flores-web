@@ -273,7 +273,6 @@
 .dish-card-hover {
   position: relative;
   overflow: hidden;
-  border-radius: 0.5rem;
   transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
   cursor: pointer;
   will-change: transform;
@@ -284,22 +283,38 @@
   box-shadow: 0 20px 35px -10px rgba(0, 0, 0, 0.7);
 }
 
-.dish-card-hover img {
+/* Foto + sombreado en una sola capa: el sombreado nunca deja un borde sin cubrir */
+.dish-card-media {
+  position: absolute;
+  inset: 0;
   transition: transform 0.25s ease-out;
   will-change: transform;
 }
 
-.dish-card-hover:hover img {
-  transform: scale(1.12);
-}
-
-.dish-card-overlay {
+.dish-card-media::after {
+  content: "";
   position: absolute;
   inset: 0;
   background: linear-gradient(to top, rgba(15, 10, 15, 0.95) 0%, rgba(15, 10, 15, 0.6) 60%, rgba(15, 10, 15, 0.2) 100%);
   opacity: 0;
-  transform: scale(0.97);
-  transition: opacity 0.2s ease-out, transform 0.2s ease-out;
+  transition: opacity 0.2s ease-out;
+}
+
+.dish-card-hover:hover .dish-card-media {
+  transform: scale(1.12);
+}
+
+.dish-card-hover:hover .dish-card-media::after,
+.dish-card-active .dish-card-media::after {
+  opacity: 1;
+}
+
+/* Solo el texto, encima (sin fondo propio) */
+.dish-card-overlay {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.2s ease-out;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -307,21 +322,19 @@
   text-align: left;
   padding: 1.5rem;
   z-index: 10;
-  will-change: opacity, transform;
+  will-change: opacity;
 }
 
 .dish-card-hover:hover .dish-card-overlay {
   opacity: 1;
-  transform: scale(1);
 }
 
 /* Tap-to-reveal en móvil: clase activa agregada vía JS al tocar */
 .dish-card-active .dish-card-overlay {
   opacity: 1;
-  transform: scale(1);
 }
 
-.dish-card-active img {
+.dish-card-active .dish-card-media {
   transform: scale(1.08);
 }
 

@@ -417,7 +417,7 @@ function UneteAlEquipoPage() {
             </p>
           </div>
 
-          <div className="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-white/20">
+          <div className="relative overflow-hidden shadow-2xl">
             <img
               src={heroImg}
               alt="Fotografía del equipo Las Flores"

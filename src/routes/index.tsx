@@ -194,19 +194,22 @@ function PlatosTipicosGrid({
         return (
           <article key={p.nombre} className="flex flex-col group">
             <div
-              className={`dish-card-hover aspect-[5/4] bg-cafe/40 rounded-lg${isActive ? " dish-card-active" : ""}`}
+              className={`dish-card-hover aspect-[5/4] bg-black${isActive ? " dish-card-active" : ""}`}
               onClick={() => handleCardClick(p.nombre)}
             >
-              <img
-                src={p.img}
-                alt={p.nombre}
-                width={1000}
-                height={800}
-                loading="eager"
-                decoding="async"
-                fetchPriority="high"
-                className="w-full h-full object-cover"
-              />
+              {/* la foto y su sombreado van juntos: así el sombreado la cubre entera, sin líneas ni parpadeo */}
+              <div className="dish-card-media">
+                <img
+                  src={p.img}
+                  alt={p.nombre}
+                  width={1000}
+                  height={800}
+                  loading="eager"
+                  decoding="async"
+                  fetchPriority="high"
+                  className="w-full h-full object-cover"
+                />
+              </div>
               <div className="dish-card-overlay">
                 <span className="text-chilca font-bold text-[10px] uppercase tracking-[0.25em] mb-1">
                   Plato Tradicional
@@ -684,7 +687,7 @@ function Index() {
       <section className="relative bg-eucalipto py-16 md:py-32 px-6">
         <div className="container-flores mx-auto grid grid-cols-1 md:grid-cols-12 gap-12 items-center">
           <div className="order-2 md:order-none md:col-span-5">
-            <div className="relative aspect-4/3 rounded-3xl overflow-hidden shadow-2xl border-4 border-white/20">
+            <div className="relative aspect-4/3 overflow-hidden shadow-2xl">
               <img
                 src="/imagenes-reales/secciones/quinoa.webp"
                 alt="Cultivo de quinoa ayacuchana, uno de los tesoros de temporada"
@@ -866,7 +869,7 @@ function Index() {
               height={1200}
               loading="lazy"
               decoding="async"
-              className="w-full h-[360px] md:h-[460px] object-cover rounded-3xl shadow-2xl border border-nogal/10"
+              className="w-full h-[360px] md:h-[460px] object-cover shadow-2xl"
             />
           </div>
         </div>

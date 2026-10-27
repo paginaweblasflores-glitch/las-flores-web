@@ -220,7 +220,7 @@ function ChefAccordionSection() {
                 data-plate-index={index}
                 type="button"
                 onClick={() => setActiveIndex(index)}
-                className={`group relative overflow-hidden rounded-[1.75rem] border border-nogal/10 bg-white text-left shadow-md transition-all duration-500 ease-out ${isActive ? "md:flex-[2.2]" : "md:flex-[0.9]"} ${isActive ? "min-h-[280px]" : "min-h-[120px]"}`}
+                className={`group relative overflow-hidden border border-nogal/10 bg-white text-left shadow-md transition-all duration-500 ease-out ${isActive ? "md:flex-[2.2]" : "md:flex-[0.9]"} ${isActive ? "min-h-[280px]" : "min-h-[120px]"}`}
               >
                 <img
                   src={plate.image}
@@ -333,7 +333,7 @@ function RestaurantePage() {
             </Link>
           </div>
           <div className="flex-1 w-full">
-            <div className="relative aspect-4/3 rounded-3xl overflow-hidden shadow-2xl border-4 border-white/20 group">
+            <div className="relative aspect-4/3 overflow-hidden shadow-2xl group">
               <img
                 src="/inicio/Equipolasflores.webp"
                 alt="Equipo humano de Restaurante Las Flores"
@@ -351,7 +351,7 @@ function RestaurantePage() {
       {/* CTA Reservas y Delivery */}
       <section id="reservas" className="bg-eucalipto text-piedra py-16 md:py-32 px-6">
         <div className="container-flores mx-auto grid items-center gap-10 md:grid-cols-[1.35fr_1fr] md:gap-16">
-          <div className="relative overflow-hidden rounded-3xl shadow-2xl border-4 border-white/20">
+          <div className="relative overflow-hidden shadow-2xl">
             <MapaUbicacion />
           </div>
           <div className="text-center md:text-left">

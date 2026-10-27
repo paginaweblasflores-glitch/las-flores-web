@@ -744,7 +744,7 @@ function TesorosAyacuchoPage() {
             {productosPorTemporada[activeTemporada].map((producto, index) => (
               <article
                 key={index}
-                className="group relative h-[420px] rounded-2xl overflow-hidden shadow-lg cursor-pointer"
+                className="group relative h-[420px] overflow-hidden shadow-lg cursor-pointer"
               >
                 {/* Imagen de fondo absoluto con zoom en hover */}
                 <img

@@ -234,7 +234,6 @@ function GaleriaPage() {
                 loading="lazy"
               />
               {/* Borde interno delgado */}
-              <div className="absolute inset-3 border border-white/40 pointer-events-none" />
               <span className="absolute right-6 top-6 max-w-[calc(100%-3rem)] rounded-md bg-eucalipto-dark/95 px-3.5 py-2 text-right text-[11px] font-semibold uppercase leading-snug tracking-[0.14em] text-piedra shadow-md pointer-events-none">
                 {img.titulo}
               </span>

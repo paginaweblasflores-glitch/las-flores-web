@@ -45,7 +45,7 @@ export function DiaSwitcher({ dias, titulo, texto }: DiaSwitcherProps) {
           onClick={() => mover(-1)}
           disabled={start === 0}
           aria-label="Días anteriores"
-          className="absolute left-0 top-[38%] -translate-y-1/2 z-10 w-10 h-10 flex items-center justify-center bg-piedra border-2 border-nogal rounded-md text-nogal hover:bg-nogal/5 transition-colors disabled:opacity-30 disabled:hover:bg-piedra"
+          className="absolute left-0 top-[38%] -translate-y-1/2 z-10 w-11 h-11 flex items-center justify-center bg-piedra border border-nogal/40 rounded-md text-nogal hover:border-nogal hover:bg-nogal/5 transition-colors cursor-pointer disabled:opacity-30 disabled:cursor-default disabled:hover:border-nogal/40 disabled:hover:bg-piedra"
         >
           <ChevronLeft size={18} />
         </button>
@@ -54,7 +54,7 @@ export function DiaSwitcher({ dias, titulo, texto }: DiaSwitcherProps) {
           onClick={() => mover(1)}
           disabled={start === maxStart}
           aria-label="Días siguientes"
-          className="absolute right-0 top-[38%] -translate-y-1/2 z-10 w-10 h-10 flex items-center justify-center bg-piedra border-2 border-nogal rounded-md text-nogal hover:bg-nogal/5 transition-colors disabled:opacity-30 disabled:hover:bg-piedra"
+          className="absolute right-0 top-[38%] -translate-y-1/2 z-10 w-11 h-11 flex items-center justify-center bg-piedra border border-nogal/40 rounded-md text-nogal hover:border-nogal hover:bg-nogal/5 transition-colors cursor-pointer disabled:opacity-30 disabled:cursor-default disabled:hover:border-nogal/40 disabled:hover:bg-piedra"
         >
           <ChevronRight size={18} />
         </button>
