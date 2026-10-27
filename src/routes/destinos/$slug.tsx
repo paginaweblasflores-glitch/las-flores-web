@@ -1,7 +1,7 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/site-footer";
-import { AyacuchoMiniMap } from "@/components/AyacuchoMiniMap";
+import { MapaDestino } from "@/components/MapaDestino";
 import { FestividadVideo } from "@/components/FestividadVideo";
 import { lugares } from "@/data/lugares";
 
@@ -162,20 +162,15 @@ function LugarDetailPage() {
               ))}
             </div>
           </div>
-          <div
-            className={`flex items-start justify-center px-6 md:px-10 pt-16 md:pt-24 pb-6 md:pb-10 md:order-1 ${lugar.mapaImagen ? "h-[410px] md:h-[550px]" : "h-[380px] md:h-[520px]"}`}
-          >
-            {lugar.mapaImagen ? (
-              <img
-                src={lugar.mapaImagen}
-                alt={`Ubicación de ${lugar.nombre} en el mapa de Ayacucho`}
-                loading="lazy"
-                decoding="async"
-                className="max-h-full max-w-full object-contain"
+          <div className="flex items-start justify-center px-6 md:px-10 pt-16 md:pt-24 pb-6 md:pb-10 md:order-1">
+            {lugar.mapLat !== undefined && lugar.mapLng !== undefined && (
+              <MapaDestino
+                nombre={lugar.nombre}
+                detalle={lugar.categoria}
+                lat={lugar.mapLat}
+                lng={lugar.mapLng}
               />
-            ) : lugar.mapLat !== undefined && lugar.mapLng !== undefined ? (
-              <AyacuchoMiniMap lat={lugar.mapLat} lng={lugar.mapLng} nombre={lugar.nombre} />
-            ) : null}
+            )}
           </div>
         </section>
 

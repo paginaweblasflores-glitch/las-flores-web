@@ -8,6 +8,7 @@ import { useState, useTransition, useEffect, useRef } from "react";
 import { Calendar, CreditCard, ChevronRight, Check, ChevronDown } from "lucide-react";
 import { SiteHeader } from "@/components/SiteHeader";
 import { MenuModal } from "@/components/MenuModal";
+import { MapaUbicacion } from "@/components/MapaUbicacion";
 import { FamiliaLasFloresSection } from "../components/FamiliaLasFloresSection";
 
 export const Route = createFileRoute("/restaurante")({
@@ -161,22 +162,22 @@ function GenerationFlipCard({
             style={{ backfaceVisibility: "hidden", transform: "rotateY(180deg)" }}
           >
             <div>
-              <span className="inline-flex rounded-full border border-nogal/20 bg-piedra px-4 py-1.5 text-[10px] uppercase tracking-[0.35em] text-nogal/80 mb-5">
+              <span className="inline-flex rounded-full border border-nogal/20 bg-piedra px-4 py-1.5 text-[11px] uppercase tracking-[0.35em] text-nogal mb-5">
                 {generation.generation}
               </span>
               <h3 className="font-serif text-3xl leading-tight text-nogal text-balance mb-6">
                 {generation.name}
               </h3>
-              <p className="text-base leading-relaxed text-nogal/80 text-pretty">
+              <p className="text-base leading-relaxed text-nogal/90 text-pretty">
                 {generation.summary}
               </p>
             </div>
 
             <div className="mt-auto pt-6 border-t border-nogal/10">
-              <span className="block text-[10px] uppercase tracking-[0.3em] text-nogal/60 mb-2 font-bold">
+              <span className="block text-[11px] uppercase tracking-[0.3em] text-nogal/85 mb-2 font-bold">
                 Su Legado
               </span>
-              <p className="text-sm leading-relaxed text-nogal/80">{generation.contribution}</p>
+              <p className="text-sm leading-relaxed text-nogal/90">{generation.contribution}</p>
             </div>
           </div>
         </div>
@@ -350,14 +351,14 @@ function RestaurantePage() {
           height={800}
           className="absolute inset-0 w-full h-full object-cover opacity-55 animate-hero"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-ink/70 via-ink/35 to-ink/90" />
+        <div className="absolute inset-0 bg-gradient-to-b from-ink/70 via-ink/55 to-ink/90" />
 
         <div className="relative z-10 mx-auto flex w-full max-w-6xl items-center justify-center px-4 sm:px-6 lg:px-8 text-piedra">
           <div className="max-w-3xl text-center">
             <h1 className="font-serif text-4xl md:text-6xl text-piedra font-normal leading-tight animate-reveal [animation-delay:200ms]">
               Bienvenido a Nuestra Casa
             </h1>
-            <p className="mx-auto mt-6 max-w-3xl text-base md:text-lg text-piedra/90 leading-relaxed">
+            <p className="mx-auto mt-6 max-w-3xl text-base md:text-lg text-piedra leading-relaxed [text-shadow:0_1px_14px_rgba(14,10,8,0.55)]">
               Cruza la puerta de Las Flores y sé parte de la familia. Aquí, cada visita se recibe
               con la misma calidez de siempre: tres generaciones cuidando cada plato, cada detalle
               y cada historia que compartimos contigo desde el corazón de Huamanga.
@@ -367,8 +368,8 @@ function RestaurantePage() {
 
         {/* Scroll Indicator */}
         <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2 animate-bounce">
-          <span className="text-piedra/60 text-[10px] uppercase tracking-[0.4em] font-medium">Desliza</span>
-          <ChevronDown size={24} className="text-piedra/60" strokeWidth={1.5} />
+          <span className="text-piedra/85 text-[11px] uppercase tracking-[0.4em] font-medium">Desliza</span>
+          <ChevronDown size={24} className="text-piedra/85" strokeWidth={1.5} />
         </div>
       </header>
 
@@ -414,26 +415,20 @@ function RestaurantePage() {
       <ChefAccordionSection />
 
       {/* CTA Reservas y Delivery */}
-      <section id="reservas" className="bg-cafe text-piedra py-16 md:py-32 px-6">
+      <section id="reservas" className="bg-eucalipto text-piedra py-16 md:py-32 px-6">
         <div className="container-flores mx-auto grid items-center gap-10 md:grid-cols-[1.35fr_1fr] md:gap-16">
-          <div className="relative aspect-[4/3] overflow-hidden rounded-3xl shadow-2xl border-4 border-white/20">
-            <img
-              src="/familia/ubicacion.webp"
-              alt="Mapa de ubicación de Restaurante Las Flores y distancias a Plaza Mayor, Aeropuerto, Wari y Pampa de la Quinua"
-              loading="lazy"
-              decoding="async"
-              className="h-full w-full object-contain"
-            />
+          <div className="relative overflow-hidden rounded-3xl shadow-2xl border-4 border-white/20">
+            <MapaUbicacion />
           </div>
           <div className="text-center md:text-left">
             <span className="text-chilca font-medium uppercase tracking-[0.3em] text-xs block mb-6">
-              Ubicacion y destino
+              Ubicación y destino
             </span>
             <h2 className="font-serif text-4xl md:text-6xl leading-[1.05] mb-8 text-balance">
-              Encuentrenos en el corazon de Ayacucho
+              Encuéntrenos en el corazón de Ayacucho
             </h2>
-            <p className="text-lg text-piedra/70 leading-[1.7] max-w-[52ch]">
-              Visite Restaurante Las Flores y descubra una experiencia gastronomica ayacuchana en
+            <p className="text-lg text-piedra/90 leading-[1.7] max-w-[52ch]">
+              Visite Restaurante Las Flores y descubra una experiencia gastronómica ayacuchana en
               un espacio familiar y acogedor.
             </p>
           </div>

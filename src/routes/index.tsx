@@ -765,7 +765,7 @@ function Index() {
                       href="/docs/resolucion_andres_avelino.pdf"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="self-start inline-flex items-center justify-center flex-none w-36 h-10 bg-eucalipto text-white rounded-md text-sm text-center"
+                      className="self-start inline-flex items-center justify-center flex-none w-36 h-10 bg-cochinilla hover:bg-cochinilla/90 transition-colors text-piedra rounded-md text-sm text-center"
                     >
                       Ver documento
                     </a>
@@ -807,7 +807,7 @@ function Index() {
                       href="/docs/documento_camara_comercio.pdf"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="self-start inline-flex items-center justify-center flex-none w-36 h-10 bg-eucalipto text-white rounded-md text-sm text-center"
+                      className="self-start inline-flex items-center justify-center flex-none w-36 h-10 bg-cochinilla hover:bg-cochinilla/90 transition-colors text-piedra rounded-md text-sm text-center"
                     >
                       Ver documento
                     </a>
@@ -849,7 +849,7 @@ function Index() {
                       href="/docs/Resolucion_andres_avelino_caceres.pdf"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="self-start inline-flex items-center justify-center flex-none w-36 h-10 bg-eucalipto text-white rounded-md text-sm text-center"
+                      className="self-start inline-flex items-center justify-center flex-none w-36 h-10 bg-cochinilla hover:bg-cochinilla/90 transition-colors text-piedra rounded-md text-sm text-center"
                     >
                       Ver documento
                     </a>

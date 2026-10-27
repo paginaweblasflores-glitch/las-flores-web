@@ -395,3 +395,17 @@
 @media (prefers-reduced-motion: reduce) {
   .fauna-entra-der, .fauna-sale-izq, .fauna-entra-izq, .fauna-sale-der, .fauna-texto { animation: none; }
 }
+
+/* Mapa de ubicación del restaurante: pulso suave alrededor del pin. */
+@keyframes mapa-pulso {
+  0% { transform: scale(0.8); opacity: 0.55; }
+  100% { transform: scale(2.4); opacity: 0; }
+}
+.mapa-pulso {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: mapa-pulso 2.6s ease-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .mapa-pulso { animation: none; opacity: 0; }
+}
