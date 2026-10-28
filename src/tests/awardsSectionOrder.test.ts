@@ -16,7 +16,7 @@ describe("sección de premios de la página de inicio", () => {
     expect(awardsSection).not.toContain("min-h-[500px] md:min-h-[600px]");
   });
 
-  it("muestra el título, separa los premios y omite el texto explicativo", () => {
+  it("muestra el título con su descripción breve y separa los premios", () => {
     const routeSource = readFileSync(homeRoutePath, "utf8");
     const awardsSection =
       routeSource.match(/\{\/\* PREMIOS \*\/\}([\s\S]*?)\{\/\* CTA FINAL \*\/\}/)?.[1] ?? "";
@@ -26,7 +26,7 @@ describe("sección de premios de la página de inicio", () => {
     const listStart = awardsSection.indexOf("<ul", headingEnd);
 
     expect(awardsSection.slice(headingStart, headingEnd)).toContain(
-      "Reconocidos por",
+      "Distinciones",
     );
     expect(
       awardsSection.slice(headingStart, headingEnd),

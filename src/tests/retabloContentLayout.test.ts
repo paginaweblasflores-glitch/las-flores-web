@@ -245,7 +245,7 @@ describe("home retablo content layout", () => {
     if (!imageContainer) throw new Error("Retablo image container not found");
     expect(attribute(imageContainer, "className")).toContain("mb-8");
     expect(contentRow.getText()).toContain(
-      'className="relative aspect-[4/3] -translate-y-[3mm] border-x-[6px] border-t-[6px] border-b-[10px] border-[#8f1d35] p-[3px] shadow-md"',
+      'className="retablo-photo-frame relative h-full -translate-y-[3mm] border-x-[6px] border-t-[6px] border-b-[10px] border-[#8f1d35] p-[3px] shadow-md"',
     );
     expect(contentRow.getText()).toContain(
       'className="relative h-full w-full overflow-hidden border border-[#d4a373]"',
