@@ -328,13 +328,13 @@ function EventosPage() {
           </span>
 
           <h1 className="font-serif text-4xl md:text-6xl text-piedra font-normal leading-tight">
-            Eventos Memorables <br />
-            <span className="font-normal">en Ayacucho</span>
+            Eventos en Ayacucho <br />
+            <span className="font-normal">para cada ocasión</span>
           </h1>
 
           <p className="text-base md:text-lg text-piedra/90 max-w-3xl mx-auto leading-relaxed">
-            Nuestros espacios, impregnados de historia y elegancia, son el escenario ideal para sus
-            celebraciones más importantes. Celebre rodeado de la magia de Huamanga.
+            Celebre en Las Flores con espacios para reuniones familiares, encuentros corporativos,
+            bodas y recepciones, acompañados de nuestra cocina y hospitalidad.
           </p>
         </div>
 

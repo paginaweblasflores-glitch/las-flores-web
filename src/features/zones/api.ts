@@ -30,7 +30,7 @@ export const OFFICIAL_DEFAULT_ZONES: RestaurantZone[] = [
   },
   {
     id: "estrado",
-    name: "Estrado Principal",
+    name: "Estrado",
     short_name: "Estrado",
     description: "Ambiente elevado en el escenario tradicional del restaurante.",
     image_url: "/imagenes-reales/Salones/estrado-principal.webp",

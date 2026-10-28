@@ -177,14 +177,14 @@ function GaleriaPage() {
         <div className="max-w-4xl mx-auto text-center relative z-10 space-y-6">
           <span className="text-chilca font-medium uppercase tracking-[0.3em] text-xs flex items-center justify-center gap-2">
             <Sparkles size={14} />
-            Nuestra Galería · Momentos que inspiran
+            Nuestra Galería
             <Sparkles size={14} />
           </span>
           <h1 className="font-serif text-4xl md:text-6xl text-piedra font-normal leading-tight">
-            Galería de Momentos
+            Las Flores: momentos y tradiciones
           </h1>
           <p className="text-base md:text-lg text-piedra/90 max-w-3xl mx-auto leading-relaxed">
-            Descubre a través de imágenes la esencia de nuestro restaurante, nuestra cultura ayacuchana y los sabores que nos definen.
+            Un recorrido visual por nuestra cocina, nuestros espacios, nuestro equipo y la riqueza cultural de Ayacucho.
           </p>
         </div>
       </section>

@@ -299,9 +299,8 @@ function RestaurantePage() {
               Bienvenido a Nuestra Casa
             </h1>
             <p className="mx-auto max-w-3xl text-base md:text-lg text-piedra leading-relaxed [text-shadow:0_1px_14px_rgba(14,10,8,0.55)]">
-              Cruza la puerta de Las Flores y sé parte de la familia. Aquí, cada visita se recibe
-              con la misma calidez de siempre: tres generaciones cuidando cada plato, cada detalle
-              y cada historia que compartimos contigo desde el corazón de Huamanga.
+              Tres generaciones de una misma familia han hecho de Las Flores un lugar donde la
+              cocina ayacuchana, la tradición y la hospitalidad se comparten alrededor de la mesa.
             </p>
           </div>
         </div>
@@ -317,12 +316,11 @@ function RestaurantePage() {
               Familia Las Flores
             </span>
             <h2 className="font-serif text-4xl md:text-5xl leading-[1.1] text-balance mb-6">
-              Una cocina con rostros e historias
+              El equipo detrás de nuestra historia
             </h2>
             <p className="text-lg text-piedra/70 leading-[1.7] mb-8">
-              Conoce a las personas que hacen posible la magia ayacuchana en cada servicio:
-              historias de orgullo, pasión y excelencia culinaria de un equipo que trabaja para
-              que cada visita se sienta como en casa.
+              Conoce a quienes hacen posible cada servicio con dedicación, compromiso y la calidez
+              que distingue a Las Flores.
             </p>
             <Link
               to="/familia-las-flores"
@@ -359,11 +357,11 @@ function RestaurantePage() {
               Ubicación y destino
             </span>
             <h2 className="font-serif text-4xl md:text-6xl leading-[1.05] mb-8 text-balance">
-              Encuéntrenos en el corazón de Ayacucho
+              Te esperamos en Las Flores
             </h2>
             <p className="text-lg text-piedra/90 leading-[1.7] max-w-[52ch]">
-              Visite Restaurante Las Flores y descubra una experiencia gastronómica ayacuchana en
-              un espacio familiar y acogedor.
+              Visítanos en Huamanga y disfruta de la cocina ayacuchana en un ambiente familiar,
+              donde la tradición se comparte alrededor de la mesa.
             </p>
           </div>
         </div>
