@@ -269,8 +269,8 @@ describe("home retablo content layout", () => {
 
   it("centers the retablo content and framed image on wide desktop screens", () => {
     expect(routeSource).toContain("@media (min-width: 1600px)");
-    expect(routeSource).toContain(
-      ".retablo-content-stack {\n              justify-content: center;",
+    expect(routeSource).toMatch(
+      /\.retablo-content-stack\s*\{\s*justify-content:\s*center;/,
     );
 
     const wrapper = findRetabloWrapper(routeAst);
