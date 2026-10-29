@@ -227,8 +227,7 @@ describe("home retablo content layout", () => {
     const contentClasses = attribute(contentRow, "className") ?? "";
     const contentElements = jsxDescendants(contentRow);
 
-    expect(contentClasses).toContain("flex-1");
-    expect(contentClasses).not.toContain("flex-col");
+    expect(contentClasses).toContain("flex-col");
     expect(contentRow.getText()).toContain("src={retabloImg}");
     const heading = contentElements.find((element) => tagName(element) === "h2");
     const paragraph = contentElements.find((element) => tagName(element) === "p");
@@ -244,9 +243,9 @@ describe("home retablo content layout", () => {
     );
     expect(imageContainer).toBeDefined();
     if (!imageContainer) throw new Error("Retablo image container not found");
-    expect(attribute(imageContainer, "className")).not.toContain("mb-8");
+    expect(attribute(imageContainer, "className")).toContain("mb-8");
     expect(contentRow.getText()).toContain(
-      'className="retablo-photo-frame relative h-full border-x-[6px] border-t-[6px] border-b-[10px] border-[#8f1d35] p-[3px] shadow-md"',
+      'className="retablo-photo-frame relative h-full -translate-y-[3mm] border-x-[6px] border-t-[6px] border-b-[10px] border-[#8f1d35] p-[3px] shadow-md"',
     );
     expect(contentRow.getText()).toContain(
       'className="relative h-full w-full overflow-hidden border border-[#d4a373]"',
@@ -268,17 +267,11 @@ describe("home retablo content layout", () => {
     expect(routeSource).not.toContain("onDoorsOpened");
   });
 
-  it("centers the framed image vertically in the retablo at every screen size", () => {
+  it("centers the retablo content and framed image on wide desktop screens", () => {
+    expect(routeSource).toContain("@media (min-width: 1600px)");
     expect(routeSource).toMatch(
-      /\.retablo-content-stack\s*\{\s*display:\s*grid;\s*grid-template-rows:\s*minmax\(0,\s*1fr\)\s+auto\s+minmax\(0,\s*1fr\);/s,
+      /\.retablo-content-stack\s*\{\s*justify-content:\s*center;/,
     );
-    expect(routeSource).toMatch(
-      /\.retablo-content-narrative\s*\{[^}]*grid-row:\s*1;[^}]*align-self:\s*end;/s,
-    );
-    expect(routeSource).toMatch(
-      /\.retablo-content-image\s*\{[^}]*grid-row:\s*2;[^}]*align-self:\s*center;[^}]*justify-self:\s*center;/s,
-    );
-    expect(routeSource).not.toContain("@media (min-width: 1600px)");
 
     const wrapper = findRetabloWrapper(routeAst);
     expect(wrapper).toBeDefined();

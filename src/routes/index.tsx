@@ -457,23 +457,9 @@ function Index() {
       {/* CULTURA Y TRADICIÓN */}
       <section className="retablo-section flex flex-col justify-center items-center w-full lg:min-h-screen overflow-x-hidden relative pt-6 pb-0 lg:items-center lg:pt-[2.3cm] lg:pb-[calc(min(2.5rem,3dvh)_+_4rem)]">
         <style>{`
-          .retablo-content-stack {
-            display: grid;
-            grid-template-rows: minmax(0, 1fr) auto minmax(0, 1fr);
-          }
-
-          .retablo-content-narrative {
-            grid-row: 1;
-            align-self: end;
-          }
-
           .retablo-content-image {
-            grid-row: 2;
-            align-self: center;
-            justify-self: center;
             width: calc(100% - min(6cm, 4vw));
             max-width: 340px;
-            margin: 0;
           }
 
           @media (min-width: 1024px) and (max-height: 850px) {
@@ -493,6 +479,16 @@ function Index() {
 
             .retablo-content-narrative {
               gap: clamp(0.5rem, 1.2dvh, 0.75rem);
+            }
+
+            /* Con poca altura el panel interior es chico: la foto no sube sobre el texto y deja un margen
+               corto abajo; su altura se reparte sola (ver .retablo-content-image en el JSX). */
+            .retablo-content-image {
+              margin-bottom: 0.5rem;
+            }
+
+            .retablo-photo-frame {
+              translate: none;
             }
 
           }
@@ -531,6 +527,12 @@ function Index() {
 
           }
 
+          @media (min-width: 1600px) {
+            .retablo-content-stack {
+              justify-content: center;
+            }
+          }
+
         `}</style>
         <div className="w-full px-6 pb-4 lg:pb-0 lg:absolute lg:inset-x-0 lg:top-[2.3cm] lg:z-10 lg:pointer-events-none">
           <div className="container-flores mx-auto">
@@ -542,7 +544,7 @@ function Index() {
         <RetabloWrapper>
           {/* Narrativa e imagen dentro del panel */}
           <div className="retablo-content-shell min-h-0 flex flex-1 h-full flex-col p-5 lg:p-10">
-            <div className="retablo-content-stack min-h-0 flex-1 items-center gap-4 lg:gap-5">
+            <div className="retablo-content-stack flex min-h-0 flex-1 flex-col items-center gap-4 lg:gap-5">
               {/* Bloque Narrativo */}
               <div className="retablo-content-narrative w-full shrink-0 flex flex-col gap-3 lg:gap-4 text-center">
                 {/* Título Serif elegante */}
@@ -582,8 +584,8 @@ function Index() {
               </div>
 
               {/* Imagen ampliada debajo de todo el texto */}
-              <div className="retablo-content-image mx-auto aspect-[4/3] min-h-[72px]">
-                <div className="retablo-photo-frame relative h-full border-x-[6px] border-t-[6px] border-b-[10px] border-[#8f1d35] p-[3px] shadow-md">
+              <div className="retablo-content-image mx-auto mb-8 aspect-[4/3] min-h-[72px]">
+                <div className="retablo-photo-frame relative h-full -translate-y-[3mm] border-x-[6px] border-t-[6px] border-b-[10px] border-[#8f1d35] p-[3px] shadow-md">
                   <div className="relative h-full w-full overflow-hidden border border-[#d4a373]">
                     <img
                       src={retabloImg}
