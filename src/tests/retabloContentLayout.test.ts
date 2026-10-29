@@ -243,9 +243,9 @@ describe("home retablo content layout", () => {
     );
     expect(imageContainer).toBeDefined();
     if (!imageContainer) throw new Error("Retablo image container not found");
-    expect(attribute(imageContainer, "className")).toContain("mb-8");
+    expect(attribute(imageContainer, "className")).toContain("my-auto");
     expect(contentRow.getText()).toContain(
-      'className="retablo-photo-frame relative h-full -translate-y-[3mm] border-x-[6px] border-t-[6px] border-b-[10px] border-[#8f1d35] p-[3px] shadow-md"',
+      'className="retablo-photo-frame relative h-full border-x-[6px] border-t-[6px] border-b-[10px] border-[#8f1d35] p-[3px] shadow-md"',
     );
     expect(contentRow.getText()).toContain(
       'className="relative h-full w-full overflow-hidden border border-[#d4a373]"',
@@ -267,11 +267,15 @@ describe("home retablo content layout", () => {
     expect(routeSource).not.toContain("onDoorsOpened");
   });
 
-  it("centers the retablo content and framed image on wide desktop screens", () => {
+  it("centers the image only in the space between the narrative and retablo base", () => {
     expect(routeSource).toContain("@media (min-width: 1600px)");
     expect(routeSource).toMatch(
       /\.retablo-content-stack\s*\{\s*justify-content:\s*center;/,
     );
+    expect(routeSource).toMatch(
+      /\.retablo-content-stack\s*\{\s*margin-bottom:\s*calc\(-1\s*\*\s*var\(--retablo-content-bottom-inset\)\);/,
+    );
+    expect(routeSource).not.toContain("margin-bottom: 0.5rem");
 
     const wrapper = findRetabloWrapper(routeAst);
     expect(wrapper).toBeDefined();

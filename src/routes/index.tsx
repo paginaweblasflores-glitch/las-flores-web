@@ -457,9 +457,23 @@ function Index() {
       {/* CULTURA Y TRADICIÓN */}
       <section className="retablo-section flex flex-col justify-center items-center w-full lg:min-h-screen overflow-x-hidden relative pt-6 pb-0 lg:items-center lg:pt-[2.3cm] lg:pb-[calc(min(2.5rem,3dvh)_+_4rem)]">
         <style>{`
+          .retablo-content-shell {
+            --retablo-content-bottom-inset: 1.25rem;
+          }
+
+          .retablo-content-stack {
+            margin-bottom: calc(-1 * var(--retablo-content-bottom-inset));
+          }
+
           .retablo-content-image {
             width: calc(100% - min(6cm, 4vw));
             max-width: 340px;
+          }
+
+          @media (min-width: 1024px) {
+            .retablo-content-shell {
+              --retablo-content-bottom-inset: 2.5rem;
+            }
           }
 
           @media (min-width: 1024px) and (max-height: 850px) {
@@ -470,6 +484,7 @@ function Index() {
             }
 
             .retablo-content-shell {
+              --retablo-content-bottom-inset: clamp(0.5rem, 1.2dvh, 1rem);
               padding: clamp(0.5rem, 1.2dvh, 1rem);
             }
 
@@ -479,16 +494,6 @@ function Index() {
 
             .retablo-content-narrative {
               gap: clamp(0.5rem, 1.2dvh, 0.75rem);
-            }
-
-            /* Con poca altura el panel interior es chico: la foto no sube sobre el texto y deja un margen
-               corto abajo; su altura se reparte sola (ver .retablo-content-image en el JSX). */
-            .retablo-content-image {
-              margin-bottom: 0.5rem;
-            }
-
-            .retablo-photo-frame {
-              translate: none;
             }
 
           }
@@ -501,6 +506,7 @@ function Index() {
             }
 
             .retablo-content-shell {
+              --retablo-content-bottom-inset: clamp(1rem, 2dvh, 1.5rem);
               padding: clamp(1rem, 2dvh, 1.5rem);
             }
 
@@ -513,6 +519,7 @@ function Index() {
 
           @media (min-width: 1024px) and (max-height: 700px) {
             .retablo-content-shell {
+              --retablo-content-bottom-inset: 0.375rem;
               padding: 0.375rem;
             }
 
@@ -584,8 +591,8 @@ function Index() {
               </div>
 
               {/* Imagen ampliada debajo de todo el texto */}
-              <div className="retablo-content-image mx-auto mb-8 aspect-[4/3] min-h-[72px]">
-                <div className="retablo-photo-frame relative h-full -translate-y-[3mm] border-x-[6px] border-t-[6px] border-b-[10px] border-[#8f1d35] p-[3px] shadow-md">
+              <div className="retablo-content-image mx-auto my-auto aspect-[4/3] min-h-[72px]">
+                <div className="retablo-photo-frame relative h-full border-x-[6px] border-t-[6px] border-b-[10px] border-[#8f1d35] p-[3px] shadow-md">
                   <div className="relative h-full w-full overflow-hidden border border-[#d4a373]">
                     <img
                       src={retabloImg}
