@@ -328,13 +328,13 @@ function EventosPage() {
           </span>
 
           <h1 className="font-serif text-4xl md:text-6xl text-piedra font-normal leading-tight">
-            Eventos Memorables <br />
-            <span className="font-normal">en Ayacucho</span>
+            Eventos en Ayacucho <br />
+            <span className="font-normal">para cada ocasión</span>
           </h1>
 
           <p className="text-base md:text-lg text-piedra/90 max-w-3xl mx-auto leading-relaxed">
-            Nuestros espacios, impregnados de historia y elegancia, son el escenario ideal para sus
-            celebraciones más importantes. Celebre rodeado de la magia de Huamanga.
+            Celebre en Las Flores con espacios para reuniones familiares, encuentros corporativos,
+            bodas y recepciones, acompañados de nuestra cocina y hospitalidad.
           </p>
         </div>
 
@@ -438,13 +438,15 @@ function EventosPage() {
                   <div className="hidden lg:flex w-fit px-4 flex-col justify-end items-center gap-3 pb-16">
                     <button
                       onClick={handlePrevSlide}
-                      className="w-12 h-12 border-2 border-nogal rounded-md flex items-center justify-center text-nogal hover:bg-nogal/10 transition-colors"
+                      aria-label="Foto anterior"
+                      className="w-11 h-11 border border-nogal/40 rounded-md flex items-center justify-center text-nogal hover:border-nogal hover:bg-nogal/5 transition-colors cursor-pointer"
                     >
                       <ChevronLeft size={20} strokeWidth={1.8} />
                     </button>
                     <button
                       onClick={handleNextSlide}
-                      className="w-12 h-12 border-2 border-nogal rounded-md flex items-center justify-center text-nogal hover:bg-nogal/10 transition-colors"
+                      aria-label="Foto siguiente"
+                      className="w-11 h-11 border border-nogal/40 rounded-md flex items-center justify-center text-nogal hover:border-nogal hover:bg-nogal/5 transition-colors cursor-pointer"
                     >
                       <ChevronRight size={20} strokeWidth={1.8} />
                     </button>
@@ -477,7 +479,6 @@ function EventosPage() {
                               className="absolute inset-0 w-full h-full object-cover"
                               loading="lazy"
                             />
-                            <div className="absolute inset-2 border border-white/40 pointer-events-none" />
                           </div>
                         ))}
                       </div>
@@ -502,7 +503,6 @@ function EventosPage() {
                           className="absolute inset-0 w-full h-full object-cover"
                           loading="lazy"
                         />
-                        <div className="absolute inset-2 border border-white/40 pointer-events-none" />
                       </div>
                     )
                   )}
@@ -529,7 +529,6 @@ function EventosPage() {
                                   className="absolute inset-0 w-full h-full object-cover"
                                   loading="lazy"
                                 />
-                                <div className="absolute inset-4 border border-white/40 pointer-events-none" />
                               </div>
                             ))}
                           </div>
@@ -544,7 +543,6 @@ function EventosPage() {
                             className="absolute inset-0 w-full h-full object-cover"
                             loading="lazy"
                           />
-                          <div className="absolute inset-4 border border-white/40 pointer-events-none" />
                         </div>
                       )
                     )}

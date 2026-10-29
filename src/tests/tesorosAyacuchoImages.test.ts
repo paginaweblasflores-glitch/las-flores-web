@@ -93,6 +93,10 @@ describe("imágenes de Tesoros de Ayacucho", () => {
     expect(details).toMatch(
       /<span className="inline-block text-\[11px\] font-bold uppercase tracking-wider text-chilca bg-black\/40 backdrop-blur-sm px-3 py-1\.5 rounded-full border border-white\/10">\s*\{producto\.rangoAltitud\}\s*<\/span>/,
     );
+    expect(routeSource).not.toMatch(
+      /\{producto\.nombre\}\s*-\s*\{producto\.rangoAltitud\}/,
+    );
+    expect(routeSource).toContain("{producto.rangoAltitud}");
     expect(routeSource).not.toContain("producto.usos.map");
   });
 });

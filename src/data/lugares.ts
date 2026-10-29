@@ -24,11 +24,9 @@ export type Lugar = {
   escenas: string;
   /** Etiquetas de 2-4 palabras para los 4 clips de video (brief de rodaje para Marketing). */
   clipTags: [string, string, string, string];
-  /** Coordenadas para el mini-mapa trazado a mano; solo hacen falta si no hay `mapaImagen`. */
+  /** Coordenadas aproximadas para ubicar el destino en el mapa referencial de Ayacucho. */
   mapLat?: number;
   mapLng?: number;
-  /** Mapa ilustrado de Ayacucho con el punto marcado (generado por encargo). Si falta, se usa el AyacuchoMiniMap trazado a mano. */
-  mapaImagen?: string;
   /** Video del hero (opcional). Si falta, el hero usa `imagen`. */
   video?: { hero: string; heroMobile: string; poster: string };
   /** Foto de la sección a pantalla completa (si falta se usa `imagen`); no se usa si hay `videoSeccion`. */
@@ -68,7 +66,6 @@ export const lugares: Lugar[] = [
     ],
     mapLat: -13.1588,
     mapLng: -74.2239,
-    mapaImagen: "/imagenes-reales/mapas/basilica-catedral.webp",
     galeria: [
       {
         imagen: "/imagenes-reales/seccion-turs/catedral-huamanga.webp",
@@ -110,7 +107,6 @@ export const lugares: Lugar[] = [
     clipTags: ["Obelisco al amanecer", "Manos ceramistas", "Iglesitas y toritos de techo", "Complejo Arqueológico Wari"],
     mapLat: -13.0478,
     mapLng: -74.1322,
-    mapaImagen: "/imagenes-reales/mapas/pampa-ayacucho.webp",
     galeria: [
       {
         imagen: "/imagenes-reales/seccion-turs/pampa-quinua.webp",
@@ -150,7 +146,9 @@ export const lugares: Lugar[] = [
       "Laderas del desfiladero",
       "Paredes entre la niebla",
     ],
-    mapaImagen: "/imagenes-reales/mapas/abismo-puncupata.webp",
+    // Ubicación aproximada (distrito de Ocros, al sureste de Huamanga); el mapa es referencial.
+    mapLat: -13.4,
+    mapLng: -73.9,
     video: {
       hero: "/videos/hero/abismo-puncupata.mp4",
       heroMobile: "/videos/hero/abismo-puncupata-mobile.mp4",
@@ -226,7 +224,8 @@ export const lugares: Lugar[] = [
     },
     escenas: "Conoce los principales monumentos incas y las vistas de Vilcas Huamán.",
     clipTags: ["Ushnu inca", "Templo del Sol", "Plaza ceremonial", "Halcón sagrado"],
-    mapaImagen: "/imagenes-reales/mapas/vilcas-huaman.webp",
+    mapLat: -13.6558,
+    mapLng: -73.95,
     video: {
       hero: "/videos/hero/vilcashuaman.mp4",
       heroMobile: "/videos/hero/vilcashuaman-mobile.mp4",
@@ -299,7 +298,6 @@ export const lugares: Lugar[] = [
     clipTags: ["Camino al abra", "Lagunas de Ritipata", "Cumbres y valles andinos", "Alpacas de las faldas"],
     mapLat: -13.42917,
     mapLng: -74.69167,
-    mapaImagen: "/imagenes-reales/mapas/ritipata.webp",
     video: {
       hero: "/videos/hero/ritipata.mp4",
       heroMobile: "/videos/hero/ritipata-mobile.mp4",
@@ -376,7 +374,6 @@ export const lugares: Lugar[] = [
     clipTags: ["Pozas escalonadas", "Caídas de agua entre terrazas", "Cañón de Millpu", "Poza al pie de la caída"],
     mapLat: -13.7207,
     mapLng: -74.1339,
-    mapaImagen: "/imagenes-reales/mapas/aguas-turquesas.webp",
     seccionImagen: {
       imagen: "/imagenes-reales/aguas-turquesas/millpu-opt.webp",
       etiqueta: "Aguas Turquesas de Millpu",

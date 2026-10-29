@@ -1,7 +1,7 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/site-footer";
-import { AyacuchoMiniMap } from "@/components/AyacuchoMiniMap";
+import { MapaDestino } from "@/components/MapaDestino";
 import { FestividadVideo } from "@/components/FestividadVideo";
 import { lugares } from "@/data/lugares";
 
@@ -162,20 +162,15 @@ function LugarDetailPage() {
               ))}
             </div>
           </div>
-          <div
-            className={`flex items-start justify-center px-6 md:px-10 pt-16 md:pt-24 pb-6 md:pb-10 md:order-1 ${lugar.mapaImagen ? "h-[410px] md:h-[550px]" : "h-[380px] md:h-[520px]"}`}
-          >
-            {lugar.mapaImagen ? (
-              <img
-                src={lugar.mapaImagen}
-                alt={`Ubicación de ${lugar.nombre} en el mapa de Ayacucho`}
-                loading="lazy"
-                decoding="async"
-                className="max-h-full max-w-full object-contain"
+          <div className="flex items-start justify-center px-6 md:px-10 pt-16 md:pt-24 pb-6 md:pb-10 md:order-1">
+            {lugar.mapLat !== undefined && lugar.mapLng !== undefined && (
+              <MapaDestino
+                nombre={lugar.nombre}
+                detalle={lugar.categoria}
+                lat={lugar.mapLat}
+                lng={lugar.mapLng}
               />
-            ) : lugar.mapLat !== undefined && lugar.mapLng !== undefined ? (
-              <AyacuchoMiniMap lat={lugar.mapLat} lng={lugar.mapLng} nombre={lugar.nombre} />
-            ) : null}
+            )}
           </div>
         </section>
 
@@ -192,14 +187,16 @@ function LugarDetailPage() {
               className="absolute inset-0 w-full h-full object-cover"
             />
             {lugar.consejo && (
-              <div className="absolute bottom-0 left-4 right-4 md:right-auto md:left-10 md:w-[30rem] md:h-[min(38rem,78svh)] flex flex-col justify-center gap-6 bg-eucalipto text-piedra px-6 py-8 md:px-10 md:py-12 overflow-y-auto">
+              <div className="absolute bottom-0 inset-x-0 md:inset-x-auto md:left-4 md:w-[22rem] md:h-[450px] flex flex-col justify-start gap-6 bg-eucalipto text-piedra px-6 py-8 md:px-5 md:py-10 overflow-y-auto">
                 <h2 className="font-serif text-xl md:text-3xl leading-snug">Consejo de visita</h2>
                 <p className="text-sm md:text-lg leading-relaxed text-piedra/90">{lugar.consejo}</p>
               </div>
             )}
             <span
-              className={`absolute bottom-6 md:bottom-10 text-piedra text-[10px] uppercase tracking-[0.35em] font-semibold drop-shadow ${
-                lugar.consejo ? "right-6 md:right-10" : "left-6 md:left-10"
+              className={`absolute text-piedra text-[10px] uppercase tracking-[0.35em] font-semibold drop-shadow ${
+                lugar.consejo
+                  ? "top-20 right-6 md:top-auto md:bottom-10 md:right-10"
+                  : "bottom-6 md:bottom-10 left-6 md:left-10"
               }`}
             >
               {imagenConsejo.etiqueta}

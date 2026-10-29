@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from "react";
 
 interface EspecieFauna {
   nombre: string;
-  quechua?: string;
   imagen: string;
   descripcion: string;
 }
@@ -10,14 +9,12 @@ interface EspecieFauna {
 const ESPECIES: EspecieFauna[] = [
   {
     nombre: "Colibrí",
-    quechua: "Q'enti",
     imagen: "/imagenes-reales/fauna/colibri.webp",
     descripcion:
       "Presente en los valles y campiñas de la región, el colibrí es una diminuta y fascinante ave, fundamental como polinizador natural para la preservación de la variada flora andina. Observar su ágil y veloz vuelo estacionario entre las flores silvestres brinda una excelente oportunidad para conectar con la delicada belleza de la naturaleza local.",
   },
   {
     nombre: "Cernícalo",
-    quechua: "Killi killi",
     imagen: "/imagenes-reales/fauna/cernicalo.webp",
     descripcion:
       "Presente en los cielos y valles de la región, el cernícalo es una pequeña y veloz ave rapaz andina, fundamental para el equilibrio ecológico por su rol en el control natural de plagas agrícolas.",
@@ -30,7 +27,6 @@ const ESPECIES: EspecieFauna[] = [
   },
   {
     nombre: "Halcón Peregrino",
-    quechua: "Waman",
     imagen: "/imagenes-reales/fauna/halcon.webp",
     descripcion:
       "Presente en los altos riscos y cañones de la región, el halcón peregrino es una imponente ave rapaz y el animal más veloz del planeta, crucial como depredador tope para el equilibrio del ecosistema andino. Avistar su espectacular vuelo en picada durante sus cacerías brinda una excelente oportunidad para maravillarse con la imponente vida silvestre local.",
@@ -134,14 +130,9 @@ export function FaunaAndina() {
         onMouseLeave={() => setLeyendo(false)}
         onFocus={() => setLeyendo(true)}
         onBlur={() => setLeyendo(false)}
-        className="md:absolute md:bottom-0 md:left-8 md:w-full md:max-w-md bg-eucalipto text-piedra px-8 py-10 md:px-10 md:py-12 flex flex-col justify-between"
+        className="md:absolute md:bottom-0 md:left-4 md:w-full md:max-w-[22rem] min-h-[400px] md:min-h-0 md:h-[450px] bg-eucalipto text-piedra px-8 py-10 md:px-5 md:py-10 flex flex-col justify-between"
       >
         <div key={especie.nombre} className={visto ? "fauna-texto" : "opacity-0"}>
-          {especie.quechua && (
-            <span className="text-chilca text-[10px] uppercase tracking-[0.3em] font-semibold mb-4 block">
-              {especie.quechua}
-            </span>
-          )}
           <h3 className="font-serif text-3xl md:text-4xl mb-5">{especie.nombre}</h3>
           <p className="text-piedra/80 text-sm md:text-base leading-relaxed">
             {especie.descripcion}
