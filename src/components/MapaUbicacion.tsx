@@ -25,8 +25,8 @@ const HUAMANGA_EN_MAPA = { x: 0.404, y: 0.3 }; // fracción del ancho y del alto
 const CENTRO = { x: MAPA.x + HUAMANGA_EN_MAPA.x * MAPA.w, y: MAPA.y + HUAMANGA_EN_MAPA.y * MAPA.h };
 
 // Posiciones referenciales alrededor del restaurante (separadas para que no se amontonen)
-const PLAZA = { x: CENTRO.x - 206, y: CENTRO.y + 40 };
-const AEROPUERTO = { x: CENTRO.x + 214, y: CENTRO.y + 104 };
+const PLAZA = { x: CENTRO.x - 206, y: CENTRO.y + 88 };
+const AEROPUERTO = { x: CENTRO.x - 206, y: CENTRO.y - 40 };
 
 // Calibración del mapa (misma que la de cada destino): Huamanga y escala en unidades del dibujo por grado
 const HUAMANGA = { lat: -13.1628, lng: -74.2179 };
@@ -46,10 +46,10 @@ function enMapa(lat: number, lng: number) {
  */
 const DESTINOS = [
   { slug: "pampa-de-quinua", lado: "der", y: 184 },
-  { slug: "abismo-puncupata", lado: "der", y: 254 },
-  { slug: "vilcas-huaman", lado: "der", y: 404 },
-  { slug: "millpu", lado: "der", y: 478, lineas: ["Aguas Turquesas", "de Millpu"] },
-  { slug: "ritipata", lado: "izq", y: 350 },
+  { slug: "abismo-puncupata", lado: "der", y: 274 },
+  { slug: "vilcas-huaman", lado: "der", y: 364 },
+  { slug: "millpu", lado: "der", y: 454, lineas: ["Aguas Turquesas", "de Millpu"] },
+  { slug: "ritipata", lado: "izq", y: 403 },
 ] as const;
 
 const LUGARES_VISITA = DESTINOS.flatMap((d) => {
@@ -61,8 +61,8 @@ const LUGARES_VISITA = DESTINOS.flatMap((d) => {
 
 const LUGARES_LISTA = [
   ["Restaurante Las Flores", "Jr. José Olaya 106, Huamanga"],
-  ["Plaza Mayor de Huamanga", "A 7 min (1 km) aprox."],
-  ["Aeropuerto Alfredo Mendívil Duarte", "A 6 min (1 km)"],
+  ["Plaza Mayor de Huamanga", "A 7 min"],
+  ["Aeropuerto Alfredo Mendívil Duarte", "A 6 min"],
   ...LUGARES_VISITA.map((l) => [l.lineas.join(" "), l.detalle]),
 ];
 
@@ -205,12 +205,6 @@ export function MapaUbicacion() {
 
         {/* Líneas guía de los lugares para visitar hacia su nombre */}
         <g stroke={TINTA} strokeWidth={0.9} opacity={0.55}>
-          <line
-            x1={AEROPUERTO.x + 8}
-            y1={AEROPUERTO.y - 1}
-            x2={X_DERECHA - 8}
-            y2={AEROPUERTO.y + 4}
-          />
           {LUGARES_VISITA.map((l) => {
             const derecha = l.lado === "der";
             return (
@@ -284,15 +278,15 @@ export function MapaUbicacion() {
           ancla="end"
           nombre="Plaza Mayor"
           detalle="DE HUAMANGA"
-          detalle2="A 7 MIN · 1 KM APROX."
+          detalle2="A 7 MIN"
         />
         <Etiqueta
-          x={X_DERECHA}
-          y={AEROPUERTO.y + 12}
-          ancla="start"
+          x={AEROPUERTO.x - 18}
+          y={AEROPUERTO.y - 6}
+          ancla="end"
           nombre="Aeropuerto"
           detalle="ALFREDO MENDÍVIL"
-          detalle2="A 6 MIN · 1 KM"
+          detalle2="A 6 MIN"
         />
         <Etiqueta
           x={CENTRO.x}
