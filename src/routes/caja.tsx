@@ -51,6 +51,7 @@ function CashierDashboardRoute() {
   const [loading, setLoading] = useState(true);
   const [isAuthorized, setIsAuthorized] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [canManageMaitre, setCanManageMaitre] = useState(false);
   const [activeTab, setActiveTab] = useState<CashierModule>("seguimiento");
 
   // Orders state
@@ -145,6 +146,7 @@ function CashierDashboardRoute() {
       }
 
       setIsAdmin(userRole === "admin");
+      setCanManageMaitre(userRole === "admin" || userRole === "cashier");
       setIsAuthorized(true);
       await fetchData();
     } catch (err) {
@@ -462,6 +464,7 @@ function CashierDashboardRoute() {
           if (next) playOrderChime();
         }}
         isAdmin={isAdmin}
+        canManageMaitre={canManageMaitre}
         onSignOut={handleSignOut}
         activeTab={activeTab}
         onSelectTab={setActiveTab}

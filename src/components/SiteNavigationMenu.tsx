@@ -98,7 +98,7 @@ export function SiteNavigationMenu({
         <div className="mx-8 border-t border-nogal/10 shrink-0" />
 
         {/* ── Nav links ── */}
-        <nav className="flex flex-col flex-1 min-h-0 px-8 py-3 w-full justify-evenly overflow-y-auto">
+        <nav className="flex flex-col flex-1 min-h-0 gap-1 px-8 py-3 w-full justify-start overflow-y-auto">
           {NAV_LINKS.map(({ label, to, hash }) => {
             return (
               <Link
@@ -110,7 +110,7 @@ export function SiteNavigationMenu({
                     setIsOpen(false);
                   }
                 }}
-                className="block w-full shrink-0 py-2.5 font-serif text-lg md:text-xl tracking-[0.12em] transition-all duration-300 font-bold leading-tight uppercase border-b border-nogal/10 last:border-b-0 text-nogal hover:text-pacay hover:translate-x-3"
+                className="block w-full shrink-0 py-1.5 font-serif text-lg md:text-xl tracking-[0.12em] transition-all duration-300 font-bold leading-tight uppercase border-b border-nogal/10 last:border-b-0 text-nogal hover:text-pacay hover:translate-x-3"
               >
                 {label}
               </Link>

@@ -1,7 +1,9 @@
-import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
 import { UserCircle2, Lock, Loader2, LogIn, ArrowLeft, Eye, EyeOff } from "lucide-react";
 import { supabase } from "../lib/supabase";
+import { loginMaitreWaiter } from "../features/maitre/api";
+import { getStaffLoginDestination, isValidMaitreAccessCode } from "../features/maitre/operations";
 
 // Mapa interno usuario → correo real de Supabase Auth. El personal solo ve y
 // elige su "Usuario"; el correo nunca se muestra ni se escribe (es la
@@ -10,6 +12,7 @@ const STAFF_USERS = [
   { username: "Administrador Las Flores", email: "restaurantelasfloresperu@gmail.com" },
   { username: "Caja Las Flores", email: "paginaweblasflores@gmail.com" },
   { username: "Ventas Las Flores", email: "convencioneslyfayacucho@gamil.com" },
+  { username: "MAITRE", email: "" },
 ];
 
 export const Route = createFileRoute("/staff-login")({
@@ -23,8 +26,8 @@ export const Route = createFileRoute("/staff-login")({
 });
 
 function StaffLoginPage() {
-  const navigate = useNavigate();
   const [username, setUsername] = useState("");
+  const [accessCode, setAccessCode] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -39,13 +42,9 @@ function StaffLoginPage() {
       .eq("id", userId)
       .single();
 
-    const role = profile?.role?.toLowerCase();
-    if (role === "admin") {
-      window.location.href = "/admin";
-    } else if (role === "cashier" || role === "staff") {
-      window.location.href = "/caja";
-    } else if (role === "ventas") {
-      window.location.href = "/panel-reservas";
+    const destination = getStaffLoginDestination(profile?.role || "");
+    if (destination) {
+      window.location.href = destination;
     } else {
       setErrorMsg("Tu cuenta no tiene acceso a ningún panel administrativo.");
       await supabase.auth.signOut();
@@ -57,7 +56,9 @@ function StaffLoginPage() {
   // Si ya hay una sesión activa (p. ej. volvió a esta página), redirige directo
   useEffect(() => {
     (async () => {
-      const { data: { session } } = await supabase.auth.getSession();
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
       if (session) {
         await redirectByRole(session.user.id);
       } else {
@@ -69,6 +70,25 @@ function StaffLoginPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMsg("");
+
+    if (username === "MAITRE") {
+      if (!isValidMaitreAccessCode(accessCode)) {
+        setErrorMsg("El código del mozo debe tener entre 4 y 6 números.");
+        return;
+      }
+
+      setLoading(true);
+      try {
+        await loginMaitreWaiter(accessCode);
+        window.location.href = "/salon";
+      } catch (error) {
+        setErrorMsg(
+          error instanceof Error ? error.message : "No se pudo iniciar sesión como mozo.",
+        );
+        setLoading(false);
+      }
+      return;
+    }
 
     const staffUser = STAFF_USERS.find((u) => u.username === username);
     if (!staffUser) {
@@ -107,11 +127,15 @@ function StaffLoginPage() {
         <div className="bg-[#2C4A3E] text-[#FAF6ED] p-7 text-center relative overflow-hidden">
           <div className="absolute top-0 right-0 w-32 h-32 bg-white/5 rounded-full blur-2xl pointer-events-none" />
           <div className="w-16 h-16 rounded-2xl bg-[#D4AF37]/15 flex items-center justify-center mx-auto mb-3 border border-[#D4AF37]/30 shadow-inner overflow-hidden">
-            <img src="/logo/logo-trasparente.webp" alt="Las Flores" className="w-11 h-11 object-contain" />
+            <img
+              src="/logo/logo-trasparente.webp"
+              alt="Las Flores"
+              className="w-11 h-11 object-contain"
+            />
           </div>
-          <h1 className="font-serif font-bold text-2xl text-white">Acceso Administrativo</h1>
+          <h1 className="font-serif font-bold text-2xl text-white">Ingreso del personal</h1>
           <p className="text-sm text-[#FAF6ED]/75 mt-1.5">
-            Selecciona tu usuario e ingresa tu contraseña.
+            Ingresa con tus credenciales de Caja o MAITRE.
           </p>
         </div>
 
@@ -119,13 +143,18 @@ function StaffLoginPage() {
         <form onSubmit={handleSubmit} className="p-6 sm:p-7 space-y-4">
           <div>
             <label className="block text-xs font-bold text-[#2C4A3E] uppercase tracking-[0.14em] mb-1.5 flex items-center gap-1.5">
-              <UserCircle2 size={13} className="text-[#2C4A3E]/70" /> Usuario
+              <UserCircle2 size={13} className="text-[#2C4A3E]/70" />
+              Usuario
             </label>
             <select
               required
               autoComplete="username"
               value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              onChange={(e) => {
+                setUsername(e.target.value);
+                setAccessCode("");
+                setErrorMsg("");
+              }}
               className="w-full px-4 py-3 rounded-xl border border-[#2C4A3E]/20 bg-white text-base md:text-sm font-medium text-[#1b2a24] focus:outline-none focus:ring-2 focus:ring-[#2C4A3E] transition-all shadow-xs cursor-pointer"
             >
               <option value="">Selecciona tu usuario...</option>
@@ -137,31 +166,54 @@ function StaffLoginPage() {
             </select>
           </div>
 
-          <div>
-            <label className="block text-xs font-bold text-[#2C4A3E] uppercase tracking-[0.14em] mb-1.5 flex items-center gap-1.5">
-              <Lock size={13} className="text-[#2C4A3E]/70" /> Contraseña
-            </label>
-            <div className="relative">
+          {username === "MAITRE" ? (
+            <div>
+              <label className="block text-xs font-bold text-[#2C4A3E] uppercase tracking-[0.14em] mb-1.5 flex items-center gap-1.5">
+                <UserCircle2 size={13} className="text-[#2C4A3E]/70" /> Código numérico del mozo
+              </label>
               <input
-                type={showPassword ? "text" : "password"}
                 required
-                autoComplete="current-password"
-                placeholder="••••••••"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-4 py-3 pr-11 rounded-xl border border-[#2C4A3E]/20 bg-white text-base md:text-sm font-medium text-[#1b2a24] focus:outline-none focus:ring-2 focus:ring-[#2C4A3E] transition-all shadow-xs"
+                autoComplete="one-time-code"
+                type="text"
+                inputMode="numeric"
+                pattern="[0-9]{4,6}"
+                maxLength={6}
+                value={accessCode}
+                onChange={(e) => setAccessCode(e.target.value.replace(/\D/g, "").slice(0, 6))}
+                placeholder="Ej. 0042"
+                className="w-full rounded-xl border border-[#2C4A3E]/20 bg-white px-4 py-3 text-base font-medium text-[#1b2a24] shadow-xs transition-all focus:outline-none focus:ring-2 focus:ring-[#2C4A3E] md:text-sm"
               />
-              <button
-                type="button"
-                onClick={() => setShowPassword((v) => !v)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-[#2C4A3E]/50 hover:text-[#2C4A3E] transition-colors cursor-pointer"
-                aria-label={showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
-                tabIndex={-1}
-              >
-                {showPassword ? <EyeOff size={17} /> : <Eye size={17} />}
-              </button>
+              <p className="mt-1.5 text-xs text-[#2C4A3E]/65">
+                Ingresa el código asignado por Caja.
+              </p>
             </div>
-          </div>
+          ) : (
+            <div>
+              <label className="block text-xs font-bold text-[#2C4A3E] uppercase tracking-[0.14em] mb-1.5 flex items-center gap-1.5">
+                <Lock size={13} className="text-[#2C4A3E]/70" /> Contraseña
+              </label>
+              <div className="relative">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  required
+                  autoComplete="current-password"
+                  placeholder="••••••••"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="w-full px-4 py-3 pr-11 rounded-xl border border-[#2C4A3E]/20 bg-white text-base md:text-sm font-medium text-[#1b2a24] focus:outline-none focus:ring-2 focus:ring-[#2C4A3E] transition-all shadow-xs"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword((v) => !v)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-[#2C4A3E]/50 hover:text-[#2C4A3E] transition-colors cursor-pointer"
+                  aria-label={showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
+                  tabIndex={-1}
+                >
+                  {showPassword ? <EyeOff size={17} /> : <Eye size={17} />}
+                </button>
+              </div>
+            </div>
+          )}
 
           {errorMsg && (
             <p className="text-xs font-bold text-red-700 bg-red-50 p-3 rounded-xl border border-red-200 text-center">

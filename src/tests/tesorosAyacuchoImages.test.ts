@@ -72,11 +72,26 @@ describe("imágenes de Tesoros de Ayacucho", () => {
     ).toBe(true);
   });
 
-  it("muestra el rango de altitud junto al nombre del producto", () => {
+  it("muestra la altitud debajo de la temporada con el mismo efecto de aparición", () => {
     const routeSource = readFileSync(routePath, "utf8");
+    const title =
+      routeSource.match(
+        /<h3 className="font-serif text-3xl text-white font-bold mb-1 drop-shadow-md">([\s\S]*?)<\/h3>/,
+      )?.[1] ?? "";
+    const detailsContainer = routeSource.match(
+      /<div className="(transform translate-y-0 opacity-100 md:translate-y-8 md:opacity-0 group-hover:!translate-y-0 group-hover:!opacity-100[^"]*)">([\s\S]*?)<\/div>/,
+    );
+    const details = detailsContainer?.[2] ?? "";
+    const seasonIndex = details.indexOf("Temporada: {producto.meses}");
+    const altitudeIndex = details.indexOf("{producto.rangoAltitud}");
 
-    expect(routeSource).toMatch(
-      /\{producto\.nombre\}\s*-\s*\{producto\.rangoAltitud\}/,
+    expect(title).toContain("{producto.nombre}");
+    expect(title).not.toContain("producto.rangoAltitud");
+    expect(seasonIndex).toBeGreaterThanOrEqual(0);
+    expect(altitudeIndex).toBeGreaterThan(seasonIndex);
+    expect(detailsContainer?.[1]).toContain("group-hover:!opacity-100");
+    expect(details).toMatch(
+      /<span className="inline-block text-\[11px\] font-bold uppercase tracking-wider text-chilca bg-black\/40 backdrop-blur-sm px-3 py-1\.5 rounded-full border border-white\/10">\s*\{producto\.rangoAltitud\}\s*<\/span>/,
     );
     expect(routeSource).not.toContain("producto.usos.map");
   });

@@ -516,6 +516,12 @@ function Index() {
 
           }
 
+          @media (min-width: 1600px) {
+            .retablo-content-stack {
+              justify-content: center;
+            }
+          }
+
         `}</style>
         <RetabloWrapper>
           {/* Narrativa e imagen dentro del panel */}

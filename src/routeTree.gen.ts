@@ -9,101 +9,33 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as UneteAlEquipoRouteImport } from './routes/unete-al-equipo'
-import { Route as TesorosAyacuchoRouteImport } from './routes/tesoros-ayacucho'
-import { Route as TerminosYCondicionesRouteImport } from './routes/terminos-y-condiciones'
-import { Route as StaffLoginRouteImport } from './routes/staff-login'
-import { Route as RestauranteRouteImport } from './routes/restaurante'
-import { Route as ReservasRouteImport } from './routes/reservas'
-import { Route as PoliticaDePrivacidadRouteImport } from './routes/politica-de-privacidad'
-import { Route as PanelReservasRouteImport } from './routes/panel-reservas'
-import { Route as LibroDeReclamacionesRouteImport } from './routes/libro-de-reclamaciones'
-import { Route as GaleriaRouteImport } from './routes/galeria'
-import { Route as FamiliaLasFloresRouteImport } from './routes/familia-las-flores'
-import { Route as EventosRouteImport } from './routes/eventos'
-import { Route as ContactoRouteImport } from './routes/contacto'
-import { Route as CartaRouteImport } from './routes/carta'
-import { Route as CajaRouteImport } from './routes/caja'
-import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as RastreoOrderIdRouteImport } from './routes/rastreo/$orderId'
-import { Route as FestividadesSlugRouteImport } from './routes/festividades/$slug'
-import { Route as DestinosSlugRouteImport } from './routes/destinos/$slug'
+import { Route as AdminRouteImport } from './routes/admin'
+import { Route as CajaRouteImport } from './routes/caja'
+import { Route as CartaRouteImport } from './routes/carta'
+import { Route as ContactoRouteImport } from './routes/contacto'
+import { Route as EventosRouteImport } from './routes/eventos'
+import { Route as FamiliaLasFloresRouteImport } from './routes/familia-las-flores'
+import { Route as GaleriaRouteImport } from './routes/galeria'
+import { Route as LibroDeReclamacionesRouteImport } from './routes/libro-de-reclamaciones'
+import { Route as MaitreRouteImport } from './routes/maitre'
+import { Route as PanelReservasRouteImport } from './routes/panel-reservas'
+import { Route as PoliticaDePrivacidadRouteImport } from './routes/politica-de-privacidad'
+import { Route as ReservasRouteImport } from './routes/reservas'
+import { Route as RestauranteRouteImport } from './routes/restaurante'
+import { Route as SalonRouteImport } from './routes/salon'
+import { Route as StaffLoginRouteImport } from './routes/staff-login'
+import { Route as TerminosYCondicionesRouteImport } from './routes/terminos-y-condiciones'
+import { Route as TesorosAyacuchoRouteImport } from './routes/tesoros-ayacucho'
+import { Route as UneteAlEquipoRouteImport } from './routes/unete-al-equipo'
 import { Route as DOrderIdRouteImport } from './routes/d/$orderId'
+import { Route as DestinosSlugRouteImport } from './routes/destinos/$slug'
+import { Route as FestividadesSlugRouteImport } from './routes/festividades/$slug'
+import { Route as RastreoOrderIdRouteImport } from './routes/rastreo/$orderId'
 
-const UneteAlEquipoRoute = UneteAlEquipoRouteImport.update({
-  id: '/unete-al-equipo',
-  path: '/unete-al-equipo',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const TesorosAyacuchoRoute = TesorosAyacuchoRouteImport.update({
-  id: '/tesoros-ayacucho',
-  path: '/tesoros-ayacucho',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const TerminosYCondicionesRoute = TerminosYCondicionesRouteImport.update({
-  id: '/terminos-y-condiciones',
-  path: '/terminos-y-condiciones',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const StaffLoginRoute = StaffLoginRouteImport.update({
-  id: '/staff-login',
-  path: '/staff-login',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const RestauranteRoute = RestauranteRouteImport.update({
-  id: '/restaurante',
-  path: '/restaurante',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ReservasRoute = ReservasRouteImport.update({
-  id: '/reservas',
-  path: '/reservas',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const PoliticaDePrivacidadRoute = PoliticaDePrivacidadRouteImport.update({
-  id: '/politica-de-privacidad',
-  path: '/politica-de-privacidad',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const PanelReservasRoute = PanelReservasRouteImport.update({
-  id: '/panel-reservas',
-  path: '/panel-reservas',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const LibroDeReclamacionesRoute = LibroDeReclamacionesRouteImport.update({
-  id: '/libro-de-reclamaciones',
-  path: '/libro-de-reclamaciones',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const GaleriaRoute = GaleriaRouteImport.update({
-  id: '/galeria',
-  path: '/galeria',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const FamiliaLasFloresRoute = FamiliaLasFloresRouteImport.update({
-  id: '/familia-las-flores',
-  path: '/familia-las-flores',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const EventosRoute = EventosRouteImport.update({
-  id: '/eventos',
-  path: '/eventos',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ContactoRoute = ContactoRouteImport.update({
-  id: '/contacto',
-  path: '/contacto',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const CartaRoute = CartaRouteImport.update({
-  id: '/carta',
-  path: '/carta',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const CajaRoute = CajaRouteImport.update({
-  id: '/caja',
-  path: '/caja',
+const IndexRoute = IndexRouteImport.update({
+  id: '/',
+  path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AdminRoute = AdminRouteImport.update({
@@ -111,19 +43,94 @@ const AdminRoute = AdminRouteImport.update({
   path: '/admin',
   getParentRoute: () => rootRouteImport,
 } as any)
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
+const CajaRoute = CajaRouteImport.update({
+  id: '/caja',
+  path: '/caja',
   getParentRoute: () => rootRouteImport,
 } as any)
-const RastreoOrderIdRoute = RastreoOrderIdRouteImport.update({
-  id: '/rastreo/$orderId',
-  path: '/rastreo/$orderId',
+const CartaRoute = CartaRouteImport.update({
+  id: '/carta',
+  path: '/carta',
   getParentRoute: () => rootRouteImport,
 } as any)
-const FestividadesSlugRoute = FestividadesSlugRouteImport.update({
-  id: '/festividades/$slug',
-  path: '/festividades/$slug',
+const ContactoRoute = ContactoRouteImport.update({
+  id: '/contacto',
+  path: '/contacto',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EventosRoute = EventosRouteImport.update({
+  id: '/eventos',
+  path: '/eventos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FamiliaLasFloresRoute = FamiliaLasFloresRouteImport.update({
+  id: '/familia-las-flores',
+  path: '/familia-las-flores',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GaleriaRoute = GaleriaRouteImport.update({
+  id: '/galeria',
+  path: '/galeria',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LibroDeReclamacionesRoute = LibroDeReclamacionesRouteImport.update({
+  id: '/libro-de-reclamaciones',
+  path: '/libro-de-reclamaciones',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MaitreRoute = MaitreRouteImport.update({
+  id: '/maitre',
+  path: '/maitre',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PanelReservasRoute = PanelReservasRouteImport.update({
+  id: '/panel-reservas',
+  path: '/panel-reservas',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PoliticaDePrivacidadRoute = PoliticaDePrivacidadRouteImport.update({
+  id: '/politica-de-privacidad',
+  path: '/politica-de-privacidad',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ReservasRoute = ReservasRouteImport.update({
+  id: '/reservas',
+  path: '/reservas',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RestauranteRoute = RestauranteRouteImport.update({
+  id: '/restaurante',
+  path: '/restaurante',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SalonRoute = SalonRouteImport.update({
+  id: '/salon',
+  path: '/salon',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const StaffLoginRoute = StaffLoginRouteImport.update({
+  id: '/staff-login',
+  path: '/staff-login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TerminosYCondicionesRoute = TerminosYCondicionesRouteImport.update({
+  id: '/terminos-y-condiciones',
+  path: '/terminos-y-condiciones',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TesorosAyacuchoRoute = TesorosAyacuchoRouteImport.update({
+  id: '/tesoros-ayacucho',
+  path: '/tesoros-ayacucho',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const UneteAlEquipoRoute = UneteAlEquipoRouteImport.update({
+  id: '/unete-al-equipo',
+  path: '/unete-al-equipo',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DOrderIdRoute = DOrderIdRouteImport.update({
+  id: '/d/$orderId',
+  path: '/d/$orderId',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DestinosSlugRoute = DestinosSlugRouteImport.update({
@@ -131,9 +138,14 @@ const DestinosSlugRoute = DestinosSlugRouteImport.update({
   path: '/destinos/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
-const DOrderIdRoute = DOrderIdRouteImport.update({
-  id: '/d/$orderId',
-  path: '/d/$orderId',
+const FestividadesSlugRoute = FestividadesSlugRouteImport.update({
+  id: '/festividades/$slug',
+  path: '/festividades/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RastreoOrderIdRoute = RastreoOrderIdRouteImport.update({
+  id: '/rastreo/$orderId',
+  path: '/rastreo/$orderId',
   getParentRoute: () => rootRouteImport,
 } as any)
 
@@ -147,10 +159,12 @@ export interface FileRoutesByFullPath {
   '/familia-las-flores': typeof FamiliaLasFloresRoute
   '/galeria': typeof GaleriaRoute
   '/libro-de-reclamaciones': typeof LibroDeReclamacionesRoute
+  '/maitre': typeof MaitreRoute
   '/panel-reservas': typeof PanelReservasRoute
   '/politica-de-privacidad': typeof PoliticaDePrivacidadRoute
   '/reservas': typeof ReservasRoute
   '/restaurante': typeof RestauranteRoute
+  '/salon': typeof SalonRoute
   '/staff-login': typeof StaffLoginRoute
   '/terminos-y-condiciones': typeof TerminosYCondicionesRoute
   '/tesoros-ayacucho': typeof TesorosAyacuchoRoute
@@ -170,10 +184,12 @@ export interface FileRoutesByTo {
   '/familia-las-flores': typeof FamiliaLasFloresRoute
   '/galeria': typeof GaleriaRoute
   '/libro-de-reclamaciones': typeof LibroDeReclamacionesRoute
+  '/maitre': typeof MaitreRoute
   '/panel-reservas': typeof PanelReservasRoute
   '/politica-de-privacidad': typeof PoliticaDePrivacidadRoute
   '/reservas': typeof ReservasRoute
   '/restaurante': typeof RestauranteRoute
+  '/salon': typeof SalonRoute
   '/staff-login': typeof StaffLoginRoute
   '/terminos-y-condiciones': typeof TerminosYCondicionesRoute
   '/tesoros-ayacucho': typeof TesorosAyacuchoRoute
@@ -194,10 +210,12 @@ export interface FileRoutesById {
   '/familia-las-flores': typeof FamiliaLasFloresRoute
   '/galeria': typeof GaleriaRoute
   '/libro-de-reclamaciones': typeof LibroDeReclamacionesRoute
+  '/maitre': typeof MaitreRoute
   '/panel-reservas': typeof PanelReservasRoute
   '/politica-de-privacidad': typeof PoliticaDePrivacidadRoute
   '/reservas': typeof ReservasRoute
   '/restaurante': typeof RestauranteRoute
+  '/salon': typeof SalonRoute
   '/staff-login': typeof StaffLoginRoute
   '/terminos-y-condiciones': typeof TerminosYCondicionesRoute
   '/tesoros-ayacucho': typeof TesorosAyacuchoRoute
@@ -219,10 +237,12 @@ export interface FileRouteTypes {
     | '/familia-las-flores'
     | '/galeria'
     | '/libro-de-reclamaciones'
+    | '/maitre'
     | '/panel-reservas'
     | '/politica-de-privacidad'
     | '/reservas'
     | '/restaurante'
+    | '/salon'
     | '/staff-login'
     | '/terminos-y-condiciones'
     | '/tesoros-ayacucho'
@@ -242,10 +262,12 @@ export interface FileRouteTypes {
     | '/familia-las-flores'
     | '/galeria'
     | '/libro-de-reclamaciones'
+    | '/maitre'
     | '/panel-reservas'
     | '/politica-de-privacidad'
     | '/reservas'
     | '/restaurante'
+    | '/salon'
     | '/staff-login'
     | '/terminos-y-condiciones'
     | '/tesoros-ayacucho'
@@ -265,10 +287,12 @@ export interface FileRouteTypes {
     | '/familia-las-flores'
     | '/galeria'
     | '/libro-de-reclamaciones'
+    | '/maitre'
     | '/panel-reservas'
     | '/politica-de-privacidad'
     | '/reservas'
     | '/restaurante'
+    | '/salon'
     | '/staff-login'
     | '/terminos-y-condiciones'
     | '/tesoros-ayacucho'
@@ -289,10 +313,12 @@ export interface RootRouteChildren {
   FamiliaLasFloresRoute: typeof FamiliaLasFloresRoute
   GaleriaRoute: typeof GaleriaRoute
   LibroDeReclamacionesRoute: typeof LibroDeReclamacionesRoute
+  MaitreRoute: typeof MaitreRoute
   PanelReservasRoute: typeof PanelReservasRoute
   PoliticaDePrivacidadRoute: typeof PoliticaDePrivacidadRoute
   ReservasRoute: typeof ReservasRoute
   RestauranteRoute: typeof RestauranteRoute
+  SalonRoute: typeof SalonRoute
   StaffLoginRoute: typeof StaffLoginRoute
   TerminosYCondicionesRoute: typeof TerminosYCondicionesRoute
   TesorosAyacuchoRoute: typeof TesorosAyacuchoRoute
@@ -305,109 +331,11 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/unete-al-equipo': {
-      id: '/unete-al-equipo'
-      path: '/unete-al-equipo'
-      fullPath: '/unete-al-equipo'
-      preLoaderRoute: typeof UneteAlEquipoRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/tesoros-ayacucho': {
-      id: '/tesoros-ayacucho'
-      path: '/tesoros-ayacucho'
-      fullPath: '/tesoros-ayacucho'
-      preLoaderRoute: typeof TesorosAyacuchoRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/terminos-y-condiciones': {
-      id: '/terminos-y-condiciones'
-      path: '/terminos-y-condiciones'
-      fullPath: '/terminos-y-condiciones'
-      preLoaderRoute: typeof TerminosYCondicionesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/staff-login': {
-      id: '/staff-login'
-      path: '/staff-login'
-      fullPath: '/staff-login'
-      preLoaderRoute: typeof StaffLoginRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/restaurante': {
-      id: '/restaurante'
-      path: '/restaurante'
-      fullPath: '/restaurante'
-      preLoaderRoute: typeof RestauranteRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/reservas': {
-      id: '/reservas'
-      path: '/reservas'
-      fullPath: '/reservas'
-      preLoaderRoute: typeof ReservasRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/politica-de-privacidad': {
-      id: '/politica-de-privacidad'
-      path: '/politica-de-privacidad'
-      fullPath: '/politica-de-privacidad'
-      preLoaderRoute: typeof PoliticaDePrivacidadRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/panel-reservas': {
-      id: '/panel-reservas'
-      path: '/panel-reservas'
-      fullPath: '/panel-reservas'
-      preLoaderRoute: typeof PanelReservasRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/libro-de-reclamaciones': {
-      id: '/libro-de-reclamaciones'
-      path: '/libro-de-reclamaciones'
-      fullPath: '/libro-de-reclamaciones'
-      preLoaderRoute: typeof LibroDeReclamacionesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/galeria': {
-      id: '/galeria'
-      path: '/galeria'
-      fullPath: '/galeria'
-      preLoaderRoute: typeof GaleriaRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/familia-las-flores': {
-      id: '/familia-las-flores'
-      path: '/familia-las-flores'
-      fullPath: '/familia-las-flores'
-      preLoaderRoute: typeof FamiliaLasFloresRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/eventos': {
-      id: '/eventos'
-      path: '/eventos'
-      fullPath: '/eventos'
-      preLoaderRoute: typeof EventosRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/contacto': {
-      id: '/contacto'
-      path: '/contacto'
-      fullPath: '/contacto'
-      preLoaderRoute: typeof ContactoRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/carta': {
-      id: '/carta'
-      path: '/carta'
-      fullPath: '/carta'
-      preLoaderRoute: typeof CartaRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/caja': {
-      id: '/caja'
-      path: '/caja'
-      fullPath: '/caja'
-      preLoaderRoute: typeof CajaRouteImport
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/admin': {
@@ -417,25 +345,130 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
+    '/caja': {
+      id: '/caja'
+      path: '/caja'
+      fullPath: '/caja'
+      preLoaderRoute: typeof CajaRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/rastreo/$orderId': {
-      id: '/rastreo/$orderId'
-      path: '/rastreo/$orderId'
-      fullPath: '/rastreo/$orderId'
-      preLoaderRoute: typeof RastreoOrderIdRouteImport
+    '/carta': {
+      id: '/carta'
+      path: '/carta'
+      fullPath: '/carta'
+      preLoaderRoute: typeof CartaRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/festividades/$slug': {
-      id: '/festividades/$slug'
-      path: '/festividades/$slug'
-      fullPath: '/festividades/$slug'
-      preLoaderRoute: typeof FestividadesSlugRouteImport
+    '/contacto': {
+      id: '/contacto'
+      path: '/contacto'
+      fullPath: '/contacto'
+      preLoaderRoute: typeof ContactoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/eventos': {
+      id: '/eventos'
+      path: '/eventos'
+      fullPath: '/eventos'
+      preLoaderRoute: typeof EventosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/familia-las-flores': {
+      id: '/familia-las-flores'
+      path: '/familia-las-flores'
+      fullPath: '/familia-las-flores'
+      preLoaderRoute: typeof FamiliaLasFloresRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/galeria': {
+      id: '/galeria'
+      path: '/galeria'
+      fullPath: '/galeria'
+      preLoaderRoute: typeof GaleriaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/libro-de-reclamaciones': {
+      id: '/libro-de-reclamaciones'
+      path: '/libro-de-reclamaciones'
+      fullPath: '/libro-de-reclamaciones'
+      preLoaderRoute: typeof LibroDeReclamacionesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/maitre': {
+      id: '/maitre'
+      path: '/maitre'
+      fullPath: '/maitre'
+      preLoaderRoute: typeof MaitreRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/panel-reservas': {
+      id: '/panel-reservas'
+      path: '/panel-reservas'
+      fullPath: '/panel-reservas'
+      preLoaderRoute: typeof PanelReservasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/politica-de-privacidad': {
+      id: '/politica-de-privacidad'
+      path: '/politica-de-privacidad'
+      fullPath: '/politica-de-privacidad'
+      preLoaderRoute: typeof PoliticaDePrivacidadRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reservas': {
+      id: '/reservas'
+      path: '/reservas'
+      fullPath: '/reservas'
+      preLoaderRoute: typeof ReservasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/restaurante': {
+      id: '/restaurante'
+      path: '/restaurante'
+      fullPath: '/restaurante'
+      preLoaderRoute: typeof RestauranteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/salon': {
+      id: '/salon'
+      path: '/salon'
+      fullPath: '/salon'
+      preLoaderRoute: typeof SalonRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/staff-login': {
+      id: '/staff-login'
+      path: '/staff-login'
+      fullPath: '/staff-login'
+      preLoaderRoute: typeof StaffLoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/terminos-y-condiciones': {
+      id: '/terminos-y-condiciones'
+      path: '/terminos-y-condiciones'
+      fullPath: '/terminos-y-condiciones'
+      preLoaderRoute: typeof TerminosYCondicionesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tesoros-ayacucho': {
+      id: '/tesoros-ayacucho'
+      path: '/tesoros-ayacucho'
+      fullPath: '/tesoros-ayacucho'
+      preLoaderRoute: typeof TesorosAyacuchoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/unete-al-equipo': {
+      id: '/unete-al-equipo'
+      path: '/unete-al-equipo'
+      fullPath: '/unete-al-equipo'
+      preLoaderRoute: typeof UneteAlEquipoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/d/$orderId': {
+      id: '/d/$orderId'
+      path: '/d/$orderId'
+      fullPath: '/d/$orderId'
+      preLoaderRoute: typeof DOrderIdRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/destinos/$slug': {
@@ -445,11 +478,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DestinosSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/d/$orderId': {
-      id: '/d/$orderId'
-      path: '/d/$orderId'
-      fullPath: '/d/$orderId'
-      preLoaderRoute: typeof DOrderIdRouteImport
+    '/festividades/$slug': {
+      id: '/festividades/$slug'
+      path: '/festividades/$slug'
+      fullPath: '/festividades/$slug'
+      preLoaderRoute: typeof FestividadesSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/rastreo/$orderId': {
+      id: '/rastreo/$orderId'
+      path: '/rastreo/$orderId'
+      fullPath: '/rastreo/$orderId'
+      preLoaderRoute: typeof RastreoOrderIdRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -465,10 +505,12 @@ const rootRouteChildren: RootRouteChildren = {
   FamiliaLasFloresRoute: FamiliaLasFloresRoute,
   GaleriaRoute: GaleriaRoute,
   LibroDeReclamacionesRoute: LibroDeReclamacionesRoute,
+  MaitreRoute: MaitreRoute,
   PanelReservasRoute: PanelReservasRoute,
   PoliticaDePrivacidadRoute: PoliticaDePrivacidadRoute,
   ReservasRoute: ReservasRoute,
   RestauranteRoute: RestauranteRoute,
+  SalonRoute: SalonRoute,
   StaffLoginRoute: StaffLoginRoute,
   TerminosYCondicionesRoute: TerminosYCondicionesRoute,
   TesorosAyacuchoRoute: TesorosAyacuchoRoute,

@@ -1,0 +1,2 @@
+[functions.maitre-auth]
+verify_jwt = false

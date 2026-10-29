@@ -9,6 +9,7 @@
 
 import { createServerFn } from "@tanstack/react-start";
 import type { CreateChargePayload } from "./culqiServer";
+import { authorizeCulqiRefund } from "./culqiRefundAuth";
 
 /**
  * Server Function para procesar un cargo con Culqi
@@ -170,33 +171,43 @@ export const verifyCulqiCharge = createServerFn()
  * Server Function para procesar reembolsos
  */
 export const refundCulqiCharge = createServerFn()
-  .validator((data: unknown) => data as { chargeId: string; amount: number; reason?: string })
+  .validator((data: unknown) => {
+    const raw = (data ?? {}) as Record<string, unknown>;
+    const accessToken = typeof raw.accessToken === "string" ? raw.accessToken.trim() : "";
+    const chargeId = typeof raw.chargeId === "string" ? raw.chargeId.trim() : "";
+    const amount = typeof raw.amount === "number" ? raw.amount : Number.NaN;
+
+    if (!accessToken || !chargeId || !Number.isInteger(amount) || amount <= 0) {
+      throw new Error("Datos de reembolso incompletos o inválidos");
+    }
+
+    return {
+      accessToken,
+      chargeId,
+      amount,
+      reason: typeof raw.reason === "string" ? raw.reason.slice(0, 200) : undefined,
+    };
+  })
   .handler(async ({ data: payload }) => {
-  try {
-    if (!payload.chargeId || !payload.amount) {
-      throw new Error("Datos de reembolso incompletos");
+    try {
+      await authorizeCulqiRefund(payload.accessToken);
+
+      const { refundCharge } = await import("./culqiServer");
+      const refund = await refundCharge(payload.chargeId, payload.amount, payload.reason);
+
+      return {
+        success: true,
+        refundId: refund.id,
+        amount: refund.amount,
+        chargeId: refund.charge_id,
+        reason: refund.reason || "Reembolso solicitado",
+      };
+    } catch (error: unknown) {
+      console.error("Error procesando reembolso Culqi:", error);
+
+      return {
+        success: false,
+        error: error instanceof Error ? error.message : "Error al procesar el reembolso",
+      };
     }
-
-    if (payload.amount <= 0) {
-      throw new Error("El monto del reembolso debe ser mayor a cero");
-    }
-
-    const { refundCharge } = await import("./culqiServer");
-    const refund = await refundCharge(payload.chargeId, payload.amount, payload.reason);
-
-    return {
-      success: true,
-      refundId: refund.id,
-      amount: refund.amount,
-      chargeId: refund.charge_id,
-      reason: refund.reason || "Reembolso solicitado",
-    };
-  } catch (error: any) {
-    console.error("Error procesando reembolso Culqi:", error);
-    
-    return {
-      success: false,
-      error: error.message || "Error al procesar el reembolso",
-    };
-  }
-});
+  });

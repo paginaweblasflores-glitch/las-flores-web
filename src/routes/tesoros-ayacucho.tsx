@@ -762,7 +762,7 @@ function TesorosAyacuchoPage() {
                   {/* Título y nombre científico (Aparece con leve movimiento arriba en desktop) */}
                   <div className="transform md:translate-y-4 group-hover:!translate-y-0 md:group-hover:-translate-y-2 transition-all duration-500 ease-out">
                     <h3 className="font-serif text-3xl text-white font-bold mb-1 drop-shadow-md">
-                      {producto.nombre} - {producto.rangoAltitud}
+                      {producto.nombre}
                     </h3>
                     {producto.nombreCientifico && (
                       <p className="text-sm italic text-white/70 mb-2">{producto.nombreCientifico}</p>
@@ -774,6 +774,11 @@ function TesorosAyacuchoPage() {
                     <span className="inline-block text-[11px] font-bold uppercase tracking-wider text-chilca bg-black/40 backdrop-blur-sm px-3 py-1.5 rounded-full border border-white/10">
                       Temporada: {producto.meses}
                     </span>
+                    <div className="mt-2">
+                      <span className="inline-block text-[11px] font-bold uppercase tracking-wider text-chilca bg-black/40 backdrop-blur-sm px-3 py-1.5 rounded-full border border-white/10">
+                        {producto.rangoAltitud}
+                      </span>
+                    </div>
                   </div>
 
                 </div>

@@ -169,9 +169,20 @@ npm run build
 ## 🛠️ Mantenimiento
 
 ### Reembolsos
-Usar la función `refundCulqiCharge()`:
+Usar la función `refundCulqiCharge()` desde una sesión autenticada de Supabase.
+El servidor verifica el token y permite reembolsos únicamente a perfiles con rol
+`admin` o `staff`:
 ```typescript
+const {
+  data: { session },
+} = await supabase.auth.getSession();
+
+if (!session) {
+  throw new Error("Inicia sesión para solicitar un reembolso.");
+}
+
 await refundCulqiCharge({
+  accessToken: session.access_token,
   chargeId: "chr_test_xxxxx",
   amount: 5000, // en centavos (S/ 50.00)
   reason: "Pedido cancelado por cliente"

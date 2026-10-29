@@ -266,4 +266,22 @@ describe("home retablo content layout", () => {
     expect(wrapperSource).toContain("w-screen");
     expect(routeSource).not.toContain("onDoorsOpened");
   });
+
+  it("centers the retablo content and framed image on wide desktop screens", () => {
+    expect(routeSource).toContain("@media (min-width: 1600px)");
+    expect(routeSource).toContain(
+      ".retablo-content-stack {\n              justify-content: center;",
+    );
+
+    const wrapper = findRetabloWrapper(routeAst);
+    expect(wrapper).toBeDefined();
+    if (!wrapper) throw new Error("RetabloWrapper not found in home route");
+
+    const imageContainer = jsxDescendants(wrapper).find((element) =>
+      (attribute(element, "className") ?? "").includes("retablo-content-image"),
+    );
+    expect(imageContainer).toBeDefined();
+    if (!imageContainer) throw new Error("Retablo image container not found");
+    expect(attribute(imageContainer, "className")).toContain("mx-auto");
+  });
 });

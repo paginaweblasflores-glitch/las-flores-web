@@ -1,5 +1,18 @@
 import { useEffect, useRef, useState } from "react";
-import { Volume2, BellOff, ShieldCheck, TrendingUp, LogOut, UserCircle2, ChevronDown, ListChecks, LineChart, ShoppingBag, Users } from "lucide-react";
+import {
+  Volume2,
+  BellOff,
+  ShieldCheck,
+  TrendingUp,
+  LogOut,
+  UserCircle2,
+  ChevronDown,
+  ListChecks,
+  LineChart,
+  ShoppingBag,
+  Users,
+  UtensilsCrossed,
+} from "lucide-react";
 import { Link } from "@tanstack/react-router";
 import { StatCard } from "./StatCard";
 
@@ -9,6 +22,7 @@ interface CashierTopBarProps {
   soundEnabled: boolean;
   onToggleSound: () => void;
   isAdmin: boolean;
+  canManageMaitre: boolean;
   onSignOut: () => void;
   activeTab: CashierModule;
   onSelectTab: (tab: CashierModule) => void;
@@ -18,6 +32,7 @@ export function CashierTopBar({
   soundEnabled,
   onToggleSound,
   isAdmin,
+  canManageMaitre,
   onSignOut,
   activeTab,
   onSelectTab,
@@ -42,7 +57,11 @@ export function CashierTopBar({
           <div className="flex items-center gap-4 w-full md:w-auto">
             <div className="flex items-center gap-2.5 shrink-0">
               <div className="w-9 h-9 rounded-xl bg-white p-1 flex items-center justify-center border-2 border-[#D4AF37] shadow-md shrink-0">
-                <img src="/favicon.png" alt="Las Flores" className="w-full h-full object-contain rounded-lg" />
+                <img
+                  src="/favicon.png"
+                  alt="Las Flores"
+                  className="w-full h-full object-contain rounded-lg"
+                />
               </div>
               <h1 className="font-serif text-sm font-black tracking-tight text-white leading-none">
                 Panel de Caja
@@ -51,6 +70,22 @@ export function CashierTopBar({
 
             {/* Module Tabs */}
             <div className="flex items-center gap-1">
+              <Link
+                to="/salon"
+                className="px-3 py-2 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 whitespace-nowrap border-b-2 border-transparent text-emerald-100/80 hover:text-white hover:bg-white/5"
+              >
+                <UtensilsCrossed size={15} className="text-emerald-300" />
+                <span>Salón</span>
+              </Link>
+              {canManageMaitre && (
+                <Link
+                  to="/maitre"
+                  className="px-3 py-2 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 whitespace-nowrap border-b-2 border-transparent text-emerald-100/80 hover:text-white hover:bg-white/5"
+                >
+                  <Users size={15} className="text-emerald-300" />
+                  <span>MAITRE</span>
+                </Link>
+              )}
               <button
                 onClick={() => onSelectTab("analitica")}
                 className={`px-3 py-2 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 whitespace-nowrap border-b-2 ${
@@ -59,7 +94,10 @@ export function CashierTopBar({
                     : "border-transparent text-emerald-100/80 hover:text-white hover:bg-white/5"
                 }`}
               >
-                <LineChart size={15} className={activeTab === "analitica" ? "text-[#D4AF37]" : "text-emerald-300"} />
+                <LineChart
+                  size={15}
+                  className={activeTab === "analitica" ? "text-[#D4AF37]" : "text-emerald-300"}
+                />
                 <span>Analítica</span>
               </button>
               <button
@@ -70,7 +108,10 @@ export function CashierTopBar({
                     : "border-transparent text-emerald-100/80 hover:text-white hover:bg-white/5"
                 }`}
               >
-                <ListChecks size={15} className={activeTab === "seguimiento" ? "text-[#D4AF37]" : "text-emerald-300"} />
+                <ListChecks
+                  size={15}
+                  className={activeTab === "seguimiento" ? "text-[#D4AF37]" : "text-emerald-300"}
+                />
                 <span>Seguimiento</span>
               </button>
               <button
@@ -81,7 +122,10 @@ export function CashierTopBar({
                     : "border-transparent text-emerald-100/80 hover:text-white hover:bg-white/5"
                 }`}
               >
-                <Users size={15} className={activeTab === "clientes" ? "text-[#D4AF37]" : "text-emerald-300"} />
+                <Users
+                  size={15}
+                  className={activeTab === "clientes" ? "text-[#D4AF37]" : "text-emerald-300"}
+                />
                 <span>Clientes</span>
               </button>
             </div>
@@ -94,7 +138,10 @@ export function CashierTopBar({
               className="flex items-center gap-2 px-2.5 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 transition-colors border border-white/20"
             >
               <UserCircle2 size={20} className="text-[#D4AF37]" />
-              <ChevronDown size={14} className={`text-emerald-200 transition-transform ${accountOpen ? "rotate-180" : ""}`} />
+              <ChevronDown
+                size={14}
+                className={`text-emerald-200 transition-transform ${accountOpen ? "rotate-180" : ""}`}
+              />
             </button>
 
             {accountOpen && (
@@ -106,7 +153,11 @@ export function CashierTopBar({
                   }}
                   className="w-full px-4 py-2.5 flex items-center gap-2.5 text-xs font-bold text-gray-700 hover:bg-gray-50 transition-colors"
                 >
-                  {soundEnabled ? <Volume2 size={15} className="text-emerald-600" /> : <BellOff size={15} className="text-red-600" />}
+                  {soundEnabled ? (
+                    <Volume2 size={15} className="text-emerald-600" />
+                  ) : (
+                    <BellOff size={15} className="text-red-600" />
+                  )}
                   <span>{soundEnabled ? "Silenciar Alerta Sonora" : "Activar Alerta Sonora"}</span>
                 </button>
 
