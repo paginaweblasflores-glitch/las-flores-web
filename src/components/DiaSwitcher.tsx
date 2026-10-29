@@ -36,7 +36,7 @@ export function DiaSwitcher({ dias, titulo, texto }: DiaSwitcherProps) {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
         <h2 className="font-serif text-3xl md:text-5xl leading-tight">{titulo ?? "Los días de Semana Santa"}</h2>
         {texto && (
-          <p className="text-nogal/70 text-base md:text-lg leading-relaxed self-center">{texto}</p>
+          <p className="text-nogal/70 text-base md:text-lg leading-relaxed self-center max-w-[62ch]">{texto}</p>
         )}
       </div>
       <div className="relative md:px-14">
@@ -85,7 +85,7 @@ export function DiaSwitcher({ dias, titulo, texto }: DiaSwitcherProps) {
                     </p>
                   )}
                   <p className="font-serif text-lg">{d.titulo ?? d.dia}</p>
-                  <p className="text-sm text-nogal/60 mt-1 leading-relaxed">
+                  <p className="text-sm text-nogal/60 mt-1 leading-relaxed max-w-[60ch]">
                     {d.texto.split(/\*(.+?)\*/g).map((trozo, j) => (j % 2 === 1 ? <em key={j}>{trozo}</em> : trozo))}
                   </p>
                 </figcaption>

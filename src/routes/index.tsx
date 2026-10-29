@@ -484,7 +484,7 @@ function Index() {
             }
 
             .retablo-content-shell {
-              --retablo-content-bottom-inset: clamp(0.5rem, 1.2dvh, 1rem);
+              --retablo-content-bottom-inset: -0.5rem;
               padding: clamp(0.5rem, 1.2dvh, 1rem);
             }
 
@@ -519,7 +519,7 @@ function Index() {
 
           @media (min-width: 1024px) and (max-height: 700px) {
             .retablo-content-shell {
-              --retablo-content-bottom-inset: 0.375rem;
+              --retablo-content-bottom-inset: -0.5rem;
               padding: 0.375rem;
             }
 

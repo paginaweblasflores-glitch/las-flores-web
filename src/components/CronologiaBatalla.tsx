@@ -14,7 +14,7 @@ export function CronologiaBatalla({ momentos, titulo, texto }: CronologiaBatalla
           {titulo ?? "Cronograma del 9 de diciembre"}
         </h2>
         {texto && (
-          <p className="text-nogal/70 text-base md:text-lg leading-relaxed self-center">{texto}</p>
+          <p className="text-nogal/70 text-base md:text-lg leading-relaxed self-center max-w-[62ch]">{texto}</p>
         )}
       </div>
       <div
@@ -36,7 +36,7 @@ export function CronologiaBatalla({ momentos, titulo, texto }: CronologiaBatalla
             </div>
             <figcaption className="mt-4">
               <p className="font-serif text-lg">{m.momento}</p>
-              <p className="text-sm text-nogal/60 mt-1 leading-relaxed">{m.texto}</p>
+              <p className="text-sm text-nogal/60 mt-1 leading-relaxed max-w-[60ch]">{m.texto}</p>
             </figcaption>
           </figure>
         ))}

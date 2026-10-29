@@ -214,7 +214,7 @@ function FestividadDetailPage() {
                       </span>
                     </summary>
                     <div className="pb-6 pr-10">
-                      <p className="text-nogal/70 text-base md:text-lg leading-relaxed">{item.respuesta}</p>
+                      <p className="text-nogal/70 text-base md:text-lg leading-relaxed max-w-[65ch]">{item.respuesta}</p>
                       {item.carta && (
                         <Link
                           to="/carta"

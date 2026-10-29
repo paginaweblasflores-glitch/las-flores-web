@@ -49,7 +49,7 @@ function LugarDetailPage() {
               <h2 className="font-serif text-3xl md:text-5xl leading-tight">
                 Un vistazo al destino
               </h2>
-              <p className="text-nogal/70 text-base md:text-lg leading-relaxed self-center">
+              <p className="text-nogal/70 text-base md:text-lg leading-relaxed self-center max-w-[62ch]">
                 {lugar.escenas}
               </p>
             </div>
@@ -211,7 +211,7 @@ function LugarDetailPage() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
                 <h2 className="font-serif text-3xl md:text-5xl leading-tight">{lugar.galeriaTitulo}</h2>
                 {lugar.galeriaTexto && (
-                  <p className="text-nogal/70 text-base md:text-lg leading-relaxed self-center">
+                  <p className="text-nogal/70 text-base md:text-lg leading-relaxed self-center max-w-[62ch]">
                     {lugar.galeriaTexto}
                   </p>
                 )}
@@ -235,7 +235,7 @@ function LugarDetailPage() {
                   </div>
                   <figcaption className="mt-4">
                     <p className="font-serif text-lg">{item.titulo}</p>
-                    <p className="text-sm text-nogal/60 mt-1 leading-relaxed">{item.descripcion}</p>
+                    <p className="text-sm text-nogal/60 mt-1 leading-relaxed max-w-[60ch]">{item.descripcion}</p>
                   </figcaption>
                 </figure>
               ))}

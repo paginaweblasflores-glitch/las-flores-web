@@ -19,7 +19,7 @@ export function ComparsasPaginadas({ comparsas, titulo, texto }: ComparsasPagina
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
         <h2 className="font-serif text-3xl md:text-5xl leading-tight">{titulo ?? "Comparsas del Carnaval"}</h2>
         {texto && (
-          <p className="text-nogal/70 text-base md:text-lg leading-relaxed self-center">{texto}</p>
+          <p className="text-nogal/70 text-base md:text-lg leading-relaxed self-center max-w-[62ch]">{texto}</p>
         )}
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-x-3 gap-y-10 md:gap-x-5 mb-10">
@@ -36,7 +36,7 @@ export function ComparsasPaginadas({ comparsas, titulo, texto }: ComparsasPagina
             </div>
             <figcaption className="mt-4">
               <p className="font-serif text-lg">{c.nombre}</p>
-              <p className="text-sm text-nogal/60 mt-1 leading-relaxed">{c.descripcion}</p>
+              <p className="text-sm text-nogal/60 mt-1 leading-relaxed max-w-[60ch]">{c.descripcion}</p>
             </figcaption>
           </figure>
         ))}
