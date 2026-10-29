@@ -1,4 +1,4 @@
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync, statSync } from "node:fs";
 import { resolve } from "node:path";
 import { describe, expect, it } from "vitest";
 
@@ -34,5 +34,22 @@ describe("sección de premios de la página de inicio", () => {
     expect(awardPosition).toBeGreaterThan(headingEnd);
     expect(listStart).toBeGreaterThan(headingEnd);
     expect(awardsSection).not.toContain("Ser el mejor restaurante de Ayacucho");
+  });
+
+  it("llena el card con la nueva foto WebP optimizada", () => {
+    const routeSource = readFileSync(homeRoutePath, "utf8");
+    const awardsSection =
+      routeSource.match(/\{\/\* PREMIOS \*\/\}([\s\S]*?)\{\/\* CTA FINAL \*\/\}/)?.[1] ?? "";
+    const imagePath = resolve(
+      process.cwd(),
+      "public/imagenes-reales/premios-restaurante/premios-las-flores.webp",
+    );
+
+    expect(awardsSection).toContain(
+      'src="/imagenes-reales/premios-restaurante/premios-las-flores.webp"',
+    );
+    expect(awardsSection).toContain("object-cover");
+    expect(existsSync(imagePath)).toBe(true);
+    expect(statSync(imagePath).size).toBeLessThan(500_000);
   });
 });
