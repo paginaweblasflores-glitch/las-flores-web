@@ -601,7 +601,7 @@ function Index() {
                       height={750}
                       loading="lazy"
                       decoding="async"
-                      className="absolute inset-0 z-10 w-full max-w-none aspect-[4/3] object-cover"
+                      className="absolute inset-0 z-10 w-full max-w-none aspect-[4/3] object-contain"
                     />
                   </div>
                 </div>

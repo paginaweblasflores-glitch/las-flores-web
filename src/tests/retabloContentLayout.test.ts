@@ -252,7 +252,7 @@ describe("home retablo content layout", () => {
     );
     expect(contentRow.getText()).not.toContain("linear-gradient(135deg, #5D2E0C");
     expect(contentRow.getText()).toContain(
-      'className="absolute inset-0 z-10 w-full max-w-none aspect-[4/3] object-cover"',
+      'className="absolute inset-0 z-10 w-full max-w-none aspect-[4/3] object-contain"',
     );
   });
 
