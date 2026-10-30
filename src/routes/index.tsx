@@ -888,8 +888,8 @@ function Index() {
             <img
               src="/imagenes-reales/premios-restaurante/premios-las-flores.webp"
               alt="Premios de Restaurante Las Flores"
-              width={800}
-              height={1200}
+              width={1000}
+              height={1000}
               loading="lazy"
               decoding="async"
               className="w-full h-[360px] md:h-[460px] object-cover shadow-2xl"
