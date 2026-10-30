@@ -434,23 +434,9 @@ function Index() {
         />
         <div className="absolute inset-0 bg-gradient-to-b from-ink/40 via-transparent to-ink/60 pointer-events-none" />
         <div className="relative h-full flex flex-col items-center justify-center text-center px-6 pt-24 pb-16">
-          <span className="text-chilca/90 uppercase tracking-[0.4em] text-xs md:text-sm mb-[clamp(0.75rem,2.5vh,1.5rem)] animate-reveal font-semibold">
-            Huamanga · Perú
-          </span>
           <h1 className="font-serif italic text-4xl sm:text-5xl md:text-[clamp(3rem,min(7vw,12vh),6rem)] text-piedra leading-[1.05] text-balance max-w-[20ch] animate-reveal [animation-delay:200ms]">
             Guardianes de la Cultura Ayacuchana
           </h1>
-          <p className="mt-[clamp(1rem,3.5vh,2rem)] max-w-[58ch] text-piedra/80 text-sm sm:text-base md:text-lg leading-[1.7] animate-reveal [animation-delay:400ms]">
-            Treinta y tres iglesias, retablos, calles llenas de historia y tradiciones que siguen
-            vivas. En Las Flores, la gastronomía es también una forma de compartir y mantener viva
-            la cultura de Ayacucho.
-          </p>
-          <Link
-            to="/restaurante"
-            className="mt-[clamp(1.5rem,5vh,3.5rem)] inline-flex items-center gap-3 px-8 py-4 text-[11px] uppercase tracking-[0.25em] font-bold animate-reveal [animation-delay:600ms] rounded-sm btn-yellow-hover"
-          >
-            <span>Nuestra Historia</span> <span aria-hidden>→</span>
-          </Link>
         </div>
       </header>
 

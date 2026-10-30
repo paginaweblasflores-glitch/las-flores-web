@@ -94,7 +94,7 @@ const GALLERY_CATEGORIES: Category[] = [
   },
   {
     id: "destino",
-    label: "Destino",
+    label: "Lugares Turísticos",
     images: [
       foto("destino", "Cañon2", "Cañones de Qorihuillca"),
       foto("destino", "Arco1", "Jirón 28 de Julio"),
@@ -116,7 +116,7 @@ const GALLERY_CATEGORIES: Category[] = [
   },
   {
     id: "postres-bebidas",
-    label: "Postres y Bebidas",
+    label: "Gastronomía",
     images: [
       foto("postres-bebidas", "chicha-uno", "Chicha de molle"),
       foto("postres-bebidas", "chicha-dos", "Chicha de jora"),
