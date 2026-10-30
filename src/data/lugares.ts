@@ -285,7 +285,7 @@ export const lugares: Lugar[] = [
     id: 5,
     slug: "ritipata",
     numeral: "V",
-    nombre: "Nevado Ritipata",
+    nombre: "Nevado de Ritipata",
     categoria: "Alta Montaña",
     heroTitulo: "Ritipata, el apu sagrado que se viste de nieve",
     imagen: "/videos/hero/ritipata-poster.webp",

@@ -178,7 +178,7 @@ export function MapaUbicacion() {
           Mapa referencial de Ayacucho con el Restaurante Las Flores al centro, la Plaza Mayor de
           Huamanga a 7 minutos, el aeropuerto a 6 minutos y la ubicación aproximada de los lugares
           para visitar: Pampa de Ayacucho, Abismo de Puncupata, Vilcas Huamán, Aguas Turquesas de
-          Millpu y Nevado Ritipata
+          Millpu y Nevado de Ritipata
         </title>
 
         <rect width={ANCHO} height={ALTO} fill={FONDO} />

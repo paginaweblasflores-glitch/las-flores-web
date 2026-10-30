@@ -45,10 +45,10 @@ export function SiteHeader({
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 flex items-center justify-between gap-3 px-4 md:px-10 py-2 md:py-3 transition-all duration-300 pointer-events-none ${
+      className={`fixed top-0 left-0 right-0 z-50 flex items-center justify-between gap-3 px-4 md:px-10 transition-all duration-500 ease-out pointer-events-none ${
         solid
-          ? "bg-piedra/95 backdrop-blur-md text-nogal shadow-sm border-b border-nogal/10"
-          : "bg-transparent text-piedra border-b border-transparent"
+          ? "py-2 md:py-3 bg-piedra/95 backdrop-blur-md text-nogal shadow-sm border-b border-nogal/10"
+          : "py-3 md:py-4 bg-transparent text-piedra border-b border-transparent"
       }`}
     >
       {/* ── Izquierda: Menú Hamburguesa + Perfil de Usuario ── */}
@@ -66,8 +66,8 @@ export function SiteHeader({
         <img
           src={solid ? LOGO_COLOR : LOGO_BLANCO}
           alt="Restaurante Las Flores Logo"
-          className={`w-auto object-contain transition-all duration-300 ${
-            solid ? "h-8" : "h-10 md:h-12"
+          className={`w-auto object-contain transition-all duration-500 ease-out ${
+            solid ? "h-8" : "h-12 md:h-16"
           }`}
         />
       </Link>

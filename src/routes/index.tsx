@@ -253,7 +253,7 @@ function FestividadesSlider() {
             </div>
             <div className="pt-5">
               <h3 className="font-serif text-2xl md:text-3xl leading-tight">{fest.nombre}</h3>
-              <span className="mt-3 inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.22em] font-semibold text-nogal underline underline-offset-4">
+              <span className="mt-3 inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.22em] font-semibold text-piedra underline underline-offset-4">
                 Descubrir <span aria-hidden>→</span>
               </span>
             </div>
@@ -311,6 +311,8 @@ function LugaresAccordion() {
   return (
     <div className="flex flex-col md:flex-row h-[820px] md:h-[500px] w-full gap-3 md:gap-5 overflow-hidden">
       {lugares.map((lugar, i) => {
+        // Nombre general de cada destino (dentro de cada página hay más de un lugar).
+        const titulo = lugar.nombreLista ?? lugar.nombre;
         const isExpanded = isMobile
           ? lugar.id === activeId
           : hovered === null
@@ -337,7 +339,7 @@ function LugaresAccordion() {
             >
               <img
                 src={lugar.imagen}
-                alt={lugar.nombre}
+                alt={titulo}
                 loading={isMobile && isExpanded ? "eager" : "lazy"}
                 fetchPriority={isMobile && isExpanded ? "high" : "low"}
                 decoding="async"
@@ -370,7 +372,7 @@ function LugaresAccordion() {
                 }`}
               >
                 <h3 className="font-serif text-piedra text-2xl md:text-4xl leading-tight mb-5">
-                  {lugar.nombre}
+                  {titulo}
                 </h3>
                 <span className="inline-flex items-center gap-2 self-start text-piedra text-[11px] uppercase tracking-[0.25em] font-bold bg-cochinilla hover:bg-cochinilla/90 transition-colors px-5 py-3">
                   Descubrir <ArrowRight size={14} />
@@ -383,8 +385,8 @@ function LugaresAccordion() {
                   isExpanded ? "opacity-0" : "opacity-100"
                 }`}
               >
-                <span className="text-piedra font-serif text-xl tracking-wider whitespace-nowrap -rotate-90">
-                  {lugar.nombre}
+                <span className="w-[440px] max-w-none shrink-0 text-center text-piedra font-serif text-xl leading-tight tracking-wider -rotate-90">
+                  {titulo}
                 </span>
               </div>
 
@@ -395,7 +397,7 @@ function LugaresAccordion() {
                 }`}
               >
                 <span className="text-piedra font-serif text-sm tracking-widest text-center px-4 drop-shadow-md">
-                  {lugar.nombre}
+                  {titulo}
                 </span>
               </div>
             </Link>
@@ -549,7 +551,7 @@ function Index() {
                     letterSpacing: "-0.01em",
                   }}
                 >
-                  El retablo, la <span className="italic">textilería</span> y el fogón
+                  El retablo ayacuchano
                 </h2>
 
                 {/* Separador ornamental */}
@@ -570,110 +572,124 @@ function Index() {
                     color: "#3d2010",
                   }}
                 >
-                  En Ayacucho el arte y la comida comparten origen: manos que tallan retablos, tejen
-                  mantas y avivan el fogón con la misma paciencia. Cada grano de maíz, cada aroma a
-                  leña cuentan la historia de una tierra que se niega a olvidar su esencia.
+                  Un retablo ayacuchano es una capilla portátil con dos puertas. Dentro hay santos y
+                  escenas de la vida del campo, hechos a mano. En Las Flores damos a conocer el
+                  retablo porque forma parte de nuestra historia.
                 </p>
               </div>
 
-              {/* Imagen ampliada debajo de todo el texto */}
-              <div className="retablo-content-image mx-auto my-auto aspect-[4/3] min-h-[72px]">
-                <div className="retablo-photo-frame relative h-full border-x-[6px] border-t-[6px] border-b-[10px] border-[#8f1d35] p-[3px] shadow-md">
-                  <div className="relative h-full w-full overflow-hidden border border-[#d4a373]">
-                    <img
-                      src={retabloImg}
-                      alt="Retablo ayacuchano tallado a mano con figuras policromadas"
-                      width={600}
-                      height={750}
-                      loading="lazy"
-                      decoding="async"
-                      className="absolute inset-0 z-10 w-full max-w-none aspect-[4/3] object-cover"
-                    />
+              {/* Imagen ampliada debajo de todo el texto, con su pie de foto pegado debajo */}
+              <div className="retablo-content-figure my-auto flex min-h-0 w-full flex-col items-center gap-1">
+                <div className="retablo-content-image mx-auto my-auto aspect-[4/3] min-h-[72px]">
+                  <div className="retablo-photo-frame relative h-full border-x-[6px] border-t-[6px] border-b-[10px] border-[#8f1d35] p-[3px] shadow-md">
+                    <div className="relative h-full w-full overflow-hidden border border-[#d4a373]">
+                      <img
+                        src={retabloImg}
+                        alt="Joaquín López Antay, maestro del retablo ayacuchano, en una fotografía en blanco y negro"
+                        width={600}
+                        height={750}
+                        loading="lazy"
+                        decoding="async"
+                        className="absolute inset-0 z-10 w-full max-w-none aspect-[4/3] object-cover"
+                      />
+                    </div>
                   </div>
                 </div>
+
+                {/* Pie de foto: fuera del cuadro de la imagen y dentro del retablo */}
+                <p
+                  className="retablo-content-caption w-full shrink-0 text-center font-sans text-[10px] leading-snug sm:text-[11px]"
+                  style={{ color: "#3d2010" }}
+                >
+                  Joaquín López Antay (1897-1981), maestro del retablo ayacuchano
+                </p>
               </div>
             </div>
           </div>
         </RetabloWrapper>
       </section>
 
-      {/* LUGARES PARA VISITAR */}
-      <section id="lugares-para-visitar" className="py-16 md:py-32 px-6 bg-piedra">
-        <div className="container-flores mx-auto">
-          <div className="mb-16 flex flex-col md:flex-row md:items-end md:justify-between gap-6">
-            <div>
-              <span className="text-eucalipto font-medium uppercase tracking-[0.3em] text-xs mb-4 block">
-                Lugares para Visitar
-              </span>
-              <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl leading-[1.05] text-balance max-w-[24ch]">
-                Ayacucho más allá de la mesa
-              </h2>
-            </div>
-            <p className="text-sm sm:text-base text-nogal/60 leading-[1.7] max-w-[36ch] md:text-right">
-              Descubre los lugares, las tradiciones y los paisajes que hacen única nuestra tierra e
-              inspiran la esencia de Las Flores.
-            </p>
-          </div>
-          {/* Acordeón expandible */}
-          <LugaresAccordion />
-        </div>
-      </section>
-
       {/* FESTIVIDADES DE HUAMANGA */}
-      <section id="festividades-de-huamanga" className="py-16 md:py-32 px-6">
+      <section id="festividades-de-huamanga" className="py-16 md:py-32 px-6 bg-eucalipto text-piedra">
         <div className="container-flores mx-auto">
           <div className="mb-16 flex flex-col md:flex-row md:items-end md:justify-between gap-6">
-            <div>
-              <span className="text-eucalipto font-medium uppercase tracking-[0.3em] text-xs mb-4 block">
-                Fiestas y Tradiciones
-              </span>
-              <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl leading-[1.05] text-balance max-w-[28ch]">
-                Festividades que dan identidad a nuestra tierra
-              </h2>
-            </div>
-            <p className="text-base text-nogal/60 leading-[1.7] max-w-[36ch] md:text-right">
-              Descubre las celebraciones que reúnen la historia, la fe y las tradiciones de
-              Ayacucho.
+            <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl leading-[1.05] text-balance max-w-[28ch]">
+              Festividades de nuestra tierra
+            </h2>
+            <p className="text-base text-piedra/70 leading-[1.7] max-w-[36ch] md:text-right">
+              Descubre las principales festividades y cuándo se celebran.
             </p>
           </div>
           <FestividadesSlider />
         </div>
       </section>
 
-      {/* FAUNA ANDINA */}
-      <section>
-        <div className="container-flores mx-auto px-6 mb-16 flex flex-col md:flex-row md:items-end md:justify-between gap-6">
-          <div>
-            <span className="text-eucalipto font-medium uppercase tracking-[0.3em] text-xs mb-4 block">
-              Naturaleza y Vida Silvestre
-            </span>
+      {/* LUGARES PARA VISITAR */}
+      <section id="lugares-para-visitar" className="py-16 md:py-32 px-6 bg-piedra">
+        <div className="container-flores mx-auto">
+          <div className="mb-16">
             <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl leading-[1.05] text-balance max-w-[28ch]">
-              La fauna de los Andes
+              Explora la belleza y lugares históricos de Ayacucho
             </h2>
           </div>
-          <p className="text-base text-nogal/60 leading-[1.7] max-w-[36ch] md:text-right">
-            Conoce las especies que habitan los paisajes ayacuchanos y descubre la riqueza de su
-            vida silvestre.
-          </p>
+          {/* Acordeón expandible */}
+          <LugaresAccordion />
+        </div>
+      </section>
+
+      {/* FAUNA ANDINA */}
+      <section>
+        <div className="container-flores mx-auto px-6 mb-16">
+          <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl leading-[1.05] text-balance max-w-[28ch]">
+            La fauna de los Andes
+          </h2>
         </div>
         <FaunaAndina />
       </section>
 
+      {/* TESOROS DE AYACUCHO */}
+      <section className="relative bg-piedra py-16 md:py-32 px-6">
+        <div className="container-flores mx-auto grid grid-cols-1 md:grid-cols-12 gap-12 items-center">
+          <div className="order-2 md:order-none md:col-span-5">
+            <div className="relative aspect-4/3 overflow-hidden shadow-2xl">
+              <img
+                src="/imagenes-reales/secciones/quinoa.webp"
+                alt="Cultivo de quinoa ayacuchana, uno de los tesoros de temporada"
+                loading="lazy"
+                decoding="async"
+                className="w-full h-full object-cover"
+              />
+            </div>
+          </div>
+          <div className="order-1 md:order-none md:col-span-6 md:col-start-7">
+            <h2 className="font-serif text-3xl md:text-5xl leading-[1.1] text-nogal text-balance mb-4">
+              Productos de temporada
+            </h2>
+            <p className="text-base md:text-lg leading-[1.7] text-nogal/70 mb-8">
+              En la región de Ayacucho la temporada de cada producto se rige fundamentalmente por
+              el calendario andino de lluvias y de meses secos. Por eso la cocina ayacuchana tiene
+              una variedad propia y muy rica de platos típicos.
+            </p>
+            <Link
+              to="/tesoros-ayacucho"
+              className="inline-flex items-center gap-3 px-8 py-4 text-[11px] uppercase tracking-[0.25em] font-bold rounded-sm btn-yellow-hover"
+            >
+              <span>Ver los productos por estación</span> <span aria-hidden>→</span>
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* PLATOS TÍPICOS */}
-      <section className="platos-section py-12 md:py-12 px-6 bg-cafe text-piedra selection:bg-chilca/30 lg:min-h-screen lg:flex lg:flex-col lg:justify-center">
+      <section className="platos-section py-12 md:py-12 px-6 bg-eucalipto text-piedra selection:bg-chilca/30 lg:min-h-screen lg:flex lg:flex-col lg:justify-center">
         <div className="container-flores mx-auto w-full">
           <div className="mb-16 md:mb-8 flex flex-col md:flex-row md:items-end md:justify-between gap-6">
-            <div>
-              <span className="text-chilca font-medium uppercase tracking-[0.3em] text-[10px] mb-4 block">
-                Gastronomía Tradicional
-              </span>
-              <h2 className="font-serif text-3xl md:text-5xl leading-[1.1] text-balance max-w-[24ch]">
-                Los sabores de la cocina ayacuchana
-              </h2>
-            </div>
+            <h2 className="font-serif text-3xl md:text-5xl leading-[1.1] text-balance max-w-[24ch]">
+              Platos típicos
+            </h2>
             <p className="text-base text-piedra/70 leading-[1.7] max-w-[36ch] md:text-right">
-              Descubre los platos tradicionales que conservan los sabores y las costumbres de
-              nuestra tierra.
+              La gastronomía de Ayacucho mezcla la cocina andina con la herencia española de la
+              Colonia.
             </p>
           </div>
           {(() => {
@@ -704,54 +720,15 @@ function Index() {
         </div>
       </section>
 
-      {/* TESOROS DE AYACUCHO */}
-      <section className="relative bg-eucalipto py-16 md:py-32 px-6">
-        <div className="container-flores mx-auto grid grid-cols-1 md:grid-cols-12 gap-12 items-center">
-          <div className="order-2 md:order-none md:col-span-5">
-            <div className="relative aspect-4/3 overflow-hidden shadow-2xl">
-              <img
-                src="/imagenes-reales/secciones/quinoa.webp"
-                alt="Cultivo de quinoa ayacuchana, uno de los tesoros de temporada"
-                loading="lazy"
-                decoding="async"
-                className="w-full h-full object-cover"
-              />
-            </div>
-          </div>
-          <div className="order-1 md:order-none md:col-span-6 md:col-start-7">
-            <span className="text-chilca font-medium uppercase tracking-[0.3em] text-xs mb-6 block">
-              Sabores de Nuestra Tierra
-            </span>
-            <h2 className="font-serif text-3xl md:text-5xl leading-[1.1] text-piedra text-balance mb-4">
-              Productos ayacuchanos de temporada
-            </h2>
-            <p className="text-base md:text-lg leading-[1.7] text-piedra/75 mb-8">
-              Una mirada a los ingredientes de nuestra región, desde las papas nativas y el olluco
-              hasta las frutas y hierbas que forman parte de la cocina ayacuchana.
-            </p>
-            <Link
-              to="/tesoros-ayacucho"
-              className="inline-flex items-center gap-3 px-8 py-4 text-[11px] uppercase tracking-[0.25em] font-bold rounded-sm btn-yellow-hover"
-            >
-              <span>Descubre Más</span> <span aria-hidden>→</span>
-            </Link>
-          </div>
-        </div>
-      </section>
-
       {/* PREMIOS */}
       <section className="py-12 md:py-20 px-6">
         <div className="container-flores mx-auto grid grid-cols-1 md:grid-cols-12 gap-12 items-center">
           <div className="md:col-span-6">
-            <span className="text-eucalipto font-medium uppercase tracking-[0.3em] text-xs mb-6 block">
-              Reconocimientos
-            </span>
             <h2 className="font-serif text-3xl sm:text-4xl md:text-6xl leading-[1.05] text-balance mb-5">
-              Distinciones
+              Reconocimientos
             </h2>
             <p className="text-base md:text-lg text-nogal/70 leading-[1.7] max-w-[46ch]">
-              Una muestra de los reconocimientos otorgados a Las Flores por su aporte a la
-              gastronomía, la tradición y el servicio.
+              Una muestra de los reconocimientos otorgados a Las Flores.
             </p>
             <ul className="space-y-6 max-w-md mt-8">
               <li className="flex items-start gap-5 w-full">
@@ -802,7 +779,7 @@ function Index() {
                 <span className="w-px h-10 bg-cochinilla shrink-0 mt-1" />
                 <div className="w-full">
                   <h4 className="font-serif text-xl font-semibold mb-0.5">
-                    Guardianes de la Tradición
+                    Guardianes de la Cultura
                   </h4>
                   <div className="flex items-start justify-between gap-4 w-full min-w-0">
                     <svg
@@ -909,7 +886,7 @@ function Index() {
           decoding="async"
           className="w-full h-[60vh] md:h-[600px] object-cover"
         />
-        <div className="absolute inset-0 bg-cafe/75" />
+        <div className="absolute inset-0 bg-cafe/55" />
         <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-6">
           <span className="text-piedra/70 uppercase tracking-[0.35em] text-xs block mb-6">
             Te esperamos en Las Flores
@@ -924,7 +901,7 @@ function Index() {
           <div className="mt-10 flex flex-col sm:flex-row gap-4">
             <Link
               to="/reservas"
-              className="inline-flex items-center justify-center gap-3 px-8 py-4 font-serif font-bold text-lg tracking-wide rounded-xl btn-yellow-hover"
+              className="inline-flex items-center justify-center gap-3 px-8 py-4 border border-transparent text-[11px] uppercase tracking-[0.25em] font-bold rounded-sm btn-yellow-hover"
             >
               <span>Reserva tu Mesa</span>
             </Link>
