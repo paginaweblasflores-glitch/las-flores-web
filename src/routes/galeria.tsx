@@ -135,6 +135,29 @@ const GALLERY_CATEGORIES: Category[] = [
       foto("eventos", "evento-08", "Equipo de cocina de Las Flores"),
       foto("eventos", "evento-16", "Chicharrón Ayacuchano"),
       foto("eventos", "evento-20", "Chef nacional Virgilio Martínez"),
+      foto("eventos", "ceramica.jpg", "Galería de experiencias — foto 1"),
+      foto("eventos", "ceramista.jpg", "Galería de experiencias — foto 2"),
+      foto("eventos", "DSC00119.jpg", "Galería de experiencias — foto 3"),
+      foto("eventos", "DSC00131.jpg", "Galería de experiencias — foto 5"),
+      foto("eventos", "DSC00140.jpg", "Galería de experiencias — foto 6"),
+      foto("eventos", "DSC00141.jpg", "Galería de experiencias — foto 7"),
+      foto("eventos", "DSC00680.jpg", "Galería de experiencias — foto 8"),
+      foto("eventos", "DSC09286.jpg", "Galería de experiencias — foto 9"),
+      foto("eventos", "DSC09546.jpg", "Galería de experiencias — foto 10"),
+      foto("eventos", "DSC09552.jpg", "Galería de experiencias — foto 11"),
+      foto("eventos", "DSC09612.jpg", "Galería de experiencias — foto 12"),
+      foto("eventos", "DSC09621.jpg", "Galería de experiencias — foto 13"),
+      foto("eventos", "DSC09672.jpg", "Galería de experiencias — foto 14"),
+      foto("eventos", "DSC09760.jpg", "Galería de experiencias — foto 15"),
+      foto("eventos", "DSC09786.jpg", "Galería de experiencias — foto 16"),
+      foto("eventos", "DSC09791 - copia.jpg", "Galería de experiencias — foto 17"),
+      foto("eventos", "DSC09911.jpg", "Galería de experiencias — foto 18"),
+      foto("eventos", "DSC09935.jpg", "Galería de experiencias — foto 19"),
+      foto("eventos", "IMG_0231.jpg", "Galería de experiencias — foto 20"),
+      foto("eventos", "IMG_0664.jpg", "Galería de experiencias — foto 21"),
+      foto("eventos", "IMG_1346.jpg", "Galería de experiencias — foto 22"),
+      foto("eventos", "quinua.jpg", "Galería de experiencias — foto 23"),
+      foto("eventos", "quinuaa.jpg", "Galería de experiencias — foto 24"),
     ],
   },
 ];
@@ -233,10 +256,6 @@ function GaleriaPage() {
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 loading="lazy"
               />
-              {/* Borde interno delgado */}
-              <span className="absolute right-6 top-6 max-w-[calc(100%-3rem)] rounded-md bg-eucalipto-dark/95 px-3.5 py-2 text-right text-[11px] font-semibold uppercase leading-snug tracking-[0.14em] text-piedra shadow-md pointer-events-none">
-                {img.titulo}
-              </span>
             </div>
           ))}
         </div>

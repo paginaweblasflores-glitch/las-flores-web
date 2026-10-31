@@ -310,8 +310,8 @@ function RestaurantePage() {
 
       {/* Familia Las Flores */}
       <section id="familia" className="bg-eucalipto text-piedra py-16 md:py-32 px-6">
-        <div className="max-w-6xl mx-auto flex flex-col lg:flex-row items-center gap-12 md:gap-20">
-          <div className="flex-1 max-w-[50ch]">
+        <div className="container-flores mx-auto flex flex-col lg:flex-row items-center gap-12 md:gap-20">
+          <div className="flex-1 max-w-none">
             <span className="text-chilca font-medium uppercase tracking-[0.3em] text-xs mb-6 block">
               Familia Las Flores
             </span>
@@ -330,8 +330,8 @@ function RestaurantePage() {
               <span>CONOCE A LA FAMILIA</span>
             </Link>
           </div>
-          <div className="flex-1 w-full">
-            <div className="relative aspect-4/3 overflow-hidden shadow-2xl group">
+          <div className="flex-1 w-full flex justify-end">
+            <div className="relative aspect-4/3 w-full max-w-[33.5rem] overflow-hidden shadow-2xl group">
               <img
                 src="/inicio/Equipolasflores.webp"
                 alt="Equipo humano de Restaurante Las Flores"
