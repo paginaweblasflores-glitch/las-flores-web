@@ -205,7 +205,7 @@ function ContactoPage() {
                 <div className="space-y-0.5">
                   <span className="text-[10px] font-bold uppercase tracking-wider text-gray-400 block">Ubicación</span>
                   <p className="font-serif text-sm font-bold text-[#2c2a29]">Jr. José Olaya 106</p>
-                  <p className="text-xs text-gray-500">Huamanga — Ayacucho (A 2 cuadras de la Plaza Mayor)</p>
+                  <p className="text-xs text-gray-500">Huamanga — Ayacucho (A siete minutos de la Plaza Mayor)</p>
                   <a
                     href="https://www.google.com/maps?q=-13.162825034398038,-74.21792188690533"
                     target="_blank"

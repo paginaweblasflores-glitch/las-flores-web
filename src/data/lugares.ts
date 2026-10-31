@@ -1,5 +1,12 @@
 /** `video` (opcional): clip corto que se reproduce en lugar de la foto; `imagen` queda como póster. */
-export type GaleriaItem = { imagen: string; titulo: string; descripcion: string; video?: string };
+export type GaleriaItem = {
+  imagen: string;
+  titulo: string;
+  descripcion: string;
+  video?: string;
+  /** Punto de enfoque del recorte de la foto en la tarjeta (CSS `object-position`); por defecto, el centro. */
+  posicion?: string;
+};
 
 /** Escena de "Un vistazo al destino": clip en bucle (`video`) con la foto como póster, y su título y descripción debajo. */
 export type EscenaCard = { imagen: string; titulo: string; descripcion: string; video?: string };
@@ -13,6 +20,8 @@ export type Lugar = {
   nombreLista?: string;
   categoria: string;
   heroTitulo: string;
+  /** Texto corto para buscadores y redes (una o dos frases); si falta se usa `descripcion`. */
+  metaDescripcion?: string;
   imagen: string;
   imagenSecundaria: string;
   /** Párrafos separados por una línea en blanco; *texto* se muestra en cursiva. */
@@ -100,7 +109,7 @@ export const lugares: Lugar[] = [
     imagen: "/imagenes-reales/seccion-turs/pampa-quinua.webp",
     imagenSecundaria: "/imagenes-reales/galeria/destino/Quinua1.webp",
     descripcion:
-      "A solo 45 minutos de Huamanga, en el distrito de Quinua, el Santuario Histórico Pampa de Ayacucho es el escenario donde el 9 de diciembre de 1824 el Ejército Unido Libertador selló la independencia de Sudamérica. Declarado Santuario Histórico en 1980, lo corona un obelisco de mármol de 44 metros, inaugurado en 1974 al cumplirse 150 años de la batalla, con las esculturas de los seis generales que la lideraron: Sucre, Córdova, La Mar, Miller, Lara y Gamarra. A pocos minutos, Quinua —distinguido oficialmente por el Mincetur como “Pueblo con Encanto” en 2024— mantiene viva la tradición de sus ceramistas, referente de la artesanía ayacuchana.",
+      "A solo cuarenta y cinco minutos de Huamanga, en el distrito de Quinua, el Santuario Histórico Pampa de Ayacucho es el escenario donde el 9 de diciembre de 1824 el Ejército Unido Libertador selló la independencia de Sudamérica. Declarado Santuario Histórico en 1980, lo corona un obelisco de mármol de 44 metros, inaugurado en 1974 al cumplirse 150 años de la batalla, con las esculturas de los seis generales que la lideraron: Sucre, Córdova, La Mar, Miller, Lara y Gamarra. A pocos minutos, Quinua —distinguido oficialmente por el Mincetur como “Pueblo con Encanto” en 2024— mantiene viva la tradición de sus ceramistas, referente de la artesanía ayacuchana.",
     consejo:
       "Complementar la visita con una parada en el Complejo Arqueológico Wari, ubicado en el mismo camino.",
     escenas: "Historia, cielo abierto y memoria viva: así se vive la Pampa de Ayacucho.",
@@ -133,13 +142,15 @@ export const lugares: Lugar[] = [
     nombreLista: "Amanecer de Puncupata y Cañones de Qorihuillca",
     categoria: "Paisaje Andino",
     heroTitulo: "Abismo de Puncupata, Puerta Celestial",
+    metaDescripcion:
+      "Un desfiladero a 4200 m s. n. m., a unas dos horas de Huamanga. Qué ver y qué llevar.",
     imagen: "/imagenes-reales/abismo-puncupata/acantilado.webp",
     imagenSecundaria: "/imagenes-reales/abismo-puncupata/cornisa.webp",
     descripcion:
-      "A unos 76 km de Huamanga —cerca de hora y media por carretera asfaltada— el Abismo de Puncupata se abre a 4,200 m.s.n.m. como uno de los desfiladeros más imponentes de Ayacucho. Un sendero peatonal habilitado por la comunidad local, de cerca de un kilómetro, lleva hasta su borde: un mirador natural con vistas a pueblos como Ccaccamarca y Chumbes. En el camino pastan vicuñas y, sobre el acantilado, planean las aves de altura. Se le conoce también como la “Puerta Celestial”, nombre que alude a su profundidad y a sus vistas panorámicas.",
+      "A unos 76 km de Huamanga, a hora y media o dos horas por carretera asfaltada, el abismo de Puncupata se abre a 4200 m s. n. m. como un gran desfiladero.\n\nUn sendero peatonal de cerca de un kilómetro, habilitado por la comunidad local, lleva hasta su borde, un mirador natural con vistas a los pueblos de Ccaccamarca y Chumbes. En el camino pastan vicuñas y, sobre el acantilado, planean las aves de altura. Se le conoce también como la «Puerta Celestial», nombre que alude a su profundidad y a sus vistas panorámicas.",
     consejo:
-      "Lleva ropa abrigadora e impermeable, botas resistentes, agua y algo de comer. A 4.200 m s. n. m., el clima puede cambiar rápidamente. Camina con precaución por el sendero, sigue las indicaciones de tu guía local y mantén una distancia segura del borde, especialmente si sufres de vértigo.",
-    escenas: "Acantilados, vicuñas y paredes de roca entre la niebla: así se vive el Abismo de Puncupata.",
+      "Lleva ropa abrigadora e impermeable, botas resistentes, agua y algo de comer. A 4200 m s. n. m. el clima puede cambiar rápidamente. Camina con precaución por el sendero y sigue las indicaciones de tu guía local. Mantén una distancia segura del borde, especialmente si sufres de vértigo.",
+    escenas: "Lo que verás en el recorrido por Puncupata.",
     clipTags: [
       "Al filo del acantilado",
       "Vicuñas en la puna",
@@ -160,28 +171,26 @@ export const lugares: Lugar[] = [
       poster: "/videos/lugares-visitar/pachapupum-poster.webp",
       etiqueta: "Volcán inactivo de Pachapupum",
     },
-    galeriaTitulo: "Lugares cercanos para conocer",
-    galeriaTexto:
-      "En el camino al abismo, el tramo final de la carretera cruza pastizales donde viven vicuñas silvestres. Y hacia el lado contrario de la ciudad, a unos 40 minutos de Huamanga, están los Cañones de Qorihuillca, un laberinto de pasadizos de roca para una excursión de unas 4 horas.",
+    galeriaTitulo: "Dos visitas más desde Huamanga",
     galeria: [
       {
         imagen: "/imagenes-reales/abismo-puncupata/vicuna-habitat.webp",
         titulo: "Vicuñas en el camino a Puncupata",
         descripcion:
-          "En el tramo final de la carretera al abismo, a más de 4,000 m.s.n.m., es común ver vicuñas silvestres entre los pastizales. Cada año, de mayo a noviembre, las comunidades de la región realizan el chaccu, un ritual ancestral que esquila a las vicuñas con más fibra y las devuelve a su hábitat sin dañarlas.",
+          "En el tramo final de la carretera al abismo, a más de 4000 m s. n. m., es común ver vicuñas silvestres entre los pastizales. Cada año, de mayo a noviembre, las comunidades de la región realizan el chaccu, un ritual ancestral que esquila a las vicuñas con más fibra y las devuelve a su hábitat sin dañarlas.",
       },
       {
         imagen: "/imagenes-reales/abismo-puncupata/canones-de-qorihuillca.webp",
         titulo: "Cañones de Qorihuillca",
         descripcion:
-          "Al lado contrario de la ciudad, a 40 minutos de Huamanga, los Cañones de Qorihuillca conforman un laberinto rocoso de pasadizos oscuros, ideal para el turismo de aventura. Se sugiere visitarlos durante la mañana, siendo indispensable el acompañamiento de un guía especializado y equipo de seguridad.",
+          "Al lado contrario de la ciudad, a cuarenta minutos de Huamanga, los Cañones de Qorihuillca conforman un laberinto rocoso de pasadizos oscuros. Se sugiere visitarlos por la mañana y es indispensable ir con un guía especializado y equipo de seguridad.",
       },
     ],
     escenasCards: [
       {
         imagen: "/imagenes-reales/abismo-puncupata/escena-borde.webp",
         titulo: "Al filo del acantilado",
-        descripcion: "A 4,200 m.s.n.m., un sendero comunitario de cerca de un kilómetro bordea el desfiladero.",
+        descripcion: "A 4200 m s. n. m., un sendero comunitario de cerca de un kilómetro bordea el desfiladero.",
         video: "/videos/lugares-visitar/abismo-puncupata-borde.mp4",
       },
       {
@@ -211,18 +220,20 @@ export const lugares: Lugar[] = [
     nombre: "Vilcas Huamán",
     nombreLista: "Vilcas Huamán, centro administrativo inca",
     categoria: "Arqueología Inca",
-    heroTitulo: "Vilcas Huamán, la ciudad del halcón sagrado",
+    heroTitulo: "Vilcas Huamán, centro administrativo inca",
+    metaDescripcion:
+      "El Ushnu y el Templo del Sol en un centro administrativo inca a 3490 m s. n. m. Cómo llegar y qué llevar.",
     imagen: "/imagenes-reales/vilcas-huaman/ushnu-aereo.webp",
     imagenSecundaria: "/imagenes-reales/vilcas-huaman/vilcas-huaman-parque.webp",
     descripcion:
-      "A unas dos horas de Huamanga, Vilcas Huamán se encuentra a 3.490 m s. n. m. y fue uno de los principales centros administrativos del Imperio inca. Su nombre proviene del quechua Willka Waman, que significa «halcón sagrado», y su importancia estuvo vinculada al Qhapaq Ñan, la red vial del Tahuantinsuyo.\n\nEn su complejo arqueológico destacan el Ushnu, una estructura ceremonial de piedra con doble jamba y el Asiento del Inca en su parte superior, y el Templo del Sol, cuyos cimientos fueron aprovechados durante la Colonia para construir la iglesia de San Juan Bautista.",
+      "Vilcas Huamán es un complejo arqueológico inca a 3490 m s. n. m., a unas dos horas y media de Huamanga. Fue uno de los principales centros administrativos del Imperio inca y su importancia estuvo vinculada al Qhapaq Ñan, la red vial del Tahuantinsuyo. Su nombre viene del quechua *Willka Waman*, que significa «halcón sagrado».\n\nEn el complejo destacan el Ushnu y el Templo del Sol. El Ushnu es una estructura ceremonial de piedra con cuatro plataformas y entrada de doble jamba, y en su parte superior está el Asiento del Inca. El Templo del Sol estaba dedicado a Inti, y sus cimientos se aprovecharon durante la Colonia para construir la iglesia de San Juan Bautista.",
     consejo:
-      "Lleva ropa abrigadora para las mañanas y tardes frías, calzado cómodo y bloqueador solar. Si no estás acostumbrado a la altura, evita realizar esfuerzos intensos al llegar. Recorre los monumentos con respeto y sigue las indicaciones del personal encargado para contribuir a la conservación de las estructuras incas.",
+      "Lleva ropa abrigadora para las mañanas y las tardes frías, calzado cómodo y bloqueador solar. Si no estás acostumbrado a la altura, evita los esfuerzos intensos al llegar. Recorre los monumentos con respeto y sigue las indicaciones del personal para conservar las estructuras incas.",
     seccionImagen: {
       imagen: "/imagenes-reales/vilcas-huaman/vilcas-huaman-parque.webp",
       etiqueta: "Plaza de Vilcas Huamán",
     },
-    escenas: "Conoce los principales monumentos incas y las vistas de Vilcas Huamán.",
+    escenas: "Lo que verás en el recorrido por Vilcas Huamán.",
     clipTags: ["Ushnu inca", "Templo del Sol", "Plaza ceremonial", "Halcón sagrado"],
     mapLat: -13.6558,
     mapLng: -73.95,
@@ -237,28 +248,26 @@ export const lugares: Lugar[] = [
       poster: "/videos/lugares-visitar/puyas-de-raimondi-poster.webp",
       etiqueta: "Puyas de Raimondi",
     },
-    galeriaTitulo: "Cerca de Vilcas Huamán",
-    galeriaTexto:
-      "Si tienes tiempo, visita también el bosque de Puyas de Raimondi de Titankayocc y el complejo arqueológico de Intihuatana, junto a la laguna de Pumacocha. Ambos se encuentran en el distrito de Vischongo.",
+    galeriaTitulo: "Dos visitas más en Vischongo",
     galeria: [
       {
         imagen: "/imagenes-reales/vilcas-huaman/puyas-de-raimondi-de-titankayocc.webp",
         titulo: "Puyas de Raimondi de Titankayocc",
         descripcion:
-          "En Vischongo, este bosque de Puyas de Raimondi se extiende entre los 3.800 y 4.500 m s. n. m. Sus enormes plantas destacan entre los pajonales de la puna andina.",
+          "En el distrito de Vischongo, a unos treinta minutos de Vilcas Huamán, este bosque es Área de Conservación Regional desde 2010. Sus enormes plantas destacan entre los pajonales de la puna.",
       },
       {
         imagen: "/imagenes-reales/vilcas-huaman/ruinas-de-intihuatana.webp",
         titulo: "Ruinas de Intihuatana",
         descripcion:
-          "Junto a la laguna de Pumacocha, este complejo arqueológico conserva construcciones incas de piedra y un reloj solar, en un entorno que combina historia y paisaje andino.",
+          "En el distrito de Vischongo, junto a la laguna Pumacocha, este complejo conserva construcciones incas de piedra y un reloj solar. Es Patrimonio Cultural de la Nación desde 2001, y su nombre quechua se traduce como «amarrar al Sol».",
       },
     ],
     escenasCards: [
       {
         imagen: "/imagenes-reales/vilcas-huaman/ushnu.webp",
         titulo: "El Ushnu",
-        descripcion: "Estructura ceremonial inca de piedra, ubicada en la plaza principal.",
+        descripcion: "Estructura ceremonial inca de piedra en la plaza principal.",
         video: "/videos/lugares-visitar/vilcas-huaman-ushnu.mp4",
       },
       {
@@ -270,7 +279,7 @@ export const lugares: Lugar[] = [
       {
         imagen: "/imagenes-reales/vilcas-huaman/plaza-aerea.webp",
         titulo: "Vilcas Huamán desde el aire",
-        descripcion: "Una vista panorámica de la plaza y los restos de la antigua ciudad inca.",
+        descripcion: "Vista panorámica de la plaza y de los restos de la antigua ciudad inca.",
         video: "/videos/lugares-visitar/vilcas-huaman-aereo.mp4",
       },
       {
@@ -287,14 +296,16 @@ export const lugares: Lugar[] = [
     numeral: "V",
     nombre: "Nevado de Ritipata",
     categoria: "Alta Montaña",
-    heroTitulo: "Ritipata, el apu sagrado que se viste de nieve",
+    heroTitulo: "El nevado de Ritipata",
+    metaDescripcion:
+      "Un nevado de unos 5000 m s. n. m. en Cangallo a tres horas de Huamanga. Cuándo ver nieve y qué llevar.",
     imagen: "/videos/hero/ritipata-poster.webp",
     imagenSecundaria: "/imagenes-reales/ritipata/laguna-nevado.webp",
     descripcion:
-      "El Apu Ritipata es un nevado considerado sagrado que se alza a casi 5.000 m s. n. m. en la cordillera Chonta, distrito de Paras, provincia de Cangallo, a poco más de tres horas de Huamanga. Su nombre proviene del quechua *riti*, «nieve», y *pata*, «lugar elevado». Entre diciembre y abril suelen producirse nevadas.\n\nDe junio a septiembre, el cielo suele estar más despejado para recorrer sus lagunas, como la Ñawi, y visitar las cataratas cercanas. Desde el abra, a más de 4.900 m s. n. m., una caminata de media hora permite acercarse al nevado y contemplar el paisaje andino, donde también habitan alpacas, vicuñas y vizcachas silvestres.",
+      "Ritipata es un nevado de unos 5000 m s. n. m. en la cordillera Chonta, en el distrito de Paras (provincia de Cangallo), a unas tres horas en auto de Huamanga. En la cosmovisión andina es un apu sagrado. Su nombre viene del quechua *riti* (nieve) y *pata* (lugar elevado).\n\nEntre diciembre y abril suelen producirse nevadas. De junio a septiembre, el cielo está más despejado para recorrer las lagunas, como la Ñawi, y las cataratas cercanas. Desde el abra, a más de 4900 m s. n. m., una caminata de media hora permite acercarse al nevado. En la zona también habitan alpacas, vicuñas y vizcachas silvestres.",
     consejo:
-      "Para ver nieve, visita entre diciembre y abril, cuando suelen producirse nevadas, aunque su presencia depende de las condiciones climáticas. Lleva ropa térmica, gorro, guantes, chaqueta impermeable, agua y comida, ya que no hay restaurantes en el lugar. Aclimátate antes de subir a esa altitud.",
-    escenas: "Nieve, lagunas de altura y alpacas: así se vive el Apu Ritipata.",
+      "Para ver nieve, visita entre diciembre y abril, aunque su presencia depende del clima. Lleva ropa térmica, chaqueta impermeable, gorro y guantes, además de agua y comida porque no hay restaurantes en el lugar. Aclimátate antes de subir a esta altitud.",
+    escenas: "Lo que verás en el recorrido por Ritipata.",
     clipTags: ["Camino al abra", "Lagunas de Ritipata", "Cumbres y valles andinos", "Alpacas de las faldas"],
     mapLat: -13.42917,
     mapLng: -74.69167,
@@ -313,21 +324,19 @@ export const lugares: Lugar[] = [
       imagen: "/imagenes-reales/ritipata/laguna-nevado.webp",
       etiqueta: "Lagunas de Ritipata",
     },
-    galeriaTitulo: "Lugares cercanos para conocer",
-    galeriaTexto:
-      "La provincia de Cangallo también guarda cascadas y pozas donde el agua baja entre praderas y formaciones rocosas. La Catarata de Pumapaqcha y la Cascada de Ruqruqa son dos paradas que puedes incluir en el recorrido, especialmente entre junio y septiembre.",
+    galeriaTitulo: "Dos visitas más en Cangallo",
     galeria: [
       {
         imagen: "/imagenes-reales/ritipata/pumapaqcha.webp",
         titulo: "Catarata de Pumapaqcha",
         descripcion:
-          "En el distrito de Cangallo, la Catarata de Pumapaqcha cae unos 10 metros hasta una laguna natural. Se llega tras una caminata de aproximadamente media hora desde la carretera Ayacucho–Cangallo.",
+          "En el distrito de Cangallo, junto a la carretera Ayacucho–Cangallo, la catarata cae unos diez metros hasta una laguna natural. Se llega tras una caminata de unos veinte minutos.",
       },
       {
         imagen: "/imagenes-reales/ritipata/ruqruqa.webp",
         titulo: "Cascada de Ruqruqa",
         descripcion:
-          "A unas tres horas y media de Huamanga, en la comunidad de Quispillaccta, distrito de Chuschi, provincia de Cangallo, la Cascada de Ruqruqa forma pozas turquesas escalonadas. Si planeas recorrer sus senderos o entrar al agua, lleva ropa de baño y calzado antideslizante.",
+          "A unas tres horas y media de Huamanga, en la comunidad de Quispillaccta (distrito de Chuschi), la cascada forma pozas turquesas escalonadas. Desde donde llega el vehículo se camina unos veinte minutos. Para recorrer los senderos o entrar al agua, lleva ropa de baño y calzado antideslizante.",
       },
     ],
     escenasCards: [
@@ -340,19 +349,19 @@ export const lugares: Lugar[] = [
       {
         imagen: "/imagenes-reales/ritipata/escena-lagunas.webp",
         titulo: "Lagunas de Ritipata",
-        descripcion: "Lagunas de aguas tranquilas rodeadas de montañas y paisajes andinos.",
+        descripcion: "Lagunas de aguas tranquilas rodeadas de montañas.",
         video: "/videos/lugares-visitar/ritipata-lagunas.mp4",
       },
       {
         imagen: "/imagenes-reales/ritipata/escena-valle.webp",
         titulo: "Cumbres y valles andinos",
-        descripcion: "Vistas panorámicas de cumbres, laderas rojizas y extensos valles.",
+        descripcion: "Vistas panorámicas de cumbres y laderas rojizas sobre extensos valles.",
         video: "/videos/lugares-visitar/ritipata-valle.mp4",
       },
       {
         imagen: "/imagenes-reales/ritipata/escena-alpacas.webp",
         titulo: "Alpacas de las faldas",
-        descripcion: "Alpacas pastando en las alturas, junto a las comunidades alpaqueras de la zona.",
+        descripcion: "Alpacas pastan en las alturas junto a comunidades alpaqueras de la zona.",
         video: "/videos/lugares-visitar/ritipata-alpacas.mp4",
       },
     ],
@@ -363,20 +372,22 @@ export const lugares: Lugar[] = [
     numeral: "VI",
     nombre: "Aguas Turquesas de Millpu",
     categoria: "Naturaleza",
-    heroTitulo: "Millpu, la joya oculta de Ayacucho",
+    heroTitulo: "Las aguas turquesas de Millpu",
+    metaDescripcion:
+      "Unas 20 pozas turquesas en un cañón de Ayacucho a unos 3600 m s. n. m. Cómo llegar y cuándo ir.",
     imagen: "/imagenes-reales/aguas-turquesas/aguas-turquesas-card.webp",
     imagenSecundaria: "/imagenes-reales/galeria/destino/Turquesa3.webp",
     descripcion:
-      "A unas 3 horas y media de Huamanga, en la comunidad de Circamarca, distrito de Huancaraylla, provincia de Víctor Fajardo, se encuentran las Aguas Turquesas de Millpu. A más de 3.600 m s. n. m., cerca de 20 pozas naturales descienden entre las paredes rocosas de un cañón, formando uno de los paisajes más llamativos de Ayacucho.\n\nEl color turquesa de sus aguas se debe a la combinación de los minerales y la luz solar. Su nombre proviene del quechua millp'u, relacionado con la acción de tragar o ingerir; también se asocia con la leyenda local de la «garganta del diablo».",
+      "Millpu es una serie de unas 20 pozas turquesas que descienden por un cañón a unos 3600 m s. n. m. Queda en la comunidad de Circamarca, en el distrito de Huancaraylla (provincia de Víctor Fajardo). Desde Huamanga se llega en unas tres horas y media por carretera hasta Pataqocha, y de ahí se camina unos veinte minutos.\n\nEl color turquesa viene de los minerales de las rocas del río y de la luz del sol. Su nombre viene del quechua *millpuy* (tragar), porque el río desaparece en una grieta subterránea. En lluvias se forma una gran represa natural, a la que algunos llaman «garganta del diablo».",
     consejo:
-      "Visita Millpu entre mayo y septiembre para apreciar mejor sus tonos turquesa, aunque el color puede variar según las lluvias. Lleva calzado con buen agarre para caminar por los senderos y respeta las indicaciones de conservación: está prohibido bañarse en las pozas.",
-    escenas: "Pozas turquesas, cascadas y paredes de roca: descubre los paisajes de Millpu.",
+      "Visita Millpu entre mayo y septiembre para ver el agua más turquesa, ya que de enero a abril las lluvias la enturbian. Lleva calzado con buen agarre para los senderos y respeta la prohibición de bañarse en las pozas, vigente desde 2018 para conservar su color.",
+    escenas: "Lo que verás en el recorrido por las pozas.",
     clipTags: ["Pozas escalonadas", "Caídas de agua entre terrazas", "Cañón de Millpu", "Poza al pie de la caída"],
     mapLat: -13.7207,
     mapLng: -74.1339,
     seccionImagen: {
       imagen: "/imagenes-reales/aguas-turquesas/millpu-opt.webp",
-      etiqueta: "Aguas Turquesas de Millpu",
+      etiqueta: "Pozas escalonadas de Millpu",
     },
     video: {
       hero: "/videos/hero/aguas-turquesas.mp4",
@@ -384,28 +395,27 @@ export const lugares: Lugar[] = [
       poster: "/videos/hero/aguas-turquesas-poster.webp",
     },
     imagenPantalla: "/imagenes-reales/aguas-turquesas/turquesa-sec.webp",
-    galeriaTitulo: "Lugares cercanos para conocer",
-    galeriaTexto:
-      "En la provincia de Víctor Fajardo, el distrito de Sarhua ofrece dos atractivos que complementan la visita: sus cascadas, rodeadas de montañas andinas, y sus tradicionales tablas pintadas, reconocidas como Patrimonio Cultural de la Nación.",
+    galeriaTitulo: "Dos visitas más en Víctor Fajardo",
     galeria: [
       {
         imagen: "/imagenes-reales/aguas-turquesas/cascadas-sarhua.webp",
-        titulo: "Cascada de Sarhua",
+        posicion: "50% 80%",
+        titulo: "Cascadas de Sarhua",
         descripcion:
-          "También conocidas como Campanayuq, estas cascadas forman una sucesión de caídas de agua entre cerros y vegetación andina. Para recorrer sus senderos, lleva calzado antideslizante y considera realizar la visita con tiempo suficiente.",
+          "Estas cascadas están a tres horas y media de Millpu y se suceden a lo largo del valle de Campanayuq hasta unas aguas termales. Conviene visitarlas a primera hora y llevar calzado antideslizante.",
       },
       {
         imagen: "/imagenes-reales/aguas-turquesas/tabla-sarhua.webp",
         titulo: "Las Tablas de Sarhua",
         descripcion:
-          "Esta expresión artística tradicional representa historias familiares y escenas de la vida comunitaria sobre tablas de madera pintadas. Reconocidas como Patrimonio Cultural de la Nación en 2018, forman parte de la identidad cultural de Sarhua.",
+          "Son tablas de madera pintadas que cuentan historias de familias y de la vida comunitaria. Tradicionalmente se regalan al terminar una casa nueva y se colocan entre las vigas del techo. Se pueden ver y comprar en Sarhua, y están declaradas Patrimonio Cultural de la Nación desde 2018.",
       },
     ],
     escenasCards: [
       {
         imagen: "/imagenes-reales/aguas-turquesas/escena-pozas.webp",
         titulo: "Pozas escalonadas",
-        descripcion: "Cerca de 20 piscinas naturales descienden en niveles, creando una sucesión de tonos turquesa.",
+        descripcion: "Unas 20 pozas descienden en niveles y forman una sucesión de tonos turquesa.",
         video: "/videos/lugares-visitar/aguas-turquesas-pozas.mp4",
       },
       {
@@ -417,13 +427,13 @@ export const lugares: Lugar[] = [
       {
         imagen: "/imagenes-reales/aguas-turquesas/escena-canon.webp",
         titulo: "Cañón de Millpu",
-        descripcion: "Altas paredes rocosas enmarcan el curso del agua en un entorno natural de montaña.",
+        descripcion: "Altas paredes rocosas enmarcan el curso del agua en un entorno de montaña.",
         video: "/videos/lugares-visitar/aguas-turquesas-canon.mp4",
       },
       {
         imagen: "/imagenes-reales/aguas-turquesas/escena-caida.webp",
         titulo: "Poza al pie de la caída",
-        descripcion: "El agua se reúne en una poza rodeada de roca, uno de los rincones más llamativos del recorrido.",
+        descripcion: "El agua se reúne en una poza rodeada de roca al pie de la caída.",
         video: "/videos/lugares-visitar/aguas-turquesas-caida.mp4",
       },
     ],

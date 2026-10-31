@@ -15,9 +15,9 @@ export const Route = createFileRoute("/destinos/$slug")({
     meta: loaderData
       ? [
           { title: `${loaderData.nombre} — Las Flores | Lugares para Visitar` },
-          { name: "description", content: loaderData.descripcion },
+          { name: "description", content: loaderData.metaDescripcion ?? loaderData.descripcion },
           { property: "og:title", content: `${loaderData.nombre} — Las Flores` },
-          { property: "og:description", content: loaderData.descripcion },
+          { property: "og:description", content: loaderData.metaDescripcion ?? loaderData.descripcion },
         ]
       : [],
   }),
@@ -49,7 +49,7 @@ function LugarDetailPage() {
               <h2 className="font-serif text-3xl md:text-5xl leading-tight">
                 Un vistazo al destino
               </h2>
-              <p className="text-nogal/70 text-base md:text-lg leading-relaxed self-center max-w-[62ch]">
+              <p className="text-nogal/70 text-base leading-[1.7] md:self-end md:justify-self-end md:text-right max-w-[36ch]">
                 {lugar.escenas}
               </p>
             </div>
@@ -211,7 +211,7 @@ function LugarDetailPage() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
                 <h2 className="font-serif text-3xl md:text-5xl leading-tight">{lugar.galeriaTitulo}</h2>
                 {lugar.galeriaTexto && (
-                  <p className="text-nogal/70 text-base md:text-lg leading-relaxed self-center max-w-[62ch]">
+                  <p className="text-nogal/70 text-base leading-[1.7] md:self-end md:justify-self-end md:text-right max-w-[36ch]">
                     {lugar.galeriaTexto}
                   </p>
                 )}
@@ -230,6 +230,7 @@ function LugarDetailPage() {
                       alt={item.titulo}
                       loading="lazy"
                       decoding="async"
+                      style={item.posicion ? { objectPosition: item.posicion } : undefined}
                       className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
                     />
                   </div>

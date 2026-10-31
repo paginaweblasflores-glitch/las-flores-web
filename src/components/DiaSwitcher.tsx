@@ -36,7 +36,9 @@ export function DiaSwitcher({ dias, titulo, texto }: DiaSwitcherProps) {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
         <h2 className="font-serif text-3xl md:text-5xl leading-tight">{titulo ?? "Los días de Semana Santa"}</h2>
         {texto && (
-          <p className="text-nogal/70 text-base md:text-lg leading-relaxed self-center max-w-[62ch]">{texto}</p>
+          <p className="text-nogal/70 text-base leading-[1.7] md:self-end md:justify-self-end md:text-right max-w-[36ch]">
+            {texto}
+          </p>
         )}
       </div>
       <div className="relative md:px-14">

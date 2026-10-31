@@ -18,9 +18,9 @@ export const Route = createFileRoute("/festividades/$slug")({
     meta: loaderData
       ? [
           { title: `${loaderData.nombre} — Las Flores | Festividades de Huamanga` },
-          { name: "description", content: loaderData.descripcion },
+          { name: "description", content: loaderData.metaDescripcion ?? loaderData.descripcion },
           { property: "og:title", content: `${loaderData.nombre} — Las Flores` },
-          { property: "og:description", content: loaderData.descripcion },
+          { property: "og:description", content: loaderData.metaDescripcion ?? loaderData.descripcion },
         ]
       : [],
   }),
@@ -172,7 +172,8 @@ function FestividadDetailPage() {
         {fest.preguntas && fest.preguntas.length > 0 && (
           <section className="px-6 md:px-16 py-16 md:py-24">
             <div className="grid grid-cols-1 md:grid-cols-[1fr_1.4fr] gap-10 md:gap-16">
-              <div className="md:sticky md:top-28 md:self-start">
+              {/* En escritorio la imagen mantiene todo el ancho de la columna y llega hasta la línea de la última pregunta; nunca pasa de ser un cuadrado. */}
+              <div className="md:flex md:flex-col">
                 <h2 className="font-serif text-3xl md:text-5xl leading-tight mb-5">
                   {fest.preguntasTitulo ?? "Preguntas frecuentes"}
                 </h2>
@@ -182,13 +183,15 @@ function FestividadDetailPage() {
                   </p>
                 )}
                 {fest.preguntasImagen && (
-                  <img
-                    src={fest.preguntasImagen.src}
-                    alt={fest.preguntasImagen.alt}
-                    loading="lazy"
-                    decoding="async"
-                    className="mt-8 md:mt-10 w-full aspect-[3/2] object-cover"
-                  />
+                  <div className="@container mt-8 md:mt-0 md:relative md:flex-1 md:min-h-0">
+                    <img
+                      src={fest.preguntasImagen.src}
+                      alt={fest.preguntasImagen.alt}
+                      loading="lazy"
+                      decoding="async"
+                      className="w-full aspect-square object-cover md:absolute md:left-0 md:top-0 md:aspect-auto md:h-full md:max-h-[100cqw]"
+                    />
+                  </div>
                 )}
               </div>
               <div className="border-t border-nogal/25">

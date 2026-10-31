@@ -15,6 +15,8 @@ export type Festividad = {
   imagen: string;
   imagenSecundaria: string;
   descripcion: string;
+  /** Texto corto para buscadores y redes (una o dos frases); si falta se usa `descripcion`. */
+  metaDescripcion?: string;
   consejo: string;
   frase: string;
   escenas: string;
@@ -66,7 +68,9 @@ export const festividades: Festividad[] = [
     imagen: "/imagenes-reales/galeria/festividades/carnaval-uno.webp",
     imagenSecundaria: "/imagenes-reales/galeria/festividades/carnaval-tres.webp",
     descripcion:
-      "El Carnaval Ayacuchano combina la herencia de los carnavales españoles con el antiguo Pukllay andino, una celebración vinculada al juego y la fertilidad. Cada año, las comparsas de los barrios y las provincias llenan las calles de Huamanga con huaynos, cantos, danzas y competencias tradicionales como el warakanakuy. Esta fiesta fue declarada Patrimonio Cultural de la Nación en 2003.",
+      "El Carnaval Ayacuchano combina la herencia de los carnavales españoles con el antiguo Pukllay andino, una celebración vinculada al juego y la fertilidad. Cada año, las comparsas de los barrios y las provincias llenan las calles de Huamanga con huaynos, cantos, danzas y competencias tradicionales como el warakanakuy. Fue el primer carnaval regional declarado Patrimonio Cultural de la Nación, en 2003.",
+    metaDescripcion:
+      "Comparsas, huaynos y el Ño Carnavalón en las calles de Huamanga hacia febrero y marzo. Qué ver y dónde comer.",
     consejo:
       "Llevar ropa que se pueda mojar: el agua, el talco y la espuma son parte esencial de la fiesta.",
     frase: "Cómo vivir el Carnaval Ayacuchano",
@@ -89,10 +93,10 @@ export const festividades: Festividad[] = [
       poster: "/videos/lugares-visitar/abuelos-quinua-poster.webp",
       etiqueta: "Los Abuelos de Quinua",
     },
-    preguntasTitulo: "Antes de salir a bailar",
+    preguntasTitulo: "Preguntas frecuentes sobre el carnaval",
     preguntasImagen: {
       src: "/imagenes-reales/carnaval-ayacuchano/danzantes-carnaval.webp",
-      alt: "Tres danzantes del carnaval con trajes de cintas de colores",
+      alt: "Danzante de carnaval con poncho y sombrero bailando en una calle decorada con cintas y globos",
     },
     escenasClips: [
       {
@@ -116,8 +120,6 @@ export const festividades: Festividad[] = [
         alt: "Vista aérea del desfile de comparsas en la Plaza Mayor, con filas de bailarinas de blanco",
       },
     ],
-    preguntasTexto:
-      "El carnaval se vive entre música, comparsas, gastronomía y encuentros en las calles de Huamanga. Si planeas asistir, estas son algunas preguntas útiles para organizar tu visita.",
     preguntas: [
       {
         pregunta: "¿Dónde se vive el Carnaval Ayacuchano?",
@@ -127,12 +129,12 @@ export const festividades: Festividad[] = [
       {
         pregunta: "¿Cuántos días dura?",
         respuesta:
-          "Los días centrales suelen extenderse por cinco días, aunque las actividades previas comienzan antes. En 2026, la celebración oficial se realizó del 14 al 18 de febrero. Como las fechas cambian cada año, consulta el cronograma de la Municipalidad Provincial de Huamanga antes de viajar.",
+          "Los días centrales suelen ser cinco, aunque las actividades previas comienzan antes. En 2026, la celebración oficial se realizó del 14 al 18 de febrero. Como las fechas cambian cada año, consulta el cronograma de la Municipalidad Provincial de Huamanga antes de viajar.",
       },
       {
-        pregunta: "¿Qué comparsas no te puedes perder?",
+        pregunta: "¿Qué comparsas puedes conocer?",
         respuesta:
-          "En 2026 participaron más de 200 comparsas, según información difundida por Andina. Entre las agrupaciones que puedes conocer están Los Legendarios Abuelos de Quinua, Cangallo Señorial, Cangallo Corazón, Sentimiento Fajardino y el Centro Cultural UQIS de Quispillacta. La cantidad de participantes y las agrupaciones pueden variar cada año.",
+          "Para 2026 se anunció la participación de más de 200 comparsas, según información difundida por Andina. Entre las agrupaciones que puedes conocer están Los Legendarios Abuelos de Quinua, Cangallo Señorial, Cangallo Corazón, Sentimiento Fajardino y el Centro Cultural UQIS de Quispillacta. La cantidad de participantes y las agrupaciones pueden variar cada año.",
       },
       {
         pregunta: "¿Cómo se despide el Carnaval?",
@@ -140,15 +142,15 @@ export const festividades: Festividad[] = [
           "La celebración culmina con la lectura del testamento y la quema simbólica del Ño Carnavalón, una tradición que reúne a las comparsas y al público en la Plaza Mayor de Huamanga.",
       },
       {
-        pregunta: "Antes de bailar, ¿dónde comer comida ayacuchana?",
+        pregunta: "¿Dónde comer comida ayacuchana antes de la fiesta?",
         respuesta:
-          "A solo 7 minutos de la Plaza Mayor, el Restaurante Las Flores ofrece desayunos y almuerzos con sabor ayacuchano. Una buena opción para recargar energías antes de salir a disfrutar de las comparsas.",
+          "A solo siete minutos de la Plaza Mayor, el Restaurante Las Flores ofrece desayunos y almuerzos con sabor ayacuchano. Una buena opción para recargar energías antes de salir a disfrutar de las comparsas.",
         carta: true,
       },
       {
         pregunta: "¿Dónde descansar después de la fiesta?",
         respuesta:
-          "A solo 10 minutos de la Plaza de Armas, el Hotel Umaru, ubicado en el valle de Huatatas, ofrece un ambiente tranquilo rodeado de naturaleza, con piscina al aire libre, jardines y terrazas con vistas al valle. Es una alternativa para descansar lejos del bullicio del centro.",
+          "A solo diez minutos de la Plaza Mayor, el Hotel Umaru, ubicado en el valle de Huatatas, ofrece un ambiente tranquilo rodeado de naturaleza, con piscina al aire libre, jardines y terrazas con vistas al valle. Es una alternativa para descansar lejos del bullicio del centro.",
       },
       {
         pregunta: "¿Cómo organizar tu día de carnaval?",
@@ -156,9 +158,9 @@ export const festividades: Festividad[] = [
           "Empieza con un desayuno o almuerzo en Las Flores, continúa con el recorrido de las comparsas por Huamanga y termina el día descansando en el Hotel Umaru. Así podrás combinar la fiesta con un momento de tranquilidad.",
       },
     ],
-    comparsasTitulo: "Las comparsas, el alma del Carnaval",
+    comparsasTitulo: "Las comparsas del Carnaval",
     comparsasTexto:
-      "Más de 200 comparsas de Huamanga y provincias como Cangallo, Huanta y Víctor Fajardo participan en la celebración. Cada agrupación aporta sus propias canciones, vestimentas y formas de bailar, convirtiendo las calles en un gran encuentro de música y tradición.",
+      "Una comparsa es un grupo de bailarines que cantan acompañados de músicos.",
     comparsas: [
       {
         imagen: "/imagenes-reales/carnaval-ayacucho/abuelos-quinua.webp",
@@ -182,7 +184,7 @@ export const festividades: Festividad[] = [
         imagen: "/imagenes-reales/carnaval-ayacuchano/sentimiento-fajardino.webp",
         nombre: "Sentimiento Fajardino",
         descripcion:
-          "Comparsa de la provincia de Víctor Fajardo que lleva a Huamanga el pumpín fajardino, expresión musical declarada Patrimonio Cultural de la Nación. Sus canciones combinan picardía y crítica social, y sus cerca de 320 músicos y danzantes destacan por sus trajes morados.",
+          "Comparsa de la provincia de Víctor Fajardo que lleva a Huamanga el pumpín fajardino, expresión musical declarada Patrimonio Cultural de la Nación en 2022. Sus canciones combinan picardía y crítica social, y sus cerca de 320 músicos y danzantes destacan por sus trajes morados.",
       },
     ],
   },
@@ -195,11 +197,13 @@ export const festividades: Festividad[] = [
     fecha: "Marzo / Abril",
     reconocimiento: "Patrimonio Cultural de la Nación (2022)",
     lugarPrincipal: "Centro histórico de Huamanga",
-    heroTitulo: "Semana Santa de Ayacucho, festividad religiosa y cultural más importante del Perú",
+    heroTitulo: "Semana Santa de Ayacucho, Patrimonio Cultural de la Nación",
     imagen: "/imagenes-reales/galeria/festividades/samana-santa-uno.webp",
     imagenSecundaria: "/imagenes-reales/galeria/festividades/semana-santa-tres.webp",
     descripcion:
-      "Con raíces en la época virreinal y más de 150 años de celebración ininterrumpida, la Semana Santa de Ayacucho reúne procesiones, rituales católicos y tradiciones andinas en las calles de Huamanga. Declarada Patrimonio Cultural de la Nación en 2022, es una de las festividades religiosas y culturales más representativas del Perú. Sus celebraciones centrales se extienden durante once días, desde el Jueves de Pasión hasta el Domingo de Resurrección.",
+      "Con raíces en la época virreinal y más de 150 años de celebración ininterrumpida, la Semana Santa de Ayacucho reúne procesiones, rituales católicos y tradiciones andinas en las calles de Huamanga. Es una de las festividades religiosas y culturales más representativas del Perú. Sus celebraciones centrales se extienden durante once días, desde el Jueves de Pasión hasta el Domingo de Resurrección.",
+    metaDescripcion:
+      "Once días de procesiones en el centro histórico de Huamanga, del Jueves de Pasión al Domingo de Resurrección. Qué ver y dónde comer.",
     consejo:
       "Llegar con anticipación a la Plaza Mayor para presenciar la salida de las procesiones; los hospedajes se llenan con semanas de anticipación.",
     frase: "Cómo vivir la Semana Santa de Ayacucho",
@@ -217,10 +221,8 @@ export const festividades: Festividad[] = [
       poster: "/videos/festividades/semana-santa-seccion-poster.webp",
     },
     diasTitulo: "Los días de Semana Santa",
-    diasTexto:
-      "Del Jueves de Pasión al Domingo de Resurrección, Huamanga vive jornadas de fe y tradición, con procesiones, misas y rituales propios de cada día. Descubre las celebraciones más representativas en este recorrido.",
-    preguntasTitulo: "Antes de acompañar la procesión",
-    preguntasTexto: "Fe, flores y tradición llenan las calles de Huamanga durante la Semana Santa. Descubre dónde vivir las principales celebraciones y cómo organizar tu visita.",
+    diasTexto: "Cada jornada tiene su procesión o su ritual propio.",
+    preguntasTitulo: "Preguntas frecuentes sobre la Semana Santa",
     preguntasImagen: {
       src: "/imagenes-reales/galeria/festividades/samana-santa-uno.webp",
       alt: "Anda iluminada avanzando entre miles de fieles en una procesión nocturna de Huamanga",
@@ -237,7 +239,7 @@ export const festividades: Festividad[] = [
           "Las celebraciones abarcan once días, del Jueves de Pasión al Domingo de Resurrección. En 2026, se realizaron del 26 de marzo al 5 de abril. Como las fechas cambian cada año según el calendario de Pascua, consulta el programa oficial de la Municipalidad Provincial de Huamanga antes de viajar.",
       },
       {
-        pregunta: "¿Qué procesiones no te puedes perder?",
+        pregunta: "¿Qué procesiones puedes conocer?",
         respuesta:
           "Entre los momentos más representativos están el Miércoles de Encuentro, cuando Jesús Nazareno y la Virgen Dolorosa se reúnen en medio de miles de velas, y la procesión del Santo Sepulcro, el Viernes Santo, acompañada por fieles en un ambiente de recogimiento. También puedes conocer las tradiciones del Sábado de Gloria, que varían según la programación de cada año.",
       },
@@ -247,20 +249,20 @@ export const festividades: Festividad[] = [
           "El Sábado de Gloria reúne diversas actividades tradicionales y preparativos para la celebración pascual. La festividad culmina el Domingo de Resurrección con la procesión del Señor Resucitado, que recorre la Plaza Mayor al amanecer.",
       },
       {
-        pregunta: "Antes de la procesión, ¿dónde comer comida ayacuchana?",
+        pregunta: "¿Dónde comer comida ayacuchana antes de las procesiones?",
         respuesta:
-          "A solo 7 minutos de la Plaza Mayor, el Restaurante Las Flores sirve desayunos y almuerzos con sabor ayacuchano desde 1980. Una buena opción para disfrutar de la gastronomía local antes de salir a acompañar las procesiones.",
+          "A solo siete minutos de la Plaza Mayor, el Restaurante Las Flores sirve desayunos y almuerzos con sabor ayacuchano desde 1980. Una buena opción para disfrutar de la gastronomía local antes de salir a acompañar las procesiones.",
         carta: true,
       },
       {
         pregunta: "¿Dónde descansar después de las procesiones?",
         respuesta:
-          "A 10 minutos de la Plaza de Armas, el Hotel Umaru, ubicado en el valle de Huatatas, ofrece un ambiente tranquilo rodeado de naturaleza, con piscina al aire libre, jardines y terrazas con vistas al valle. Durante la Semana Santa, la demanda de alojamiento puede aumentar, por lo que conviene reservar con anticipación.",
+          "A diez minutos de la Plaza Mayor, el Hotel Umaru, ubicado en el valle de Huatatas, ofrece un ambiente tranquilo rodeado de naturaleza, con piscina al aire libre, jardines y terrazas con vistas al valle. Durante la Semana Santa, la demanda de alojamiento puede aumentar, por lo que conviene reservar con anticipación.",
       },
       {
         pregunta: "¿Cómo organizar tu día en Semana Santa?",
         respuesta:
-          "Empieza con un desayuno o almuerzo en Las Flores, a 7 minutos de la Plaza Mayor. Después, recorre el centro histórico y acompaña las procesiones programadas para ese día. Al terminar, puedes descansar en el Hotel Umaru, a 10 minutos, y disfrutar de un ambiente tranquilo lejos del bullicio del centro.",
+          "Empieza con un desayuno o almuerzo en Las Flores, a siete minutos de la Plaza Mayor. Después, recorre el centro histórico y acompaña las procesiones programadas para ese día. Al terminar, puedes descansar en el Hotel Umaru, a diez minutos, y disfrutar de un ambiente tranquilo lejos del bullicio del centro.",
       },
     ],
     escenasClips: [
@@ -395,7 +397,9 @@ export const festividades: Festividad[] = [
       "Asistir temprano a la ceremonia oficial en el Santuario Histórico Pampa de Ayacucho y complementar con una visita a Quinua, Pueblo con Encanto, y sus ceramistas.",
     frase: "Cómo vivir el 9 de Diciembre",
     escenas: "Historia, memoria y libertad: así se vive el 9 de Diciembre.",
-    dato: "El monumento conmemorativo de la Pampa de Ayacucho se alza en el lugar donde se libró la batalla y rinde homenaje a quienes participaron en esta gesta histórica.",
+    dato: "El obelisco de la Pampa de Ayacucho mide 44 metros y se alza en el lugar donde se libró la batalla.",
+    metaDescripcion:
+      "Ceremonia cívico-militar y escenificación de la Batalla de Ayacucho en la Pampa de Ayacucho, en Quinua. Qué ver y cómo llegar.",
     clipTags: [
       "Escenificación de la batalla",
       "Obelisco y los 6 generales",
@@ -407,9 +411,8 @@ export const festividades: Festividad[] = [
       card: "/videos/festividades/9-de-diciembre-card.mp4",
       poster: "/videos/festividades/9-de-diciembre-poster.webp",
     },
-    cronologiaTitulo: "Cronograma del 9 de diciembre",
-    cronologiaTexto:
-      "Cada 9 de diciembre, el Santuario Histórico Pampa de Ayacucho, en Quinua, acoge actividades oficiales para recordar la batalla y rendir homenaje a sus protagonistas. El programa puede variar cada año.",
+    cronologiaTitulo: "Actividades del 9 de diciembre",
+    cronologiaTexto: "El programa puede variar cada año.",
     cronologia: [
       {
         momento: "Ceremonia central",
@@ -445,9 +448,7 @@ export const festividades: Festividad[] = [
         alt: "Vista aérea de la escenificación de la batalla en la Pampa de Ayacucho",
       },
     ],
-    preguntasTitulo: "Antes de ir a la Pampa de Ayacucho",
-    preguntasTexto:
-      "Historia, memoria y paisajes andinos se encuentran en Quinua. Descubre qué actividades puedes presenciar y cómo organizar tu visita.",
+    preguntasTitulo: "Preguntas frecuentes sobre el 9 de diciembre",
     preguntasImagen: {
       src: "/imagenes-reales/9-de-diciembre/obelisco-de-quinua.webp",
       alt: "Visitantes frente al obelisco de la Pampa de Ayacucho, en Quinua",
@@ -456,7 +457,7 @@ export const festividades: Festividad[] = [
       {
         pregunta: "¿Qué se conmemora el 9 de diciembre?",
         respuesta:
-          "Se recuerda la Batalla de Ayacucho de 1824, en la que el Ejército Unido Libertador, al mando de Antonio José de Sucre, derrotó a las fuerzas realistas en un enfrentamiento decisivo para la independencia del Perú y la emancipación sudamericana. Desde 2021, el 9 de diciembre es feriado nacional, según la Ley N.º 31381.",
+          "Se recuerda la Batalla de Ayacucho de 1824, en la que el Ejército Unido Libertador, al mando de Antonio José de Sucre, derrotó a las fuerzas realistas en un enfrentamiento decisivo para la independencia del Perú y la emancipación sudamericana. Es feriado nacional desde 2022, según la Ley N.º 31381.",
       },
       {
         pregunta: "¿Dónde se vive la conmemoración?",
@@ -464,30 +465,30 @@ export const festividades: Festividad[] = [
           "En el Santuario Histórico Pampa de Ayacucho, en Quinua, donde se libró la batalla. Cada año, el lugar acoge una ceremonia cívico-militar y una escenificación histórica cuyo programa y número de participantes pueden variar.",
       },
       {
-        pregunta: "¿Cómo llego a la Pampa de Ayacucho?",
+        pregunta: "¿Cómo llegar a la Pampa de Ayacucho?",
         respuesta:
           "El Santuario se encuentra en el distrito de Quinua, a unos 37 km de Huamanga, en las faldas del cerro Condorcunca. Puedes llegar por carretera en vehículo particular o mediante un tour desde la ciudad. Para el 9 de diciembre, consulta los horarios, accesos y posibles restricciones con las autoridades locales.",
       },
       {
-        pregunta: "¿Qué puedo ver en el Santuario?",
+        pregunta: "¿Qué puedes ver en el Santuario?",
         respuesta:
           "Puedes visitar el obelisco conmemorativo y recorrer la planicie donde se libró la batalla, rodeada de paisajes andinos. Muy cerca se encuentra Quinua, conocido por su tradición alfarera y sus talleres de cerámica, ideales para complementar la visita.",
       },
       {
-        pregunta: "Antes de la ceremonia, ¿dónde comer comida ayacuchana?",
+        pregunta: "¿Dónde comer comida ayacuchana antes de la ceremonia?",
         respuesta:
-          "A solo 7 minutos de la Plaza Mayor, el Restaurante Las Flores sirve desayunos y almuerzos con sabor ayacuchano desde 1980. Una buena opción para empezar el día antes de viajar hacia la Pampa de Ayacucho.",
+          "A solo siete minutos de la Plaza Mayor, el Restaurante Las Flores sirve desayunos y almuerzos con sabor ayacuchano desde 1980. Una buena opción para empezar el día antes de viajar hacia la Pampa de Ayacucho.",
         carta: true,
       },
       {
         pregunta: "¿Dónde descansar después de la jornada?",
         respuesta:
-          "A 10 minutos de la Plaza de Armas, el Hotel Umaru, ubicado en el valle de Huatatas, ofrece un entorno tranquilo rodeado de naturaleza, con piscina al aire libre, jardines y terrazas con vistas al valle, lejos del bullicio del centro.",
+          "A diez minutos de la Plaza Mayor, el Hotel Umaru, ubicado en el valle de Huatatas, ofrece un entorno tranquilo rodeado de naturaleza, con piscina al aire libre, jardines y terrazas con vistas al valle, lejos del bullicio del centro.",
       },
       {
         pregunta: "¿Cómo organizar tu día del 9 de diciembre?",
         respuesta:
-          "Empieza con un desayuno o almuerzo en Las Flores, a 7 minutos de la Plaza Mayor. Después, viaja a la Pampa de Ayacucho para asistir a las actividades conmemorativas y conocer el campo histórico. Al regresar, puedes descansar en el Hotel Umaru, a 10 minutos, y terminar el día en un ambiente tranquilo.",
+          "Empieza con un desayuno o almuerzo en Las Flores, a siete minutos de la Plaza Mayor. Después, viaja a la Pampa de Ayacucho para asistir a las actividades conmemorativas y conocer el campo histórico. Al regresar, puedes descansar en el Hotel Umaru, a diez minutos, y terminar el día en un ambiente tranquilo.",
       },
     ],
   },

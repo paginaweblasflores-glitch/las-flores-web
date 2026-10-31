@@ -153,7 +153,7 @@ export const Route = createFileRoute("/")({
               name: "¿Qué restaurantes hay cerca de la Plaza de Armas de Ayacucho?",
               acceptedAnswer: {
                 "@type": "Answer",
-                text: "Restaurante Las Flores se encuentra ubicado a pocas cuadras del centro histórico en Jr. José Olaya 106, Huamanga — Ayacucho.",
+                text: "Restaurante Las Flores se encuentra en Jr. José Olaya 106, Huamanga — Ayacucho, a siete minutos de la Plaza Mayor.",
               },
             },
           ],
@@ -171,7 +171,7 @@ export const Route = createFileRoute("/")({
 function PlatosTipicosGrid({
   platos,
 }: {
-  platos: { img: string; nombre: string; desc: string }[];
+  platos: { img: string; nombre: string; ocasion: string; desc: string }[];
 }) {
   const [activeNombre, setActiveNombre] = useState<string | null>(null);
 
@@ -212,7 +212,7 @@ function PlatosTipicosGrid({
               </div>
               <div className="dish-card-overlay">
                 <span className="text-chilca font-bold text-[10px] uppercase tracking-[0.25em] mb-1">
-                  Plato Tradicional
+                  {p.ocasion}
                 </span>
                 <h4 className="font-serif text-lg font-bold text-piedra mb-1">{p.nombre}</h4>
                 <p className="text-xs text-piedra/80 leading-relaxed">{p.desc}</p>
@@ -697,22 +697,26 @@ function Index() {
               {
                 img: "/imagenes-reales/seccion-gastronomia/puca-picante.webp",
                 nombre: "Puca Picante",
-                desc: "Emblemático guiso de intenso color rojo a base de papa, maní tostado, betarraga y chicharrón de cerdo. Un clásico de festividades y picanterías ayacuchanas.",
+                ocasion: "Festividades y picanterías",
+                desc: "Puca significa rojo en quechua. Es un guiso de intenso color rojo. Lleva papa, maní tostado, betarraga y chicharrón de cerdo.",
               },
               {
                 img: "/imagenes-reales/seccion-gastronomia/mondongo ayacuchano.webp",
                 nombre: "Mondongo Ayacuchano",
-                desc: "Contundente caldo dominical preparado con maíz mote, carnes, panza y hierbabuena. Un reparador desayuno tradicional de la sierra.",
+                ocasion: "Mañanas de domingo",
+                desc: "Es un caldo de maíz mote con carnes y panza. Lleva hierbabuena.",
               },
               {
                 img: "/imagenes-reales/seccion-gastronomia/cuy-frito-ayacuchano.webp",
                 nombre: "Cuy Frito Ayacuchano",
-                desc: "Plato crujiente y emblemático de la gastronomía andina. Una herencia culinaria prehispánica presente en celebraciones tradicionales.",
+                ocasion: "Celebraciones y picanterías",
+                desc: "Es un plato crujiente hecho con cuy. El consumo de este animal andino se remonta a la época prehispánica.",
               },
               {
                 img: "/imagenes-reales/seccion-gastronomia/chorizo-ayacuchano.webp",
                 nombre: "Chorizo Ayacuchano",
-                desc: "Carne de cerdo finamente picada y macerada en ají panca, servida sin embutir. Un manjar tradicional especialmente popular en Semana Santa.",
+                ocasion: "Semana Santa",
+                desc: "Es carne de cerdo finamente picada y macerada en ají panca. Se sirve sin embutir.",
               },
             ];
             return <PlatosTipicosGrid platos={PLATOS} />;
@@ -879,7 +883,7 @@ function Index() {
       <section className="relative w-full">
         <img
           src={ayacuchoHero}
-          alt="Vista andina al atardecer"
+          alt="Vista aérea de la Plaza de Armas de Ayacucho al atardecer"
           width={1920}
           height={800}
           loading="lazy"
@@ -895,8 +899,7 @@ function Index() {
             De esta tierra nace Las Flores
           </h2>
           <p className="mt-6 max-w-[40ch] text-piedra/80 text-sm md:text-base leading-relaxed">
-            Ven a compartir nuestra tradición en la mesa o disfruta los sabores de Ayacucho desde
-            casa.
+            Desde 1980 servimos cocina ayacuchana a siete minutos de la Plaza Mayor.
           </p>
           <div className="mt-10 flex flex-col sm:flex-row gap-4">
             <Link
@@ -910,7 +913,7 @@ function Index() {
               onClick={() => setIsMenuOpen(true)}
               className="inline-flex items-center justify-center gap-3 px-8 py-4 border border-piedra/30 text-piedra text-[11px] uppercase tracking-[0.25em] font-bold hover:bg-piedra/10 transition-colors rounded-sm cursor-pointer"
             >
-              Pedir por Delivery
+              Pide por Delivery
             </button>
           </div>
         </div>

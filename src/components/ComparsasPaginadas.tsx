@@ -19,7 +19,9 @@ export function ComparsasPaginadas({ comparsas, titulo, texto }: ComparsasPagina
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
         <h2 className="font-serif text-3xl md:text-5xl leading-tight">{titulo ?? "Comparsas del Carnaval"}</h2>
         {texto && (
-          <p className="text-nogal/70 text-base md:text-lg leading-relaxed self-center max-w-[62ch]">{texto}</p>
+          <p className="text-nogal/70 text-base leading-[1.7] md:self-end md:justify-self-end md:text-right max-w-[36ch]">
+            {texto}
+          </p>
         )}
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-x-3 gap-y-10 md:gap-x-5 mb-10">
@@ -48,7 +50,7 @@ export function ComparsasPaginadas({ comparsas, titulo, texto }: ComparsasPagina
             type="button"
             onClick={() => setPage(i)}
             aria-label={`Ver comparsas ${i + 1}`}
-            className={`w-9 h-9 rounded-md flex items-center justify-center text-xs font-semibold border-2 transition-colors ${
+            className={`w-9 h-9 rounded-md flex items-center justify-center text-xs font-semibold border transition-colors ${
               i === page
                 ? "border-eucalipto bg-eucalipto text-piedra"
                 : "border-nogal text-nogal/60 hover:bg-nogal/5"

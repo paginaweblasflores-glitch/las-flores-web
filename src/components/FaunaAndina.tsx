@@ -2,6 +2,8 @@ import { useEffect, useRef, useState } from "react";
 
 interface EspecieFauna {
   nombre: string;
+  /** Nombre en quechua, si lo tiene; se muestra bajo el nombre. */
+  quechua?: string;
   imagen: string;
   descripcion: string;
 }
@@ -9,33 +11,36 @@ interface EspecieFauna {
 const ESPECIES: EspecieFauna[] = [
   {
     nombre: "Colibrí",
+    quechua: "qinti",
     imagen: "/imagenes-reales/fauna/colibri.webp",
     descripcion:
-      "Presente en los valles y campiñas de la región, el colibrí es una diminuta y fascinante ave, fundamental como polinizador natural para la preservación de la variada flora andina. Observar su ágil y veloz vuelo estacionario entre las flores silvestres brinda una excelente oportunidad para conectar con la delicada belleza de la naturaleza local.",
+      "Vive en los valles y campiñas de Ayacucho. Se alimenta del néctar de las flores silvestres y las poliniza. Se mantiene en el aire frente a las flores con un vuelo estacionario.",
   },
   {
     nombre: "Cernícalo",
+    quechua: "killinchu",
     imagen: "/imagenes-reales/fauna/cernicalo.webp",
     descripcion:
-      "Presente en los cielos y valles de la región, el cernícalo es una pequeña y veloz ave rapaz andina, fundamental para el equilibrio ecológico por su rol en el control natural de plagas agrícolas.",
+      "Vuela sobre los cielos y valles de Ayacucho. Es una pequeña ave rapaz andina y veloz. Contribuye al control natural de las plagas agrícolas.",
   },
   {
     nombre: "Cóndor Andino",
     imagen: "/imagenes-reales/fauna/condor.webp",
     descripcion:
-      "Presente en las alturas de Lucanas (destacando el Valle de Sondondo) y Sucre, el cóndor andino es un ave sagrada mensajera de los Apus y vital para el ecosistema. Visitar estos miradores naturales ofrece una inigualable oportunidad para admirar el majestuoso vuelo de este símbolo milenario en su hábitat.",
+      "Habita las alturas de Lucanas (sobre todo el Valle de Sondondo) y de Sucre. En la cosmovisión andina es el mensajero de los Apus y un símbolo milenario. También es vital para el ecosistema.",
   },
   {
     nombre: "Halcón Peregrino",
+    quechua: "waman",
     imagen: "/imagenes-reales/fauna/halcon.webp",
     descripcion:
-      "Presente en los altos riscos y cañones de la región, el halcón peregrino es una imponente ave rapaz y el animal más veloz del planeta, crucial como depredador tope para el equilibrio del ecosistema andino. Avistar su espectacular vuelo en picada durante sus cacerías brinda una excelente oportunidad para maravillarse con la imponente vida silvestre local.",
+      "Habita los altos riscos y cañones de Ayacucho. Es el animal más veloz del planeta cuando cae en picada. Como depredador tope mantiene el equilibrio del ecosistema andino.",
   },
   {
     nombre: "Vicuña",
     imagen: "/imagenes-reales/fauna/vicuna.webp",
     descripcion:
-      "Presente en las planicies altoandinas, especialmente en la Reserva Nacional Pampa Galeras, la vicuña es un grácil camélido silvestre, símbolo patrio y poseedor de la fibra más fina del mundo. Recorrer esta reserva protegida brinda una excelente oportunidad para admirar a esta invaluable especie en total libertad.",
+      "Habita las planicies altoandinas (sobre todo la Reserva Nacional Pampa Galeras). Es un camélido silvestre y un símbolo patrio. Su fibra es considerada la más fina del mundo.",
   },
 ];
 
@@ -133,7 +138,12 @@ export function FaunaAndina() {
         className="md:absolute md:bottom-0 md:left-4 md:w-full md:max-w-[22rem] min-h-[400px] md:min-h-0 md:h-[450px] bg-eucalipto text-piedra px-8 py-10 md:px-5 md:py-10 flex flex-col justify-between"
       >
         <div key={especie.nombre} className={visto ? "fauna-texto" : "opacity-0"}>
-          <h3 className="font-serif text-3xl md:text-4xl mb-5">{especie.nombre}</h3>
+          <h3 className={`font-serif text-3xl md:text-4xl ${especie.quechua ? "mb-1" : "mb-5"}`}>
+            {especie.nombre}
+          </h3>
+          {especie.quechua && (
+            <p className="mb-5 text-sm italic text-piedra/70">{especie.quechua} en quechua</p>
+          )}
           <p className="text-piedra/80 text-sm md:text-base leading-relaxed">
             {especie.descripcion}
           </p>
