@@ -26,7 +26,7 @@ describe("sección de premios de la página de inicio", () => {
     const listStart = awardsSection.indexOf("<ul", headingEnd);
 
     expect(awardsSection.slice(headingStart, headingEnd)).toContain(
-      "Distinciones",
+      "Reconocimientos",
     );
     expect(
       awardsSection.slice(headingStart, headingEnd),
