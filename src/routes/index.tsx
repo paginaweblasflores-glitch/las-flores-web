@@ -617,7 +617,7 @@ function Index() {
               Festividades de nuestra tierra
             </h2>
             <p className="text-base text-piedra/70 leading-[1.7] max-w-[36ch] md:text-right">
-              Descubre las principales festividades y cuándo se celebran.
+              Descubre las principales festividades de Ayacucho y cuándo se celebran.
             </p>
           </div>
           <FestividadesSlider />
@@ -629,7 +629,7 @@ function Index() {
         <div className="container-flores mx-auto">
           <div className="mb-16">
             <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl leading-[1.05] text-balance max-w-[28ch]">
-              Explora la belleza y lugares históricos de Ayacucho
+              Lugares históricos y naturales de Ayacucho
             </h2>
           </div>
           {/* Acordeón expandible */}
@@ -668,7 +668,7 @@ function Index() {
             <p className="text-base md:text-lg leading-[1.7] text-nogal/70 mb-8">
               En la región de Ayacucho la temporada de cada producto se rige fundamentalmente por
               el calendario andino de lluvias y de meses secos. Por eso la cocina ayacuchana tiene
-              una variedad propia y muy rica de platos típicos.
+              una variedad propia de platos típicos.
             </p>
             <Link
               to="/tesoros-ayacucho"
