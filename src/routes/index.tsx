@@ -869,7 +869,7 @@ function Index() {
               height={1000}
               loading="lazy"
               decoding="async"
-              className="w-full h-[360px] md:h-[460px] object-cover shadow-2xl"
+              className="w-full aspect-square object-cover shadow-2xl"
             />
           </div>
         </div>

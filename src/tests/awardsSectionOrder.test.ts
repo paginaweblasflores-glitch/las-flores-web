@@ -12,7 +12,7 @@ describe("sección de premios de la página de inicio", () => {
 
     expect(awardsSection).toContain('className="py-12 md:py-20 px-6"');
     expect(awardsSection).toContain('className="space-y-6 max-w-md mt-8"');
-    expect(awardsSection).toContain("h-[360px] md:h-[460px]");
+    expect(awardsSection).toContain("aspect-square");
     expect(awardsSection).not.toContain("min-h-[500px] md:min-h-[600px]");
   });
 
@@ -36,7 +36,7 @@ describe("sección de premios de la página de inicio", () => {
     expect(awardsSection).not.toContain("Ser el mejor restaurante de Ayacucho");
   });
 
-  it("llena el card con la nueva foto WebP optimizada", () => {
+  it("llena un card cuadrado con la foto WebP completa y optimizada", () => {
     const routeSource = readFileSync(homeRoutePath, "utf8");
     const awardsSection =
       routeSource.match(/\{\/\* PREMIOS \*\/\}([\s\S]*?)\{\/\* CTA FINAL \*\/\}/)?.[1] ?? "";
@@ -48,7 +48,10 @@ describe("sección de premios de la página de inicio", () => {
     expect(awardsSection).toContain(
       'src="/imagenes-reales/premios-restaurante/premios-las-flores.webp"',
     );
-    expect(awardsSection).toContain("object-cover");
+    expect(awardsSection).toContain(
+      'className="w-full aspect-square object-cover shadow-2xl"',
+    );
+    expect(awardsSection).not.toContain("h-[360px] md:h-[460px]");
     expect(existsSync(imagePath)).toBe(true);
     expect(statSync(imagePath).size).toBeLessThan(500_000);
   });
