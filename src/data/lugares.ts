@@ -41,6 +41,8 @@ export type Lugar = {
   video?: { hero: string; heroMobile: string; poster: string };
   /** Foto de la sección a pantalla completa (si falta se usa `imagen`); no se usa si hay `videoSeccion`. */
   imagenPantalla?: string;
+  /** Etiqueta (y texto alternativo) de la foto a pantalla completa; si falta se usa el nombre del lugar. */
+  etiquetaPantalla?: string;
   /** Video a pantalla completa que reemplaza la foto de la sección bajo la galería; `etiqueta` sustituye al nombre del lugar (opcional). */
   videoSeccion?: { src: string; srcMobile: string; poster: string; etiqueta?: string };
   /** Tarjetas (clip, título y descripción) para el bloque de escenas; si faltan se usan los clips genéricos. */
@@ -150,32 +152,65 @@ export const lugares: Lugar[] = [
     nombre: "Pampa de Ayacucho",
     nombreLista: "Quinua, Pueblo con Encanto",
     categoria: "Santuario Histórico",
-    heroTitulo: "Quinua, Pueblo con Encanto, donde nació la libertad de América",
-    imagen: "/imagenes-reales/seccion-turs/pampa-quinua.webp",
+    heroTitulo: "Quinua, Pueblo con Encanto",
+    imagen: "/imagenes-reales/galeria/destino/Quinua1.webp",
     imagenSecundaria: "/imagenes-reales/galeria/destino/Quinua1.webp",
+    metaDescripcion:
+      "Santuario Histórico donde se libró la batalla de Ayacucho en 1824, a 37 km de Huamanga. Obelisco de 44 metros y cerámica de Quinua.",
     descripcion:
-      "A solo cuarenta y cinco minutos de Huamanga, en el distrito de Quinua, el Santuario Histórico Pampa de Ayacucho es el escenario donde el 9 de diciembre de 1824 el Ejército Unido Libertador selló la independencia de Sudamérica. Declarado Santuario Histórico en 1980, lo corona un obelisco de mármol de 44 metros, inaugurado en 1974 al cumplirse 150 años de la batalla, con las esculturas de los seis generales que la lideraron: Sucre, Córdova, La Mar, Miller, Lara y Gamarra. A pocos minutos, Quinua —distinguido oficialmente por el Mincetur como “Pueblo con Encanto” en 2024— mantiene viva la tradición de sus ceramistas, referente de la artesanía ayacuchana.",
+      "El Santuario Histórico Pampa de Ayacucho está a 37 km de Huamanga, en el distrito de Quinua. Es el escenario donde el 9 de diciembre de 1824 el Ejército Unido Libertador selló la independencia de Sudamérica, y fue declarado Santuario Histórico en 1980.\n\nLo corona un obelisco de 44 metros revestido de mármol. A pocos minutos queda el pueblo de Quinua, reconocido por el Mincetur como “Pueblo con Encanto” en 2024, una distinción para localidades con atributos naturales y culturales auténticos que favorecen el turismo. Su cerámica, hecha con arcilla local, da forma a toritos de techo, iglesias en miniatura y figuras costumbristas. Sus saberes y prácticas son Patrimonio Cultural de la Nación desde 2019.",
     consejo:
-      "Complementar la visita con una parada en el Complejo Arqueológico Wari, ubicado en el mismo camino.",
+      "A unos 3400 m s. n. m. el clima es frío y el sol es fuerte, así que lleva abrigo, protector solar y agua. De enero a marzo llueve, por eso conviene sumar un impermeable.",
     escenasTitulo: "Pampa de Ayacucho de cerca",
-    clipTags: ["Obelisco al amanecer", "Manos ceramistas", "Iglesitas y toritos de techo", "Complejo Arqueológico Wari"],
+    clipTags: ["El obelisco", "Cerámica de Quinua", "Abuelos de Quinua", "Escenificación de la batalla"],
     mapLat: -13.0478,
     mapLng: -74.1322,
+    seccionImagen: {
+      imagen: "/imagenes-reales/pampa-de-ayacucho/pampa-obelisco.webp",
+      etiqueta: "Obelisco de la Pampa de Ayacucho",
+    },
+    imagenPantalla: "/imagenes-reales/pampa-de-ayacucho/wari.webp",
+    etiquetaPantalla: "Complejo Arqueológico Wari",
+    escenasCards: [
+      {
+        imagen: "/imagenes-reales/pampa-de-ayacucho/escena-obelisco.webp",
+        titulo: "El obelisco",
+        descripcion: "Mide 44 metros y se alza en el lugar donde se libró la batalla de Ayacucho.",
+        video: "/imagenes-reales/pampa-de-ayacucho/pampa-obelisco-clip.mp4",
+      },
+      {
+        imagen: "/imagenes-reales/pampa-de-ayacucho/escena-figuras.webp",
+        titulo: "Cerámica de Quinua",
+        descripcion: "Sus raíces combinan la herencia de la cultura Wari con influencias coloniales.",
+        video: "/imagenes-reales/pampa-de-ayacucho/pampa-figuras.mp4",
+      },
+      {
+        imagen: "/imagenes-reales/pampa-de-ayacucho/escena-abuelos.webp",
+        titulo: "Abuelos de Quinua",
+        descripcion: "Reconocida comparsa carnavalesca y danza tradicional originaria del distrito de Quinua.",
+        video: "/imagenes-reales/pampa-de-ayacucho/pampa-abuelos.mp4",
+      },
+      {
+        imagen: "/imagenes-reales/pampa-de-ayacucho/escena-escenificacion.webp",
+        titulo: "Escenificación de la batalla",
+        descripcion: "Cada 9 de diciembre se recrea la batalla de Ayacucho en la pampa.",
+        video: "/imagenes-reales/pampa-de-ayacucho/pampa-escenificacion.mp4",
+      },
+    ],
+    galeriaTitulo: "Dos visitas más en la ruta a Quinua",
     galeria: [
       {
-        imagen: "/imagenes-reales/seccion-turs/pampa-quinua.webp",
-        titulo: "Obelisco de la Pampa de Ayacucho",
-        descripcion: "Monumento de 44 metros que conmemora la batalla que selló la independencia de Sudamérica.",
+        imagen: "/imagenes-reales/pampa-de-ayacucho/ceramica-quinua.webp",
+        posicion: "50% 40%",
+        titulo: "Cerámica de Quinua",
+        descripcion:
+          "Los saberes y prácticas de su elaboración son Patrimonio Cultural de la Nación desde 2019. Los ceramistas trabajan con arcilla local y modelan toritos de techo, iglesias en miniatura y figuras costumbristas.",
       },
       {
-        imagen: "/imagenes-reales/seccion-turs/quinua-ceramica.webp",
-        titulo: "Cerámica tradicional de Quinua",
-        descripcion: "Sus saberes son Patrimonio Cultural de la Nación desde 2019; las iglesitas de techo, que coronan las casas nuevas, son una de sus piezas más emblemáticas.",
-      },
-      {
-        imagen: "/imagenes-reales/seccion-turs/complejo-wari.webp",
+        imagen: "/imagenes-reales/pampa-de-ayacucho/complejo-arqueologico-wari.webp",
         titulo: "Complejo Arqueológico Wari",
-        descripcion: "De camino a Quinua, a unos 20 km de Huamanga, se visita la capital del primer imperio andino, anterior a los incas.",
+        descripcion:
+          "Fue la capital del Estado Wari entre los años 600 y 1100 d. C. Queda a unos 22 km de la ciudad de Ayacucho, en la carretera a Quinua, y tiene un museo de sitio.",
       },
     ],
   },

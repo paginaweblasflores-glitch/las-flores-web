@@ -256,7 +256,7 @@ function LugarDetailPage() {
             <>
               <img
                 src={lugar.imagenPantalla ?? lugar.imagen}
-                alt={lugar.nombre}
+                alt={lugar.etiquetaPantalla ?? lugar.nombre}
                 loading="lazy"
                 decoding="async"
                 className="absolute inset-0 w-full h-full object-cover"
@@ -265,7 +265,7 @@ function LugarDetailPage() {
             </>
           )}
           <span className="absolute bottom-6 left-6 md:bottom-10 md:left-10 text-piedra text-[10px] uppercase tracking-[0.35em] font-semibold drop-shadow">
-            {lugar.videoSeccion?.etiqueta ?? lugar.nombre}
+            {lugar.etiquetaPantalla ?? lugar.videoSeccion?.etiqueta ?? lugar.nombre}
           </span>
         </section>
 
