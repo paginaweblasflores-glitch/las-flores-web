@@ -1,5 +1,3 @@
-import { supabase } from "./supabase";
-
 export const OFFICIAL_EMAIL = "contacto@restaurantelasflores.com";
 
 type EmailTemplate =
@@ -54,26 +52,15 @@ async function sendEmail(payload: TemplateEmail): Promise<boolean> {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),
     });
-    if (response.ok) {
-      console.info(`[Email Service]: ${payload.template} email sent.`);
-      return true;
+    if (!response.ok) {
+      console.warn("[Email Service]: Email delivery unavailable.");
+      return false;
     }
+    return true;
   } catch {
-    // Local development may not have the Vercel API route available.
+    console.warn("[Email Service]: Email delivery unavailable.");
+    return false;
   }
-
-  try {
-    const { data, error } = await supabase.functions.invoke("send-email", { body });
-    if (!error && data) {
-      console.info(`[Email Service]: ${payload.template} email sent.`);
-      return true;
-    }
-  } catch (error) {
-    console.warn(`[Email Service]: Error sending ${payload.template} email:`, error);
-  }
-
-  console.info(`[Email Service Log]: ${payload.template} notification recorded.`);
-  return false;
 }
 
 export async function sendOrderEmails(
