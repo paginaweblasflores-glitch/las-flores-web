@@ -125,15 +125,15 @@ describe("RetabloWrapper", () => {
     expect(interior).toContain("lg:mb-[14px]");
   });
 
-  it("adds 2 cm to the pediment only at desktop viewport widths of 1440 px or more", () => {
+  it("adds 2 cm to the pediment only at desktop viewport widths of 1600 px or more", () => {
     expect(wrapperSource).toMatch(
-      /@media \(min-width: 1440px\) \{[\s\S]*?\.retablo-copete \{[\s\S]*?height: calc\(6rem \+ 2cm\);/,
+      /@media \(min-width: 1600px\) \{[\s\S]*?\.retablo-copete \{[\s\S]*?height: calc\(6rem \+ 2cm\);/,
     );
     expect(wrapperSource).toMatch(
-      /@media \(min-width: 1440px\) \{[\s\S]*?\.retablo-content-layer \{[\s\S]*?padding-top: calc\(6rem \+ 2cm\);/,
+      /@media \(min-width: 1600px\) \{[\s\S]*?\.retablo-content-layer \{[\s\S]*?padding-top: calc\(6rem \+ 2cm\);/,
     );
     expect(wrapperSource).toMatch(
-      /@media \(min-width: 1440px\) \{[\s\S]*?\.retablo-house-frame \{[\s\S]*?calc\(6rem \+ 2cm\)/,
+      /@media \(min-width: 1600px\) \{[\s\S]*?\.retablo-house-frame \{[\s\S]*?calc\(6rem \+ 2cm\)/,
     );
   });
 
