@@ -706,7 +706,7 @@ function Index() {
         <div className="container-flores mx-auto grid grid-cols-1 md:grid-cols-12 gap-12 items-center">
           <div className="md:col-span-6">
             <h2 className="font-serif text-3xl sm:text-4xl md:text-6xl leading-[1.05] text-balance mb-5">
-              Distinciones
+              Reconocimientos
             </h2>
             <p className="text-base md:text-lg text-nogal/70 leading-[1.7] max-w-[46ch]">
               Una muestra de los reconocimientos otorgados a Las Flores.
