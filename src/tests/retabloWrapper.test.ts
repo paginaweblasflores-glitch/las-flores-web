@@ -110,10 +110,10 @@ describe("RetabloWrapper", () => {
     const markup = renderToStaticMarkup(
       React.createElement(RetabloWrapper, null, React.createElement("p", null, "Contenido")),
     );
-    const contentLayer = markup.match(/<div class="relative z-10 min-h-0[^"]*"[^>]*>/)?.[0] ?? "";
+    const contentLayer =
+      markup.match(/<div class="[^"]*retablo-content-layer[^"]*"[^>]*>/)?.[0] ?? "";
     const interior = markup.match(/<div class="retablo-interior[^"]*">/)?.[0] ?? "";
-    const pediment =
-      markup.match(/<div class="absolute top-0 left-0 right-0[^"]*"[^>]*>/)?.[0] ?? "";
+    const pediment = markup.match(/<div class="[^"]*retablo-copete[^"]*"[^>]*>/)?.[0] ?? "";
 
     expect(contentLayer).toContain("pt-16");
     expect(contentLayer).toContain("lg:pt-24");
@@ -123,6 +123,18 @@ describe("RetabloWrapper", () => {
     expect(interior).not.toContain("mb-[10px]");
     expect(interior).toContain("lg:mx-[14px]");
     expect(interior).toContain("lg:mb-[14px]");
+  });
+
+  it("adds 2 cm to the pediment only at desktop viewport widths of 1440 px or more", () => {
+    expect(wrapperSource).toMatch(
+      /@media \(min-width: 1440px\) \{[\s\S]*?\.retablo-copete \{[\s\S]*?height: calc\(6rem \+ 2cm\);/,
+    );
+    expect(wrapperSource).toMatch(
+      /@media \(min-width: 1440px\) \{[\s\S]*?\.retablo-content-layer \{[\s\S]*?padding-top: calc\(6rem \+ 2cm\);/,
+    );
+    expect(wrapperSource).toMatch(
+      /@media \(min-width: 1440px\) \{[\s\S]*?\.retablo-house-frame \{[\s\S]*?calc\(6rem \+ 2cm\)/,
+    );
   });
 
   it.each(["h-screen", "h-dvh"])("accepts equivalent viewport height class %s", (heightClass) => {

@@ -1,3 +1,5 @@
+import { renderTransactionalEmail } from "./_lib/emailTemplates.ts";
+
 export const config = {
   runtime: "nodejs",
 };
@@ -10,44 +12,38 @@ const ALLOWED_ORIGINS = [
   "http://localhost:5173",
   "http://localhost:4173",
 ];
-
-const ALLOWED_FROM: Record<string, string> = {
-  general: "Restaurante Las Flores <contacto@restaurantelasflores.com>",
-  pedidos: "Pedidos — Las Flores <pedidos@restaurantelasflores.com>",
-  reservas: "Reservas — Las Flores <reservas@restaurantelasflores.com>",
-  notificaciones: "Las Flores <no-reply@restaurantelasflores.com>",
-};
-const DEFAULT_FROM = ALLOWED_FROM.general;
-const REPLY_TO = "contacto@restaurantelasflores.com";
-
-const MAX_RECIPIENTS = 5;
 const MAX_BODY_BYTES = 200_000;
-const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+
+type ApiRequest = {
+  method?: string;
+  headers?: Record<string, unknown>;
+  body?: unknown;
+};
+
+type ApiResponse = {
+  setHeader: (name: string, value: string) => void;
+  status: (code: number) => ApiResponse;
+  json: (value: unknown) => ApiResponse;
+  end: () => ApiResponse;
+};
 
 function isAllowedOrigin(origin: string | null): boolean {
-  if (!origin) return true; // Same origin or non-browser server call
+  if (!origin) return true;
   if (ALLOWED_ORIGINS.includes(origin)) return true;
   return /^https:\/\/[a-z0-9-]+\.vercel\.app$/i.test(origin);
 }
 
-function resolveFrom(requested: unknown): string {
-  if (typeof requested !== "string" || !requested.trim()) return DEFAULT_FROM;
-  const raw = requested.trim();
-  const byKey = ALLOWED_FROM[raw.toLowerCase()];
-  if (byKey) return byKey;
-  const match = Object.values(ALLOWED_FROM).find(
-    (allowed) => allowed.toLowerCase() === raw.toLowerCase()
-  );
-  return match || DEFAULT_FROM;
-}
-
-export default async function handler(req: any, res: any) {
-  const origin = req.headers?.origin || req.headers?.Origin || null;
+export default async function handler(req: ApiRequest, res: ApiResponse) {
+  const originHeader = req.headers?.origin ?? req.headers?.Origin;
+  const origin = typeof originHeader === "string" ? originHeader : null;
 
   if (origin && isAllowedOrigin(origin)) {
     res.setHeader("Access-Control-Allow-Origin", origin);
     res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
-    res.setHeader("Access-Control-Allow-Headers", "authorization, x-client-info, apikey, content-type");
+    res.setHeader(
+      "Access-Control-Allow-Headers",
+      "authorization, x-client-info, apikey, content-type",
+    );
     res.setHeader("Vary", "Origin");
   }
 
@@ -63,81 +59,66 @@ export default async function handler(req: any, res: any) {
     return res.status(403).json({ error: "Origen no autorizado" });
   }
 
+  let payload: unknown;
   try {
-    const resendApiKey = process.env.RESEND_API_KEY || process.env.VITE_RESEND_API_KEY || "";
-    if (!resendApiKey) {
-      console.warn("RESEND_API_KEY no configurada en las variables de entorno de Vercel.");
-      return res.status(500).json({ error: "Servicio de correo no configurado" });
+    const rawBody = typeof req.body === "string" ? req.body : JSON.stringify(req.body ?? {});
+    if (new TextEncoder().encode(rawBody).length > MAX_BODY_BYTES) {
+      return res.status(413).json({ error: "El contenido de la solicitud es demasiado grande" });
     }
+    payload = typeof req.body === "string" ? JSON.parse(req.body) : req.body;
+  } catch {
+    return res.status(400).json({ error: "Solicitud inválida" });
+  }
 
-    const payload = typeof req.body === "string" ? JSON.parse(req.body) : req.body;
-    const { to, subject, html, from, replyTo, reply_to } = payload || {};
+  if (
+    payload === null ||
+    typeof payload !== "object" ||
+    Array.isArray(payload) ||
+    Object.keys(payload).some((key) => key !== "template" && key !== "data")
+  ) {
+    return res.status(400).json({ error: "Solicitud inválida" });
+  }
 
-    const recipients = (Array.isArray(to) ? to : [to])
-      .filter((value): value is string => typeof value === "string" && EMAIL_REGEX.test(value.trim()))
-      .map((value) => value.trim());
+  const { template, data } = payload as Record<string, unknown>;
+  if (typeof template !== "string" || !("data" in payload)) {
+    return res.status(400).json({ error: "Solicitud inválida" });
+  }
 
-    if (recipients.length === 0) {
-      return res.status(400).json({ error: "Destinatario inválido" });
-    }
-    if (recipients.length > MAX_RECIPIENTS) {
-      return res.status(400).json({ error: "Demasiados destinatarios" });
-    }
-    if (typeof subject !== "string" || !subject.trim()) {
-      return res.status(400).json({ error: "Asunto requerido" });
-    }
-    if (typeof html !== "string" || !html.trim()) {
-      return res.status(400).json({ error: "Contenido requerido" });
-    }
+  let rendered: ReturnType<typeof renderTransactionalEmail>;
+  try {
+    rendered = renderTransactionalEmail(template, data);
+  } catch {
+    return res.status(400).json({ error: "Plantilla o datos inválidos" });
+  }
 
-    const sender = resolveFrom(from);
-    const replyAddress =
-      typeof replyTo === "string" && EMAIL_REGEX.test(replyTo)
-        ? replyTo
-        : typeof reply_to === "string" && EMAIL_REGEX.test(reply_to)
-        ? reply_to
-        : REPLY_TO;
+  const resendApiKey = process.env.RESEND_API_KEY || "";
+  if (!resendApiKey) {
+    return res.status(500).json({ error: "Servicio de correo no configurado" });
+  }
 
-    const sendEmailReq = (fromAddress: string) =>
-      fetch("https://api.resend.com/emails", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${resendApiKey}`,
-        },
-        body: JSON.stringify({
-          from: fromAddress,
-          to: recipients,
-          reply_to: replyAddress,
-          subject: subject.slice(0, 200),
-          html,
-        }),
-      });
-
-    let response = await sendEmailReq(sender);
-
-    if (!response.ok) {
-      const errorText = await response.text();
-      console.error("Error en API de Resend:", errorText);
-
-      // Reintento con el remitente de pruebas si el dominio no está verificado en Resend
-      if (
-        errorText.includes("validation_error") ||
-        errorText.includes("not verified") ||
-        response.status === 403
-      ) {
-        response = await sendEmailReq("Restaurante Las Flores <onboarding@resend.dev>");
-      }
-    }
+  try {
+    const response = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${resendApiKey}`,
+      },
+      body: JSON.stringify({
+        from: rendered.from,
+        to: rendered.to,
+        reply_to: rendered.replyTo,
+        subject: rendered.subject,
+        html: rendered.html,
+      }),
+    });
 
     if (!response.ok) {
       return res.status(502).json({ error: "No se pudo enviar el correo" });
     }
 
-    const data = await response.json();
-    return res.status(200).json({ success: true, id: data?.id });
-  } catch (err: any) {
-    console.error("Error en endpoint send-email:", err);
-    return res.status(500).json({ error: "Error interno del servicio de correo" });
+    const result = await response.json();
+    return res.status(200).json({ success: true, id: result?.id });
+  } catch {
+    return res.status(502).json({ error: "No se pudo enviar el correo" });
   }
 }

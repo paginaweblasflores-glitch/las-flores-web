@@ -231,6 +231,25 @@ const RetabloWrapper = ({ children }: { children: ReactNode }) => {
             );
           }
         }
+        @media (min-width: 1440px) {
+          .retablo-copete {
+            height: calc(6rem + 2cm);
+          }
+
+          .retablo-content-layer {
+            padding-top: calc(6rem + 2cm);
+          }
+
+          .retablo-house-frame {
+            clip-path: polygon(
+              50% 0%,
+              100% calc(6rem + 2cm),
+              100% 100%,
+              0% 100%,
+              0% calc(6rem + 2cm)
+            );
+          }
+        }
 
         /* Transición 3D de puertas (sin CSS filter para evitar flatten de contexto 3D) */
         .door-left {
@@ -276,7 +295,7 @@ const RetabloWrapper = ({ children }: { children: ReactNode }) => {
 
       {/* CAPA 2: Frontón / Copete triangular con Marco de Madera caoba alineado a ras — z-50 */}
       <div
-        className="absolute top-0 left-0 right-0 z-50 h-16 lg:h-24 pointer-events-none overflow-hidden"
+        className="retablo-copete absolute top-0 left-0 right-0 z-50 h-16 lg:h-24 pointer-events-none overflow-hidden"
         aria-hidden="true"
       >
         <svg className="w-full h-full block" viewBox="0 0 1000 240" preserveAspectRatio="none">
@@ -328,7 +347,7 @@ const RetabloWrapper = ({ children }: { children: ReactNode }) => {
 
       {/* CAPA 3: Contenido rectangular — z-10 (overflow-visible para despliegue 3D) */}
       <div
-        className="relative z-10 min-h-0 pt-16 lg:pt-24 flex-1 flex flex-col justify-center overflow-visible"
+        className="retablo-content-layer relative z-10 min-h-0 pt-16 lg:pt-24 flex-1 flex flex-col justify-center overflow-visible"
         style={{ transformStyle: "preserve-3d" }}
       >
         <div
