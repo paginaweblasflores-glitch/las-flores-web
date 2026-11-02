@@ -158,7 +158,7 @@ export const festividades: Festividad[] = [
           "Empieza con un desayuno o almuerzo en Las Flores, continúa con el recorrido de las comparsas por Huamanga y termina el día descansando en el Hotel Umaru. Así podrás combinar la fiesta con un momento de tranquilidad.",
       },
     ],
-    comparsasTitulo: "Las comparsas del Carnaval",
+    comparsasTitulo: "Las comparsas más conocidas",
     comparsasTexto:
       "Una comparsa es un grupo de bailarines que cantan acompañados de músicos.",
     comparsas: [

@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/SiteHeader";
-import { Sparkles, ArrowRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 
 export const Route = createFileRoute("/familia-las-flores")({
   head: () => ({
@@ -87,19 +87,9 @@ function FamiliaLasFloresPage() {
         </div>
 
         <div className="max-w-4xl mx-auto text-center relative z-10 space-y-6">
-          <span className="text-chilca font-medium uppercase tracking-[0.3em] text-xs flex items-center justify-center gap-2">
-            <Sparkles size={14} />
-            Nuestra Gente · Nuestro Orgullo
-            <Sparkles size={14} />
-          </span>
-
           <h1 className="font-serif text-4xl md:text-6xl text-piedra font-normal leading-tight">
             Familia Las Flores
           </h1>
-
-          <p className="text-base md:text-lg text-piedra/90 max-w-3xl mx-auto leading-relaxed">
-            "Detrás de cada plato sabroso y cada sonrisa en mesa hay hombres y mujeres ayacuchanos que trabajan con dignidad, pasión y profundo amor por nuestras raíces."
-          </p>
         </div>
       </section>
 

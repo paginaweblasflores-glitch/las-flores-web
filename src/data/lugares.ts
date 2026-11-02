@@ -61,7 +61,7 @@ export const lugares: Lugar[] = [
     nombreLista: "Plaza Mayor de Ayacucho",
     categoria: "Patrimonio Colonial",
     heroTitulo: "Catedral de Ayacucho, Patrimonio Cultural de la Nación",
-    imagen: "/imagenes-reales/seccion-turs/catedral-huamanga.webp",
+    imagen: "/imagenes-reales/catedral-de-ayacucho/plaza-de-sucre.webp",
     imagenSecundaria: "/imagenes-reales/galeria/destino/Catedral1.webp",
     descripcion:
       "La Basílica Catedral de Ayacucho, dedicada a Nuestra Señora de las Nieves, está en el lado este de la Plaza Mayor de Huamanga. Su construcción empezó en 1632, cuando el obispo Francisco Verdugo puso la primera piedra, y terminó en 1672, cuarenta años después.\n\nSu fachada tiene líneas renacentistas y barrocas y tres portadas hacia la plaza. Por dentro, tres naves sostenidas por 18 columnas guardan diez retablos tallados y bañados en pan de oro. Fue declarada Patrimonio Cultural de la Nación en 1972.",

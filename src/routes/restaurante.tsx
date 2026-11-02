@@ -5,7 +5,7 @@ const heroRestauranteImg = "/imagenes-reales/hero-paginas/hero-restaurante.webp"
 const cocinaImg = "/imagenes-reales/EQUIPO/02042026-DSC05081-opt.webp";
 import { SiteFooter } from "@/components/site-footer";
 import { useState, useTransition, useEffect, useRef } from "react";
-import { Calendar, CreditCard, ChevronRight, Check, Sparkles } from "lucide-react";
+import { Calendar, CreditCard, ChevronRight, Check } from "lucide-react";
 import { SiteHeader } from "@/components/SiteHeader";
 import { MenuModal } from "@/components/MenuModal";
 import { MapaUbicacion } from "@/components/MapaUbicacion";
@@ -86,7 +86,7 @@ const chefRecommendations = [
     name: "Cuy las Flores",
     price: "S/ 85",
     description:
-      "Plato insignia, acompañado con papas nativas doradas, qapchi, choclo salteado en especias, ensalada criolla y chips de papas.",
+      "Nuestro plato insignia, acompañado de papas nativas doradas, qapchi, choclo salteado en especias, ensalada criolla y chips de papas.",
     image: "/imagenes-reales/recomendaciones-chef/cuy-las-flores.webp",
     alt: "Cuy las Flores",
   },
@@ -94,7 +94,7 @@ const chefRecommendations = [
     name: "Chicharrón Huamanguino",
     price: "S/ 70",
     description:
-      "Trozos de carne de cerdo dorados en su propia manteca, acompañado de papas sancochadas, qapchi, chips de camote y ensalada criolla.",
+      "Trozos de carne de cerdo dorados en su propia manteca, acompañados de papas sancochadas, qapchi, chips de camote y ensalada criolla.",
     image: "/imagenes-reales/recomendaciones-chef/chicharon.webp",
     alt: "Chicharrón Huamanguino",
   },
@@ -135,10 +135,6 @@ function GenerationsSection() {
               Tres generaciones al frente de Las Flores
             </h2>
           </div>
-          <p className="text-base text-nogal/60 leading-[1.7] max-w-[42ch] md:text-right">
-            Desde hace 45 años, en Las Flores mantenemos viva la tradición, compartiendo con cada
-            generación el sabor y la calidez de nuestra tierra, Ayacucho.
-          </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 xl:gap-10">
@@ -202,11 +198,8 @@ function ChefAccordionSection() {
     <section className="bg-piedra py-16 md:py-20 px-6">
       <div className="container-flores mx-auto">
         <div className="mb-6">
-          <span className="text-eucalipto font-medium uppercase tracking-[0.3em] text-xs mb-4 block">
-            Especialidad de Casa
-          </span>
           <h2 className="font-serif text-4xl md:text-5xl leading-[1.05] text-balance">
-            Recomendaciones del Chef
+            Recomendaciones del chef
           </h2>
         </div>
 
@@ -290,18 +283,9 @@ function RestaurantePage() {
 
         <div className="relative z-10 mx-auto flex w-full max-w-6xl items-center justify-center px-4 sm:px-6 lg:px-8 text-piedra">
           <div className="max-w-3xl text-center space-y-6">
-            <span className="text-chilca font-medium uppercase tracking-[0.3em] text-xs flex items-center justify-center gap-2">
-              <Sparkles size={14} />
-              Nuestra Historia
-              <Sparkles size={14} />
-            </span>
             <h1 className="font-serif text-4xl md:text-6xl text-piedra font-normal leading-tight animate-reveal-left-to-right [animation-delay:200ms]">
               Bienvenido a Nuestra Casa
             </h1>
-            <p className="mx-auto max-w-3xl text-base md:text-lg text-piedra leading-relaxed [text-shadow:0_1px_14px_rgba(14,10,8,0.55)]">
-              Tres generaciones de una misma familia han hecho de Las Flores un lugar donde la
-              cocina ayacuchana, la tradición y la hospitalidad se comparten alrededor de la mesa.
-            </p>
           </div>
         </div>
       </header>
@@ -313,14 +297,14 @@ function RestaurantePage() {
         <div className="container-flores mx-auto flex flex-col lg:flex-row items-center gap-12 md:gap-20">
           <div className="flex-1 max-w-none">
             <span className="text-chilca font-medium uppercase tracking-[0.3em] text-xs mb-6 block">
-              Familia Las Flores
+              Nuestra gente
             </span>
             <h2 className="font-serif text-4xl md:text-5xl leading-[1.1] text-balance mb-6">
-              El equipo detrás de nuestra historia
+              Familia Las Flores
             </h2>
             <p className="text-lg text-piedra/70 leading-[1.7] mb-8">
-              Conoce a quienes hacen posible cada servicio con dedicación, compromiso y la calidez
-              que distingue a Las Flores.
+              Detrás de cada plato sabroso y cada sonrisa en la mesa hay hombres y mujeres
+              ayacuchanos que trabajan con dignidad, pasión y profundo amor por nuestras raíces.
             </p>
             <Link
               to="/familia-las-flores"
@@ -354,14 +338,14 @@ function RestaurantePage() {
           </div>
           <div className="text-center md:text-left">
             <span className="text-chilca font-medium uppercase tracking-[0.3em] text-xs block mb-6">
-              Ubicación y destino
+              Huamanga, Ayacucho
             </span>
             <h2 className="font-serif text-4xl md:text-6xl leading-[1.05] mb-8 text-balance">
-              Te esperamos en Las Flores
+              Dónde estamos
             </h2>
             <p className="text-lg text-piedra/90 leading-[1.7] max-w-[52ch]">
-              Visítanos en Huamanga y disfruta de la cocina ayacuchana en un ambiente familiar,
-              donde la tradición se comparte alrededor de la mesa.
+              Estamos en el Jr. José Olaya 106, a siete minutos de la Plaza Mayor. Te esperamos para
+              disfrutar de la cocina ayacuchana en familia.
             </p>
           </div>
         </div>

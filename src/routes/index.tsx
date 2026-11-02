@@ -166,61 +166,38 @@ export const Route = createFileRoute("/")({
 
 // ─── COMPONENTES ──────────────────────────────────────────────────────────────
 
-// ─── PLATOS TÍPICOS — Tap-to-reveal en móvil ─────────────────────────────────
+// ─── PLATOS TÍPICOS — Nombre, ocasión y descripción siempre visibles bajo la foto ───
 
 function PlatosTipicosGrid({
   platos,
 }: {
   platos: { img: string; nombre: string; ocasion: string; desc: string }[];
 }) {
-  const [activeNombre, setActiveNombre] = useState<string | null>(null);
-
-  const handleCardClick = (nombre: string) => {
-    setActiveNombre((prev) => (prev === nombre ? null : nombre));
-  };
-
   return (
-    <div
-      className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
-      onTouchStart={(e) => {
-        // Si el toque fue fuera de un card, cierra el activo
-        if (!(e.target as Element).closest(".dish-card-hover")) {
-          setActiveNombre(null);
-        }
-      }}
-    >
-      {platos.map((p) => {
-        const isActive = activeNombre === p.nombre;
-        return (
-          <article key={p.nombre} className="flex flex-col group">
-            <div
-              className={`dish-card-hover aspect-[5/4] bg-black${isActive ? " dish-card-active" : ""}`}
-              onClick={() => handleCardClick(p.nombre)}
-            >
-              {/* la foto y su sombreado van juntos: así el sombreado la cubre entera, sin líneas ni parpadeo */}
-              <div className="dish-card-media">
-                <img
-                  src={p.img}
-                  alt={p.nombre}
-                  width={1000}
-                  height={800}
-                  loading="eager"
-                  decoding="async"
-                  fetchPriority="high"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              <div className="dish-card-overlay">
-                <span className="text-chilca font-bold text-[10px] uppercase tracking-[0.25em] mb-1">
-                  {p.ocasion}
-                </span>
-                <h4 className="font-serif text-lg font-bold text-piedra mb-1">{p.nombre}</h4>
-                <p className="text-xs text-piedra/80 leading-relaxed">{p.desc}</p>
-              </div>
-            </div>
-          </article>
-        );
-      })}
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-10">
+      {platos.map((p) => (
+        <article key={p.nombre} className="flex flex-col group">
+          <div className="aspect-[5/4] overflow-hidden bg-black">
+            <img
+              src={p.img}
+              alt={p.nombre}
+              width={1000}
+              height={800}
+              loading="eager"
+              decoding="async"
+              fetchPriority="high"
+              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+            />
+          </div>
+          <div className="pt-5">
+            <span className="block text-chilca font-bold text-[10px] uppercase tracking-[0.25em] mb-2">
+              {p.ocasion}
+            </span>
+            <h3 className="font-serif text-xl md:text-2xl leading-tight">{p.nombre}</h3>
+            <p className="mt-2 text-sm text-piedra/80 leading-relaxed">{p.desc}</p>
+          </div>
+        </article>
+      ))}
     </div>
   );
 }

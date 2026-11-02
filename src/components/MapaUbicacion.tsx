@@ -48,7 +48,7 @@ const DESTINOS = [
   { slug: "pampa-de-quinua", lado: "der", y: 184 },
   { slug: "abismo-puncupata", lado: "der", y: 274 },
   { slug: "vilcas-huaman", lado: "der", y: 364 },
-  { slug: "millpu", lado: "der", y: 454, lineas: ["Aguas Turquesas", "de Millpu"] },
+  { slug: "millpu", lado: "der", y: 454, lineas: ["Aguas turquesas", "de Millpu"] },
   { slug: "ritipata", lado: "izq", y: 403 },
 ] as const;
 
@@ -177,7 +177,7 @@ export function MapaUbicacion() {
         <title id="mapa-ubicacion-titulo">
           Mapa referencial de Ayacucho con el Restaurante Las Flores al centro, la Plaza Mayor de
           Huamanga a siete minutos, el aeropuerto a seis minutos y la ubicación aproximada de los lugares
-          para visitar: Pampa de Ayacucho, Abismo de Puncupata, Vilcas Huamán, Aguas Turquesas de
+          para visitar: Pampa de Ayacucho, Abismo de Puncupata, Vilcas Huamán, Aguas turquesas de
           Millpu y Nevado de Ritipata
         </title>
 
