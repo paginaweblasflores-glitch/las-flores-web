@@ -8,7 +8,7 @@ export type GaleriaItem = {
   posicion?: string;
 };
 
-/** Escena de "Un vistazo al destino": clip en bucle (`video`) con la foto como póster, y su título y descripción debajo. */
+/** Escena de la sección "… de cerca": clip en bucle (`video`) con la foto como póster, y su título y descripción debajo. */
 export type EscenaCard = { imagen: string; titulo: string; descripcion: string; video?: string };
 
 export type Lugar = {
@@ -30,7 +30,8 @@ export type Lugar = {
   consejo?: string;
   /** Imagen a pantalla completa con una etiqueta encima, entre el mapa y la galería (opcional). */
   seccionImagen?: { imagen: string; etiqueta: string };
-  escenas: string;
+  /** Título de la sección de clips ("… de cerca"); va sin descripción. */
+  escenasTitulo: string;
   /** Etiquetas de 2-4 palabras para los 4 clips de video (brief de rodaje para Marketing). */
   clipTags: [string, string, string, string];
   /** Coordenadas aproximadas para ubicar el destino en el mapa referencial de Ayacucho. */
@@ -57,44 +58,88 @@ export const lugares: Lugar[] = [
     slug: "catedral-de-ayacucho",
     numeral: "I",
     nombre: "Basílica Catedral de Ayacucho",
-    nombreLista: "Plaza de Armas de Ayacucho",
+    nombreLista: "Plaza Mayor de Ayacucho",
     categoria: "Patrimonio Colonial",
-    heroTitulo: "Donde la fe se viste de piedra y oro",
+    heroTitulo: "Catedral de Ayacucho, Patrimonio Cultural de la Nación",
     imagen: "/imagenes-reales/seccion-turs/catedral-huamanga.webp",
     imagenSecundaria: "/imagenes-reales/galeria/destino/Catedral1.webp",
     descripcion:
-      "En el corazón de la Plaza Mayor de Huamanga —la ciudad de las 33 iglesias—, la Basílica Catedral de Nuestra Señora de las Nieves data de 1632, cuando el obispo Francisco Verdugo puso la primera piedra; la construcción tomó 40 años y fue consagrada en 1672 bajo la advocación de la Virgen de las Nieves. Su fachada, de líneas renacentistas y barrocas, y sus tres naves —sostenidas por 18 columnas y 16 bóvedas— guardan diez retablos tallados y bañados en pan de oro. Declarada Patrimonio Cultural de la Nación en 1972, abre su frontis con tres portadas sobre la Plaza Mayor.",
+      "La Basílica Catedral de Ayacucho, dedicada a Nuestra Señora de las Nieves, está en el lado este de la Plaza Mayor de Huamanga. Su construcción empezó en 1632, cuando el obispo Francisco Verdugo puso la primera piedra, y terminó en 1672, cuarenta años después.\n\nSu fachada tiene líneas renacentistas y barrocas y tres portadas hacia la plaza. Por dentro, tres naves sostenidas por 18 columnas guardan diez retablos tallados y bañados en pan de oro. Fue declarada Patrimonio Cultural de la Nación en 1972.",
+    metaDescripcion:
+      "Basílica Catedral de Ayacucho, en la Plaza Mayor de Huamanga. Se construyó entre 1632 y 1672 y guarda diez retablos con pan de oro.",
     consejo:
-      "Complementar la visita con un recorrido por el centro histórico de Huamanga y sus templos coloniales: la ciudad cuenta con 33 iglesias.",
-    escenas: "Piedra, historia y luz dorada: así se vive la Basílica Catedral de Ayacucho.",
-    clipTags: [
-      "Fachada al atardecer",
-      "Retablos de pan de oro",
-      "Procesión de Semana Santa",
-      "Campanarios coloniales",
-    ],
+      "Sube al campanario por la escalera de piedra para ver la ciudad en panorámica. Si quieres más, el museo y las catacumbas están dentro de la misma Catedral.",
+    escenasTitulo: "Basílica Catedral de cerca",
+    clipTags: ["Fachada de la Catedral", "Portada y esculturas", "Naves y arcos", "Retablos de pan de oro"],
     mapLat: -13.1588,
     mapLng: -74.2239,
+    seccionImagen: {
+      imagen: "/imagenes-reales/seccion-turs/catedral-huamanga.webp",
+      etiqueta: "Fachada de la Basílica Catedral",
+    },
+    video: {
+      hero: "/videos/hero/catedral-de-ayacucho.mp4",
+      heroMobile: "/videos/hero/catedral-de-ayacucho-mobile.mp4",
+      poster: "/videos/hero/catedral-de-ayacucho-poster.webp",
+    },
+    videoSeccion: {
+      src: "/videos/lugares-visitar/plaza-mayor-de-huamanga.mp4",
+      srcMobile: "/videos/lugares-visitar/plaza-mayor-de-huamanga-mobile.mp4",
+      poster: "/videos/lugares-visitar/plaza-mayor-de-huamanga-poster.webp",
+      etiqueta: "Plaza Mayor de Huamanga",
+    },
+    escenasCards: [
+      {
+        imagen: "/imagenes-reales/catedral-de-ayacucho/escena-fachada.webp",
+        titulo: "Fachada de la Basílica Catedral",
+        descripcion: "La fachada de la Basílica Catedral da a la Plaza Mayor, en su lado este.",
+        video: "/videos/lugares-visitar/catedral-fachada.mp4",
+      },
+      {
+        imagen: "/imagenes-reales/catedral-de-ayacucho/escena-portada.webp",
+        titulo: "Portada y esculturas",
+        descripcion: "La portada tiene tres puertas de ingreso y esculturas de San Pedro y San Pablo.",
+        video: "/videos/lugares-visitar/catedral-portada.mp4",
+      },
+      {
+        imagen: "/imagenes-reales/catedral-de-ayacucho/escena-naves.webp",
+        titulo: "Naves y arcos",
+        descripcion: "El interior tiene tres naves sostenidas por 18 columnas.",
+        video: "/videos/lugares-visitar/catedral-naves.mp4",
+      },
+      {
+        imagen: "/imagenes-reales/catedral-de-ayacucho/escena-retablos.webp",
+        titulo: "Retablos de pan de oro",
+        descripcion: "Diez retablos acabados en pan de oro adornan el interior, entre ellos el del Altar Mayor.",
+        video: "/videos/lugares-visitar/catedral-retablos.mp4",
+      },
+    ],
+    galeriaTitulo: "Cuatro visitas más en Huamanga",
     galeria: [
       {
-        imagen: "/imagenes-reales/seccion-turs/catedral-huamanga.webp",
-        titulo: "Fachada de la Basílica Catedral",
-        descripcion: "Piedra labrada del siglo XVII frente a la Plaza Mayor.",
+        imagen: "/imagenes-reales/catedral-de-ayacucho/plaza-mayor-de-huamanga.webp",
+        titulo: "Plaza Mayor de Huamanga",
+        descripcion:
+          "Las casonas que la rodean datan de los siglos XVI y XVII y tienen arquerías de piedra en el primer nivel. La Basílica Catedral está en su lado este.",
       },
       {
-        imagen: "/imagenes-reales/galeria/destino/Catedral2.webp",
-        titulo: "Retablos de pan de oro",
-        descripcion: "Diez retablos tallados y bañados en pan de oro adornan sus naves.",
+        imagen: "/imagenes-reales/catedral-de-ayacucho/arco-del-triunfo.webp",
+        posicion: "50% 54%",
+        titulo: "Arco del Triunfo",
+        descripcion:
+          "Se levantó en 1910 para recordar la victoria del combate del 2 de Mayo. Está a unos cuatro minutos a pie de la Plaza Mayor.",
       },
       {
-        imagen: "/imagenes-reales/seccion-turs/catedral-semana-santa.webp",
-        titulo: "Semana Santa de Ayacucho",
-        descripcion: "La bendición de ramos y la salida del Señor Resucitado ocurren en la Basílica Catedral.",
+        imagen: "/imagenes-reales/catedral-de-ayacucho/catedral-santo-domingo.webp",
+        titulo: "Templo de Santo Domingo",
+        descripcion:
+          "Se construyó entre los siglos XVI y XVII y su fachada tiene tres arcos y dos torres. Queda en la esquina de los jirones 9 de Diciembre y María Parado de Bellido.",
       },
       {
-        imagen: "/imagenes-reales/galeria/destino/Catedral1.webp",
-        titulo: "Basílica Catedral iluminada",
-        descripcion: "Su iluminación nocturna resalta la piedra tallada de la fachada.",
+        imagen: "/imagenes-reales/catedral-de-ayacucho/mirador-de-acuchimay.webp",
+        titulo: "Mirador de Acuchimay",
+        descripcion:
+          "Desde este mirador del cerro Acuchimay, en Carmen Alto, a 2865 m s. n. m., se ve la ciudad en 360 grados. Queda a unos diez minutos en auto de la Plaza Mayor y la entrada es libre.",
       },
     ],
   },
@@ -112,7 +157,7 @@ export const lugares: Lugar[] = [
       "A solo cuarenta y cinco minutos de Huamanga, en el distrito de Quinua, el Santuario Histórico Pampa de Ayacucho es el escenario donde el 9 de diciembre de 1824 el Ejército Unido Libertador selló la independencia de Sudamérica. Declarado Santuario Histórico en 1980, lo corona un obelisco de mármol de 44 metros, inaugurado en 1974 al cumplirse 150 años de la batalla, con las esculturas de los seis generales que la lideraron: Sucre, Córdova, La Mar, Miller, Lara y Gamarra. A pocos minutos, Quinua —distinguido oficialmente por el Mincetur como “Pueblo con Encanto” en 2024— mantiene viva la tradición de sus ceramistas, referente de la artesanía ayacuchana.",
     consejo:
       "Complementar la visita con una parada en el Complejo Arqueológico Wari, ubicado en el mismo camino.",
-    escenas: "Historia, cielo abierto y memoria viva: así se vive la Pampa de Ayacucho.",
+    escenasTitulo: "Pampa de Ayacucho de cerca",
     clipTags: ["Obelisco al amanecer", "Manos ceramistas", "Iglesitas y toritos de techo", "Complejo Arqueológico Wari"],
     mapLat: -13.0478,
     mapLng: -74.1322,
@@ -139,7 +184,7 @@ export const lugares: Lugar[] = [
     slug: "abismo-puncupata",
     numeral: "III",
     nombre: "Abismo de Puncupata",
-    nombreLista: "Amanecer de Puncupata y Cañones de Qorihuillca",
+    nombreLista: "Amanecer de Puncupata y cañones de Qorihuillca",
     categoria: "Paisaje Andino",
     heroTitulo: "Abismo de Puncupata, Puerta Celestial",
     metaDescripcion:
@@ -150,7 +195,7 @@ export const lugares: Lugar[] = [
       "A unos 76 km de Huamanga, a hora y media o dos horas por carretera asfaltada, el abismo de Puncupata se abre a 4200 m s. n. m. como un gran desfiladero.\n\nUn sendero peatonal de cerca de un kilómetro, habilitado por la comunidad local, lleva hasta su borde, un mirador natural con vistas a los pueblos de Ccaccamarca y Chumbes. En el camino pastan vicuñas y, sobre el acantilado, planean las aves de altura. Se le conoce también como la «Puerta Celestial», nombre que alude a su profundidad y a sus vistas panorámicas.",
     consejo:
       "Lleva ropa abrigadora e impermeable, botas resistentes, agua y algo de comer. A 4200 m s. n. m. el clima puede cambiar rápidamente. Camina con precaución por el sendero y sigue las indicaciones de tu guía local. Mantén una distancia segura del borde, especialmente si sufres de vértigo.",
-    escenas: "Lo que verás en el recorrido por Puncupata.",
+    escenasTitulo: "Puncupata de cerca",
     clipTags: [
       "Al filo del acantilado",
       "Vicuñas en la puna",
@@ -233,7 +278,7 @@ export const lugares: Lugar[] = [
       imagen: "/imagenes-reales/vilcas-huaman/vilcas-huaman-parque.webp",
       etiqueta: "Plaza de Vilcas Huamán",
     },
-    escenas: "Lo que verás en el recorrido por Vilcas Huamán.",
+    escenasTitulo: "Vilcas Huamán de cerca",
     clipTags: ["Ushnu inca", "Templo del Sol", "Plaza ceremonial", "Halcón sagrado"],
     mapLat: -13.6558,
     mapLng: -73.95,
@@ -305,7 +350,7 @@ export const lugares: Lugar[] = [
       "Ritipata es un nevado de unos 5000 m s. n. m. en la cordillera Chonta, en el distrito de Paras (provincia de Cangallo), a unas tres horas en auto de Huamanga. En la cosmovisión andina es un apu sagrado. Su nombre viene del quechua *riti* (nieve) y *pata* (lugar elevado).\n\nEntre diciembre y abril suelen producirse nevadas. De junio a septiembre, el cielo está más despejado para recorrer las lagunas, como la Ñawi, y las cataratas cercanas. Desde el abra, a más de 4900 m s. n. m., una caminata de media hora permite acercarse al nevado. En la zona también habitan alpacas, vicuñas y vizcachas silvestres.",
     consejo:
       "Para ver nieve, visita entre diciembre y abril, aunque su presencia depende del clima. Lleva ropa térmica, chaqueta impermeable, gorro y guantes, además de agua y comida porque no hay restaurantes en el lugar. Aclimátate antes de subir a esta altitud.",
-    escenas: "Lo que verás en el recorrido por Ritipata.",
+    escenasTitulo: "Ritipata de cerca",
     clipTags: ["Camino al abra", "Lagunas de Ritipata", "Cumbres y valles andinos", "Alpacas de las faldas"],
     mapLat: -13.42917,
     mapLng: -74.69167,
@@ -370,7 +415,7 @@ export const lugares: Lugar[] = [
     id: 1,
     slug: "millpu",
     numeral: "VI",
-    nombre: "Aguas Turquesas de Millpu",
+    nombre: "Aguas turquesas de Millpu",
     categoria: "Naturaleza",
     heroTitulo: "Las aguas turquesas de Millpu",
     metaDescripcion:
@@ -381,7 +426,7 @@ export const lugares: Lugar[] = [
       "Millpu es una serie de unas 20 pozas turquesas que descienden por un cañón a unos 3600 m s. n. m. Queda en la comunidad de Circamarca, en el distrito de Huancaraylla (provincia de Víctor Fajardo). Desde Huamanga se llega en unas tres horas y media por carretera hasta Pataqocha, y de ahí se camina unos veinte minutos.\n\nEl color turquesa viene de los minerales de las rocas del río y de la luz del sol. Su nombre viene del quechua *millpuy* (tragar), porque el río desaparece en una grieta subterránea. En lluvias se forma una gran represa natural, a la que algunos llaman «garganta del diablo».",
     consejo:
       "Visita Millpu entre mayo y septiembre para ver el agua más turquesa, ya que de enero a abril las lluvias la enturbian. Lleva calzado con buen agarre para los senderos y respeta la prohibición de bañarse en las pozas, vigente desde 2018 para conservar su color.",
-    escenas: "Lo que verás en el recorrido por las pozas.",
+    escenasTitulo: "Millpu de cerca",
     clipTags: ["Pozas escalonadas", "Caídas de agua entre terrazas", "Cañón de Millpu", "Poza al pie de la caída"],
     mapLat: -13.7207,
     mapLng: -74.1339,

@@ -42,16 +42,13 @@ function LugarDetailPage() {
   );
   const clips = Array.from({ length: 4 }, (_, i) => clipsPool[i % clipsPool.length]);
 
-  // Sección "Un vistazo al destino": va arriba, antes de la imagen con el Consejo; con tarjetas verticales y a la altura de la pantalla (igual en todos los lugares; con clips si el lugar los tiene, con fotos si no).
+  // Sección de escenas ("… de cerca"): va arriba, antes de la imagen con el Consejo; con tarjetas verticales y a la altura de la pantalla (igual en todos los lugares; con clips si el lugar los tiene, con fotos si no).
   const escenasSection = (
           <section className="px-6 md:px-16 py-16 md:py-24 md:min-h-[100svh] md:flex md:flex-col md:justify-center">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
               <h2 className="font-serif text-3xl md:text-5xl leading-tight">
-                Un vistazo al destino
+                {lugar.escenasTitulo}
               </h2>
-              <p className="text-nogal/70 text-base leading-[1.7] md:self-end md:justify-self-end md:text-right max-w-[36ch]">
-                {lugar.escenas}
-              </p>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-5">
               {lugar.escenasCards
@@ -138,7 +135,7 @@ function LugarDetailPage() {
         )}
 
         <div className="relative z-10 h-full w-full flex flex-col justify-end px-6 md:px-16 pb-16 md:pb-20">
-          <h1 className="font-serif text-4xl md:text-6xl text-piedra leading-tight max-w-3xl">
+          <h1 className="font-serif text-4xl md:text-6xl text-piedra leading-tight max-w-4xl text-balance">
             {lugar.heroTitulo}
           </h1>
         </div>
@@ -219,7 +216,7 @@ function LugarDetailPage() {
             )}
             <div
               className={`grid grid-cols-1 gap-x-3 gap-y-10 md:gap-x-5 ${
-                lugar.galeria.length === 2 ? "md:grid-cols-2" : "md:grid-cols-3"
+                lugar.galeria.length === 2 || lugar.galeria.length === 4 ? "md:grid-cols-2" : "md:grid-cols-3"
               }`}
             >
               {lugar.galeria.map((item) => (
