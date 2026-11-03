@@ -14,7 +14,6 @@ import {
   GlassWater,
   Users,
   CheckCircle2,
-  Sparkles,
   ChevronUp,
   ChevronDown,
   ChevronLeft,
@@ -321,12 +320,6 @@ function EventosPage() {
         <div className="absolute inset-0 bg-gradient-to-t from-ink/90 via-ink/45 to-black/30" />
 
         <div className="max-w-4xl mx-auto text-center relative z-10 space-y-6 -mt-12">
-          <span className="text-chilca font-medium uppercase tracking-[0.3em] text-xs flex items-center justify-center gap-2">
-            <Sparkles size={14} />
-            Celebre con nosotros
-            <Sparkles size={14} />
-          </span>
-
           <h1 className="font-serif text-4xl md:text-6xl text-piedra font-normal leading-tight">
             Eventos en Ayacucho <br />
             <span className="font-normal">para cada ocasión</span>
@@ -835,4 +828,3 @@ function EventosPage() {
     </div>
   );
 }
-

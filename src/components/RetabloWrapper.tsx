@@ -231,7 +231,7 @@ const RetabloWrapper = ({ children }: { children: ReactNode }) => {
             );
           }
         }
-        @media (min-width: 1440px) {
+        @media (min-width: 1600px) {
           .retablo-copete {
             height: calc(6rem + 2cm);
           }
