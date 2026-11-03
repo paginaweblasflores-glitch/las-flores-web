@@ -4,11 +4,12 @@ const casaImg = "/imagenes-reales/EQUIPO/Gregoria.webp";
 const heroRestauranteImg = "/imagenes-reales/hero-paginas/hero-restaurante.webp";
 const cocinaImg = "/imagenes-reales/EQUIPO/02042026-DSC05081-opt.webp";
 import { SiteFooter } from "@/components/site-footer";
-import { useState, useTransition, useEffect, useRef } from "react";
+import { useState, useTransition, useEffect } from "react";
 import { Calendar, CreditCard, ChevronRight, Check } from "lucide-react";
 import { SiteHeader } from "@/components/SiteHeader";
 import { MenuModal } from "@/components/MenuModal";
 import { MapaUbicacion } from "@/components/MapaUbicacion";
+import { FestividadVideo } from "@/components/FestividadVideo";
 import { FamiliaLasFloresSection } from "../components/FamiliaLasFloresSection";
 
 export const Route = createFileRoute("/restaurante")({
@@ -73,32 +74,51 @@ const generationStories: GenerationStory[] = [
   },
 ];
 
+const VIDEOS_PLATOS = "/imagenes-reales/videos-de-platos";
+
+// Descripciones tomadas de la carta
 const chefRecommendations = [
   {
     name: "Puca Picante",
-    price: "S/ 65",
     description:
-      "Guiso de papa vieja en salsa de ají panca con maní tostado, trozos de carne de cerdo y especias, servido con arroz blanco, ensalada regional y una presa de chicharrón huamanguino.",
-    image: "/imagenes-reales/recomendaciones-chef/puca-picante.webp",
-    alt: "Puca Picante",
-  },
-  {
-    name: "Cuy las Flores",
-    price: "S/ 85",
-    description:
-      "Nuestro plato insignia, acompañado de papas nativas doradas, qapchi, choclo salteado en especias, ensalada criolla y chips de papas.",
-    image: "/imagenes-reales/recomendaciones-chef/cuy-las-flores.webp",
-    alt: "Cuy las Flores",
+      "Guiso de papa en salsa de ají panca con maní tostado, carne de cerdo y especias, servido con arroz blanco, ensalada y chicharrón.",
+    video: `${VIDEOS_PLATOS}/puca-picante.mp4`,
+    poster: `${VIDEOS_PLATOS}/puca-picante-poster.webp`,
+    alt: "Preparación y emplatado del Puca Picante",
   },
   {
     name: "Chicharrón Huamanguino",
-    price: "S/ 70",
     description:
       "Trozos de carne de cerdo dorados en su propia manteca, acompañados de papas sancochadas, qapchi, chips de camote y ensalada criolla.",
-    image: "/imagenes-reales/recomendaciones-chef/chicharon.webp",
-    alt: "Chicharrón Huamanguino",
+    video: `${VIDEOS_PLATOS}/chicharron-huamanguino.mp4`,
+    poster: `${VIDEOS_PLATOS}/chicharron-huamanguino-poster.webp`,
+    alt: "Preparación y emplatado del Chicharrón Huamanguino",
+  },
+  {
+    name: "Cuy Las Flores",
+    description:
+      "Nuestro plato insignia, acompañado de papas nativas doradas, qapchi, choclo salteado en especias, ensalada criolla y chips de papas.",
+    video: `${VIDEOS_PLATOS}/cuy-las-flores.mp4`,
+    poster: `${VIDEOS_PLATOS}/cuy-las-flores-poster.webp`,
+    alt: "Preparación y emplatado del Cuy Las Flores",
+  },
+  {
+    name: "Chancho Asado Las Flores",
+    description:
+      "Carne de cerdo macerada en distintas especias, acompañada de pastel de papa, crema de pimentón, chips de camote y ensalada hawaiana.",
+    video: `${VIDEOS_PLATOS}/chancho-asado.mp4`,
+    poster: `${VIDEOS_PLATOS}/chancho-asado-poster.webp`,
+    alt: "Preparación y emplatado del Chancho Asado Las Flores",
   },
 ];
+
+const VIDEOS_CLIENTES = "/imagenes-reales/testimonios";
+
+const clientTestimonials = [1, 2, 3, 4].map((n) => ({
+  video: `${VIDEOS_CLIENTES}/cliente-${n}.mp4`,
+  poster: `${VIDEOS_CLIENTES}/cliente-${n}-poster.webp`,
+  alt: `Testimonio ${n} de un cliente de Restaurante Las Flores`,
+}));
 
 function GenerationCard({ generation }: { generation: GenerationStory }) {
   return (
@@ -147,102 +167,57 @@ function GenerationsSection() {
   );
 }
 
-function ChefAccordionSection() {
-  const [activeIndex, setActiveIndex] = useState<number | null>(1);
-  const [isMobile, setIsMobile] = useState(false);
-  const itemRefs = useRef<(HTMLButtonElement | null)[]>([]);
-
-  useEffect(() => {
-    const mediaQuery = window.matchMedia("(max-width: 767px)");
-    const updateIsMobile = () => {
-      const mobile = mediaQuery.matches;
-      setIsMobile(mobile);
-      if (!mobile) {
-        setActiveIndex(1);
-      }
-    };
-    updateIsMobile();
-    mediaQuery.addEventListener("change", updateIsMobile);
-    return () => mediaQuery.removeEventListener("change", updateIsMobile);
-  }, []);
-
-  useEffect(() => {
-    if (!isMobile) return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visible = entries.filter((entry) => entry.isIntersecting);
-        if (visible.length === 0) return;
-
-        const bestEntry = visible.reduce((best, current) =>
-          current.intersectionRatio > best.intersectionRatio ? current : best
-        );
-
-        const index = Number(bestEntry.target.getAttribute("data-plate-index"));
-        if (!Number.isNaN(index)) {
-          setActiveIndex(index);
-        }
-      },
-      {
-        root: null,
-        rootMargin: "-45% 0px -45% 0px",
-        threshold: 0.5,
-      }
-    );
-
-    itemRefs.current.forEach((node) => node && observer.observe(node));
-    return () => observer.disconnect();
-  }, [isMobile]);
-
+function ChefVideosSection() {
   return (
     <section className="bg-piedra py-16 md:py-20 px-6">
       <div className="container-flores mx-auto">
-        <div className="mb-6">
-          <h2 className="font-serif text-4xl md:text-5xl leading-[1.05] text-balance">
-            Recomendaciones del chef
-          </h2>
-        </div>
+        <h2 className="font-serif text-4xl md:text-5xl leading-[1.05] text-balance">
+          Recomendaciones del chef
+        </h2>
 
-        <div className="mt-6 flex flex-col gap-3 md:flex-row md:h-[400px]">
-          {chefRecommendations.map((plate, index) => {
-            const isActive = !isMobile || activeIndex === index;
-            return (
-              <button
-                key={plate.name}
-                ref={(el) => { itemRefs.current[index] = el; }}
-                data-plate-index={index}
-                type="button"
-                onClick={() => setActiveIndex(index)}
-                className={`group relative overflow-hidden border border-nogal/10 bg-white text-left shadow-md transition-all duration-500 ease-out ${isActive ? "md:flex-[2.2]" : "md:flex-[0.9]"} ${isActive ? "min-h-[280px]" : "min-h-[120px]"}`}
-              >
-                <img
-                  src={plate.image}
+        <div className="mt-8 grid grid-cols-2 lg:grid-cols-4 gap-x-3 gap-y-10 md:gap-x-5">
+          {chefRecommendations.map((plate) => (
+            <article key={plate.name}>
+              <div className="relative aspect-[9/16] overflow-hidden bg-black">
+                <FestividadVideo
+                  src={plate.video}
+                  poster={plate.poster}
                   alt={plate.alt}
-                  loading={isMobile && isActive ? "eager" : "lazy"}
-                  fetchPriority={isMobile && isActive ? "high" : "low"}
-                  decoding="async"
-                  width={1000}
-                  height={800}
-                  className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105 will-change-transform"
+                  className="absolute inset-0 h-full w-full object-cover"
                 />
-                <div
-                  className={`absolute inset-0 transition-all duration-500 ${isActive ? "bg-gradient-to-t from-ink/90 via-ink/40 to-transparent" : "bg-gradient-to-t from-ink/70 via-ink/20 to-transparent"}`}
-                />
-                <div className="absolute inset-x-0 bottom-0 p-5 md:p-6 text-piedra">
-                  <div
-                    className={`transition-all duration-500 ${isActive ? "translate-y-0 opacity-100" : "translate-y-3 opacity-90"}`}
-                  >
-                    <h3 className="text-lg md:text-xl font-serif leading-tight">{plate.name}</h3>
-                    <p
-                      className={`mt-3 text-sm leading-relaxed text-piedra/80 transition-all duration-500 ${isActive ? "max-h-32 opacity-100" : "max-h-0 opacity-0 overflow-hidden"}`}
-                    >
-                      {plate.description}
-                    </p>
-                  </div>
-                </div>
-              </button>
-            );
-          })}
+              </div>
+              <div className="pt-4">
+                <h3 className="font-serif text-lg md:text-xl leading-tight">{plate.name}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-nogal/70">{plate.description}</p>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function ClientVideosSection() {
+  return (
+    <section className="bg-eucalipto text-piedra py-16 md:py-20 px-6">
+      <div className="container-flores mx-auto">
+        <h2 className="font-serif text-4xl md:text-5xl leading-[1.05] text-balance">
+          Lo que dicen quienes nos visitan
+        </h2>
+
+        <div className="mt-8 grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-5">
+          {clientTestimonials.map((t) => (
+            <div key={t.video} className="relative aspect-[9/16] overflow-hidden bg-black">
+              <FestividadVideo
+                src={t.video}
+                poster={t.poster}
+                alt={t.alt}
+                conSonido
+                className="absolute inset-0 h-full w-full object-cover"
+              />
+            </div>
+          ))}
         </div>
       </div>
     </section>
@@ -328,26 +303,24 @@ function RestaurantePage() {
         </div>
       </section>
 
-      <ChefAccordionSection />
+      <ChefVideosSection />
+
+      <ClientVideosSection />
 
       {/* CTA Reservas y Delivery */}
-      <section id="reservas" className="bg-eucalipto text-piedra py-16 md:py-32 px-6">
-        <div className="container-flores mx-auto grid items-center gap-10 md:grid-cols-[1.35fr_1fr] md:gap-16">
-          <div className="relative overflow-hidden shadow-2xl">
-            <MapaUbicacion />
-          </div>
+      <section id="reservas" className="bg-piedra text-nogal py-16 md:py-32 px-6">
+        <div className="container-flores mx-auto grid items-center gap-10 md:grid-cols-[1fr_1.35fr] md:gap-16">
           <div className="text-center md:text-left">
-            <span className="text-chilca font-medium uppercase tracking-[0.3em] text-xs block mb-6">
-              Huamanga, Ayacucho
-            </span>
             <h2 className="font-serif text-4xl md:text-6xl leading-[1.05] mb-8 text-balance">
-              Dónde estamos
+              ¿Dónde nos encuentras?
             </h2>
-            <p className="text-lg text-piedra/90 leading-[1.7] max-w-[52ch]">
-              Estamos en el Jr. José Olaya 106, a siete minutos de la Plaza Mayor. Te esperamos para
-              disfrutar de la cocina ayacuchana en familia.
+            <p className="text-lg text-nogal/80 leading-[1.7] max-w-[52ch]">
+              Estamos en Huamanga, Ayacucho. Nuestra dirección es el Jr. José Olaya 106, a siete minutos
+              de la Plaza Mayor y a seis del aeropuerto Alfredo Mendívil Duarte. Atendemos de lunes a viernes de 7:00&nbsp;a.&nbsp;m.
+              a 5:30&nbsp;p.&nbsp;m., y los sábados y domingos de 7:00&nbsp;a.&nbsp;m. a 6:00&nbsp;p.&nbsp;m.
             </p>
           </div>
+          <MapaUbicacion />
         </div>
       </section>
 

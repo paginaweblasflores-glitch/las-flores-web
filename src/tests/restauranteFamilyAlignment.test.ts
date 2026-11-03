@@ -7,7 +7,7 @@ const routeSource = readFileSync(resolve(process.cwd(), "src/routes/restaurante.
 describe("alineación de la sección de familia en restaurante", () => {
   it("comparte el ancho de las tarjetas de generaciones para alinear sus bordes", () => {
     const familySection =
-      routeSource.match(/\{\/\* Familia Las Flores \*\/\}([\s\S]*?)<ChefAccordionSection/)?.[1] ??
+      routeSource.match(/\{\/\* Familia Las Flores \*\/\}([\s\S]*?)<ChefVideosSection/)?.[1] ??
       "";
 
     expect(familySection).toContain(

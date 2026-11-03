@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { Volume2, VolumeX } from "lucide-react";
 
 interface FestividadVideoProps {
   src: string;
@@ -9,7 +10,11 @@ interface FestividadVideoProps {
   className?: string;
   /** Hero: el video se pide de inmediato. Si es false (tarjetas), se pide al acercarse a la sección (~1.5 pantallas). */
   priority?: boolean;
+  /** El video corre en silencio; muestra un botón para que el visitante active el audio (solo uno suena a la vez). */
+  conSonido?: boolean;
 }
+
+const EVENTO_SONIDO = "festividad-video-sonido";
 
 function evitarVideo(): boolean {
   const reduceMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
@@ -17,9 +22,29 @@ function evitarVideo(): boolean {
   return Boolean(reduceMotion || conn?.saveData);
 }
 
-export function FestividadVideo({ src, srcMobile, poster, alt, className = "", priority = false }: FestividadVideoProps) {
+export function FestividadVideo({ src, srcMobile, poster, alt, className = "", priority = false, conSonido = false }: FestividadVideoProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [sinVideo, setSinVideo] = useState(false);
+  const [sonando, setSonando] = useState(false);
+
+  // El audio se activa solo con el botón; al activar uno se silencian los demás.
+  useEffect(() => {
+    const el = videoRef.current;
+    if (el) el.muted = !sonando;
+  }, [sonando]);
+
+  useEffect(() => {
+    const alActivarOtro = (e: Event) => {
+      if ((e as CustomEvent).detail !== videoRef.current) setSonando(false);
+    };
+    window.addEventListener(EVENTO_SONIDO, alActivarOtro);
+    return () => window.removeEventListener(EVENTO_SONIDO, alActivarOtro);
+  }, []);
+
+  const alternarSonido = () => {
+    if (!sonando) window.dispatchEvent(new CustomEvent(EVENTO_SONIDO, { detail: videoRef.current }));
+    setSonando(!sonando);
+  };
 
   useEffect(() => {
     if (evitarVideo()) {
@@ -30,9 +55,9 @@ export function FestividadVideo({ src, srcMobile, poster, alt, className = "", p
     if (!el) return;
 
     // React no refleja `muted` como atributo; sin esto algunos navegadores bloquean el autoplay.
-    el.muted = true;
     el.defaultMuted = true;
     el.setAttribute("muted", "");
+    if (!conSonido) el.muted = true;
     el.playsInline = true;
 
     let activo = true;
@@ -75,6 +100,8 @@ export function FestividadVideo({ src, srcMobile, poster, alt, className = "", p
         if (el.paused) el.play().catch(() => {});
       } else if (!el.paused) {
         el.pause();
+        // Al salir de pantalla vuelve en silencio.
+        setSonando(false);
       }
     };
 
@@ -122,17 +149,30 @@ export function FestividadVideo({ src, srcMobile, poster, alt, className = "", p
   }
 
   return (
-    <video
-      ref={videoRef}
-      src={priority && !srcMobile ? src : undefined}
-      poster={poster}
-      muted
-      loop
-      playsInline
-      autoPlay
-      preload={priority ? "auto" : "none"}
-      aria-label={alt}
-      className={className}
-    />
+    <>
+      <video
+        ref={videoRef}
+        src={priority && !srcMobile ? src : undefined}
+        poster={poster}
+        muted
+        loop
+        playsInline
+        autoPlay
+        preload={priority ? "auto" : "none"}
+        aria-label={alt}
+        className={className}
+      />
+      {conSonido && (
+        <button
+          type="button"
+          onClick={alternarSonido}
+          aria-pressed={sonando}
+          aria-label={sonando ? "Silenciar el video" : "Activar el sonido del video"}
+          className="absolute bottom-3 right-3 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-ink/70 text-piedra backdrop-blur-sm transition-colors hover:bg-ink/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-chilca"
+        >
+          {sonando ? <Volume2 size={18} aria-hidden="true" /> : <VolumeX size={18} aria-hidden="true" />}
+        </button>
+      )}
+    </>
   );
 }

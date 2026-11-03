@@ -60,7 +60,7 @@ const LUGARES_VISITA = DESTINOS.flatMap((d) => {
 });
 
 const LUGARES_LISTA = [
-  ["Restaurante Las Flores", "Jr. José Olaya 106, Huamanga"],
+  ["Las Flores", "Jr. José Olaya 106, Huamanga"],
   ["Plaza Mayor de Huamanga", "A 7 min"],
   ["Aeropuerto Alfredo Mendívil Duarte", "A 6 min"],
   ...LUGARES_VISITA.map((l) => [l.lineas.join(" "), l.detalle]),
@@ -167,7 +167,7 @@ function Etiqueta({
 
 export function MapaUbicacion() {
   return (
-    <div style={{ backgroundColor: FONDO }}>
+    <div>
       <svg
         viewBox={`0 0 ${ANCHO} ${ALTO}`}
         className="block w-full h-auto"
@@ -175,13 +175,12 @@ export function MapaUbicacion() {
         aria-labelledby="mapa-ubicacion-titulo"
       >
         <title id="mapa-ubicacion-titulo">
-          Mapa referencial de Ayacucho con el Restaurante Las Flores al centro, la Plaza Mayor de
+          Mapa referencial de Ayacucho con Las Flores al centro, la Plaza Mayor de
           Huamanga a siete minutos, el aeropuerto a seis minutos y la ubicación aproximada de los lugares
           para visitar: Pampa de Ayacucho, Abismo de Puncupata, Vilcas Huamán, Aguas turquesas de
           Millpu y Nevado de Ritipata
         </title>
 
-        <rect width={ANCHO} height={ALTO} fill={FONDO} />
         <image
           href="/imagenes-reales/mapas/ayacucho-base.webp"
           x={MAPA.x}
@@ -292,7 +291,7 @@ export function MapaUbicacion() {
           x={CENTRO.x}
           y={CENTRO.y - 64}
           ancla="middle"
-          nombre="Restaurante Las Flores"
+          nombre="Las Flores"
           detalle="JR. JOSÉ OLAYA 106"
           principal
         />
