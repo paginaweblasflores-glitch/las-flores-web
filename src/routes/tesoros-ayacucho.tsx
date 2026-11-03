@@ -2,7 +2,6 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteFooter } from "@/components/site-footer";
 import { useState, useEffect } from "react";
 import { SiteHeader } from "../components/SiteHeader";
-import { Sparkles } from "lucide-react";
 import { MobileCategoryFilter } from "@/components/MobileCategoryFilter";
 
 export const Route = createFileRoute("/tesoros-ayacucho")({
@@ -689,18 +688,10 @@ function TesorosAyacuchoPage() {
         <div className="absolute inset-0 bg-gradient-to-t from-ink/90 via-ink/45 to-black/30" />
 
         <div className="relative z-10 mx-auto flex w-full max-w-4xl items-center justify-center px-6 text-piedra">
-          <div className="max-w-3xl text-center space-y-6">
-
-            <span className="text-chilca font-medium uppercase tracking-[0.3em] text-xs flex items-center justify-center gap-2">
-              <Sparkles size={14} />
-              Productos de Temporada · Ayacucho
-              <Sparkles size={14} />
-            </span>
-
+          <div className="max-w-3xl text-center">
             <h1 className="font-serif text-4xl md:text-6xl text-piedra font-normal leading-tight">
-              Tesoros de Ayacucho
+              Productos de temporada
             </h1>
-
             <p className="text-base md:text-lg text-piedra/90 max-w-3xl mx-auto leading-relaxed">
               Ingredientes autóctonos que dan vida a nuestra cocina. Cada temporada trae los mejores
               productos de nuestra tierra, cosechados en su punto perfecto.
