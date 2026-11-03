@@ -203,7 +203,7 @@ function ClientVideosSection() {
     <section className="bg-eucalipto text-piedra py-16 md:py-20 px-6">
       <div className="container-flores mx-auto">
         <h2 className="font-serif text-4xl md:text-5xl leading-[1.05] text-balance">
-          Lo que dicen quienes nos visitan
+          Recomendado por quienes nos visitan
         </h2>
 
         <div className="mt-8 grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-5">
