@@ -133,7 +133,7 @@ const GALLERY_CATEGORIES: Category[] = [
     images: [
       foto("eventos", "IMG_0231.jpg", "Chef Gastón Acurio en Las Flores"),
       foto("eventos", "IMG_1346.jpg", "Miss Perú Internacional en Las Flores"),
-      foto("eventos", "IMG_0664.jpg", "Segunda generación de Las Flores"),
+      foto("eventos", "IMG_0664.jpg", "Señora Gloria"),
       foto("eventos", "evento-09", "Ceremonia de apertura"),
       foto("eventos", "evento-08", "Equipo de cocina de Las Flores"),
       foto("eventos", "ceramista.jpg", "Visitante observa una obra de cerámica de Quinua"),
@@ -188,11 +188,6 @@ function GaleriaPage() {
           <div className="absolute inset-0 bg-gradient-to-t from-ink/90 via-ink/45 to-black/30" />
         </div>
         <div className="max-w-4xl mx-auto text-center relative z-10 space-y-6">
-          <span className="text-chilca font-medium uppercase tracking-[0.3em] text-xs flex items-center justify-center gap-2">
-            <Sparkles size={14} />
-            Nuestra Galería
-            <Sparkles size={14} />
-          </span>
           <h1 className="font-serif text-4xl md:text-6xl text-piedra font-normal leading-tight">
             Nuestras costumbres para el mundo
           </h1>

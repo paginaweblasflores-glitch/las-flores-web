@@ -6,6 +6,13 @@ const galleryRoutePath = resolve(process.cwd(), "src/routes/galeria.tsx");
 const source = readFileSync(galleryRoutePath, "utf8");
 
 describe("etiquetas de las tarjetas de galería", () => {
+  it("omite la etiqueta Nuestra Galería del encabezado", () => {
+    const galleryHero = source.match(/\{\/\* Header Banner \*\/\}([\s\S]*?)<\/section>/)?.[1] ?? "";
+
+    expect(galleryHero).not.toContain("Nuestra Galería");
+    expect(galleryHero).toContain("Nuestras costumbres para el mundo");
+  });
+
   it("muestra el título actualizado en el encabezado", () => {
     expect(source).toContain("Nuestras costumbres para el mundo");
   });
@@ -31,7 +38,7 @@ describe("etiquetas de las tarjetas de galería", () => {
     expect(experienceCategory).not.toContain('foto("eventos", "evento-20"');
     expect(experienceCategory).toContain('"IMG_0231.jpg", "Chef Gastón Acurio en Las Flores"');
     expect(experienceCategory).toContain('"IMG_1346.jpg", "Miss Perú Internacional en Las Flores"');
-    expect(experienceCategory).toContain('"IMG_0664.jpg", "Segunda generación de Las Flores"');
+    expect(experienceCategory).toContain('"IMG_0664.jpg", "Señora Gloria"');
     expect(experienceCategory).toContain('"DSC00119.jpg", "Un compartir en Las Flores"');
     expect(experienceCategory).toContain('"DSC00131.jpg", "Un compartir en Las Flores"');
     expect(experienceCategory).toContain('"DSC00140.jpg", "Un compartir en Las Flores"');
