@@ -65,10 +65,11 @@ describe("imágenes de la categoría Experiencia", () => {
       existsSync(resolve(process.cwd(), "public/imagenes-reales/galeria/eventos/DSC00123-2.jpg.webp")),
     ).toBe(true);
 
-    for (const existingImage of ["evento-09", "evento-08", "evento-20"]) {
+    for (const existingImage of ["evento-09", "evento-08"]) {
       expect(category).toContain(`foto("eventos", "${existingImage}",`);
     }
 
-    expect(category.match(/foto\("eventos",/g)).toHaveLength(18);
+    expect(category).not.toContain('foto("eventos", "evento-20",');
+    expect(category.match(/foto\("eventos",/g)).toHaveLength(17);
   });
 });

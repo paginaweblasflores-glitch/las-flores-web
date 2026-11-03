@@ -59,7 +59,7 @@ export function SiteHeader({
       {/* ── Centro: Logo Las Flores ── */}
       <Link
         to="/"
-        className="flex-1 flex justify-center items-center pointer-events-auto"
+        className="absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 items-center justify-center pointer-events-auto"
         onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
         aria-label="Ir al inicio de Restaurante Las Flores"
       >
