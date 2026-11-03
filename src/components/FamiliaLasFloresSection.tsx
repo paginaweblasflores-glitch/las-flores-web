@@ -37,7 +37,7 @@ const defaultReviews: CollaboratorReview[] = [
   },
   {
     id: "3",
-    name: "Carlos Avelino",
+    name: "Chef Flavio Solorzano",
     role: "Chef de Fuegos & Carnes Andinas",
     years: "5 años en Las Flores",
     photo: "/imagenes-reales/EQUIPO/encantados-de-atenderlos.webp",

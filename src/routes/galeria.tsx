@@ -146,7 +146,7 @@ const GALLERY_CATEGORIES: Category[] = [
       foto("eventos", "DSC09672.jpg", "Demostración de cocina en Las Flores"),
       foto("eventos", "DSC09760.jpg", "Cocinero en una presentación gastronómica"),
       foto("eventos", "DSC09786.jpg", "Encuentro de cocineros en Las Flores"),
-      foto("eventos", "DSC09791 - copia.jpg", "Presentación del equipo de cocina de Las Flores"),
+      foto("eventos", "DSC09791 - copia.jpg", "Chef Flavio Solorzano"),
       foto("eventos", "DSC09935.jpg", "Entrevista a un cocinero de Las Flores en una feria"),
     ],
   },
