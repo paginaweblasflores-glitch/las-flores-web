@@ -19,6 +19,10 @@ export type Lugar = {
   /** Nombre más general que se muestra solo en la lista "Explora más lugares para visitar"; si falta se usa `nombre`. */
   nombreLista?: string;
   categoria: string;
+  /** Provincia donde queda el lugar: se muestra junto al punto del mapa de ubicación. */
+  provincia: string;
+  /** Capa del mapa que pinta suavemente esa provincia (opcional). */
+  provinciaSombreada?: string;
   heroTitulo: string;
   /** Texto corto para buscadores y redes (una o dos frases); si falta se usa `descripcion`. */
   metaDescripcion?: string;
@@ -62,6 +66,8 @@ export const lugares: Lugar[] = [
     nombre: "Basílica Catedral de Ayacucho",
     nombreLista: "Plaza Mayor de Ayacucho",
     categoria: "Patrimonio Colonial",
+    provincia: "Huamanga",
+    provinciaSombreada: "/imagenes-reales/mapas/provincia-huamanga.webp",
     heroTitulo: "Catedral de Ayacucho, Patrimonio Cultural de la Nación",
     imagen: "/imagenes-reales/catedral-de-ayacucho/plaza-de-sucre.webp",
     imagenSecundaria: "/imagenes-reales/galeria/destino/Catedral1.webp",
@@ -135,13 +141,13 @@ export const lugares: Lugar[] = [
         imagen: "/imagenes-reales/catedral-de-ayacucho/catedral-santo-domingo.webp",
         titulo: "Templo de Santo Domingo",
         descripcion:
-          "Se construyó entre los siglos XVI y XVII y su fachada tiene tres arcos y dos torres. Queda en la esquina de los jirones 9 de Diciembre y María Parado de Bellido.",
+          "Se construyó entre los siglos XVI y XVII y su fachada tiene tres arcos y dos torres. Queda a unos tres minutos a pie de la Plaza Mayor, en la esquina de los jirones 9 de Diciembre y María Parado de Bellido.",
       },
       {
         imagen: "/imagenes-reales/catedral-de-ayacucho/mirador-de-acuchimay.webp",
         titulo: "Mirador de Acuchimay",
         descripcion:
-          "Desde este mirador del cerro Acuchimay, en Carmen Alto, a 2865 m s. n. m., se ve la ciudad en 360 grados. Queda a unos diez minutos en auto de la Plaza Mayor y la entrada es libre.",
+          "Desde este mirador del cerro Acuchimay, en Carmen Alto, se ve la ciudad en 360 grados. Queda a unos diez minutos en vehículo de la Plaza Mayor, a 2865 m s. n. m., y la entrada es libre.",
       },
     ],
   },
@@ -152,6 +158,8 @@ export const lugares: Lugar[] = [
     nombre: "Pampa de Ayacucho",
     nombreLista: "Quinua, Pueblo con Encanto",
     categoria: "Santuario Histórico",
+    provincia: "Huamanga",
+    provinciaSombreada: "/imagenes-reales/mapas/provincia-huamanga.webp",
     heroTitulo: "Quinua, Pueblo con Encanto",
     imagen: "/imagenes-reales/galeria/destino/Quinua1.webp",
     imagenSecundaria: "/imagenes-reales/galeria/destino/Quinua1.webp",
@@ -163,14 +171,23 @@ export const lugares: Lugar[] = [
       "A unos 3400 m s. n. m. el clima es frío y el sol es fuerte, así que lleva abrigo, protector solar y agua. De enero a marzo llueve, por eso conviene sumar un impermeable.",
     escenasTitulo: "Pampa de Ayacucho de cerca",
     clipTags: ["El obelisco", "Cerámica de Quinua", "Abuelos de Quinua", "Escenificación de la batalla"],
-    mapLat: -13.0478,
+    mapLat: -13.0811,
     mapLng: -74.1322,
+    video: {
+      hero: "/videos/hero/pampa-de-ayacucho.mp4",
+      heroMobile: "/videos/hero/pampa-de-ayacucho-mobile.mp4",
+      poster: "/videos/hero/pampa-de-ayacucho-poster.webp",
+    },
     seccionImagen: {
       imagen: "/imagenes-reales/pampa-de-ayacucho/pampa-obelisco.webp",
       etiqueta: "Obelisco de la Pampa de Ayacucho",
     },
-    imagenPantalla: "/imagenes-reales/pampa-de-ayacucho/wari.webp",
-    etiquetaPantalla: "Complejo Arqueológico Wari",
+    videoSeccion: {
+      src: "/imagenes-reales/pampa-de-ayacucho/pueblo-de-quinua.mp4",
+      srcMobile: "/imagenes-reales/pampa-de-ayacucho/pueblo-de-quinua-mobile.mp4",
+      poster: "/imagenes-reales/pampa-de-ayacucho/pueblo-de-quinua-poster.webp",
+      etiqueta: "Pueblo de Quinua",
+    },
     escenasCards: [
       {
         imagen: "/imagenes-reales/pampa-de-ayacucho/escena-obelisco.webp",
@@ -200,17 +217,17 @@ export const lugares: Lugar[] = [
     galeriaTitulo: "Dos visitas más en la ruta a Quinua",
     galeria: [
       {
+        imagen: "/imagenes-reales/pampa-de-ayacucho/wari.webp",
+        titulo: "Complejo Arqueológico Wari",
+        descripcion:
+          "Fue la capital del Estado Wari entre los años 600 y 1100 d. C. Queda a unos treinta minutos en vehículo de Huamanga, antes de llegar al pueblo de Quinua y a la Pampa de Ayacucho. Conviene visitarlo primero y continuar después hacia Quinua.",
+      },
+      {
         imagen: "/imagenes-reales/pampa-de-ayacucho/ceramica-quinua.webp",
         posicion: "50% 40%",
         titulo: "Cerámica de Quinua",
         descripcion:
-          "Los saberes y prácticas de su elaboración son Patrimonio Cultural de la Nación desde 2019. Los ceramistas trabajan con arcilla local y modelan toritos de techo, iglesias en miniatura y figuras costumbristas.",
-      },
-      {
-        imagen: "/imagenes-reales/pampa-de-ayacucho/complejo-arqueologico-wari.webp",
-        titulo: "Complejo Arqueológico Wari",
-        descripcion:
-          "Fue la capital del Estado Wari entre los años 600 y 1100 d. C. Queda a unos 22 km de la ciudad de Ayacucho, en la carretera a Quinua, y tiene un museo de sitio.",
+          "Es un arte tradicional ayacuchano, Patrimonio Cultural de la Nación desde 2019, hecho con arcilla local. Para ver y adquirir estas piezas hay que ir al pueblo de Quinua, a unos cincuenta minutos en vehículo de Huamanga y justo antes de la Pampa de Ayacucho.",
       },
     ],
   },
@@ -221,6 +238,8 @@ export const lugares: Lugar[] = [
     nombre: "Abismo de Puncupata",
     nombreLista: "Amanecer de Puncupata y cañones de Qorihuillca",
     categoria: "Paisaje Andino",
+    provincia: "Huamanga",
+    provinciaSombreada: "/imagenes-reales/mapas/provincia-huamanga.webp",
     heroTitulo: "Abismo de Puncupata, Puerta Celestial",
     metaDescripcion:
       "Un desfiladero a 4200 m s. n. m., a unas dos horas de Huamanga. Qué ver y qué llevar.",
@@ -263,7 +282,7 @@ export const lugares: Lugar[] = [
         imagen: "/imagenes-reales/abismo-puncupata/canones-de-qorihuillca.webp",
         titulo: "Cañones de Qorihuillca",
         descripcion:
-          "Al lado contrario de la ciudad, a cuarenta minutos de Huamanga, los Cañones de Qorihuillca conforman un laberinto rocoso de pasadizos oscuros. Se sugiere visitarlos por la mañana y es indispensable ir con un guía especializado y equipo de seguridad.",
+          "Son un laberinto rocoso de pasadizos oscuros. Quedan a unos cuarenta minutos en vehículo de Huamanga. Se recomienda ir por la mañana, y es indispensable hacerlo con un guía especializado y equipo de seguridad.",
       },
     ],
     escenasCards: [
@@ -300,6 +319,8 @@ export const lugares: Lugar[] = [
     nombre: "Vilcas Huamán",
     nombreLista: "Vilcas Huamán, centro administrativo inca",
     categoria: "Arqueología Inca",
+    provincia: "Vilcas Huamán",
+    provinciaSombreada: "/imagenes-reales/mapas/provincia-vilcas-huaman.webp",
     heroTitulo: "Vilcas Huamán, centro administrativo inca",
     metaDescripcion:
       "El Ushnu y el Templo del Sol en un centro administrativo inca a 3490 m s. n. m. Cómo llegar y qué llevar.",
@@ -334,13 +355,13 @@ export const lugares: Lugar[] = [
         imagen: "/imagenes-reales/vilcas-huaman/puyas-de-raimondi-de-titankayocc.webp",
         titulo: "Puyas de Raimondi de Titankayocc",
         descripcion:
-          "En el distrito de Vischongo, a unos treinta minutos de Vilcas Huamán, este bosque es Área de Conservación Regional desde 2010. Sus enormes plantas destacan entre los pajonales de la puna.",
+          "Es un bosque de puyas de Raimondi, Área de Conservación Regional desde 2010, cuyas enormes plantas destacan entre los pajonales de la puna. Queda en el camino a Vilcas Huamán, en el distrito de Vischongo, a unas dos horas en vehículo de Huamanga.",
       },
       {
         imagen: "/imagenes-reales/vilcas-huaman/ruinas-de-intihuatana.webp",
         titulo: "Ruinas de Intihuatana",
         descripcion:
-          "En el distrito de Vischongo, junto a la laguna Pumacocha, este complejo conserva construcciones incas de piedra y un reloj solar. Es Patrimonio Cultural de la Nación desde 2001, y su nombre quechua se traduce como «amarrar al Sol».",
+          "Es un complejo inca de piedra con un reloj solar, junto a la laguna Pumacocha, en el distrito de Vischongo. Queda en el camino a Vilcas Huamán. Es Patrimonio Cultural de la Nación desde 2001, y su nombre quechua se traduce como «amarrar al Sol».",
       },
     ],
     escenasCards: [
@@ -376,6 +397,8 @@ export const lugares: Lugar[] = [
     numeral: "V",
     nombre: "Nevado de Ritipata",
     categoria: "Alta Montaña",
+    provincia: "Cangallo",
+    provinciaSombreada: "/imagenes-reales/mapas/provincia-cangallo.webp",
     heroTitulo: "El nevado de Ritipata",
     metaDescripcion:
       "Un nevado de unos 5000 m s. n. m. en Cangallo a tres horas de Huamanga. Cuándo ver nieve y qué llevar.",
@@ -384,7 +407,7 @@ export const lugares: Lugar[] = [
     descripcion:
       "Ritipata es un nevado de unos 5000 m s. n. m. en la cordillera Chonta, en el distrito de Paras (provincia de Cangallo), a unas tres horas en auto de Huamanga. En la cosmovisión andina es un apu sagrado. Su nombre viene del quechua *riti* (nieve) y *pata* (lugar elevado).\n\nEntre diciembre y abril suelen producirse nevadas. De junio a septiembre, el cielo está más despejado para recorrer las lagunas, como la Ñawi, y las cataratas cercanas. Desde el abra, a más de 4900 m s. n. m., una caminata de media hora permite acercarse al nevado. En la zona también habitan alpacas, vicuñas y vizcachas silvestres.",
     consejo:
-      "Para ver nieve, visita entre diciembre y abril, aunque su presencia depende del clima. Lleva ropa térmica, chaqueta impermeable, gorro y guantes, además de agua y comida porque no hay restaurantes en el lugar. Aclimátate antes de subir a esta altitud.",
+      "Para ver nieve, visita entre diciembre y abril, porque su presencia depende del clima. Lleva ropa térmica, chaqueta impermeable, gorro y guantes, además de agua y comida porque no hay restaurantes en el lugar. Aclimátate antes de subir a esta altitud.",
     escenasTitulo: "Ritipata de cerca",
     clipTags: ["Camino al abra", "Lagunas de Ritipata", "Cumbres y valles andinos", "Alpacas de las faldas"],
     mapLat: -13.42917,
@@ -410,13 +433,13 @@ export const lugares: Lugar[] = [
         imagen: "/imagenes-reales/ritipata/pumapaqcha.webp",
         titulo: "Catarata de Pumapaqcha",
         descripcion:
-          "En el distrito de Cangallo, junto a la carretera Ayacucho–Cangallo, la catarata cae unos diez metros hasta una laguna natural. Se llega tras una caminata de unos veinte minutos.",
+          "Es una catarata de unos diez metros que cae hasta una laguna natural, junto a la carretera Ayacucho–Cangallo, en el distrito de Cangallo. Queda a unas dos horas y media en vehículo de Huamanga, y se llega tras una caminata de unos veinte minutos.",
       },
       {
         imagen: "/imagenes-reales/ritipata/ruqruqa.webp",
         titulo: "Cascada de Ruqruqa",
         descripcion:
-          "A unas tres horas y media de Huamanga, en la comunidad de Quispillaccta (distrito de Chuschi), la cascada forma pozas turquesas escalonadas. Desde donde llega el vehículo se camina unos veinte minutos. Para recorrer los senderos o entrar al agua, lleva ropa de baño y calzado antideslizante.",
+          "La cascada forma pozas turquesas escalonadas, en la comunidad de Quispillaccta (distrito de Chuschi). Queda a unas tres horas y media en vehículo de Huamanga, y desde donde llega el vehículo se camina unos veinte minutos. Para recorrer los senderos o entrar al agua, lleva ropa de baño y calzado antideslizante.",
       },
     ],
     escenasCards: [
@@ -452,6 +475,8 @@ export const lugares: Lugar[] = [
     numeral: "VI",
     nombre: "Aguas turquesas de Millpu",
     categoria: "Naturaleza",
+    provincia: "Víctor Fajardo",
+    provinciaSombreada: "/imagenes-reales/mapas/provincia-victor-fajardo.webp",
     heroTitulo: "Las aguas turquesas de Millpu",
     metaDescripcion:
       "Unas 20 pozas turquesas en un cañón de Ayacucho a unos 3600 m s. n. m. Cómo llegar y cuándo ir.",
@@ -474,21 +499,25 @@ export const lugares: Lugar[] = [
       heroMobile: "/videos/hero/aguas-turquesas-mobile.mp4",
       poster: "/videos/hero/aguas-turquesas-poster.webp",
     },
-    imagenPantalla: "/imagenes-reales/aguas-turquesas/turquesa-sec.webp",
+    videoSeccion: {
+      src: "/imagenes-reales/aguas-turquesas/aguas-turquesas-seccion.mp4",
+      srcMobile: "/imagenes-reales/aguas-turquesas/aguas-turquesas-seccion-mobile.mp4",
+      poster: "/imagenes-reales/aguas-turquesas/aguas-turquesas-seccion-poster.webp",
+    },
     galeriaTitulo: "Dos visitas más en Víctor Fajardo",
     galeria: [
+      {
+        imagen: "/imagenes-reales/aguas-turquesas/tabla-sarhua.webp",
+        titulo: "Las Tablas de Sarhua",
+        descripcion:
+          "Son tablas de madera pintadas que cuentan historias de familias y de la vida comunitaria. Tradicionalmente se regalan al terminar una casa nueva y se colocan entre las vigas del techo. Se pueden ver y comprar en Sarhua, a unas tres horas en vehículo de Huamanga, y están declaradas Patrimonio Cultural de la Nación desde 2018.",
+      },
       {
         imagen: "/imagenes-reales/aguas-turquesas/cascadas-sarhua.webp",
         posicion: "50% 80%",
         titulo: "Cascadas de Sarhua",
         descripcion:
-          "Estas cascadas están a tres horas y media de Millpu y se suceden a lo largo del valle de Campanayuq hasta unas aguas termales. Conviene visitarlas a primera hora y llevar calzado antideslizante.",
-      },
-      {
-        imagen: "/imagenes-reales/aguas-turquesas/tabla-sarhua.webp",
-        titulo: "Las Tablas de Sarhua",
-        descripcion:
-          "Son tablas de madera pintadas que cuentan historias de familias y de la vida comunitaria. Tradicionalmente se regalan al terminar una casa nueva y se colocan entre las vigas del techo. Se pueden ver y comprar en Sarhua, y están declaradas Patrimonio Cultural de la Nación desde 2018.",
+          "Se suceden por el valle de Campanayuq hasta unas aguas termales. Desde Huamanga se llega a Sarhua en unas tres horas en vehículo, y de ahí se camina cerca de una hora. Conviene ir a primera hora y llevar calzado antideslizante.",
       },
     ],
     escenasCards: [

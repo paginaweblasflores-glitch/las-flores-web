@@ -50,11 +50,15 @@ function enLineas(nombre: string, maximo = 19) {
 interface MapaDestinoProps {
   nombre: string;
   detalle: string;
+  /** Provincia donde queda el destino; se rotula junto al punto, como "HUAMANGA" en la referencia. */
+  provincia?: string;
+  /** Capa transparente (del tamaño del mapa base) que pinta suavemente la provincia del destino. */
+  sombreado?: string;
   lat: number;
   lng: number;
 }
 
-export function MapaDestino({ nombre, detalle, lat, lng }: MapaDestinoProps) {
+export function MapaDestino({ nombre, detalle, provincia, sombreado, lat, lng }: MapaDestinoProps) {
   const huamanga = enMapa(HUAMANGA.lat, HUAMANGA.lng);
   const destino = enMapa(lat, lng);
   const esHuamanga = Math.hypot(destino.x - huamanga.x, destino.y - huamanga.y) < 14;
@@ -75,6 +79,17 @@ export function MapaDestino({ nombre, detalle, lat, lng }: MapaDestinoProps) {
         Mapa referencial de Ayacucho con la ubicación aproximada de {nombre}
       </title>
 
+      {/* Provincia pintada: va debajo del mapa para que sus líneas queden nítidas encima */}
+      {sombreado && (
+        <image
+          href={sombreado}
+          x={MAPA.x}
+          y={MAPA.y}
+          width={MAPA.w}
+          height={MAPA.h}
+          preserveAspectRatio="xMidYMid meet"
+        />
+      )}
       <image
         href="/imagenes-reales/mapas/ayacucho-base.webp"
         x={MAPA.x}
@@ -106,19 +121,22 @@ export function MapaDestino({ nombre, detalle, lat, lng }: MapaDestinoProps) {
             stroke={TINTA}
             strokeWidth={1.4}
           />
-          <text
-            x={huamanga.x + 14}
-            y={huamanga.y - 8}
-            fontFamily={FUENTE_TEXTO}
-            fontSize={15}
-            letterSpacing={2.4}
-            fill={SUAVE}
-            stroke={PAPEL}
-            strokeWidth={5}
-            paintOrder="stroke"
-          >
-            HUAMANGA
-          </text>
+          {/* Si el destino es de la provincia de Huamanga, su propio rótulo ya dice "Huamanga": no se repite */}
+          {provincia?.toUpperCase() !== "HUAMANGA" && (
+            <text
+              x={huamanga.x + 14}
+              y={huamanga.y - 8}
+              fontFamily={FUENTE_TEXTO}
+              fontSize={15}
+              letterSpacing={2.4}
+              fill={SUAVE}
+              stroke={PAPEL}
+              strokeWidth={5}
+              paintOrder="stroke"
+            >
+              HUAMANGA
+            </text>
+          )}
         </g>
       )}
 
@@ -142,6 +160,28 @@ export function MapaDestino({ nombre, detalle, lat, lng }: MapaDestinoProps) {
       />
       <circle cx={destino.x} cy={destino.y} r={12} fill={PAPEL} stroke={ORO} strokeWidth={1.9} />
       <circle cx={destino.x} cy={destino.y} r={6} fill={ORO} />
+
+      {/* Provincia, a la derecha del punto (a la izquierda si no cabe) */}
+      {provincia && (() => {
+        const texto = provincia.toUpperCase();
+        const aDerecha = destino.x + 30 + texto.length * 14 <= ANCHO - 10;
+        return (
+          <text
+            x={aDerecha ? destino.x + 30 : destino.x - 30}
+            y={destino.y + 5}
+            textAnchor={aDerecha ? "start" : "end"}
+            fontFamily={FUENTE_TEXTO}
+            fontSize={15}
+            letterSpacing={2.4}
+            fill={SUAVE}
+            stroke={PAPEL}
+            strokeWidth={5}
+            paintOrder="stroke"
+          >
+            {texto}
+          </text>
+        );
+      })()}
 
       {lineas.map((linea, i) => (
         <text

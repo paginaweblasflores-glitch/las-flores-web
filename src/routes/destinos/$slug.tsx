@@ -164,6 +164,8 @@ function LugarDetailPage() {
               <MapaDestino
                 nombre={lugar.nombre}
                 detalle={lugar.categoria}
+                provincia={lugar.provincia}
+                sombreado={lugar.provinciaSombreada}
                 lat={lugar.mapLat}
                 lng={lugar.mapLng}
               />
