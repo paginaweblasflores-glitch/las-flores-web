@@ -434,7 +434,7 @@ export function AdminJobsSection({ onNewApplicationsCountChange }: AdminJobsSect
         <div className="space-y-4">
           {/* Filtros */}
           <div className="p-4 rounded-3xl bg-white border border-[#d4a373]/25 shadow-sm flex flex-wrap items-center justify-between gap-4">
-            <div className="relative flex-1 min-w-[240px]">
+            <div className="relative flex-1 min-w-[15rem]">
               <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#2e5339]" size={16} />
               <input
                 type="text"

@@ -75,7 +75,7 @@ export function SiteHeader({
       </Link>
 
       {/* ── Derecha: Botones de Acción (Delivery, Reservar, Carrito) ── */}
-      <div className="flex items-center gap-3 sm:gap-4 md:gap-6 text-[11px] md:text-sm uppercase tracking-[0.15em] font-semibold pointer-events-auto">
+      <div className="flex items-center gap-3 sm:gap-4 md:gap-6 text-[0.6875rem] md:text-sm uppercase tracking-[0.15em] font-semibold pointer-events-auto">
         {(showDelivery || onDeliveryClick) && (
           <button
             onClick={onDeliveryClick}
@@ -90,7 +90,7 @@ export function SiteHeader({
         {showReservar && (
           <Link
             to="/reservas"
-            className={`pointer-events-auto px-4.5 py-1.5 md:px-5 md:py-2 text-[11px] md:text-xs font-semibold uppercase tracking-[0.2em] transition-colors duration-300 rounded-md border ${
+            className={`pointer-events-auto px-4.5 py-1.5 md:px-5 md:py-2 text-[0.6875rem] md:text-xs font-semibold uppercase tracking-[0.2em] transition-colors duration-300 rounded-md border ${
               solid
                 ? "border-nogal/50 text-nogal hover:border-nogal hover:bg-nogal/10"
                 : "border-piedra/50 text-piedra hover:border-piedra/80 hover:bg-piedra/15"

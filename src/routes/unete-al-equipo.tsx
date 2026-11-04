@@ -113,7 +113,7 @@ function UneteAlEquipoPage() {
       </section>
 
       {/* ── SECCIÓN DE VACANTES Y FORMULARIO (PRIMERO, PARA CONVERSIÓN INMEDIATA) ── */}
-      <section className="py-16 md:py-24 px-6 md:px-12 lg:px-20 max-w-[1400px] mx-auto w-full flex-1">
+      <section className="py-16 md:py-24 px-6 md:px-12 lg:px-20 max-w-[87.5rem] mx-auto w-full flex-1">
         <div className="mb-10 text-center md:text-left">
           <h2 className="font-serif text-3xl md:text-4xl text-ink mb-2">Convocatorias Abiertas</h2>
           <p className="text-ink/60 text-sm">
@@ -259,7 +259,7 @@ function UneteAlEquipoPage() {
                       {activeDetailTab === "details" ? (
                         <div className="space-y-6 text-xs text-ink/80 leading-relaxed animate-in fade-in">
                           <div>
-                            <h4 className="font-bold text-ink uppercase tracking-wider mb-2 text-[11px] text-eucalipto">
+                            <h4 className="font-bold text-ink uppercase tracking-wider mb-2 text-[0.6875rem] text-eucalipto">
                               Descripción del Puesto
                             </h4>
                             <p className="text-sm text-ink/90 leading-relaxed font-sans">
@@ -269,7 +269,7 @@ function UneteAlEquipoPage() {
 
                         {selectedOffer.responsibilities?.length > 0 && (
                           <div>
-                            <h4 className="font-bold text-ink uppercase tracking-wider mb-3 text-[11px] flex items-center gap-1.5 text-eucalipto">
+                            <h4 className="font-bold text-ink uppercase tracking-wider mb-3 text-[0.6875rem] flex items-center gap-1.5 text-eucalipto">
                               <CheckCircle2 size={16} />
                               <span>Responsabilidades Principales</span>
                             </h4>
@@ -286,7 +286,7 @@ function UneteAlEquipoPage() {
 
                         {selectedOffer.requirements?.length > 0 && (
                           <div>
-                            <h4 className="font-bold text-ink uppercase tracking-wider mb-3 text-[11px] flex items-center gap-1.5 text-eucalipto">
+                            <h4 className="font-bold text-ink uppercase tracking-wider mb-3 text-[0.6875rem] flex items-center gap-1.5 text-eucalipto">
                               <ListChecks size={16} />
                               <span>Requisitos del Candidato</span>
                             </h4>
@@ -303,7 +303,7 @@ function UneteAlEquipoPage() {
 
                         {selectedOffer.benefits?.length > 0 && (
                           <div>
-                            <h4 className="font-bold text-ink uppercase tracking-wider mb-3 text-[11px] flex items-center gap-1.5 text-eucalipto">
+                            <h4 className="font-bold text-ink uppercase tracking-wider mb-3 text-[0.6875rem] flex items-center gap-1.5 text-eucalipto">
                               <Gift size={16} />
                               <span>Beneficios & Ofrecimiento</span>
                             </h4>

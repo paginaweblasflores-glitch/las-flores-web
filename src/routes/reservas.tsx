@@ -685,9 +685,9 @@ function ReservasPage() {
           {/* Connecting line: cada círculo ocupa 1/4 de ancho centrado, así que la
               pista va de 12.5% a 87.5% (el centro de la 1ª a la 4ª columna) para
               quedar exactamente pegada a cada círculo, sin espacio suelto. */}
-          <div className="absolute top-[22px] left-[12.5%] right-[12.5%] h-[3px] bg-gray-200 z-0" />
+          <div className="absolute top-[1.375rem] left-[12.5%] right-[12.5%] h-[3px] bg-gray-200 z-0" />
           <div
-            className="absolute top-[22px] left-[12.5%] h-[3px] bg-[#A32638] z-0 transition-all duration-500"
+            className="absolute top-[1.375rem] left-[12.5%] h-[3px] bg-[#A32638] z-0 transition-all duration-500"
             style={{ width: `${((mainStep - 1) / 3) * 75}%` }}
           />
 
@@ -713,7 +713,7 @@ function ReservasPage() {
                   {isDone ? <Check size={20} strokeWidth={3} /> : s.num}
                 </button>
                 <span
-                  className={`text-center leading-tight text-[8px] tracking-tight sm:text-[11px] sm:tracking-wider uppercase font-semibold ${
+                  className={`text-center leading-tight text-[0.5rem] tracking-tight sm:text-[0.6875rem] sm:tracking-wider uppercase font-semibold ${
                     isCurrent || isDone ? "text-[#A32638]" : "text-gray-400"
                   }`}
                 >
@@ -772,8 +772,8 @@ function ReservasPage() {
                   className={`group flex flex-col justify-between transition-all duration-300 cursor-pointer ${blockReason ? "opacity-70" : ""}`}
                 >
                   <div>
-                    {/* Foto Vertical Estilo La Rosa Náutica (Altura uniforme fija h-[580px]) */}
-                    <div className="w-full h-[500px] sm:h-[540px] lg:h-[580px] overflow-hidden relative rounded-xs shadow-md">
+                    {/* Foto Vertical Estilo La Rosa Náutica (Altura uniforme fija h-[36.25rem]) */}
+                    <div className="w-full h-[31.25rem] sm:h-[33.75rem] lg:h-[36.25rem] overflow-hidden relative rounded-xs shadow-md">
                       <img
                         src={z.imagen}
                         alt={z.nombre}
@@ -782,12 +782,12 @@ function ReservasPage() {
                       <div className="absolute inset-0 bg-black/10 group-hover:bg-black/0 transition-colors duration-500" />
 
                       {blockReason && (
-                        <span className="absolute top-3 left-3 right-3 bg-red-700/90 backdrop-blur-xs text-white text-[10px] font-bold uppercase tracking-wide px-3 py-2 rounded-xs text-center leading-snug">
+                        <span className="absolute top-3 left-3 right-3 bg-red-700/90 backdrop-blur-xs text-white text-[0.625rem] font-bold uppercase tracking-wide px-3 py-2 rounded-xs text-center leading-snug">
                           Reservada / No disponible: {blockReason}
                         </span>
                       )}
 
-                      <span className="absolute bottom-3 left-3 bg-black/65 backdrop-blur-xs text-white text-[10px] font-semibold uppercase tracking-widest px-3 py-1.5 rounded-xs">
+                      <span className="absolute bottom-3 left-3 bg-black/65 backdrop-blur-xs text-white text-[0.625rem] font-semibold uppercase tracking-widest px-3 py-1.5 rounded-xs">
                         {z.capacidad}
                       </span>
                     </div>
@@ -811,7 +811,7 @@ function ReservasPage() {
                         e.stopPropagation();
                         handleSelectZoneCard(z);
                       }}
-                      className="w-full rounded-full py-2.5 px-4 text-[11px] font-bold tracking-widest uppercase transition-all duration-300 shadow-2xs border border-[#A32638] text-[#A32638] group-hover:bg-[#A32638] group-hover:text-white"
+                      className="w-full rounded-full py-2.5 px-4 text-[0.6875rem] font-bold tracking-widest uppercase transition-all duration-300 shadow-2xs border border-[#A32638] text-[#A32638] group-hover:bg-[#A32638] group-hover:text-white"
                     >
                       Reservar {z.nombre}
                     </button>
@@ -827,9 +827,9 @@ function ReservasPage() {
       {selectedZona && (
         <div ref={wizardRef} className="animate-in fade-in duration-500">
           {/* Edge-to-Edge Split Hero Banner (Altura reducida para mostrar formulario abajo) */}
-          <div className="w-full h-[50vh] min-h-[420px] max-h-[520px] grid grid-cols-1 lg:grid-cols-2 border-b border-[#d4a373]/30 overflow-hidden">
+          <div className="w-full h-[50vh] min-h-[26.25rem] max-h-[32.5rem] grid grid-cols-1 lg:grid-cols-2 border-b border-[#d4a373]/30 overflow-hidden">
             {/* Foto a la izquierda a pantalla completa */}
-            <div className="h-[400px] lg:h-full w-full relative overflow-hidden">
+            <div className="h-[25rem] lg:h-full w-full relative overflow-hidden">
               <img
                 src={selectedZona.imagen}
                 alt={selectedZona.nombre}
@@ -914,7 +914,7 @@ function ReservasPage() {
                           onClick={() => setForm((f) => ({ ...f, guests: numStr }))}
                           className={`w-14 h-12 rounded-md transition-all duration-200 font-bold text-sm flex items-center justify-center shadow-2xs ${
                             isSelected
-                              ? "bg-[#7a1c29] text-white shadow-md ring-2 ring-[#d4a373] scale-102"
+                              ? "bg-white text-[#A32638] shadow-md ring-2 ring-[#A32638] scale-102"
                               : "bg-[#A32638] text-white hover:bg-[#8e2132]"
                           }`}
                         >
@@ -951,7 +951,7 @@ function ReservasPage() {
                   {/* Mensaje Informativo & WhatsApp para grupos mayores al límite de esta zona */}
                   <div className="mt-4 p-4 bg-[#fdf8f0] rounded-none border border-[#d4a373]/30 text-xs text-gray-700 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
                     <div>
-                      <p className="font-bold text-[#3b1f10] uppercase tracking-wider text-[10px] mb-0.5">
+                      <p className="font-bold text-[#3b1f10] uppercase tracking-wider text-[0.625rem] mb-0.5">
                         Capacidad Máxima del Ambiente ({selectedZona.nombre}): {selectedZona.maxCap} personas
                       </p>
                       <p>
@@ -971,7 +971,7 @@ function ReservasPage() {
                       }
                       target="_blank"
                       rel="noreferrer"
-                      className="bg-[#25D366] hover:bg-[#20bd5a] text-gray-950 font-bold px-4 py-2.5 rounded-none text-xs flex items-center gap-1.5 shrink-0 shadow-2xs transition-all"
+                      className="bg-[#25D366] hover:bg-[#20bd5a] text-gray-950 font-bold px-4 py-2.5 rounded-md text-xs flex items-center gap-1.5 shrink-0 shadow-2xs transition-all"
                     >
                       <span>Coordinar por WhatsApp →</span>
                     </a>
@@ -995,7 +995,7 @@ function ReservasPage() {
                       input.click();
                     }
                   }}
-                  className="flex items-center gap-1.5 text-[11px] font-bold text-[#A32638] border border-[#A32638]/30 bg-[#A32638]/10 hover:bg-[#A32638]/20 rounded-md px-3 py-1.5 transition-all cursor-pointer"
+                  className="flex items-center gap-1.5 text-[0.6875rem] font-bold text-[#A32638] border border-[#A32638]/30 bg-[#A32638]/10 hover:bg-[#A32638]/20 rounded-md px-3 py-1.5 transition-all cursor-pointer"
                   aria-label="Elegir otra fecha desde el calendario"
                 >
                   <Calendar size={14} />
@@ -1027,14 +1027,14 @@ function ReservasPage() {
                       key={item.iso}
                       type="button"
                       onClick={() => setForm((f) => ({ ...f, date: item.iso }))}
-                      className={`flex flex-col items-center justify-center min-w-[54px] py-2.5 rounded-md transition-all text-center shadow-2xs ${
+                      className={`flex flex-col items-center justify-center min-w-[3.375rem] py-2.5 rounded-md transition-all text-center shadow-2xs ${
                         isSelected
-                          ? "bg-[#7a1c29] text-white shadow-md ring-2 ring-[#d4a373] scale-102"
+                          ? "bg-white text-[#A32638] shadow-md ring-2 ring-[#A32638] scale-102"
                           : "bg-[#A32638] text-white hover:bg-[#8e2132]"
                       }`}
                     >
-                      <span className="text-[14px] font-bold leading-none mb-1">{item.dayNum}</span>
-                      <span className="text-[10px] uppercase font-semibold opacity-90">{item.dayShortCap}</span>
+                      <span className="text-[0.875rem] font-bold leading-none mb-1">{item.dayNum}</span>
+                      <span className="text-[0.625rem] uppercase font-semibold opacity-90">{item.dayShortCap}</span>
                     </button>
                   );
                 })}
@@ -1057,17 +1057,17 @@ function ReservasPage() {
                         key={h}
                         type="button"
                         onClick={() => handleSelectTime(h, "desayuno")}
-                        className={`py-3.5 text-center text-xs font-bold rounded-none transition-all shadow-2xs ${
+                        className={`py-3.5 text-center text-xs font-bold rounded-md transition-all shadow-2xs ${
                           hourBlackout
                             ? "bg-amber-50/90 text-amber-900/80 border border-amber-200/80 hover:bg-amber-100/90 cursor-pointer"
                             : isSelected
-                            ? "bg-[#7a1c29] text-white shadow-md ring-2 ring-[#d4a373] scale-102"
+                            ? "bg-white text-[#A32638] shadow-md ring-2 ring-[#A32638] scale-102"
                             : "bg-[#A32638] text-white hover:bg-[#8e2132]"
                         }`}
                         title={hourBlackout ? `Horario reservado: ${hourBlackout}` : undefined}
                       >
                         {h}
-                        {hourBlackout && <span className="block text-[8px] uppercase tracking-wider font-extrabold text-amber-800/80 mt-0.5">Reservado</span>}
+                        {hourBlackout && <span className="block text-[0.5rem] uppercase tracking-wider font-extrabold text-amber-800/80 mt-0.5">Reservado</span>}
                       </button>
                     );
                   })}
@@ -1088,17 +1088,17 @@ function ReservasPage() {
                         key={h}
                         type="button"
                         onClick={() => handleSelectTime(h, "almuerzo")}
-                        className={`py-3.5 text-center text-xs font-bold rounded-none transition-all shadow-2xs ${
+                        className={`py-3.5 text-center text-xs font-bold rounded-md transition-all shadow-2xs ${
                           hourBlackout
                             ? "bg-amber-50/90 text-amber-900/80 border border-amber-200/80 hover:bg-amber-100/90 cursor-pointer"
                             : isSelected
-                            ? "bg-[#7a1c29] text-white shadow-md ring-2 ring-[#d4a373] scale-102"
+                            ? "bg-white text-[#A32638] shadow-md ring-2 ring-[#A32638] scale-102"
                             : "bg-[#A32638] text-white hover:bg-[#8e2132]"
                         }`}
                         title={hourBlackout ? `Horario reservado: ${hourBlackout}` : undefined}
                       >
                         {h}
-                        {hourBlackout && <span className="block text-[8px] uppercase tracking-wider font-extrabold text-amber-800/80 mt-0.5">Reservado</span>}
+                        {hourBlackout && <span className="block text-[0.5rem] uppercase tracking-wider font-extrabold text-amber-800/80 mt-0.5">Reservado</span>}
                       </button>
                     );
                   })}
@@ -1124,7 +1124,7 @@ function ReservasPage() {
                       type="button"
                       onClick={handleContinueToStep2}
                       disabled={!isStep1Complete}
-                      className={`w-full py-4 rounded-none font-bold uppercase tracking-widest text-sm transition-all shadow-md active:scale-[0.99] flex items-center justify-center gap-2 cursor-pointer ${
+                      className={`w-full py-4 rounded-md font-bold uppercase tracking-widest text-sm transition-all shadow-md active:scale-[0.99] flex items-center justify-center gap-2 cursor-pointer ${
                         isStep1Complete
                           ? "bg-[#A32638] hover:bg-[#7a1c29] text-white cursor-pointer"
                           : "bg-gray-200 text-gray-500 cursor-not-allowed border border-gray-300/60 opacity-80"
@@ -1258,7 +1258,7 @@ function ReservasPage() {
               <div className="pt-4">
                 <button
                   type="submit"
-                  className="w-full bg-[#A32638] hover:bg-[#7a1c29] text-white py-4 rounded-none font-bold uppercase tracking-widest text-sm transition-all shadow-md active:scale-[0.99] cursor-pointer"
+                  className="w-full bg-[#A32638] hover:bg-[#7a1c29] text-white py-4 rounded-md font-bold uppercase tracking-widest text-sm transition-all shadow-md active:scale-[0.99] cursor-pointer"
                 >
                   Continuar a Experiencia →
                 </button>
@@ -1354,7 +1354,7 @@ function ReservasPage() {
                   type="button"
                   onClick={handleFinalizeReservation}
                   disabled={isSubmitting}
-                  className="w-full bg-[#A32638] hover:bg-[#7a1c29] text-white py-4 rounded-none font-bold uppercase tracking-widest text-sm transition-all shadow-md active:scale-[0.99] disabled:opacity-50 cursor-pointer"
+                  className="w-full bg-[#A32638] hover:bg-[#7a1c29] text-white py-4 rounded-md font-bold uppercase tracking-widest text-sm transition-all shadow-md active:scale-[0.99] disabled:opacity-50 cursor-pointer"
                 >
                   {isSubmitting ? "Procesando Reserva..." : "CONFIRMAR RESERVA"}
                 </button>
@@ -1392,7 +1392,7 @@ function ReservasPage() {
               {/* Header del Pase */}
               <div className="border-b border-[#d4a373]/40 pb-4 flex justify-between items-center">
                 <div>
-                  <span className="text-[10px] uppercase font-bold tracking-widest text-[#d4a373] block">
+                  <span className="text-[0.625rem] uppercase font-bold tracking-widest text-[#d4a373] block">
                     Pase Digital de Reserva
                   </span>
                   <span className="font-serif font-bold text-lg text-[#A32638]">
@@ -1409,7 +1409,7 @@ function ReservasPage() {
                 <div className="flex items-center gap-3">
                   <Calendar size={18} className="text-[#A32638] shrink-0" />
                   <div>
-                    <span className="text-[10px] text-gray-500 uppercase block font-semibold">Fecha & Hora</span>
+                    <span className="text-[0.625rem] text-gray-500 uppercase block font-semibold">Fecha & Hora</span>
                     <span className="font-bold text-[#A32638] text-sm">{form.date} — {form.time}h.</span>
                   </div>
                 </div>
@@ -1417,7 +1417,7 @@ function ReservasPage() {
                 <div className="flex items-center gap-3">
                   <UserIcon size={18} className="text-[#A32638] shrink-0" />
                   <div>
-                    <span className="text-[10px] text-gray-500 uppercase block font-semibold">Comensales & Zona</span>
+                    <span className="text-[0.625rem] text-gray-500 uppercase block font-semibold">Comensales & Zona</span>
                     <span className="font-bold text-[#A32638] text-sm">{form.guests} personas · {form.zona.nombre}</span>
                   </div>
                 </div>
@@ -1425,7 +1425,7 @@ function ReservasPage() {
                 <div className="flex items-center gap-3">
                   <MapPin size={18} className="text-[#A32638] shrink-0" />
                   <div>
-                    <span className="text-[10px] text-gray-500 uppercase block font-semibold">Ubicación</span>
+                    <span className="text-[0.625rem] text-gray-500 uppercase block font-semibold">Ubicación</span>
                     <span className="font-bold text-gray-800">Jr. José Olaya 106, Huamanga — Ayacucho</span>
                   </div>
                 </div>
@@ -1434,13 +1434,13 @@ function ReservasPage() {
               {/* Titular de la Reserva */}
               <div className="pt-3 border-t border-[#d4a373]/30 flex justify-between items-end">
                 <div>
-                  <span className="text-[10px] text-gray-500 uppercase font-bold block mb-0.5">
+                  <span className="text-[0.625rem] text-gray-500 uppercase font-bold block mb-0.5">
                     Titular de la Reserva:
                   </span>
                   <span className="font-serif text-base font-bold text-[#3b1f10] block">
                     {form.firstName.toUpperCase()} {form.lastName.toUpperCase()}
                   </span>
-                  <span className="text-[10px] text-gray-500 font-medium block">
+                  <span className="text-[0.625rem] text-gray-500 font-medium block">
                     {form.phoneCountry} {form.phone}
                   </span>
                 </div>
@@ -1448,7 +1448,7 @@ function ReservasPage() {
                 {/* Simulación QR Code */}
                 <div className="w-16 h-16 bg-white p-1.5 rounded-xl border border-[#d4a373]/40 shadow-xs flex flex-col items-center justify-center shrink-0">
                   <QrCode size={40} className="text-[#A32638]" />
-                  <span className="text-[7px] font-mono text-gray-500 mt-0.5">VALID</span>
+                  <span className="text-[0.4375rem] font-mono text-gray-500 mt-0.5">VALID</span>
                 </div>
               </div>
             </div>
@@ -1534,7 +1534,7 @@ function ReservasPage() {
               <Calendar size={26} />
             </div>
             <div>
-              <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-[#d4a373] block mb-1">
+              <span className="text-[0.625rem] font-bold uppercase tracking-[0.25em] text-[#d4a373] block mb-1">
                 Restaurante Las Flores
               </span>
               <h3 className="font-serif italic text-2xl md:text-3xl text-[#3b1f10] font-bold">
@@ -1547,7 +1547,7 @@ function ReservasPage() {
             </p>
             {noticeModal.reason && (
               <div className="bg-white/80 p-3.5 rounded-2xl border border-[#d4a373]/30 text-left space-y-1">
-                <span className="text-[10px] font-extrabold uppercase tracking-wider text-[#d4a373] block">
+                <span className="text-[0.625rem] font-extrabold uppercase tracking-wider text-[#d4a373] block">
                   Información:
                 </span>
                 <p className="text-xs text-gray-800 font-medium">
@@ -1579,7 +1579,7 @@ function ReservasPage() {
                   <ShieldCheck size={22} className="text-[#d4a373]" />
                 </div>
                 <div>
-                  <span className="text-[9px] uppercase tracking-[0.25em] text-[#d4a373] font-bold block">
+                  <span className="text-[0.5625rem] uppercase tracking-[0.25em] text-[#d4a373] font-bold block">
                     Restaurante Turístico Las Flores
                   </span>
                   <h3 className="font-serif text-lg md:text-xl font-bold">
@@ -1662,7 +1662,7 @@ function ReservasPage() {
 
             {/* Footer con botón de Aceptar */}
             <div className="p-4 md:p-6 bg-white border-t border-[#d4a373]/30 flex items-center justify-between gap-4 shrink-0">
-              <span className="text-[11px] text-gray-500 hidden sm:inline">
+              <span className="text-[0.6875rem] text-gray-500 hidden sm:inline">
                 Restaurante Las Flores — Ayacucho, Perú
               </span>
               <button

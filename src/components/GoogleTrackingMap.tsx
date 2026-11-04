@@ -175,7 +175,7 @@ export function GoogleTrackingMap({
 
   if (loadError) {
     return (
-      <div className="w-full h-[400px] flex items-center justify-center bg-red-50 text-red-500 rounded-2xl border border-red-100">
+      <div className="w-full h-[25rem] flex items-center justify-center bg-red-50 text-red-500 rounded-2xl border border-red-100">
         <p className="text-sm font-bold">Error al cargar Google Maps</p>
       </div>
     );
@@ -183,13 +183,13 @@ export function GoogleTrackingMap({
 
   if (!isLoaded || !API_KEY) {
     return (
-      <div className="w-full h-[400px] flex flex-col items-center justify-center bg-piedra/50 rounded-2xl border border-nogal/10">
+      <div className="w-full h-[25rem] flex flex-col items-center justify-center bg-piedra/50 rounded-2xl border border-nogal/10">
         <div className="w-8 h-8 border-[3px] border-nogal border-t-transparent rounded-full animate-spin mb-4" />
         <p className="text-xs font-bold text-nogal/50 uppercase tracking-widest">
           {!API_KEY ? "Falta API Key de Google Maps" : "Cargando Mapa..."}
         </p>
         {!API_KEY && (
-          <p className="text-[10px] text-nogal/40 mt-2 text-center max-w-xs">
+          <p className="text-[0.625rem] text-nogal/40 mt-2 text-center max-w-xs">
             Añade VITE_GOOGLE_MAPS_API_KEY a tu archivo .env
           </p>
         )}
@@ -198,7 +198,7 @@ export function GoogleTrackingMap({
   }
 
   return (
-    <div className="w-full h-[400px] rounded-2xl overflow-hidden border border-nogal/10 relative z-0 shadow-inner">
+    <div className="w-full h-[25rem] rounded-2xl overflow-hidden border border-nogal/10 relative z-0 shadow-inner">
       <GoogleMap
         mapContainerStyle={containerStyle}
         center={driverLocation || restaurantLocation}
@@ -271,7 +271,7 @@ export function GoogleTrackingMap({
       <div className="absolute top-4 left-4 right-4 md:right-auto z-10">
         <div className="bg-white/95 backdrop-blur-md px-4 py-3 rounded-2xl shadow-xl shadow-nogal/5 border border-white flex flex-col md:flex-row md:items-center gap-1 md:gap-4">
           <div>
-            <h4 className="font-bold text-[10px] text-nogal/50 uppercase tracking-[0.2em] mb-0.5">Estado</h4>
+            <h4 className="font-bold text-[0.625rem] text-nogal/50 uppercase tracking-[0.2em] mb-0.5">Estado</h4>
             <div className="flex items-center gap-2">
               {driverLocation ? (
                 <>

@@ -76,13 +76,13 @@ export function DiaSwitcher({ dias, titulo, texto }: DiaSwitcherProps) {
                     decoding="async"
                     className="w-full h-full object-cover"
                   />
-                  <span className="absolute top-3 right-3 bg-ink/70 text-piedra text-[10px] uppercase tracking-[0.2em] px-2.5 py-1">
+                  <span className="absolute top-3 right-3 bg-ink/70 text-piedra text-[0.625rem] uppercase tracking-[0.2em] px-2.5 py-1">
                     Día {d.numero}
                   </span>
                 </div>
                 <figcaption className="mt-4">
                   {d.titulo && (
-                    <p className="text-eucalipto text-[10px] uppercase tracking-[0.25em] font-semibold mb-1">
+                    <p className="text-eucalipto text-[0.625rem] uppercase tracking-[0.25em] font-semibold mb-1">
                       {d.dia}
                     </p>
                   )}

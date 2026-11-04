@@ -73,7 +73,7 @@ function LugarDetailPage() {
                         )}
                       </div>
                       <figcaption className="mt-3">
-                        <p className="text-[11px] uppercase tracking-[0.2em] font-semibold text-nogal/60">
+                        <p className="text-[0.6875rem] uppercase tracking-[0.2em] font-semibold text-nogal/60">
                           {item.titulo}
                         </p>
                         <p className="text-sm text-nogal/60 mt-1 leading-relaxed">{item.descripcion}</p>
@@ -91,7 +91,7 @@ function LugarDetailPage() {
                           className="w-full h-full object-cover"
                         />
                       </div>
-                      <p className="text-[11px] uppercase tracking-[0.2em] font-semibold text-nogal/60 mt-3">
+                      <p className="text-[0.6875rem] uppercase tracking-[0.2em] font-semibold text-nogal/60 mt-3">
                         {lugar.clipTags[i]}
                       </p>
                     </div>
@@ -148,7 +148,7 @@ function LugarDetailPage() {
             className="flex items-start px-6 md:px-16 py-16 md:py-24 md:order-2"
           >
             <div className="max-w-lg">
-              <span className="text-eucalipto text-[10px] uppercase tracking-[0.3em] font-semibold mb-4 block">
+              <span className="text-eucalipto text-[0.625rem] uppercase tracking-[0.3em] font-semibold mb-4 block">
                 {lugar.categoria}
               </span>
               <h2 className="font-serif text-3xl md:text-4xl leading-tight mb-5">{lugar.nombre}</h2>
@@ -186,13 +186,13 @@ function LugarDetailPage() {
               className="absolute inset-0 w-full h-full object-cover"
             />
             {lugar.consejo && (
-              <div className="absolute bottom-0 inset-x-0 md:inset-x-auto md:left-4 md:w-[22rem] md:h-[450px] flex flex-col justify-start gap-6 bg-eucalipto text-piedra px-6 py-8 md:px-5 md:py-10 overflow-y-auto">
+              <div className="absolute bottom-0 inset-x-0 md:inset-x-auto md:left-4 md:w-[22rem] md:h-[28.125rem] flex flex-col justify-start gap-6 bg-eucalipto text-piedra px-6 py-8 md:px-5 md:py-10 overflow-y-auto">
                 <h2 className="font-serif text-xl md:text-3xl leading-snug">Consejo de visita</h2>
                 <p className="text-sm md:text-lg leading-relaxed text-piedra/90">{lugar.consejo}</p>
               </div>
             )}
             <span
-              className={`absolute text-piedra text-[10px] uppercase tracking-[0.35em] font-semibold drop-shadow ${
+              className={`absolute text-piedra text-[0.625rem] uppercase tracking-[0.35em] font-semibold drop-shadow ${
                 lugar.consejo
                   ? "top-20 right-6 md:top-auto md:bottom-10 md:right-10"
                   : "bottom-6 md:bottom-10 left-6 md:left-10"
@@ -266,7 +266,7 @@ function LugarDetailPage() {
               <div className="absolute inset-0 bg-ink/10" />
             </>
           )}
-          <span className="absolute bottom-6 left-6 md:bottom-10 md:left-10 text-piedra text-[10px] uppercase tracking-[0.35em] font-semibold drop-shadow">
+          <span className="absolute bottom-6 left-6 md:bottom-10 md:left-10 text-piedra text-[0.625rem] uppercase tracking-[0.35em] font-semibold drop-shadow">
             {lugar.etiquetaPantalla ?? lugar.videoSeccion?.etiqueta ?? lugar.nombre}
           </span>
         </section>
@@ -287,7 +287,7 @@ function LugarDetailPage() {
                   <span className="font-serif text-xl md:text-3xl leading-snug transition-transform duration-300 group-hover:translate-x-2">
                     {otro.nombreLista ?? otro.nombre}
                   </span>
-                  <span className="hidden md:block text-[11px] uppercase tracking-[0.2em] font-semibold text-nogal/60">
+                  <span className="hidden md:block text-[0.6875rem] uppercase tracking-[0.2em] font-semibold text-nogal/60">
                     {otro.categoria}
                   </span>
                   <span

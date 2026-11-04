@@ -94,7 +94,7 @@ export function SimpleTrendChart({
                     {valuePrefix}
                     {entry.value.toFixed(0)}
                   </span>
-                  <div className="w-full flex-1 max-h-[170px] flex items-end bg-gray-50 rounded-t-xl p-0.5 border border-gray-100">
+                  <div className="w-full flex-1 max-h-[10.625rem] flex items-end bg-gray-50 rounded-t-xl p-0.5 border border-gray-100">
                     <div
                       style={{ height: `${heightPercent}%`, background: `linear-gradient(to top, ${color}, ${color}cc)` }}
                       className="w-full rounded-t-lg transition-all shadow-md group-hover:brightness-110"

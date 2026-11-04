@@ -362,7 +362,7 @@ function EventosPage() {
         </div>
 
         {/* Tab Content (3 Columns) */}
-        <div className="relative w-full max-w-[1800px] mx-auto flex">
+        <div className="relative w-full max-w-[112.5rem] mx-auto flex">
           {EVENT_TABS.map((tab) => {
             const visualIndex = carouselIndices[tab.id];
             const transitionEnabled = carouselTransitions[tab.id];
@@ -418,7 +418,7 @@ function EventosPage() {
                   <div className="mt-auto">
                     <button
                       onClick={() => setIsContactOpen(true)}
-                      className="px-10 py-5 text-[11px] uppercase tracking-[0.25em] font-bold rounded-sm btn-yellow-hover"
+                      className="px-10 py-5 text-[0.6875rem] uppercase tracking-[0.25em] font-bold rounded-sm btn-yellow-hover"
                     >
                       Cotizar Evento
                     </button>
@@ -447,7 +447,7 @@ function EventosPage() {
 
                 {/* ─── COLUMNA 3 MÓVIL: una imagen a la vez con swipe táctil ─── */}
                 <div
-                  className="block lg:hidden w-full h-[300px] mb-8 relative overflow-hidden"
+                  className="block lg:hidden w-full h-[18.75rem] mb-8 relative overflow-hidden"
                   onTouchStart={(e) => setTouchStartX(e.touches[0].clientX)}
                   onTouchEnd={(e) => {
                     if (touchStartX === null) return;
@@ -562,7 +562,7 @@ function EventosPage() {
           {/* Tarjeta Panel Lateral */}
           <div
             onClick={(e) => e.stopPropagation()}
-            className="doc-legible relative z-10 w-full max-w-[420px] bg-[#f8f4e6] text-nogal rounded-[24px] sm:rounded-[32px] shadow-2xl overflow-hidden border border-black/10 flex flex-col shrink-0 h-[92dvh] sm:h-[calc(100dvh-32px)] animate-in slide-in-from-right duration-300"
+            className="doc-legible relative z-10 w-full max-w-[26.25rem] bg-[#f8f4e6] text-nogal rounded-[24px] sm:rounded-[32px] shadow-2xl overflow-hidden border border-black/10 flex flex-col shrink-0 h-[92dvh] sm:h-[calc(100dvh-32px)] animate-in slide-in-from-right duration-300"
           >
             {/* Header & Navbar Pinned Bar */}
             <div className="bg-white shrink-0 border-b border-black/10 shadow-xs z-20">
@@ -642,7 +642,7 @@ function EventosPage() {
                       <span className="text-xs font-bold text-nogal block">
                         ¿Atención directa?
                       </span>
-                      <span className="text-[11px] text-black/50 block">
+                      <span className="text-[0.6875rem] text-black/50 block">
                         Escríbenos por WhatsApp
                       </span>
                     </div>
@@ -650,7 +650,7 @@ function EventosPage() {
                       href="https://wa.me/51980723422?text=Hola%20Las%20Flores,%20deseo%20cotizar%20un%20evento%20especial%20en%20sus%20salones.%20%C2%BFMe%20podr%C3%ADan%20compartir%20informaci%C3%B3n%20y%20men%C3%BAs?"
                       target="_blank"
                       rel="noreferrer"
-                      className="py-2 px-3 bg-eucalipto hover:bg-eucalipto/90 text-piedra rounded-xl font-bold text-[11px] uppercase tracking-wider transition-colors flex items-center gap-1.5 shadow-xs shrink-0 cursor-pointer"
+                      className="py-2 px-3 bg-eucalipto hover:bg-eucalipto/90 text-piedra rounded-xl font-bold text-[0.6875rem] uppercase tracking-wider transition-colors flex items-center gap-1.5 shadow-xs shrink-0 cursor-pointer"
                     >
                       <PhoneCall size={13} />
                       <span>WhatsApp</span>

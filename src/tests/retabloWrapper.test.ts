@@ -99,7 +99,7 @@ describe("RetabloWrapper", () => {
     const wrapper = markup.match(/<div class="[^"]*mx-auto[^"]*"[^>]*>/)?.[0] ?? "";
 
     expect(wrapper).toContain("lg:w-[calc(50vw_-_40px)]");
-    expect(wrapper).toContain("lg:max-w-[900px]");
+    expect(wrapper).toContain("lg:max-w-[56.25rem]");
     expect(wrapper).toContain("lg:mt-0");
     expect(wrapper).toContain("lg:min-h-[min(700px,calc(100dvh_-_10rem))]");
     expect(wrapper).toContain("lg:h-[min(900px,calc(100dvh_-_10rem))]");
@@ -116,7 +116,7 @@ describe("RetabloWrapper", () => {
     expect(wrapper).toContain("w-screen");
     expect(wrapper).toContain("max-w-none");
     expect(wrapper).toContain("lg:w-[calc(50vw_-_40px)]");
-    expect(wrapper).toContain("lg:max-w-[900px]");
+    expect(wrapper).toContain("lg:max-w-[56.25rem]");
     expect(wrapper).not.toContain("w-[90vw]");
   });
 
@@ -145,8 +145,8 @@ describe("RetabloWrapper", () => {
     expect(pediment).toContain("lg:h-24");
     expect(interior).not.toContain("mx-[10px]");
     expect(interior).not.toContain("mb-[10px]");
-    expect(interior).toContain("lg:mx-[14px]");
-    expect(interior).toContain("lg:mb-[14px]");
+    expect(interior).toContain("lg:mx-[0.875rem]");
+    expect(interior).toContain("lg:mb-[0.875rem]");
   });
 
   it("reduces the pediment by 1 cm only at desktop viewport widths of 1600 px or more", () => {

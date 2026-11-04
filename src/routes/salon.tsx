@@ -373,7 +373,7 @@ function SalonRoute() {
   return (
     <main className="min-h-screen bg-[#f7f6f1] text-[#21372b]">
       <header className="sticky top-0 z-30 border-b border-[#dfe5dc] bg-white/95 backdrop-blur">
-        <div className="mx-auto flex max-w-[1600px] items-center justify-between gap-4 px-4 py-3 sm:px-7">
+        <div className="mx-auto flex max-w-[100rem] items-center justify-between gap-4 px-4 py-3 sm:px-7">
           <div className="min-w-0">
             <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#738477]">
               Restaurante Las Flores
@@ -397,7 +397,7 @@ function SalonRoute() {
         </div>
       </header>
 
-      <div className="mx-auto max-w-[1600px] space-y-5 px-4 py-5 sm:px-7">
+      <div className="mx-auto max-w-[100rem] space-y-5 px-4 py-5 sm:px-7">
         {(errorMessage || successMessage) && (
           <div
             role={errorMessage ? "alert" : "status"}
@@ -567,7 +567,7 @@ function SalonRoute() {
                         >
                           <div className="flex items-start justify-between gap-2">
                             <div>
-                              <p className="text-[10px] font-bold uppercase tracking-[0.12em] text-[#89948a]">
+                              <p className="text-[0.625rem] font-bold uppercase tracking-[0.12em] text-[#89948a]">
                                 {category}
                               </p>
                               <h3 className="mt-1 font-serif text-base font-bold">{dish.name}</h3>
@@ -706,7 +706,7 @@ function SalonRoute() {
                     >
                       {saving ? "Guardando..." : "Enviar comanda"}
                     </button>
-                    <p className="text-center text-[11px] leading-relaxed text-[#7d887f]">
+                    <p className="text-center text-[0.6875rem] leading-relaxed text-[#7d887f]">
                       Las bebidas se separan para bar y los platos para cocina. La impresión queda
                       pendiente mientras se configura el conector del local.
                     </p>

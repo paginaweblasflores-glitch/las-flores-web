@@ -59,7 +59,7 @@ export function LocationSelector({ onLocationSelect, onAddressResolve, initialLo
 
   if (!MapComponents) {
     return (
-      <div className="w-full h-[250px] rounded-xl border-2 border-black/10 bg-black/5 animate-pulse" />
+      <div className="w-full h-[15.625rem] rounded-xl border-2 border-black/10 bg-black/5 animate-pulse" />
     );
   }
 
@@ -99,7 +99,7 @@ export function LocationSelector({ onLocationSelect, onAddressResolve, initialLo
   const MAPTILER_KEY = import.meta.env.VITE_MAPTILER_API_KEY;
 
   return (
-    <div className="w-full h-[250px] rounded-xl overflow-hidden border-2 border-black/10 relative z-0">
+    <div className="w-full h-[15.625rem] rounded-xl overflow-hidden border-2 border-black/10 relative z-0">
       <MapContainer
         center={position}
         zoom={15}

@@ -46,7 +46,7 @@ function TerminosCondicionesPage() {
           
           {/* Introducción */}
           <div className="border-b border-black/10 pb-6 space-y-3">
-            <span className="text-[11px] font-bold uppercase tracking-widest text-eucalipto block">
+            <span className="text-[0.6875rem] font-bold uppercase tracking-widest text-eucalipto block">
               Vigencia General — Restaurante Turístico Las Flores
             </span>
             <p className="text-base font-serif italic text-ink">

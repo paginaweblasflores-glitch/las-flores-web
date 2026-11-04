@@ -32,7 +32,7 @@ export function CronologiaBatalla({ momentos, titulo, texto }: CronologiaBatalla
                 decoding="async"
                 className="w-full h-full object-cover"
               />
-              <span className="absolute top-3 right-3 bg-ink/70 text-piedra text-[10px] uppercase tracking-[0.2em] px-2.5 py-1">
+              <span className="absolute top-3 right-3 bg-ink/70 text-piedra text-[0.625rem] uppercase tracking-[0.2em] px-2.5 py-1">
                 Momento {i + 1}
               </span>
             </div>

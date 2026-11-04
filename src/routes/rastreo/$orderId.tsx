@@ -159,7 +159,7 @@ function ClientTrackingLink() {
         {/* Cabecera Editorial */}
         <header className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 relative">
           <div className="relative z-10">
-            <span className="text-[10px] md:text-xs uppercase tracking-[0.4em] font-extrabold text-chilca block mb-2">
+            <span className="text-[0.625rem] md:text-xs uppercase tracking-[0.4em] font-extrabold text-chilca block mb-2">
               Experiencia Las Flores
             </span>
             <h1 className="font-serif italic text-4xl md:text-5xl text-nogal tracking-tight leading-[1.1]">
@@ -178,7 +178,7 @@ function ClientTrackingLink() {
               <Package className="text-eucalipto" size={20} strokeWidth={2.5} />
             </div>
             <div>
-              <p className="text-[9px] uppercase font-bold text-nogal/40 tracking-[0.2em] mb-0.5">Orden de Compra</p>
+              <p className="text-[0.5625rem] uppercase font-bold text-nogal/40 tracking-[0.2em] mb-0.5">Orden de Compra</p>
               <p className="text-sm font-bold text-nogal tracking-wide">#{order.order_number || orderId}</p>
             </div>
           </div>
@@ -189,7 +189,7 @@ function ClientTrackingLink() {
           <section className="bg-white p-6 md:p-8 rounded-[2rem] shadow-xl shadow-nogal/5 border border-nogal/10 relative z-10 space-y-8">
             <div className="flex items-center justify-between border-b border-nogal/10 pb-4">
               <h2 className="font-serif text-xl font-bold text-nogal">Seguimiento en Tiempo Real</h2>
-              <span className="text-[10px] uppercase font-extrabold tracking-widest bg-eucalipto/10 text-eucalipto px-3 py-1 rounded-full flex items-center gap-1.5">
+              <span className="text-[0.625rem] uppercase font-extrabold tracking-widest bg-eucalipto/10 text-eucalipto px-3 py-1 rounded-full flex items-center gap-1.5">
                 <span className="w-2 h-2 rounded-full bg-eucalipto animate-ping" />
                 Sincronizado en Vivo
               </span>
@@ -205,7 +205,7 @@ function ClientTrackingLink() {
                   <div key={step.num} className="relative flex items-start gap-4 group">
                     {/* Marcador del Nodo */}
                     <div 
-                      className={`absolute -left-[31px] md:-left-[39px] top-0 w-8 h-8 rounded-full flex items-center justify-center font-bold text-xs transition-all duration-500 ${
+                      className={`absolute -left-[1.9375rem] md:-left-[2.4375rem] top-0 w-8 h-8 rounded-full flex items-center justify-center font-bold text-xs transition-all duration-500 ${
                         isCompleted
                           ? "bg-eucalipto text-white shadow-md scale-100"
                           : isCurrent
@@ -224,7 +224,7 @@ function ClientTrackingLink() {
                           {step.title}
                         </h3>
                         {isCurrent && (
-                          <span className="text-[9px] uppercase font-extrabold px-2 py-0.5 bg-nogal text-chilca rounded-full animate-pulse">
+                          <span className="text-[0.5625rem] uppercase font-extrabold px-2 py-0.5 bg-nogal text-chilca rounded-full animate-pulse">
                             En Proceso
                           </span>
                         )}
@@ -278,7 +278,7 @@ function ClientTrackingLink() {
               <h3 className="font-bold text-xs uppercase tracking-[0.15em] text-nogal/50 mb-2">Destino Registrado</h3>
               <p className="text-nogal text-sm font-medium leading-relaxed">{order.address || "Dirección registrada"}</p>
               {order.reference && (
-                <p className="text-nogal/50 text-[11px] mt-1 italic">Ref: {order.reference}</p>
+                <p className="text-nogal/50 text-[0.6875rem] mt-1 italic">Ref: {order.reference}</p>
               )}
             </div>
           </div>
@@ -286,8 +286,8 @@ function ClientTrackingLink() {
           <div className="bg-nogal p-6 md:p-8 rounded-3xl border border-nogal/10 flex flex-col justify-center items-center text-center text-piedra shadow-xl">
              <Navigation2 className="text-chilca opacity-50 mb-3" size={24} />
              <h3 className="font-serif italic text-xl mb-1">¿Algún inconveniente?</h3>
-             <p className="text-[11px] text-piedra/60 mb-5 max-w-[200px] leading-relaxed">Nuestro equipo de soporte está listo para ayudarte con tu orden.</p>
-             <a href="https://wa.me/51980723422" target="_blank" rel="noreferrer" className="w-full max-w-[200px] py-3.5 bg-pacay text-white rounded-xl font-bold text-[10px] uppercase tracking-widest hover:bg-pacay/90 transition-all shadow-md active:scale-95">
+             <p className="text-[0.6875rem] text-piedra/60 mb-5 max-w-[12.5rem] leading-relaxed">Nuestro equipo de soporte está listo para ayudarte con tu orden.</p>
+             <a href="https://wa.me/51980723422" target="_blank" rel="noreferrer" className="w-full max-w-[12.5rem] py-3.5 bg-pacay text-white rounded-xl font-bold text-[0.625rem] uppercase tracking-widest hover:bg-pacay/90 transition-all shadow-md active:scale-95">
                Contactar Soporte
              </a>
           </div>

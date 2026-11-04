@@ -121,7 +121,7 @@ function FamiliaLasFloresPage() {
 
               <div className="px-7 pt-7 pb-8">
                 <span className="block font-serif text-5xl leading-none text-[#D4AF37]/50">&ldquo;</span>
-                <p className="text-[14px] italic leading-[1.75] text-gray-600 pr-1 -mt-4">
+                <p className="text-[0.875rem] italic leading-[1.75] text-gray-600 pr-1 -mt-4">
                   {c.quote}
                 </p>
                 <p className="mt-4 text-sm font-bold text-[#2D473C]">— {c.name}</p>

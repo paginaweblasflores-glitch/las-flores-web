@@ -401,7 +401,7 @@ function PanelReservasRoute() {
 
       {/* Header (fijo arriba, ancho completo) */}
       <header className="bg-[#2D473C] text-[#F9F8F3] border-b border-[#D4AF37]/30 shadow-xl sticky top-0 z-40 font-sans">
-        <div className="max-w-[1800px] mx-auto px-4 md:px-6">
+        <div className="max-w-[112.5rem] mx-auto px-4 md:px-6">
           <div className="flex flex-col md:flex-row items-center justify-between gap-3 py-3 md:h-16 md:py-0">
             <div className="flex items-center gap-4 w-full md:w-auto">
               <div className="flex items-center gap-2.5 shrink-0">

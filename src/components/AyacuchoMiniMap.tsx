@@ -32,7 +32,7 @@ export function AyacuchoMiniMap({ lat, lng, nombre }: AyacuchoMiniMapProps) {
   return (
     <svg
       viewBox={`0 0 ${VIEWBOX_W} ${VIEWBOX_H}`}
-      className="w-full h-full max-h-[520px]"
+      className="w-full h-full max-h-[32.5rem]"
       role="img"
       aria-label={`Ubicación de ${nombre} en el departamento de Ayacucho`}
     >

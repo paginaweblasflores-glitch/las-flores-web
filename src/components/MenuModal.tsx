@@ -208,7 +208,7 @@ export function MenuModal({ open, onClose }: MenuModalProps) {
               Nuestra Carta
             </h2>
             <p
-              className="text-[9px] md:text-[10px] uppercase tracking-[0.25em] font-bold text-eucalipto/60"
+              className="text-[0.5625rem] md:text-[0.625rem] uppercase tracking-[0.25em] font-bold text-eucalipto/60"
             >
               Para Delivery & Recojo
             </p>
@@ -227,7 +227,7 @@ export function MenuModal({ open, onClose }: MenuModalProps) {
             <span className="hidden md:inline">Ver Pedido</span>
             {totalItems > 0 && (
               <span
-                className={`absolute -top-2 -right-2 text-white text-[10px] w-5 h-5 rounded-full flex items-center justify-center font-bold shadow-sm bg-cochinilla transition-all duration-300 ${
+                className={`absolute -top-2 -right-2 text-white text-[0.625rem] w-5 h-5 rounded-full flex items-center justify-center font-bold shadow-sm bg-cochinilla transition-all duration-300 ${
                   isBouncing ? "scale-[1.35] rotate-12" : "scale-100"
                 }`}
               >
@@ -295,7 +295,7 @@ export function MenuModal({ open, onClose }: MenuModalProps) {
                 {active?.label || "Cargando..."}
               </h2>
               <span
-                className="text-[10px] uppercase tracking-[0.3em] font-bold px-4 py-2 rounded-full"
+                className="text-[0.625rem] uppercase tracking-[0.3em] font-bold px-4 py-2 rounded-full"
                 style={{ background: `${R.morado}15`, color: R.morado }}
               >
                 {(active?.dishes?.length || 0)} platos

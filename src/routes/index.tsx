@@ -190,7 +190,7 @@ function PlatosTipicosGrid({
             />
           </div>
           <div className="pt-5">
-            <span className="block text-chilca font-bold text-[10px] uppercase tracking-[0.25em] mb-2">
+            <span className="block text-chilca font-bold text-[0.625rem] uppercase tracking-[0.25em] mb-2">
               {p.ocasion}
             </span>
             <h3 className="font-serif text-xl md:text-2xl leading-tight">{p.nombre}</h3>
@@ -217,20 +217,20 @@ function FestividadesSlider() {
             params={{ slug: fest.slug }}
             className="group block text-left transition-transform duration-300 hover:-translate-y-1"
           >
-            <div className="relative isolate overflow-hidden min-h-[280px] md:min-h-[360px] lg:min-h-[400px]">
+            <div className="relative isolate overflow-hidden min-h-[17.5rem] md:min-h-[22.5rem] lg:min-h-[25rem]">
               <FestividadVideo
                 src={fest.video.card}
                 poster={fest.video.poster}
                 alt={fest.nombre}
                 className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
               />
-              <span className="absolute top-4 right-4 bg-ink/70 text-piedra text-[10px] uppercase tracking-[0.25em] px-3 py-1.5">
+              <span className="absolute top-4 right-4 bg-ink/70 text-piedra text-[0.625rem] uppercase tracking-[0.25em] px-3 py-1.5">
                 {fest.fecha}
               </span>
             </div>
             <div className="pt-5">
               <h3 className="font-serif text-2xl md:text-3xl leading-tight">{fest.nombre}</h3>
-              <span className="mt-3 inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.22em] font-semibold text-piedra underline underline-offset-4">
+              <span className="mt-3 inline-flex items-center gap-2 text-[0.625rem] uppercase tracking-[0.22em] font-semibold text-piedra underline underline-offset-4">
                 Descubrir <span aria-hidden>→</span>
               </span>
             </div>
@@ -286,7 +286,7 @@ function LugaresAccordion() {
   }, [isMobile]);
 
   return (
-    <div className="flex flex-col md:flex-row h-[820px] md:h-[500px] w-full gap-3 md:gap-5 overflow-hidden">
+    <div className="flex flex-col md:flex-row h-[51.25rem] md:h-[31.25rem] w-full gap-3 md:gap-5 overflow-hidden">
       {lugares.map((lugar, i) => {
         // Nombre general de cada destino (dentro de cada página hay más de un lugar).
         const titulo = lugar.nombreLista ?? lugar.nombre;
@@ -351,7 +351,7 @@ function LugaresAccordion() {
                 <h3 className="font-serif text-piedra text-2xl md:text-4xl leading-tight mb-5">
                   {titulo}
                 </h3>
-                <span className="inline-flex items-center gap-2 self-start text-piedra text-[11px] uppercase tracking-[0.25em] font-bold bg-cochinilla hover:bg-cochinilla/90 transition-colors px-5 py-3">
+                <span className="inline-flex items-center gap-2 self-start text-piedra text-[0.6875rem] uppercase tracking-[0.25em] font-bold bg-cochinilla hover:bg-cochinilla/90 transition-colors px-5 py-3">
                   Descubrir <ArrowRight size={14} />
                 </span>
               </div>
@@ -362,7 +362,7 @@ function LugaresAccordion() {
                   isExpanded ? "opacity-0" : "opacity-100"
                 }`}
               >
-                <span className="w-[440px] max-w-none shrink-0 text-center text-piedra font-serif text-xl leading-tight tracking-wider -rotate-90">
+                <span className="w-[27.5rem] max-w-none shrink-0 text-center text-piedra font-serif text-xl leading-tight tracking-wider -rotate-90">
                   {titulo}
                 </span>
               </div>
@@ -557,7 +557,7 @@ function Index() {
 
               {/* Imagen ampliada debajo de todo el texto, con su pie de foto pegado debajo */}
               <div className="retablo-content-figure my-auto flex min-h-0 w-full flex-col items-center gap-1">
-                <div className="retablo-content-image mx-auto my-auto aspect-[4/3] min-h-[72px]">
+                <div className="retablo-content-image mx-auto my-auto aspect-[4/3] min-h-[4.5rem]">
                   <div className="retablo-photo-frame relative h-full border-x-[6px] border-t-[6px] border-b-[10px] border-[#8f1d35] p-[3px] shadow-md">
                     <div className="relative h-full w-full overflow-hidden border border-[#d4a373]">
                       <img
@@ -575,7 +575,7 @@ function Index() {
 
                 {/* Pie de foto: fuera del cuadro de la imagen y dentro del retablo */}
                 <p
-                  className="retablo-content-caption w-full shrink-0 text-center font-sans text-[10px] leading-snug sm:text-[11px]"
+                  className="retablo-content-caption w-full shrink-0 text-center font-sans text-[0.625rem] leading-snug sm:text-[0.6875rem]"
                   style={{ color: "#3d2010" }}
                 >
                   Joaquín López Antay (1897-1981), maestro del retablo ayacuchano
@@ -649,7 +649,7 @@ function Index() {
             </p>
             <Link
               to="/tesoros-ayacucho"
-              className="inline-flex items-center gap-3 px-8 py-4 text-[11px] uppercase tracking-[0.25em] font-bold rounded-sm btn-yellow-hover"
+              className="inline-flex items-center gap-3 px-8 py-4 text-[0.6875rem] uppercase tracking-[0.25em] font-bold rounded-sm btn-yellow-hover"
             >
               <span>Ver los productos por estación</span> <span aria-hidden>→</span>
             </Link>
@@ -865,7 +865,7 @@ function Index() {
           height={800}
           loading="lazy"
           decoding="async"
-          className="w-full h-[70vh] md:h-[720px] object-cover"
+          className="w-full h-[70vh] md:h-[45rem] object-cover"
         />
         <div className="absolute inset-0 bg-cafe/55" />
         <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-6">
@@ -881,14 +881,14 @@ function Index() {
           <div className="mt-10 flex flex-col sm:flex-row gap-4">
             <Link
               to="/reservas"
-              className="inline-flex items-center justify-center gap-3 px-8 py-4 border border-transparent text-[11px] uppercase tracking-[0.25em] font-bold rounded-sm btn-yellow-hover"
+              className="inline-flex items-center justify-center gap-3 px-8 py-4 border border-transparent text-[0.6875rem] uppercase tracking-[0.25em] font-bold rounded-sm btn-yellow-hover"
             >
               <span>Reserva tu Mesa</span>
             </Link>
             <button
               type="button"
               onClick={() => setIsMenuOpen(true)}
-              className="inline-flex items-center justify-center gap-3 px-8 py-4 border border-piedra/30 text-piedra text-[11px] uppercase tracking-[0.25em] font-bold hover:bg-piedra/10 transition-colors rounded-sm cursor-pointer"
+              className="inline-flex items-center justify-center gap-3 px-8 py-4 border border-piedra/30 text-piedra text-[0.6875rem] uppercase tracking-[0.25em] font-bold hover:bg-piedra/10 transition-colors rounded-sm cursor-pointer"
             >
               Pide por Delivery
             </button>

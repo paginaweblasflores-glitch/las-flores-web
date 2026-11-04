@@ -69,7 +69,7 @@ export function AdminTopNav({
 
   return (
     <nav className="bg-[#2D473C] text-[#F9F8F3] border-b border-[#D4AF37]/30 shadow-xl sticky top-0 z-40 font-sans">
-      <div className="max-w-[1800px] mx-auto px-4 md:px-6">
+      <div className="max-w-[112.5rem] mx-auto px-4 md:px-6">
         <div className="flex items-center justify-between gap-3 h-16">
           {/* Brand */}
           <div className="flex items-center gap-2.5 shrink-0">
@@ -81,7 +81,7 @@ export function AdminTopNav({
                 Las Flores
                 <ShieldCheck size={12} className="text-[#D4AF37]" />
               </h2>
-              <span className="text-[10px] font-sans uppercase font-extrabold text-emerald-200/80 tracking-wider block mt-0.5">
+              <span className="text-[0.625rem] font-sans uppercase font-extrabold text-emerald-200/80 tracking-wider block mt-0.5">
                 Suite de Admin
               </span>
             </div>
@@ -106,7 +106,7 @@ export function AdminTopNav({
                   <span>{item.label}</span>
                   {item.badge !== undefined && item.badge > 0 && (
                     <span
-                      className={`px-1.5 py-0.5 rounded-full text-[10px] font-black leading-none ${
+                      className={`px-1.5 py-0.5 rounded-full text-[0.625rem] font-black leading-none ${
                         isActive ? "bg-[#D4AF37] text-[#2D473C]" : "bg-emerald-400 text-[#2D473C]"
                       }`}
                     >
@@ -141,7 +141,7 @@ export function AdminTopNav({
               {accountOpen && (
                 <div className="absolute right-0 mt-2 w-64 bg-white rounded-2xl shadow-2xl border border-gray-200 overflow-hidden z-50 text-[#231A14]">
                   <div className="px-4 py-3 border-b border-gray-100">
-                    <span className="text-[10px] uppercase font-extrabold text-gray-400 tracking-wider block">
+                    <span className="text-[0.625rem] uppercase font-extrabold text-gray-400 tracking-wider block">
                       Sesión Activa
                     </span>
                     <p className="text-xs font-bold text-gray-800 truncate">{userEmail || "Administrador"}</p>
@@ -208,7 +208,7 @@ export function AdminTopNav({
                   </div>
                   {item.badge !== undefined && item.badge > 0 && (
                     <span
-                      className={`px-2 py-0.5 rounded-full text-[10px] font-black ${
+                      className={`px-2 py-0.5 rounded-full text-[0.625rem] font-black ${
                         isActive ? "bg-[#2D473C] text-white" : "bg-emerald-400 text-[#2D473C]"
                       }`}
                     >

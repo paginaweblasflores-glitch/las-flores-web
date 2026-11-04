@@ -246,11 +246,11 @@ export function CashierOrderCard({
                     <span className="font-extrabold text-[#2D473C]">{item.quantity}x</span>{" "}
                     <span className="font-semibold text-gray-800">
                       {item.product_name}
-                      {item.notes && <span className="block mt-0.5 text-[11px] font-medium text-gray-500">{item.notes}</span>}
+                      {item.notes && <span className="block mt-0.5 text-[0.6875rem] font-medium text-gray-500">{item.notes}</span>}
                     </span>
                   </div>
                     <span className="text-right font-sans tracking-tight tabular-nums text-[#2D473C] shrink-0">
-                      <span className="block text-[10px] font-semibold text-gray-500">
+                      <span className="block text-[0.625rem] font-semibold text-gray-500">
                         Unitario: S/ {Number(item.unit_price || 0).toFixed(2)}
                       </span>
                       <span className="block font-black">
@@ -274,7 +274,7 @@ export function CashierOrderCard({
               <span>Cupón {order.coupon_code ? `"${order.coupon_code}"` : "aplicado"}</span>
             </div>
             <div className="text-right leading-tight">
-              <span className="block text-[10px] font-semibold text-emerald-700/80">
+              <span className="block text-[0.625rem] font-semibold text-emerald-700/80">
                 Precio normal: S/ {Number(order.subtotal || 0).toFixed(2)}
               </span>
               <span className="block font-black text-emerald-800">

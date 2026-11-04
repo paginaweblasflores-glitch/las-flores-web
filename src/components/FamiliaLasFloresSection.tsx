@@ -101,7 +101,7 @@ export function FamiliaLasFloresSection({
                     <p className="text-xs text-[#2D473C] font-semibold">
                       {review.role}
                     </p>
-                    <span className="inline-flex items-center gap-1 text-[10px] text-gray-400 font-extrabold uppercase mt-0.5">
+                    <span className="inline-flex items-center gap-1 text-[0.625rem] text-gray-400 font-extrabold uppercase mt-0.5">
                       <Award size={12} className="text-[#D4AF37]" />
                       {review.years}
                     </span>
@@ -120,17 +120,17 @@ export function FamiliaLasFloresSection({
               {/* Recommended Dish Footer */}
               <div className="mt-6 pt-4 border-t border-gray-100 bg-[#F9F8F3]/80 -mx-6 -mb-6 p-4 rounded-b-3xl flex items-center justify-between">
                 <div>
-                  <span className="text-[9px] uppercase font-black tracking-wider text-gray-400 block">
+                  <span className="text-[0.5625rem] uppercase font-black tracking-wider text-gray-400 block">
                     Recomendación de {review.name.split(" ")[0]}
                   </span>
-                  <p className="font-serif font-bold text-xs text-[#2D473C] truncate max-w-[170px]">
+                  <p className="font-serif font-bold text-xs text-[#2D473C] truncate max-w-[10.625rem]">
                     {review.recommendedDish}
                   </p>
                 </div>
 
                 <Link
                   to="/carta"
-                  className="px-3 py-1.5 rounded-xl bg-[#2D473C] hover:bg-[#243B31] text-white text-[11px] font-black flex items-center gap-1 shadow-2xs transition-transform active:scale-95 shrink-0"
+                  className="px-3 py-1.5 rounded-xl bg-[#2D473C] hover:bg-[#243B31] text-white text-[0.6875rem] font-black flex items-center gap-1 shadow-2xs transition-transform active:scale-95 shrink-0"
                 >
                   <Utensils size={12} className="text-[#D4AF37]" />
                   <span>Ver Carta</span>

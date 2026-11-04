@@ -735,7 +735,7 @@ function TesorosAyacuchoPage() {
             {productosPorTemporada[activeTemporada].map((producto, index) => (
               <article
                 key={index}
-                className="group relative h-[420px] overflow-hidden shadow-lg cursor-pointer"
+                className="group relative h-[26.25rem] overflow-hidden shadow-lg cursor-pointer"
               >
                 {/* Imagen de fondo absoluto con zoom en hover */}
                 <img
@@ -762,11 +762,11 @@ function TesorosAyacuchoPage() {
                   
                   {/* Temporada (Visible en móvil, Delay 1 en desktop) */}
                   <div className="transform translate-y-0 opacity-100 md:translate-y-8 md:opacity-0 group-hover:!translate-y-0 group-hover:!opacity-100 transition-all duration-500 md:delay-100 ease-out mb-5 mt-3 md:mt-0 flex flex-wrap gap-2">
-                    <span className="inline-block text-[11px] font-bold uppercase tracking-wider text-chilca bg-black/40 backdrop-blur-sm px-3 py-1.5 rounded-full border border-white/10">
+                    <span className="inline-block text-[0.6875rem] font-bold uppercase tracking-wider text-chilca bg-black/40 backdrop-blur-sm px-3 py-1.5 rounded-full border border-white/10">
                       Temporada: {producto.meses}
                     </span>
                     <div className="mt-2">
-                      <span className="inline-block text-[11px] font-bold uppercase tracking-wider text-chilca bg-black/40 backdrop-blur-sm px-3 py-1.5 rounded-full border border-white/10">
+                      <span className="inline-block text-[0.6875rem] font-bold uppercase tracking-wider text-chilca bg-black/40 backdrop-blur-sm px-3 py-1.5 rounded-full border border-white/10">
                         {producto.rangoAltitud}
                       </span>
                     </div>

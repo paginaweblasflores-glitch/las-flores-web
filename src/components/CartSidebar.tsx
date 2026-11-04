@@ -850,7 +850,7 @@ export function CartSidebar() {
           {/* Modal: bottom-sheet en móvil, panel pegado a la derecha a pantalla completa en escritorio.
           Empuja desde/hacia un solo eje por breakpoint (Y en móvil, X en escritorio). */}
           <div
-            className={`doc-legible relative z-10 w-full max-w-[390px] bg-[#f8f4e6] text-nogal shadow-2xl overflow-hidden border border-black/10 sm:border-0 flex flex-col h-[100dvh] shrink-0 transition-transform duration-[350ms] ease-out ${
+            className={`doc-legible relative z-10 w-full max-w-[24.375rem] bg-[#f8f4e6] text-nogal shadow-2xl overflow-hidden border border-black/10 sm:border-0 flex flex-col h-[100dvh] shrink-0 transition-transform duration-[350ms] ease-out ${
               entered
                 ? "translate-y-0 sm:translate-x-0"
                 : "translate-y-full sm:translate-y-0 sm:translate-x-full"
@@ -1445,7 +1445,7 @@ export function CartSidebar() {
                                     setDelivery({ ...delivery, notes: e.target.value })
                                   }
                                   placeholder="Sin cebolla, aliño aparte, o entregar a las 2:00 PM..."
-                                  className={`${inputCls} resize-none min-h-[90px]`}
+                                  className={`${inputCls} resize-none min-h-[5.625rem]`}
                                 />
                               </div>
                             </div>
@@ -1774,7 +1774,7 @@ export function CartSidebar() {
                             setStep("cart");
                           }
                         }}
-                        className="flex-none w-12 h-[52px] rounded-xl flex items-center justify-center border-2 transition-colors hover:bg-black/5"
+                        className="flex-none w-12 h-[3.25rem] rounded-xl flex items-center justify-center border-2 transition-colors hover:bg-black/5"
                         style={{
                           borderColor: "var(--color-eucalipto)",
                           color: "var(--color-eucalipto)",
@@ -1821,7 +1821,7 @@ export function CartSidebar() {
                       <button
                         type="button"
                         onClick={() => setStep("delivery")}
-                        className="flex-none w-12 h-[52px] rounded-xl flex items-center justify-center border-2 transition-colors hover:bg-black/5"
+                        className="flex-none w-12 h-[3.25rem] rounded-xl flex items-center justify-center border-2 transition-colors hover:bg-black/5"
                         style={{
                           borderColor: "var(--color-eucalipto)",
                           color: "var(--color-eucalipto)",

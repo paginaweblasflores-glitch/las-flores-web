@@ -158,7 +158,7 @@ export function MobileCategoryFilter({
           />
 
           <div
-            className={`relative z-10 w-full max-w-[480px] bg-[#F9F8F3] rounded-t-3xl shadow-2xl overflow-hidden flex flex-col max-h-[75dvh] transition-transform duration-[350ms] ease-out ${
+            className={`relative z-10 w-full max-w-[30rem] bg-[#F9F8F3] rounded-t-3xl shadow-2xl overflow-hidden flex flex-col max-h-[75dvh] transition-transform duration-[350ms] ease-out ${
               entered ? "translate-y-0" : "translate-y-full"
             }`}
           >

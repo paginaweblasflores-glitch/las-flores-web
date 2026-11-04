@@ -48,7 +48,7 @@ export function LoginModal({
       {/* Card del modal */}
       <div
         onClick={(e) => e.stopPropagation()}
-        className="relative z-10 bg-[#f8f4e6] rounded-3xl w-full max-w-[400px] overflow-hidden shadow-2xl animate-in fade-in slide-in-from-bottom-6 sm:zoom-in-95 duration-200 border border-black/8"
+        className="relative z-10 bg-[#f8f4e6] rounded-3xl w-full max-w-[25rem] overflow-hidden shadow-2xl animate-in fade-in slide-in-from-bottom-6 sm:zoom-in-95 duration-200 border border-black/8"
       >
         {/* Header — logo centrado + cerrar */}
         <div className="relative flex items-center justify-center px-5 py-3.5 border-b border-ink/8">
@@ -78,7 +78,7 @@ export function LoginModal({
           <h3 className="font-serif font-bold text-2xl text-ink mb-1 text-center">
             Iniciar Sesión
           </h3>
-          <p className="text-xs text-ink/50 text-center mb-6 leading-relaxed max-w-[280px]">
+          <p className="text-xs text-ink/50 text-center mb-6 leading-relaxed max-w-[17.5rem]">
             {subtitle}
           </p>
 
@@ -116,7 +116,7 @@ export function LoginModal({
               Continuar con Facebook
             </button>
 
-            <p className="text-[11px] text-ink/40 text-center pt-2 leading-relaxed">
+            <p className="text-[0.6875rem] text-ink/40 text-center pt-2 leading-relaxed">
               Usamos tu cuenta de Google o Facebook para confirmar tu identidad.
               No guardamos contraseñas.
             </p>

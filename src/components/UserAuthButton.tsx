@@ -211,7 +211,7 @@ export function UserAuthButton({ textColorClass }: UserAuthButtonProps) {
             className="w-7 h-7 rounded-full object-cover border-2 border-white/40 shadow-sm"
           />
         ) : (
-          <div className="w-7 h-7 rounded-full bg-eucalipto text-chilca flex items-center justify-center text-[11px] font-black border-2 border-white/30">
+          <div className="w-7 h-7 rounded-full bg-eucalipto text-chilca flex items-center justify-center text-[0.6875rem] font-black border-2 border-white/30">
             {initials}
           </div>
         )}

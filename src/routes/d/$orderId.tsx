@@ -294,7 +294,7 @@ function DriverMagicLink() {
             <CheckCircle2 size={44} />
           </div>
           <div>
-            <span className="text-[10px] uppercase font-bold tracking-[0.2em] text-eucalipto bg-eucalipto/10 px-3 py-1 rounded-full">
+            <span className="text-[0.625rem] uppercase font-bold tracking-[0.2em] text-eucalipto bg-eucalipto/10 px-3 py-1 rounded-full">
               Entrega Completada
             </span>
             <h1 className="font-serif text-2xl font-bold text-nogal mt-3">Misión Cumplida</h1>
@@ -307,7 +307,7 @@ function DriverMagicLink() {
               <ShieldCheck size={16} className="text-eucalipto" />
               <span>Enlace Desactivado</span>
             </div>
-            <p className="text-[11px] text-nogal/60">
+            <p className="text-[0.6875rem] text-nogal/60">
               Este enlace de despacho ha sido cerrado para liberar recursos y mantener la plataforma segura.
             </p>
           </div>
@@ -339,7 +339,7 @@ function DriverMagicLink() {
           <div className="w-14 h-14 mx-auto bg-white/10 rounded-full flex items-center justify-center mb-3">
             <Navigation2 size={28} className="text-chilca" />
           </div>
-          <span className="text-[10px] uppercase font-bold tracking-[0.2em] text-chilca mb-1 block">
+          <span className="text-[0.625rem] uppercase font-bold tracking-[0.2em] text-chilca mb-1 block">
             Panel de Despacho Motorizado
           </span>
           <h2 className="text-2xl font-serif font-bold">#{orderData.order_number}</h2>
@@ -354,18 +354,18 @@ function DriverMagicLink() {
                 <MapPin className="text-nogal" size={20} />
               </div>
               <div className="flex-1 min-w-0">
-                <p className="text-[10px] uppercase font-bold tracking-widest text-nogal/50 mb-0.5">Cliente & Destino:</p>
+                <p className="text-[0.625rem] uppercase font-bold tracking-widest text-nogal/50 mb-0.5">Cliente & Destino:</p>
                 <p className="font-bold text-sm text-nogal truncate">{orderData.client_name || "Cliente Las Flores"}</p>
                 <p className="text-xs text-nogal/80 font-medium leading-snug mt-1">{orderData.address || "Dirección no especificada"}</p>
                 {orderData.reference && (
-                  <p className="text-[11px] text-nogal/60 mt-1 italic">Ref: {orderData.reference}</p>
+                  <p className="text-[0.6875rem] text-nogal/60 mt-1 italic">Ref: {orderData.reference}</p>
                 )}
               </div>
             </div>
 
             {orderData.client_phone && (
               <div className="pt-2 border-t border-nogal/10 flex justify-between items-center">
-                <span className="text-[10px] uppercase font-bold text-nogal/50">Teléfono del cliente:</span>
+                <span className="text-[0.625rem] uppercase font-bold text-nogal/50">Teléfono del cliente:</span>
                 <a
                   href={`tel:${orderData.client_phone}`}
                   className="text-xs font-bold text-eucalipto hover:underline flex items-center gap-1"
@@ -378,7 +378,7 @@ function DriverMagicLink() {
 
             {/* Detalle de Comanda */}
             <div className="border-t border-nogal/10 pt-3 space-y-1.5">
-              <p className="text-[10px] uppercase font-bold tracking-widest text-nogal/50">Platos de la Comanda:</p>
+              <p className="text-[0.625rem] uppercase font-bold tracking-widest text-nogal/50">Platos de la Comanda:</p>
               {orderData.items?.map((item, idx) => (
                 <div key={idx} className="flex justify-between text-xs font-medium">
                   <span className="text-nogal/80">{item.quantity}x {item.product_name}</span>
@@ -396,7 +396,7 @@ function DriverMagicLink() {
                     </span>
                     <span className="text-base text-amber-700 font-serif font-black">S/ {Number(orderData.total).toFixed(2)}</span>
                   </div>
-                  <p className="text-[10px] text-amber-900 font-bold uppercase tracking-wider">
+                  <p className="text-[0.625rem] text-amber-900 font-bold uppercase tracking-wider">
                     Cobrar el dinero en efectivo al entregar el pedido.
                   </p>
                 </div>
@@ -409,7 +409,7 @@ function DriverMagicLink() {
                     </span>
                     <span className="text-base text-emerald-700 font-serif font-black">S/ {Number(orderData.total).toFixed(2)}</span>
                   </div>
-                  <p className="text-[10px] text-emerald-900 font-bold uppercase tracking-wider">
+                  <p className="text-[0.625rem] text-emerald-900 font-bold uppercase tracking-wider">
                     Pagado online ({paymentLabel}) — No solicitar dinero.
                   </p>
                 </div>
@@ -447,7 +447,7 @@ function DriverMagicLink() {
                   <Clock size={15} className="animate-spin text-amber-600" />
                   En camino a la cocina
                 </p>
-                <p className="text-[11px] text-nogal/60 mt-1">
+                <p className="text-[0.6875rem] text-nogal/60 mt-1">
                   Cuando la cocina te entregue el paquete listo, presiona el botón.
                 </p>
               </div>
@@ -470,7 +470,7 @@ function DriverMagicLink() {
                   <span className="w-2.5 h-2.5 rounded-full bg-eucalipto animate-ping" />
                   En camino al domicilio
                 </p>
-                <p className="text-[11px] text-nogal/60 mt-1">
+                <p className="text-[0.6875rem] text-nogal/60 mt-1">
                   Te estás dirigiendo a la dirección del cliente. Al entregar el pedido, presiona Confirmar.
                 </p>
               </div>
@@ -483,7 +483,7 @@ function DriverMagicLink() {
                     : `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(orderData.address + ", Ayacucho")}`
                   }
                   target="_blank" rel="noreferrer"
-                  className="flex-1 py-3 bg-white border border-nogal/15 hover:bg-piedra text-nogal rounded-xl font-bold text-[10px] uppercase tracking-widest transition-all shadow-sm flex flex-col items-center justify-center gap-1"
+                  className="flex-1 py-3 bg-white border border-nogal/15 hover:bg-piedra text-nogal rounded-xl font-bold text-[0.625rem] uppercase tracking-widest transition-all shadow-sm flex flex-col items-center justify-center gap-1"
                 >
                   <ExternalLink size={15} />
                   Google Maps
@@ -494,7 +494,7 @@ function DriverMagicLink() {
                     : `https://waze.com/ul?q=${encodeURIComponent(orderData.address + ", Ayacucho")}&navigate=yes`
                   }
                   target="_blank" rel="noreferrer"
-                  className="flex-1 py-3 bg-white border border-nogal/15 hover:bg-piedra text-nogal rounded-xl font-bold text-[10px] uppercase tracking-widest transition-all shadow-sm flex flex-col items-center justify-center gap-1"
+                  className="flex-1 py-3 bg-white border border-nogal/15 hover:bg-piedra text-nogal rounded-xl font-bold text-[0.625rem] uppercase tracking-widest transition-all shadow-sm flex flex-col items-center justify-center gap-1"
                 >
                   <ExternalLink size={15} />
                   Waze
@@ -514,7 +514,7 @@ function DriverMagicLink() {
         </div>
       </div>
       
-      <div className="mt-8 text-center text-nogal/40 text-[10px] uppercase font-bold tracking-widest flex items-center justify-center gap-2">
+      <div className="mt-8 text-center text-nogal/40 text-[0.625rem] uppercase font-bold tracking-widest flex items-center justify-center gap-2">
         <img src="/images.png" className="h-4 brightness-0 opacity-40 grayscale" alt="Logo" />
         Sistema de Seguimiento Las Flores
       </div>

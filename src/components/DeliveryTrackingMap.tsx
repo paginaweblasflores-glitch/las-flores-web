@@ -83,7 +83,7 @@ export function DeliveryTrackingMap({
   }, [orderId]);
 
   return (
-    <div className="w-full h-[400px] rounded-[1.5rem] overflow-hidden relative z-0">
+    <div className="w-full h-[25rem] rounded-[1.5rem] overflow-hidden relative z-0">
       <MapContainer 
         center={driverLocation || restaurantLocation} 
         zoom={15} 
@@ -131,7 +131,7 @@ export function DeliveryTrackingMap({
       <div className="absolute top-4 left-4 right-4 md:right-auto z-[1000]">
         <div className="bg-white/95 backdrop-blur-md px-4 py-3 rounded-2xl shadow-xl shadow-nogal/5 border border-white flex flex-col md:flex-row md:items-center gap-1 md:gap-4">
           <div>
-            <h4 className="font-bold text-[10px] text-nogal/50 uppercase tracking-[0.2em] mb-0.5">Estado del Repartidor</h4>
+            <h4 className="font-bold text-[0.625rem] text-nogal/50 uppercase tracking-[0.2em] mb-0.5">Estado del Repartidor</h4>
             <div className="flex items-center gap-2">
               {deliveryStatus === 'delivered' ? (
                 <>

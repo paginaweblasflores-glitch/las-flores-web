@@ -273,7 +273,7 @@ export function CustomerHistoryModal({ open, onClose, user, inline }: CustomerHi
   const firstName = fullName.split(" ")[0];
 
   const content = (
-      <div className={`doc-legible relative z-10 w-full max-w-[390px] bg-[#f8f4e6] text-nogal rounded-[24px] sm:rounded-[32px] rounded-b-none sm:rounded-b-[32px] shadow-2xl overflow-hidden border border-black/10 flex flex-col shrink-0 ${inline ? "h-full max-w-full shadow-none border-none rounded-none w-full" : "h-[92dvh] sm:h-[calc(100dvh-80px)] sm:max-h-[950px] animate-in slide-in-from-bottom-6 sm:zoom-in-95 duration-200"}`}>
+      <div className={`doc-legible relative z-10 w-full max-w-[24.375rem] bg-[#f8f4e6] text-nogal rounded-[24px] sm:rounded-[32px] rounded-b-none sm:rounded-b-[32px] shadow-2xl overflow-hidden border border-black/10 flex flex-col shrink-0 ${inline ? "h-full max-w-full shadow-none border-none rounded-none w-full" : "h-[92dvh] sm:h-[calc(100dvh-80px)] sm:max-h-[59.375rem] animate-in slide-in-from-bottom-6 sm:zoom-in-95 duration-200"}`}>
         {/* Header & Navbar Pinned Bar */}
         <div className="bg-white shrink-0 border-b border-black/10 shadow-xs z-20">
           <div className="px-5 py-3.5 flex items-center justify-between border-b border-black/5">
@@ -776,7 +776,7 @@ function InlineOrderTracker({ order, onBack }: { order: any; onBack: () => void 
             return (
               <div key={step.num} className="relative flex items-start gap-3">
                 <div
-                  className={`absolute -left-[29px] top-0 w-6 h-6 rounded-full flex items-center justify-center font-bold text-xs transition-all ${
+                  className={`absolute -left-[1.8125rem] top-0 w-6 h-6 rounded-full flex items-center justify-center font-bold text-xs transition-all ${
                     isCompleted
                       ? "bg-eucalipto text-white"
                       : isCurrent

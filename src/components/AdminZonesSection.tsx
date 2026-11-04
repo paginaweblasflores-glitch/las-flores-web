@@ -202,7 +202,7 @@ export function AdminZonesSection() {
                     />
                   </div>
 
-                  <p className="text-xs text-[#3b1f10]/70 leading-relaxed min-h-[36px]">
+                  <p className="text-xs text-[#3b1f10]/70 leading-relaxed min-h-[2.25rem]">
                     {zone.description || "Sin descripción asignada."}
                   </p>
 

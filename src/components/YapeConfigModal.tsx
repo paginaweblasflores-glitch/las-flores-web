@@ -339,7 +339,7 @@ export function YapeConfigModal({
               <div className="p-6 text-center bg-gray-50 rounded-2xl border border-gray-200 space-y-2">
                 <AlertCircle size={32} className="text-amber-500 mx-auto" />
                 <p className="text-xs font-bold text-gray-700">No hay cuentas de Yape habilitadas</p>
-                <p className="text-[11px] text-gray-500">
+                <p className="text-[0.6875rem] text-gray-500">
                   Comunícate con Administración para habilitar un código QR de cobro.
                 </p>
               </div>
@@ -389,7 +389,7 @@ export function YapeConfigModal({
                       <div className="space-y-0.5">
                         <span className="text-xs font-bold text-gray-800 line-clamp-1">{acc.name}</span>
                         {acc.phone && (
-                          <span className="text-[11px] text-gray-600 font-mono block">
+                          <span className="text-[0.6875rem] text-gray-600 font-mono block">
                             Tel: {acc.phone}
                           </span>
                         )}
@@ -397,7 +397,7 @@ export function YapeConfigModal({
 
                       {/* Miniatura visual */}
                       <div className="pt-2 border-t border-gray-100 flex items-center justify-between">
-                        <span className="text-[10px] text-gray-400 uppercase font-semibold">Miniatura QR</span>
+                        <span className="text-[0.625rem] text-gray-400 uppercase font-semibold">Miniatura QR</span>
                         <div className="w-8 h-8 rounded-lg bg-white border border-gray-200 p-0.5 shadow-2xs overflow-hidden">
                           <img src={acc.qrUrl} alt="QR" className="w-full h-full object-contain" />
                         </div>
@@ -421,7 +421,7 @@ export function YapeConfigModal({
                 <div className="space-y-1 text-xs flex-1">
                   <div className="flex items-center gap-2">
                     <span className="font-extrabold text-[#2D473C] uppercase text-xs">{activeAccount.label}</span>
-                    <span className="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-bold">
+                    <span className="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[0.625rem] font-bold">
                       Seleccionado
                     </span>
                   </div>
@@ -564,7 +564,7 @@ export function YapeConfigModal({
                           </>
                         )}
                       </button>
-                      <p className="text-[11px] text-gray-500 leading-tight">
+                      <p className="text-[0.6875rem] text-gray-500 leading-tight">
                         Conversión y compresión automática a WebP (800x800 px) para escaneo ultra-rápido.
                       </p>
                     </div>
@@ -636,19 +636,19 @@ export function YapeConfigModal({
                           <div className="flex items-center gap-2 flex-wrap">
                             <span className="font-extrabold text-sm text-gray-900">{acc.label}</span>
                             {isActive && (
-                              <span className="px-2 py-0.5 rounded-full bg-emerald-600 text-white text-[10px] font-black uppercase tracking-wider flex items-center gap-1">
+                              <span className="px-2 py-0.5 rounded-full bg-emerald-600 text-white text-[0.625rem] font-black uppercase tracking-wider flex items-center gap-1">
                                 <CheckCircle2 size={10} /> ACTIVO EN TIENDA
                               </span>
                             )}
                             {!isEnabled && (
-                              <span className="px-2 py-0.5 rounded-full bg-gray-200 text-gray-700 text-[10px] font-bold uppercase tracking-wider">
+                              <span className="px-2 py-0.5 rounded-full bg-gray-200 text-gray-700 text-[0.625rem] font-bold uppercase tracking-wider">
                                 DESHABILITADO EN CAJA
                               </span>
                             )}
                           </div>
                           <p className="text-gray-700 font-semibold truncate">{acc.name}</p>
                           {acc.phone && (
-                            <p className="text-gray-500 font-mono text-[11px]">Tel: {acc.phone}</p>
+                            <p className="text-gray-500 font-mono text-[0.6875rem]">Tel: {acc.phone}</p>
                           )}
                         </div>
                       </div>
@@ -660,7 +660,7 @@ export function YapeConfigModal({
                           <button
                             type="button"
                             onClick={() => setConfig((prev) => ({ ...prev, activeAccountId: acc.id }))}
-                            className="px-2.5 py-1.5 rounded-lg bg-[#2D473C] hover:bg-[#243B31] text-white text-[11px] font-bold flex items-center gap-1 cursor-pointer transition-colors"
+                            className="px-2.5 py-1.5 rounded-lg bg-[#2D473C] hover:bg-[#243B31] text-white text-[0.6875rem] font-bold flex items-center gap-1 cursor-pointer transition-colors"
                             title="Establecer como cuenta activa para cobros"
                           >
                             <Check size={13} /> Activar

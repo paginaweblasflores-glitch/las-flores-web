@@ -115,7 +115,7 @@ export function FaunaAndina() {
   };
 
   return (
-    <div ref={raiz} className="relative md:h-[750px]">
+    <div ref={raiz} className="relative md:h-[46.875rem]">
       <div className="relative h-96 overflow-hidden md:absolute md:inset-0 md:h-full">
         {[saliente, activo].map((i) =>
           i === null ? null : (
@@ -135,7 +135,7 @@ export function FaunaAndina() {
         onMouseLeave={() => setLeyendo(false)}
         onFocus={() => setLeyendo(true)}
         onBlur={() => setLeyendo(false)}
-        className="md:absolute md:bottom-0 md:left-4 md:w-full md:max-w-[22rem] min-h-[400px] md:min-h-0 md:h-[450px] bg-eucalipto text-piedra px-8 py-10 md:px-5 md:py-10 flex flex-col justify-between"
+        className="md:absolute md:bottom-0 md:left-4 md:w-full md:max-w-[22rem] min-h-[25rem] md:min-h-0 md:h-[28.125rem] bg-eucalipto text-piedra px-8 py-10 md:px-5 md:py-10 flex flex-col justify-between"
       >
         <div key={especie.nombre} className={visto ? "fauna-texto" : "opacity-0"}>
           <h3 className={`font-serif text-3xl md:text-4xl ${especie.quechua ? "mb-1" : "mb-5"}`}>

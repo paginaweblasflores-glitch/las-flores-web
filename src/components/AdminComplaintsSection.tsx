@@ -435,7 +435,7 @@ export function AdminComplaintsSection({ onPendingCountChange }: AdminComplaints
                         </span>
                       </td>
 
-                      <td className="py-3.5 px-4 max-w-[200px] truncate text-gray-700">
+                      <td className="py-3.5 px-4 max-w-[12.5rem] truncate text-gray-700">
                         <span className="capitalize font-semibold text-gray-800 block text-xs">{item.claimed_type}</span>
                         <span className="text-gray-500 truncate block text-xs">{item.claimed_description}</span>
                       </td>

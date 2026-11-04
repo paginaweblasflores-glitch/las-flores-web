@@ -71,7 +71,7 @@ export function MapaDestino({ nombre, detalle, provincia, sombreado, lat, lng }:
   return (
     <svg
       viewBox={`0 0 ${ANCHO} ${ALTO}`}
-      className="block w-full max-w-[680px] h-auto"
+      className="block w-full max-w-[42.5rem] h-auto"
       role="img"
       aria-labelledby="mapa-destino-titulo"
     >

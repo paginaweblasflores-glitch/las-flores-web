@@ -106,7 +106,7 @@ export function StatCard({
               {label}
             </span>
             {badge && (
-              <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold shrink-0 ${styles.chipBg} ${styles.chipText}`}>
+              <span className={`px-2 py-0.5 rounded-full text-[0.625rem] font-bold shrink-0 ${styles.chipBg} ${styles.chipText}`}>
                 {badge}
               </span>
             )}

@@ -194,14 +194,14 @@ export function SeatSelector({
           className="rounded-2xl overflow-hidden shadow-inner mb-4 p-3"
           style={{ background: zone.colorLight + "60", border: `1.5px solid ${zone.color}40` }}
         >
-          <p className="text-[9px] font-bold uppercase tracking-widest text-center mb-2"
+          <p className="text-[0.5625rem] font-bold uppercase tracking-widest text-center mb-2"
             style={{ color: zone.color }}
           >
             {zone.name.toUpperCase()}
           </p>
 
           <svg viewBox={zone.tables.length > 10 ? "0 0 100 115" : zone.tables.length <= 4 ? "0 0 100 100" : "0 0 100 100"}
-            className="w-full max-w-[300px] mx-auto">
+            className="w-full max-w-[18.75rem] mx-auto">
             <rect x="1" y="1" width="98"
               height={zone.tables.length > 10 ? 113 : 98}
               rx="6" fill="#fdf8f0" stroke={zone.color + "40"} strokeWidth="0.8" />
@@ -457,7 +457,7 @@ export function SeatSelector({
           </div>
         </div>
 
-        <p className="text-[10px] text-center mt-1.5 opacity-40">
+        <p className="text-[0.625rem] text-center mt-1.5 opacity-40">
           Usa + / − para hacer zoom · Pellizca la pantalla con dos dedos
         </p>
       </div>

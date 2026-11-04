@@ -235,7 +235,7 @@ function RestaurantePage() {
             <Link
               to="/familia-las-flores"
               onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-              className="inline-flex items-center justify-center px-10 py-5 text-[11px] uppercase tracking-[0.25em] font-bold rounded-sm btn-yellow-hover"
+              className="inline-flex items-center justify-center px-10 py-5 text-[0.6875rem] uppercase tracking-[0.25em] font-bold rounded-sm btn-yellow-hover"
             >
               <span>CONOCE A LA FAMILIA</span>
             </Link>

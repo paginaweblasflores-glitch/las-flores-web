@@ -236,7 +236,7 @@ export function ReservasClientsSection({ reservations, onStatusChange }: Reserva
           </select>
         )}
 
-        <div className="relative flex-1 min-w-[200px]">
+        <div className="relative flex-1 min-w-[12.5rem]">
           <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400" size={16} />
           <input
             type="text"

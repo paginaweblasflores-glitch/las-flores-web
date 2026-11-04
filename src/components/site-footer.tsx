@@ -38,9 +38,9 @@ export function SiteFooter() {
             >
               <BookOpen size={24} className="text-eucalipto group-hover:scale-110 transition-transform" />
               <div className="leading-none text-left">
-                <span className="text-[10px] uppercase font-bold text-eucalipto tracking-wider">Libro de</span>
+                <span className="text-[0.625rem] uppercase font-bold text-eucalipto tracking-wider">Libro de</span>
                 <br />
-                <span className="text-[10px] uppercase font-extrabold text-eucalipto tracking-wider">
+                <span className="text-[0.625rem] uppercase font-extrabold text-eucalipto tracking-wider">
                   Reclamaciones
                 </span>
               </div>
@@ -104,7 +104,7 @@ export function SiteFooter() {
         </div>
 
         {/* Bottom Credits */}
-        <div className="pt-8 border-t border-cream/10 flex flex-col md:flex-row justify-between items-center gap-4 text-[11px] tracking-wider text-piedra/40">
+        <div className="pt-8 border-t border-cream/10 flex flex-col md:flex-row justify-between items-center gap-4 text-[0.6875rem] tracking-wider text-piedra/40">
           <span>© 2026 Restaurante Las Flores S.A.C.</span>
           <div className="flex items-center gap-4">
             <Link

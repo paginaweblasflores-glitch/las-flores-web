@@ -170,6 +170,16 @@
 }
 
 @layer base {
+  /*
+   * Escala fluida para pantallas grandes: 16px hasta 1440px de ancho y, desde ahi, crece de forma continua
+   * (unos 19px a 1920px, unos 23px a 2560px) con tope en 24px. Todo lo medido en rem (letras, espacios,
+   * botones, tarjetas, anchos y altos) crece junto y mantiene sus proporciones. La base usa rem para respetar
+   * la preferencia de tamano de letra del visitante y el zoom del navegador.
+   */
+  html {
+    font-size: clamp(1rem, 0.4rem + 0.667vw, 1.5rem);
+  }
+
   * {
     border-color: var(--color-border);
   }
@@ -293,28 +303,15 @@
 }
 
 /*
- * Contenedor ancho para pantallas grandes (monitores 24"+): el sitio se
- * diseñó y probó sobre todo en laptop, donde max-w-7xl (1280px) llena casi
- * todo el ancho. En monitores de escritorio (1920px, 2560px+) esa misma
- * franja deja demasiado espacio vacío a los lados. Este contenedor crece
- * en pasos a partir de esos anchos, en vez de quedarse fijo en 1280px.
+ * Contenedor del sitio. Su ancho esta en rem, asi que crece junto con la escala fluida de la base
+ * (ver `html` arriba): 1280px en laptop y proporcionalmente mas ancho en monitores de escritorio.
  */
 .container-flores {
-  max-width: 80rem; /* 1280px, igual que max-w-7xl en pantallas normales */
+  max-width: 80rem;
 }
 @media (min-width: 1440px) {
   .container-flores {
-    max-width: 90rem; /* 1440px */
-  }
-}
-@media (min-width: 1920px) {
-  .container-flores {
-    max-width: 105rem; /* 1680px */
-  }
-}
-@media (min-width: 2560px) {
-  .container-flores {
-    max-width: 120rem; /* 1920px */
+    max-width: 90rem;
   }
 }
 

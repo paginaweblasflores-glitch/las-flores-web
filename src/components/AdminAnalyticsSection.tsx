@@ -475,7 +475,7 @@ export function AdminAnalyticsSection({
                       <span className="text-xs font-mono font-extrabold text-[#14231D] group-hover:scale-110 transition-transform">
                         S/{dataObj.total.toFixed(0)}
                       </span>
-                      <div className="w-full flex-1 max-h-[170px] flex items-end bg-[#14231D]/5 rounded-t-xl p-0.5 border border-[#14231D]/8">
+                      <div className="w-full flex-1 max-h-[10.625rem] flex items-end bg-[#14231D]/5 rounded-t-xl p-0.5 border border-[#14231D]/8">
                         <div
                           style={{ height: `${heightPercent}%` }}
                           className="w-full bg-gradient-to-t from-blue-900 via-blue-700 to-blue-400 rounded-t-lg transition-all shadow-md group-hover:brightness-110"

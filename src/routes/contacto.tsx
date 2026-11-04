@@ -136,7 +136,7 @@ function ContactoPage() {
                   Atención al Cliente
                 </h3>
                 <span
-                  className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${
+                  className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[0.625rem] font-bold uppercase tracking-wider ${
                     (isMounted ? isOpenNow : true)
                       ? "bg-emerald-50 text-emerald-700 border border-emerald-200"
                       : "bg-amber-50 text-amber-700 border border-amber-200"
@@ -153,14 +153,14 @@ function ContactoPage() {
                   <MapPin size={18} />
                 </div>
                 <div className="space-y-0.5">
-                  <span className="text-[10px] font-bold uppercase tracking-wider text-gray-400 block">Ubicación</span>
+                  <span className="text-[0.625rem] font-bold uppercase tracking-wider text-gray-400 block">Ubicación</span>
                   <p className="font-serif text-sm font-bold text-[#2c2a29]">Jr. José Olaya 106</p>
                   <p className="text-xs text-gray-500">Huamanga — Ayacucho (A siete minutos de la Plaza Mayor)</p>
                   <a
                     href="https://www.google.com/maps?q=-13.162825034398038,-74.21792188690533"
                     target="_blank"
                     rel="noreferrer"
-                    className="inline-flex items-center gap-1 text-[11px] font-bold text-[#2e5339] hover:underline pt-1"
+                    className="inline-flex items-center gap-1 text-[0.6875rem] font-bold text-[#2e5339] hover:underline pt-1"
                   >
                     <span>Ver en Google Maps</span>
                     <ExternalLink size={10} />
@@ -174,7 +174,7 @@ function ContactoPage() {
                   <Clock size={18} />
                 </div>
                 <div className="space-y-1 w-full">
-                  <span className="text-[10px] font-bold uppercase tracking-wider text-gray-400 block">Horario</span>
+                  <span className="text-[0.625rem] font-bold uppercase tracking-wider text-gray-400 block">Horario</span>
                   <div className="text-xs text-gray-700 space-y-1">
                     <p className="flex justify-between">
                       <span>Lunes a Viernes:</span>
