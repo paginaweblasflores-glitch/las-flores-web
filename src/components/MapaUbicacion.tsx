@@ -60,7 +60,7 @@ const LUGARES_VISITA = DESTINOS.flatMap((d) => {
 });
 
 const LUGARES_LISTA = [
-  ["Las Flores", "Jr. José Olaya 106, Huamanga"],
+  ["Las Flores", ""],
   ["Plaza Mayor de Huamanga", "A 7 min"],
   ["Aeropuerto Alfredo Mendívil Duarte", "A 6 min"],
   ...LUGARES_VISITA.map((l) => [l.lineas.join(" "), l.detalle]),
@@ -115,7 +115,7 @@ function Etiqueta({
   x: number;
   y: number;
   nombre: string;
-  detalle: string;
+  detalle?: string;
   detalle2?: string;
   ancla: "start" | "middle" | "end";
   principal?: boolean;
@@ -135,18 +135,20 @@ function Etiqueta({
       >
         {nombre}
       </text>
-      <text
-        x={x}
-        y={y + 27}
-        textAnchor={ancla}
-        fontFamily={FUENTE_TEXTO}
-        fontSize={14}
-        letterSpacing={2.6}
-        fill={SUAVE}
-        {...{ ...halo, strokeWidth: 6 }}
-      >
-        {detalle}
-      </text>
+      {detalle && (
+        <text
+          x={x}
+          y={y + 27}
+          textAnchor={ancla}
+          fontFamily={FUENTE_TEXTO}
+          fontSize={14}
+          letterSpacing={2.6}
+          fill={SUAVE}
+          {...{ ...halo, strokeWidth: 6 }}
+        >
+          {detalle}
+        </text>
+      )}
       {detalle2 && (
         <text
           x={x}
@@ -292,7 +294,6 @@ export function MapaUbicacion() {
           y={CENTRO.y - 64}
           ancla="middle"
           nombre="Las Flores"
-          detalle="JR. JOSÉ OLAYA 106"
           principal
         />
       </svg>
@@ -305,9 +306,11 @@ export function MapaUbicacion() {
         {LUGARES_LISTA.map(([nombre, detalle]) => (
           <li key={nombre}>
             <span className="block font-serif text-lg leading-snug">{nombre}</span>
-            <span className="block text-sm" style={{ color: ORO }}>
-              {detalle}
-            </span>
+            {detalle && (
+              <span className="block text-sm" style={{ color: ORO }}>
+                {detalle}
+              </span>
+            )}
           </li>
         ))}
       </ul>
