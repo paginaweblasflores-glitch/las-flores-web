@@ -4,7 +4,6 @@ import { describe, expect, it } from "vitest";
 
 const galleryRoutePath = resolve(process.cwd(), "src/routes/galeria.tsx");
 const uploadedImages = [
-  "ceramista.jpg.webp",
   "DSC00119.jpg.webp",
   "DSC00131.jpg.webp",
   "DSC00140.jpg.webp",
@@ -15,7 +14,6 @@ const uploadedImages = [
   "DSC09760.jpg.webp",
   "DSC09786.jpg.webp",
   "DSC09791 - copia.jpg.webp",
-  "DSC09935.jpg.webp",
   "IMG_0231.jpg.webp",
   "IMG_0664.jpg.webp",
   "IMG_1346.jpg.webp",
@@ -27,7 +25,9 @@ const removedImages = [
   "DSC09612.jpg.webp",
   "DSC09621.jpg.webp",
   "DSC09911.jpg.webp",
+  "DSC09935.jpg.webp",
   "evento-16.webp",
+  "ceramista.jpg.webp",
   "quinua.jpg.webp",
   "quinuaa.jpg.webp",
 ] as const;
@@ -70,6 +70,6 @@ describe("imágenes de la categoría Experiencia", () => {
     }
 
     expect(category).not.toContain('foto("eventos", "evento-20",');
-    expect(category.match(/foto\("eventos",/g)).toHaveLength(17);
+    expect(category.match(/foto\("eventos",/g)).toHaveLength(15);
   });
 });

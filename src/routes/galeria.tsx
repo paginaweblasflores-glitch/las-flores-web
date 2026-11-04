@@ -136,7 +136,6 @@ const GALLERY_CATEGORIES: Category[] = [
       foto("eventos", "IMG_0664.jpg", "Señora Gloria"),
       foto("eventos", "evento-09", "Ceremonia de apertura"),
       foto("eventos", "evento-08", "Equipo de cocina de Las Flores"),
-      foto("eventos", "ceramista.jpg", "Visitante observa una obra de cerámica de Quinua"),
       foto("eventos", "DSC00119.jpg", "Un compartir en Las Flores"),
       foto("eventos", "DSC00131.jpg", "Un compartir en Las Flores"),
       foto("eventos", "DSC00140.jpg", "Un compartir en Las Flores"),
@@ -146,8 +145,7 @@ const GALLERY_CATEGORIES: Category[] = [
       foto("eventos", "DSC09672.jpg", "Demostración de cocina en Las Flores"),
       foto("eventos", "DSC09760.jpg", "Cocinero en una presentación gastronómica"),
       foto("eventos", "DSC09786.jpg", "Encuentro de cocineros en Las Flores"),
-      foto("eventos", "DSC09791 - copia.jpg", "Presentación del equipo de cocina de Las Flores"),
-      foto("eventos", "DSC09935.jpg", "Entrevista a un cocinero de Las Flores en una feria"),
+      foto("eventos", "DSC09791 - copia.jpg", "Chef Flavio Solorzano"),
     ],
   },
 ];

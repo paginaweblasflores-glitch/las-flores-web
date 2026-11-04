@@ -67,7 +67,7 @@ const LUGARES_VISITA = DESTINOS.flatMap((d) => {
 });
 
 const LUGARES_LISTA = [
-  ["Las Flores", "Huamanga"],
+  ["Las Flores", ""],
   ["Plaza Mayor de Huamanga", "A 7 min"],
   ["Aeropuerto Alfredo Mendívil Duarte", "A 6 min"],
   ...LUGARES_VISITA.map((l) => [l.lineas.join(" "), `${l.tiempo} · ${l.altitud}`]),
@@ -325,9 +325,11 @@ export function MapaUbicacion() {
         {LUGARES_LISTA.map(([nombre, detalle]) => (
           <li key={nombre}>
             <span className="block font-serif text-lg leading-snug">{nombre}</span>
-            <span className="block text-sm" style={{ color: ORO }}>
-              {detalle}
-            </span>
+            {detalle && (
+              <span className="block text-sm" style={{ color: ORO }}>
+                {detalle}
+              </span>
+            )}
           </li>
         ))}
       </ul>

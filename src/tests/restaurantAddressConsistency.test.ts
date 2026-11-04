@@ -1,6 +1,9 @@
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
+import React from "react";
+import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
+import { MapaUbicacion } from "../components/MapaUbicacion";
 
 const root = process.cwd();
 
@@ -23,5 +26,13 @@ describe("dirección del Restaurante Las Flores", () => {
     );
 
     expect(modal).toContain("Recojo en local - Jr. José Olaya 106");
+  });
+
+  it("omite la dirección de la etiqueta de Las Flores en el mapa", () => {
+    const markup = renderToStaticMarkup(React.createElement(MapaUbicacion));
+
+    expect(markup).toContain("Las Flores");
+    expect(markup).not.toContain("JOSÉ OLAYA 106");
+    expect(markup).not.toContain("Jr. José Olaya 106");
   });
 });
