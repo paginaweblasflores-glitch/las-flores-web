@@ -16,7 +16,8 @@ describe("site navigation menu layout", () => {
     expect(nav).toContain("gap-1");
     expect(nav).toContain("overflow-y-auto");
     expect(nav).not.toContain("justify-evenly");
-    expect(links).toContain("py-1.5");
+    // El relleno parte de 0.375rem (py-1.5) en pantallas normales y crece solo en pantallas altas.
+    expect(links).toContain("py-[clamp(0.375rem,");
     expect(links).not.toContain("py-2.5");
   });
 });
