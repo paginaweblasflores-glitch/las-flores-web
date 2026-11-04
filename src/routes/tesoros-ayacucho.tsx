@@ -676,7 +676,7 @@ function TesorosAyacuchoPage() {
       <SiteHeader />
 
       {/* Hero */}
-      <header className="relative min-h-[60vh] w-full overflow-hidden bg-eucalipto flex items-center pt-32 pb-24">
+      <header className="relative h-[max(60vh,29rem)] w-full overflow-hidden bg-eucalipto flex items-center pt-32 pb-24">
         <img
           src="/imagenes-reales/productosAyacucho/riti.png"
           alt="Paisaje de Riti, Ayacucho"

@@ -45,32 +45,39 @@ function enMapa(lat: number, lng: number) {
  * base del nombre); `lineas` parte los nombres largos. La Basílica Catedral queda en la Plaza Mayor de Huamanga.
  */
 const DESTINOS = [
-  { slug: "pampa-de-quinua", lado: "der", y: 184 },
-  { slug: "abismo-puncupata", lado: "der", y: 274 },
-  { slug: "vilcas-huaman", lado: "der", y: 364 },
-  { slug: "millpu", lado: "der", y: 454, lineas: ["Aguas turquesas", "de Millpu"] },
-  { slug: "ritipata", lado: "izq", y: 403 },
+  { slug: "pampa-de-quinua", lado: "der", y: 184, tiempo: "A 45 min", altitud: "3400 m s. n. m." },
+  { slug: "abismo-puncupata", lado: "der", y: 274, tiempo: "A 1 hora y media", altitud: "4200 m s. n. m." },
+  { slug: "vilcas-huaman", lado: "der", y: 364, tiempo: "A 2 horas y media", altitud: "3490 m s. n. m." },
+  {
+    slug: "millpu",
+    lado: "der",
+    y: 454,
+    lineas: ["Aguas turquesas", "de Millpu"],
+    tiempo: "A 3 horas y media",
+    altitud: "3600 m s. n. m.",
+  },
+  { slug: "ritipata", lado: "izq", y: 403, tiempo: "A 3 horas", altitud: "5000 m s. n. m." },
 ] as const;
 
 const LUGARES_VISITA = DESTINOS.flatMap((d) => {
   const lugar = lugares.find((l) => l.slug === d.slug);
   if (!lugar || lugar.mapLat === undefined || lugar.mapLng === undefined) return [];
   const lineas: readonly string[] = "lineas" in d ? d.lineas : [lugar.nombre];
-  return [{ ...d, lineas, detalle: lugar.categoria, punto: enMapa(lugar.mapLat, lugar.mapLng) }];
+  return [{ ...d, lineas, punto: enMapa(lugar.mapLat, lugar.mapLng) }];
 });
 
 const LUGARES_LISTA = [
-  ["Las Flores", "Jr. José Olaya 106, Huamanga"],
+  ["Las Flores", "Huamanga"],
   ["Plaza Mayor de Huamanga", "A 7 min"],
   ["Aeropuerto Alfredo Mendívil Duarte", "A 6 min"],
-  ...LUGARES_VISITA.map((l) => [l.lineas.join(" "), l.detalle]),
+  ...LUGARES_VISITA.map((l) => [l.lineas.join(" "), `${l.tiempo} · ${l.altitud}`]),
 ];
 
 // Columnas de nombres a los lados del mapa
 const X_DERECHA = 730;
 const X_IZQUIERDA = 236;
-const TAMANO_NOMBRE = 24;
-const TAMANO_DETALLE = 13;
+const TAMANO_NOMBRE = 26;
+const TAMANO_DETALLE = 14;
 
 function Punto({
   x,
@@ -115,7 +122,7 @@ function Etiqueta({
   x: number;
   y: number;
   nombre: string;
-  detalle: string;
+  detalle?: string;
   detalle2?: string;
   ancla: "start" | "middle" | "end";
   principal?: boolean;
@@ -128,32 +135,34 @@ function Etiqueta({
         y={y}
         textAnchor={ancla}
         fontFamily={FUENTE_TITULO}
-        fontSize={principal ? 36 : 30}
+        fontSize={principal ? 38 : 32}
         fontWeight={principal ? 600 : 400}
         fill={principal ? ROJO : ORO}
         {...halo}
       >
         {nombre}
       </text>
-      <text
-        x={x}
-        y={y + 27}
-        textAnchor={ancla}
-        fontFamily={FUENTE_TEXTO}
-        fontSize={14}
-        letterSpacing={2.6}
-        fill={SUAVE}
-        {...{ ...halo, strokeWidth: 6 }}
-      >
-        {detalle}
-      </text>
+      {detalle && (
+        <text
+          x={x}
+          y={y + 29}
+          textAnchor={ancla}
+          fontFamily={FUENTE_TEXTO}
+          fontSize={15}
+          letterSpacing={2.6}
+          fill={SUAVE}
+          {...{ ...halo, strokeWidth: 6 }}
+        >
+          {detalle}
+        </text>
+      )}
       {detalle2 && (
         <text
           x={x}
-          y={y + 49}
+          y={y + 52}
           textAnchor={ancla}
           fontFamily={FUENTE_TEXTO}
-          fontSize={14}
+          fontSize={15}
           letterSpacing={2.6}
           fill={SUAVE}
           {...{ ...halo, strokeWidth: 6 }}
@@ -238,7 +247,7 @@ export function MapaUbicacion() {
           const x = derecha ? X_DERECHA : X_IZQUIERDA;
           const ancla = derecha ? "start" : "end";
           const halo = { stroke: FONDO, strokeWidth: 7, paintOrder: "stroke" as const };
-          const yDetalle = l.y + (l.lineas.length - 1) * (TAMANO_NOMBRE + 4) + 19;
+          const yDetalle = l.y + (l.lineas.length - 1) * (TAMANO_NOMBRE + 4) + 21;
           return (
             <g key={l.slug}>
               {l.lineas.map((linea, i) => (
@@ -265,7 +274,19 @@ export function MapaUbicacion() {
                 fill={SUAVE}
                 {...{ ...halo, strokeWidth: 5 }}
               >
-                {l.detalle.toUpperCase()}
+                {l.tiempo.toUpperCase()}
+              </text>
+              <text
+                x={x}
+                y={yDetalle + 24}
+                textAnchor={ancla}
+                fontFamily={FUENTE_TEXTO}
+                fontSize={TAMANO_DETALLE}
+                letterSpacing={2.4}
+                fill={SUAVE}
+                {...{ ...halo, strokeWidth: 5 }}
+              >
+                {l.altitud.toUpperCase()}
               </text>
             </g>
           );
@@ -292,7 +313,6 @@ export function MapaUbicacion() {
           y={CENTRO.y - 64}
           ancla="middle"
           nombre="Las Flores"
-          detalle="JR. JOSÉ OLAYA 106"
           principal
         />
       </svg>

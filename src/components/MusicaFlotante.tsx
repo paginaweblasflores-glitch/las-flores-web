@@ -3,21 +3,20 @@ import { useRouterState } from "@tanstack/react-router";
 import { Volume2 } from "lucide-react";
 import { alternarMusica, permitirMusicaEnRuta, sincronizarMusica, useMusica } from "@/lib/musicaFondo";
 
-// Paneles de uso interno: ahí la música se pausa y no se muestra el botón.
-const RUTAS_INTERNAS = ["/admin", "/caja", "/panel-reservas", "/staff-login"];
-
 /**
  * Montado una sola vez en el layout raíz (no se destruye al navegar). Mantiene la música sincronizada con la
- * pestaña/ruta y muestra un parlante flotante para silenciarla desde cualquier página.
+ * pestaña/ruta: solo suena en la página de inicio. Al ir a cualquier otra página se silencia, y al volver al
+ * inicio se retoma (salvo que el visitante la haya silenciado). Muestra un parlante flotante en el inicio, al
+ * bajar del hero, para silenciarla.
  */
 export function MusicaFlotante() {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const { sonando, heroVisible } = useMusica();
-  const rutaInterna = RUTAS_INTERNAS.some((r) => pathname === r || pathname.startsWith(`${r}/`));
+  const enInicio = pathname === "/";
 
   useEffect(() => {
-    permitirMusicaEnRuta(!rutaInterna);
-  }, [rutaInterna]);
+    permitirMusicaEnRuta(enInicio);
+  }, [enInicio]);
 
   useEffect(() => {
     document.addEventListener("visibilitychange", sincronizarMusica);
@@ -33,7 +32,7 @@ export function MusicaFlotante() {
   }, []);
 
   // En la página principal, mientras se ve el hero, el parlante ya está en el propio hero.
-  if (!sonando || heroVisible || rutaInterna) return null;
+  if (!sonando || heroVisible || !enInicio) return null;
 
   return (
     <button

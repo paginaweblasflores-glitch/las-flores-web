@@ -75,7 +75,7 @@ export function SiteNavigationMenu({
 
       {/* ── Drawer — diseño de una sola pantalla, sin scroll del documento ── */}
       <div
-        className={`fixed inset-y-0 left-0 h-[100dvh] max-h-[100dvh] w-[min(100vw,420px)] z-[100] bg-piedra flex flex-col shadow-2xl pointer-events-auto transition-transform duration-300 ease-out overflow-hidden ${isOpen ? 'translate-x-0' : '-translate-x-full'
+        className={`fixed inset-y-0 left-0 h-[100dvh] max-h-[100dvh] w-[min(100vw,clamp(420px,28vw,580px))] z-[100] bg-piedra flex flex-col shadow-2xl pointer-events-auto transition-transform duration-300 ease-out overflow-hidden ${isOpen ? 'translate-x-0' : '-translate-x-full'
           }`}
       >
         {/* ── Header con logo centrado + botón cerrar ── */}
@@ -98,7 +98,7 @@ export function SiteNavigationMenu({
         <div className="mx-8 border-t border-nogal/10 shrink-0" />
 
         {/* ── Nav links ── */}
-        <nav className="flex flex-col flex-1 min-h-0 gap-1 px-8 py-3 w-full justify-start overflow-y-auto">
+        <nav className="flex flex-col flex-1 min-h-0 gap-1 px-8 py-3 w-full justify-start [@media(min-height:1000px)]:justify-center overflow-y-auto">
           {NAV_LINKS.map(({ label, to, hash }) => {
             return (
               <Link
@@ -110,7 +110,7 @@ export function SiteNavigationMenu({
                     setIsOpen(false);
                   }
                 }}
-                className="block w-full shrink-0 py-1.5 font-serif text-lg md:text-xl tracking-[0.12em] transition-all duration-300 font-bold leading-tight uppercase border-b border-nogal/10 last:border-b-0 text-nogal hover:text-pacay hover:translate-x-3"
+                className="block w-full shrink-0 py-[clamp(0.375rem,calc((100vh_-_800px)*0.06),1.75rem)] font-serif text-lg md:text-[length:clamp(1.25rem,calc(0.9vw_+_0.4rem),1.75rem)] tracking-[0.12em] transition-all duration-300 font-bold leading-tight uppercase border-b border-nogal/10 last:border-b-0 text-nogal hover:text-pacay hover:translate-x-3"
               >
                 {label}
               </Link>

@@ -13,8 +13,7 @@ import {
   ChevronDown,
   Compass, 
   HelpCircle, 
-  ExternalLink,
-  Sparkles
+  ExternalLink
 } from "lucide-react";
 import { SiteHeader } from "../components/SiteHeader";
 import { useState, useEffect } from "react";
@@ -145,7 +144,7 @@ function ContactoPage() {
       <SiteHeader />
 
       {/* ── HERO ── */}
-      <section className="relative min-h-[60vh] flex items-center justify-center pt-32 pb-24 px-6 bg-eucalipto-dark text-piedra overflow-hidden">
+      <section className="relative h-[max(60vh,29rem)] flex items-center justify-center pt-32 pb-24 px-6 bg-eucalipto-dark text-piedra overflow-hidden">
         <div className="absolute inset-0 z-0">
           <img
             src={heroImg}
@@ -158,11 +157,6 @@ function ContactoPage() {
         </div>
 
         <div className="max-w-4xl mx-auto text-center relative z-10 space-y-6">
-          <span className="text-chilca font-medium uppercase tracking-[0.3em] text-xs flex items-center justify-center gap-2">
-            <Sparkles size={14} />
-            Estamos para servirte · Escríbenos
-            <Sparkles size={14} />
-          </span>
           <h1 className="font-serif text-4xl md:text-6xl text-piedra font-normal leading-tight">
             Contáctanos
           </h1>

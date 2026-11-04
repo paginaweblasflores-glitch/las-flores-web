@@ -7,7 +7,7 @@ import { JobApplicationForm } from "../features/jobs/components/JobApplicationFo
 import { listPublicJobOffers } from "../features/jobs/api";
 import { sortPublicOffers } from "../features/jobs/rules";
 import type { PublicJobOffer } from "../features/jobs/types";
-import { Heart, Users, Award, Loader2, AlertCircle, Briefcase, FileText, Send, CheckCircle2, ListChecks, Gift, Sparkles } from "lucide-react";
+import { Heart, Users, Award, Loader2, AlertCircle, Briefcase, FileText, Send, CheckCircle2, ListChecks, Gift } from "lucide-react";
 import { FamiliaLasFloresSection } from "../components/FamiliaLasFloresSection";
 
 export const Route = createFileRoute("/unete-al-equipo")({
@@ -89,7 +89,7 @@ function UneteAlEquipoPage() {
       <SiteHeader />
 
       {/* ── HERO SECTION (FORMATO EXACTO A EVENTOS) ── */}
-      <section className="relative min-h-[60vh] flex items-center justify-center overflow-hidden bg-eucalipto pt-32 pb-24 px-6">
+      <section className="relative h-[max(60vh,29rem)] flex items-center justify-center overflow-hidden bg-eucalipto pt-32 pb-24 px-6">
         <img
           src={heroImg}
           alt="Equipo de Restaurante Las Flores Ayacucho"
@@ -100,13 +100,7 @@ function UneteAlEquipoPage() {
         />
         <div className="absolute inset-0 bg-gradient-to-t from-ink/90 via-ink/45 to-black/30" />
 
-        <div className="max-w-4xl mx-auto text-center relative z-10 space-y-6 -mt-12">
-          <span className="text-chilca font-medium uppercase tracking-[0.3em] text-xs flex items-center justify-center gap-2">
-            <Sparkles size={14} />
-            Trabaja con nosotros
-            <Sparkles size={14} />
-          </span>
-
+        <div className="max-w-4xl mx-auto text-center relative z-10 space-y-6">
           <h1 className="font-serif text-4xl md:text-6xl text-piedra font-normal leading-tight">
             Crece con nosotros <br />
             <span className="font-normal">en Ayacucho</span>

@@ -865,7 +865,7 @@ function Index() {
           height={800}
           loading="lazy"
           decoding="async"
-          className="w-full h-[60vh] md:h-[600px] object-cover"
+          className="w-full h-[70vh] md:h-[720px] object-cover"
         />
         <div className="absolute inset-0 bg-cafe/55" />
         <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-6">

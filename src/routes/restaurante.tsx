@@ -42,37 +42,7 @@ export const Route = createFileRoute("/restaurante")({
   component: RestaurantePage,
 });
 
-type GenerationStory = {
-  generation: string;
-  name: string;
-  image: string;
-  alt: string;
-  summary: string;
-};
-
-const generationStories: GenerationStory[] = [
-  {
-    generation: "Primera generación",
-    name: "Mamina",
-    image: "/imagenes-reales/FAMILIA-HISTORIA/mamina.webp",
-    alt: "Fundadora de Las Flores en la cocina",
-    summary: "Fundó Las Flores y puso la base de su cocina familiar.",
-  },
-  {
-    generation: "Segunda generación",
-    name: "Gloria",
-    image: "/imagenes-reales/FAMILIA-HISTORIA/gloria.webp",
-    alt: "Gloria en la etapa de consolidación del restaurante Las Flores",
-    summary: "Formalizó el negocio y proyectó la cocina ayacuchana hacia nuevos públicos.",
-  },
-  {
-    generation: "Tercera generación",
-    name: "Mijail",
-    image: "/imagenes-reales/FAMILIA-HISTORIA/mijail.webp",
-    alt: "Mijail junto a la tercera generación de Las Flores",
-    summary: "Lidera el restaurante hoy y lleva la tradición a una propuesta contemporánea.",
-  },
-];
+const VIDEO_GENERACIONES = "/imagenes-reales/tres-generaciones";
 
 const VIDEOS_PLATOS = "/imagenes-reales/videos-de-platos";
 
@@ -120,48 +90,29 @@ const clientTestimonials = [1, 2, 3, 4].map((n) => ({
   alt: `Testimonio ${n} de un cliente de Restaurante Las Flores`,
 }));
 
-function GenerationCard({ generation }: { generation: GenerationStory }) {
-  return (
-    <article className="group">
-      <div className="aspect-square overflow-hidden bg-eucalipto">
-        <img
-          src={generation.image}
-          alt={generation.alt}
-          loading="lazy"
-          decoding="async"
-          className="h-full w-full object-cover object-[center_20%] transition-transform duration-700 ease-out group-hover:scale-105"
-        />
-      </div>
-      <div className="pt-5">
-        <span className="block text-[11px] font-medium uppercase tracking-[0.3em] text-eucalipto">
-          {generation.generation}
-        </span>
-        <h3 className="mt-2 font-serif text-3xl leading-tight text-nogal">{generation.name}</h3>
-        <p className="mt-2 max-w-sm text-base leading-relaxed text-nogal/80 text-pretty">
-          {generation.summary}
-        </p>
-      </div>
-    </article>
-  );
-}
-
 function GenerationsSection() {
   return (
-    <section id="historia" className="bg-piedra py-16 md:py-20 px-6">
-      <div className="container-flores mx-auto">
-        <div className="mb-8 md:mb-12 flex flex-col md:flex-row md:items-end md:justify-between gap-6">
-          <div>
-            <h2 className="font-serif text-4xl md:text-5xl leading-[1.05] text-balance max-w-[24ch]">
-              Tres generaciones al frente de Las Flores
-            </h2>
-          </div>
-        </div>
+    <section id="historia" className="bg-piedra pt-16 md:pt-20">
+      <div className="container-flores mx-auto px-6 flex flex-col md:flex-row md:items-end md:justify-between gap-6">
+        <h2 className="font-serif text-4xl md:text-5xl leading-[1.05] text-balance max-w-[24ch]">
+          Tres generaciones al frente de Las Flores
+        </h2>
+        <p className="text-base md:text-lg text-nogal/70 leading-[1.7] text-balance max-w-[36ch] md:text-right">
+          Hace 46 años nació Las Flores, y hoy sigue recibiendo a sus clientes con alma y amor.
+        </p>
+      </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 xl:gap-10">
-          {generationStories.map((generation) => (
-            <GenerationCard key={generation.name} generation={generation} />
-          ))}
-        </div>
+      <div className="relative mt-8 md:mt-12 aspect-video w-full overflow-hidden bg-black">
+        <FestividadVideo
+          src={`${VIDEO_GENERACIONES}/sr-gloria.mp4`}
+          srcMobile={`${VIDEO_GENERACIONES}/sr-gloria-mobile.mp4`}
+          poster={`${VIDEO_GENERACIONES}/sr-gloria-poster.webp`}
+          alt="La señora Gloria cuenta cómo empezó Restaurante Las Flores, quién lo fundó y quién lo dirige hoy"
+          conSonido
+          posicionSonido="left-1/2 top-[86%] -translate-x-1/2 -translate-y-1/2"
+          sonidoGrande
+          className="absolute inset-0 h-full w-full object-cover"
+        />
       </div>
     </section>
   );
@@ -244,7 +195,7 @@ function RestaurantePage() {
 
       <header
         id="historia"
-        className="relative min-h-[75vh] w-full overflow-hidden bg-eucalipto flex items-center pt-32 pb-24"
+        className="relative h-[max(60vh,29rem)] w-full overflow-hidden bg-eucalipto flex items-center pt-32 pb-24"
       >
         <img
           src={heroRestauranteImg}

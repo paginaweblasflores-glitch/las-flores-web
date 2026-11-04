@@ -12,6 +12,10 @@ interface FestividadVideoProps {
   priority?: boolean;
   /** El video corre en silencio; muestra un botón para que el visitante active el audio (solo uno suena a la vez). */
   conSonido?: boolean;
+  /** Clases de posición del botón de sonido; por defecto, esquina inferior derecha. */
+  posicionSonido?: string;
+  /** Botón de sonido grande, con el mismo aspecto que el del hero del inicio (para videos que ocupan toda la sección). */
+  sonidoGrande?: boolean;
 }
 
 const EVENTO_SONIDO = "festividad-video-sonido";
@@ -22,7 +26,7 @@ function evitarVideo(): boolean {
   return Boolean(reduceMotion || conn?.saveData);
 }
 
-export function FestividadVideo({ src, srcMobile, poster, alt, className = "", priority = false, conSonido = false }: FestividadVideoProps) {
+export function FestividadVideo({ src, srcMobile, poster, alt, className = "", priority = false, conSonido = false, posicionSonido = "bottom-3 right-3", sonidoGrande = false }: FestividadVideoProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [sinVideo, setSinVideo] = useState(false);
   const [sonando, setSonando] = useState(false);
@@ -168,9 +172,13 @@ export function FestividadVideo({ src, srcMobile, poster, alt, className = "", p
           onClick={alternarSonido}
           aria-pressed={sonando}
           aria-label={sonando ? "Silenciar el video" : "Activar el sonido del video"}
-          className="absolute bottom-3 right-3 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-ink/70 text-piedra backdrop-blur-sm transition-colors hover:bg-ink/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-chilca"
+          className={`absolute ${posicionSonido} z-10 flex items-center justify-center rounded-full text-piedra backdrop-blur-sm transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-chilca ${
+            sonidoGrande
+              ? "h-11 w-11 border border-piedra/60 bg-black/30 hover:bg-black/50"
+              : "h-10 w-10 bg-ink/70 hover:bg-ink/90"
+          }`}
         >
-          {sonando ? <Volume2 size={18} aria-hidden="true" /> : <VolumeX size={18} aria-hidden="true" />}
+          {sonando ? <Volume2 size={sonidoGrande ? 20 : 18} aria-hidden="true" /> : <VolumeX size={sonidoGrande ? 20 : 18} aria-hidden="true" />}
         </button>
       )}
     </>

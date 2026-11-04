@@ -8,6 +8,6 @@ const source = readFileSync(eventsRoutePath, "utf8");
 describe("encabezado de eventos", () => {
   it("omite el rótulo Celebre con nosotros y conserva el título", () => {
     expect(source).not.toContain("Celebre con nosotros");
-    expect(source).toContain("Eventos en Ayacucho");
+    expect(source).toContain("Celebra en Las Flores");
   });
 });

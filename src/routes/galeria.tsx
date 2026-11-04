@@ -53,7 +53,7 @@ const foto = (carpeta: string, archivo: string, titulo: string): GalleryImage =>
 const GALLERY_CATEGORIES: Category[] = [
   {
     id: "arte-cultura",
-    label: "Arte y Cultura",
+    label: "Artes y Culturas",
     images: [
       foto("arte-cultura", "textil-uno", "Pollera ayacuchana"),
       foto("arte-cultura", "textil-dos", "Chaqueta con bordado ayacuchano"),
@@ -62,12 +62,12 @@ const GALLERY_CATEGORIES: Category[] = [
       foto("arte-cultura", "ceramica-dos", "Personajes costumbristas de la cerámica de Quinua"),
       foto("arte-cultura", "ceramica-tres", "Iglesia de cerámica de Quinua"),
       foto("arte-cultura", "ceramica-cuatro", "Músicos de cerámica tradicional de Quinua"),
-      foto("arte-cultura", "retablo-uno", "Casa Museo Joaquín López Antay"),
+      foto("arte-cultura", "retablo-uno", "Exhibición de retablos ayacuchanos"),
       foto("arte-cultura", "retablo-tres", "Retablos Ayacuchanos tradicionales"),
       foto("arte-cultura", "piedra-huamanga-uno", "Tallado en piedra de Huamanga"),
       foto("arte-cultura", "piedra-huamanga-tres", "El descendimiento de la cruz tallado en piedra de Huamanga"),
       foto("arte-cultura", "piedra-huamanga-cuatro", "Obelisco de la Pampa de Ayacucho talladas en piedra de Huamanga"),
-      foto("arte-cultura", "cereria-uno", "Maestro Cirilo Gálvez Ramos"),
+      foto("arte-cultura", "cereria-uno", "Maestro artesano"),
       foto("arte-cultura", "cereria-dos", "Cerería tradicional ayacuchana"),
       foto("arte-cultura", "cereria-tres", "Virgen de los Dolores"),
       foto("arte-cultura", "telar-uno", "Maestro tejedor Marcelino Pomataylla Bautista"),
@@ -81,7 +81,7 @@ const GALLERY_CATEGORIES: Category[] = [
     label: "Festividades",
     images: [
       foto("festividades", "carnaval-uno", "Carnaval Ayacuchano"),
-      foto("festividades", "carnaval-tres", "Carnaval de Culluchaca"),
+      foto("festividades", "carnaval-tres", "Comparsas"),
       foto("festividades", "semana-santa-dos", "Miércoles de Encuentro de la Semana Santa de Ayacucho"),
       foto("festividades", "semana-santa-tres", "Alfombras florales de Semana Santa"),
       foto("festividades", "hatun-yacu-raymi-uno", "Hatun Yaku Raymi"),
@@ -99,7 +99,7 @@ const GALLERY_CATEGORIES: Category[] = [
       foto("destino", "Cañon2", "Cañones de Qorihuillca"),
       foto("destino", "Arco1", "Jirón 28 de Julio"),
       foto("destino", "Arco2", "Arco del Triunfo"),
-      foto("destino", "Catedral1", "Basílica Catedral iluminada"),
+      foto("destino", "Catedral1", "Basílica Catedral de Ayacucho"),
       foto("destino", "Catedral2", "Retablos de pan de oro"),
       foto("destino", "Plaza1", "Plaza Mayor de Huamanga"),
       foto("destino", "Plaza2", "Monumento ecuestre al Mariscal Antonio José de Sucre"),
@@ -111,12 +111,12 @@ const GALLERY_CATEGORIES: Category[] = [
       foto("destino", "Turquesa1", "Aguas turquesas de Millpu"),
       foto("destino", "Cascadas1", "Cascadas de Ruqruqa"),
       foto("destino", "Cascadas2", "Cascadas de Sarhua"),
-      foto("destino", "Iglesia2", "Templo y Convento de San Francisco de Asís"),
+      foto("destino", "Iglesia2", "Iglesia colonial"),
     ],
   },
   {
     id: "postres-bebidas",
-    label: "Gastronomía",
+    label: "Gastronomías",
     images: [
       foto("postres-bebidas", "chicha-uno", "Chicha de molle"),
       foto("postres-bebidas", "chicha-dos", "Chicha de jora"),
@@ -129,7 +129,7 @@ const GALLERY_CATEGORIES: Category[] = [
   },
   {
     id: "experiencia",
-    label: "Experiencia",
+    label: "Experiencias",
     images: [
       foto("eventos", "IMG_0231.jpg", "Chef Gastón Acurio en Las Flores"),
       foto("eventos", "IMG_1346.jpg", "Miss Perú Internacional en Las Flores"),
@@ -176,7 +176,7 @@ function GaleriaPage() {
       <SiteHeader />
 
       {/* Header Banner */}
-      <section className="relative min-h-[60vh] flex items-center justify-center pt-32 pb-24 px-6 bg-eucalipto-dark text-piedra overflow-hidden">
+      <section className="relative h-[max(60vh,29rem)] flex items-center justify-center pt-32 pb-24 px-6 bg-eucalipto-dark text-piedra overflow-hidden">
         <div className="absolute inset-0 z-0">
           <img
             src="/imagenes-reales/seccion-festividades/Festividades.webp"
@@ -192,7 +192,7 @@ function GaleriaPage() {
             Nuestras costumbres para el mundo
           </h1>
           <p className="text-base md:text-lg text-piedra/90 max-w-3xl mx-auto leading-relaxed">
-            Un recorrido visual por nuestra cocina, nuestros espacios, nuestro equipo y la riqueza cultural de Ayacucho.
+            Siéntate en primera fila y mira cómo se vive Ayacucho.
           </p>
         </div>
       </section>
@@ -241,7 +241,7 @@ function GaleriaPage() {
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 loading="lazy"
               />
-              <span className="absolute right-6 top-6 max-w-[calc(100%-3rem)] rounded-md bg-eucalipto-dark/95 px-3.5 py-2 text-right text-[11px] font-semibold uppercase leading-snug tracking-[0.14em] text-piedra shadow-md pointer-events-none">
+              <span className="absolute right-6 top-6 max-w-[calc(100%-3rem)] rounded-xs bg-black/65 backdrop-blur-xs px-3 py-1.5 text-right text-[10px] font-semibold uppercase leading-snug tracking-widest text-white pointer-events-none">
                 {img.titulo}
               </span>
             </div>

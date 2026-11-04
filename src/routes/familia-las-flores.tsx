@@ -74,7 +74,7 @@ function FamiliaLasFloresPage() {
       <SiteHeader />
 
       {/* Hero Section Completa */}
-      <section className="relative min-h-[60vh] flex items-center justify-center pt-32 pb-24 px-6 bg-eucalipto-dark text-piedra overflow-hidden">
+      <section className="relative h-[max(60vh,29rem)] flex items-center justify-center pt-32 pb-24 px-6 bg-eucalipto-dark text-piedra overflow-hidden">
         <div className="absolute inset-0 z-0">
           <img
             src="/inicio/Equipolasflores.webp"

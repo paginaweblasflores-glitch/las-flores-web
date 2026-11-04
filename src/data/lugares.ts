@@ -164,9 +164,9 @@ export const lugares: Lugar[] = [
     imagen: "/imagenes-reales/galeria/destino/Quinua1.webp",
     imagenSecundaria: "/imagenes-reales/galeria/destino/Quinua1.webp",
     metaDescripcion:
-      "Santuario Histórico donde se libró la batalla de Ayacucho en 1824, a 37 km de Huamanga. Obelisco de 44 metros y cerámica de Quinua.",
+      "Santuario Histórico donde se libró la batalla de Ayacucho en 1824, a unos cuarenta y cinco minutos de Huamanga. Obelisco de 44 metros y cerámica de Quinua.",
     descripcion:
-      "El Santuario Histórico Pampa de Ayacucho está a 37 km de Huamanga, en el distrito de Quinua. Es el escenario donde el 9 de diciembre de 1824 el Ejército Unido Libertador selló la independencia de Sudamérica, y fue declarado Santuario Histórico en 1980.\n\nLo corona un obelisco de 44 metros revestido de mármol. A pocos minutos queda el pueblo de Quinua, reconocido por el Mincetur como “Pueblo con Encanto” en 2024, una distinción para localidades con atributos naturales y culturales auténticos que favorecen el turismo. Su cerámica, hecha con arcilla local, da forma a toritos de techo, iglesias en miniatura y figuras costumbristas. Sus saberes y prácticas son Patrimonio Cultural de la Nación desde 2019.",
+      "El Santuario Histórico Pampa de Ayacucho está a unos cuarenta y cinco minutos en vehículo de Huamanga, en el distrito de Quinua. Es el escenario donde el 9 de diciembre de 1824 el Ejército Unido Libertador selló la independencia de Sudamérica, y fue declarado Santuario Histórico en 1980.\n\nLo corona un obelisco de 44 metros revestido de mármol. A pocos minutos queda el pueblo de Quinua, reconocido por el Mincetur como “Pueblo con Encanto” en 2024, una distinción para localidades con atributos naturales y culturales auténticos que favorecen el turismo. Su cerámica, hecha con arcilla local, da forma a toritos de techo, iglesias en miniatura y figuras costumbristas. Sus saberes y prácticas son Patrimonio Cultural de la Nación desde 2019.",
     consejo:
       "A unos 3400 m s. n. m. el clima es frío y el sol es fuerte, así que lleva abrigo, protector solar y agua. De enero a marzo llueve, por eso conviene sumar un impermeable.",
     escenasTitulo: "Pampa de Ayacucho de cerca",
@@ -236,17 +236,17 @@ export const lugares: Lugar[] = [
     slug: "abismo-puncupata",
     numeral: "III",
     nombre: "Abismo de Puncupata",
-    nombreLista: "Amanecer de Puncupata y cañones de Qorihuillca",
+    nombreLista: "Abismo de Puncupata, Puerta Celestial",
     categoria: "Paisaje Andino",
     provincia: "Huamanga",
     provinciaSombreada: "/imagenes-reales/mapas/provincia-huamanga.webp",
     heroTitulo: "Abismo de Puncupata, Puerta Celestial",
     metaDescripcion:
-      "Un desfiladero a 4200 m s. n. m., a unas dos horas de Huamanga. Qué ver y qué llevar.",
+      "Un desfiladero a 4200 m s. n. m., a una hora y media de Huamanga. Qué ver y qué llevar.",
     imagen: "/imagenes-reales/abismo-puncupata/acantilado.webp",
     imagenSecundaria: "/imagenes-reales/abismo-puncupata/cornisa.webp",
     descripcion:
-      "A unos 76 km de Huamanga, a hora y media o dos horas por carretera asfaltada, el abismo de Puncupata se abre a 4200 m s. n. m. como un gran desfiladero.\n\nUn sendero peatonal de cerca de un kilómetro, habilitado por la comunidad local, lleva hasta su borde, un mirador natural con vistas a los pueblos de Ccaccamarca y Chumbes. En el camino pastan vicuñas y, sobre el acantilado, planean las aves de altura. Se le conoce también como la «Puerta Celestial», nombre que alude a su profundidad y a sus vistas panorámicas.",
+      "A una hora y media en vehículo de Huamanga, el abismo de Puncupata se abre a 4200 m s. n. m. como un gran desfiladero.\n\nUn sendero peatonal de cerca de un kilómetro, habilitado por la comunidad local, lleva hasta su borde, un mirador natural con vistas a los pueblos de Ccaccamarca y Chumbes. En el camino pastan vicuñas y, sobre el acantilado, planean las aves de altura. Se le conoce también como la «Puerta Celestial», nombre que alude a su profundidad y a sus vistas panorámicas.",
     consejo:
       "Lleva ropa abrigadora e impermeable, botas resistentes, agua y algo de comer. A 4200 m s. n. m. el clima puede cambiar rápidamente. Camina con precaución por el sendero y sigue las indicaciones de tu guía local. Mantén una distancia segura del borde, especialmente si sufres de vértigo.",
     escenasTitulo: "Puncupata de cerca",

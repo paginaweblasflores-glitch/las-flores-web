@@ -1,9 +1,9 @@
 import { useSyncExternalStore } from "react";
 
 /**
- * Música de fondo del sitio. El audio vive en este módulo (no dentro de una página), así que sigue sonando
- * al navegar entre páginas hasta que el visitante la silencie. Se intenta iniciar desde el hero de la
- * página principal; en cada visita nueva vuelve a empezar activada.
+ * Música de fondo del sitio. Solo suena en la página de inicio: el audio vive en este módulo (no dentro de una
+ * página) para no cortarse al bajar por el inicio, pero se pausa al navegar a cualquier otra página y se retoma
+ * al volver al inicio. Se intenta iniciar desde el hero; en cada visita nueva vuelve a empezar activada.
  */
 
 const SRC_AUDIO = "/videos/hero/inicio-hero-audio.m4a";
@@ -18,13 +18,13 @@ let estado: Estado = ESTADO_SERVIDOR;
 const oyentes = new Set<() => void>();
 
 let audio: HTMLAudioElement | null = null;
-// Intención: la música debe sonar (aunque esté en pausa temporal por pestaña oculta o ruta interna).
+// Intención: la música debe sonar (aunque esté en pausa temporal por pestaña oculta o por estar fuera del inicio).
 let deseada = false;
 // El navegador rechazó reproducir (sin interacción previa del visitante): espera a que use el parlante.
 let bloqueada = false;
 // El visitante la silenció en esta visita: no se reactiva sola al volver al inicio. Se reinicia al recargar/visita nueva.
 let silenciadaEnEstaVisita = false;
-// Paneles internos (admin, caja…): la música se pausa ahí.
+// Solo el inicio permite música: en el resto de páginas se pausa.
 let rutaPermitida = true;
 
 function actualizar(parcial: Partial<Estado>) {
@@ -119,7 +119,7 @@ export function permitirMusicaEnRuta(permitida: boolean) {
   sincronizarMusica();
 }
 
-/** Pausa temporal con la pestaña oculta o en rutas internas; la retoma al volver. Se llama desde un vigilante global. */
+/** Pausa temporal con la pestaña oculta o fuera del inicio; la retoma al volver. Se llama desde un vigilante global. */
 export function sincronizarMusica() {
   const a = audio;
   if (!a) return;

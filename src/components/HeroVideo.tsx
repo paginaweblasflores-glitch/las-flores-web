@@ -31,8 +31,8 @@ function diferenciaCircular(a: number, b: number, duracion: number): number {
 /**
  * Hero con música (ver `lib/musicaFondo`).
  * - El video va siempre silenciado y solo corre mientras se ve (no gasta CPU/batería fuera de pantalla).
- * - El sonido es una pista de audio aparte, global: sigue sonando al bajar del hero y también al navegar a otras
- *   páginas, hasta que el visitante la silencie. Al volver al hero, el video se alinea con el audio.
+ * - El sonido es una pista de audio aparte: sigue sonando al bajar del hero, pero solo en la página de inicio. Al
+ *   navegar a otra página se silencia, y al volver se retoma. Al volver al hero, el video se alinea con el audio.
  * - Se intenta sonar de inmediato al cargar. Si el navegador lo bloquea (sin interacción previa del visitante),
  *   queda silenciado y el parlante lo activa, igual que en otros sitios con video de portada.
  */
@@ -116,7 +116,7 @@ export function HeroVideo({ srcDesktop, srcMobile, poster, alt, className = "" }
       window.removeEventListener("focus", sincronizar);
       window.removeEventListener("scroll", sincronizar);
       window.removeEventListener("resize", sincronizar);
-      // El audio NO se detiene: sigue sonando en otras páginas. Solo se avisa que el hero ya no está.
+      // El audio no se detiene aquí: lo pausa MusicaFlotante al salir del inicio. Solo se avisa que el hero ya no está.
       marcarHeroVisible(false);
     };
   }, [srcDesktop, srcMobile]);
@@ -133,7 +133,7 @@ export function HeroVideo({ srcDesktop, srcMobile, poster, alt, className = "" }
         onClick={() => alternarMusica(videoRef.current?.currentTime)}
         aria-label={sonando ? "Silenciar la música" : "Activar el sonido del video"}
         aria-pressed={sonando}
-        className="absolute bottom-8 right-6 md:bottom-10 md:right-16 z-20 flex h-11 w-11 items-center justify-center rounded-full border border-piedra/60 bg-black/30 text-piedra backdrop-blur-sm transition-colors hover:bg-black/50"
+        className="absolute left-1/2 top-[86%] -translate-x-1/2 -translate-y-1/2 z-20 flex h-11 w-11 items-center justify-center rounded-full border border-piedra/60 bg-black/30 text-piedra backdrop-blur-sm transition-colors hover:bg-black/50"
       >
         {sonando ? <Volume2 size={20} /> : <VolumeX size={20} />}
       </button>

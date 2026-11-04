@@ -308,7 +308,7 @@ function EventosPage() {
       <SiteHeader />
 
       {/* Hero Section */}
-      <section className="relative min-h-[60vh] flex items-center justify-center overflow-hidden bg-eucalipto pt-32 pb-24 px-6">
+      <section className="relative h-[max(60vh,29rem)] flex items-center justify-center overflow-hidden bg-eucalipto pt-32 pb-24 px-6">
         <img
           src="/inicio/eventos.webp"
           alt="Eventos en Restaurante Las Flores Ayacucho"
@@ -319,15 +319,14 @@ function EventosPage() {
         />
         <div className="absolute inset-0 bg-gradient-to-t from-ink/90 via-ink/45 to-black/30" />
 
-        <div className="max-w-4xl mx-auto text-center relative z-10 space-y-6 -mt-12">
+        <div className="max-w-4xl mx-auto text-center relative z-10 space-y-6">
           <h1 className="font-serif text-4xl md:text-6xl text-piedra font-normal leading-tight">
-            Eventos en Ayacucho <br />
-            <span className="font-normal">para cada ocasión</span>
+            Celebra en Las Flores
           </h1>
 
           <p className="text-base md:text-lg text-piedra/90 max-w-3xl mx-auto leading-relaxed">
-            Celebre en Las Flores con espacios para reuniones familiares, encuentros corporativos,
-            bodas y recepciones, acompañados de nuestra cocina y hospitalidad.
+            Comparte momentos inolvidables con los tuyos, con nuestra cocina y la hospitalidad de una
+            familia ayacuchana.
           </p>
         </div>
 
@@ -809,7 +808,7 @@ function EventosPage() {
                   type="submit"
                   form="eventQuoteForm"
                   disabled={formStatus === "submitting"}
-                  className="py-2.5 px-5 rounded-xl bg-eucalipto text-piedra text-xs font-bold uppercase tracking-wider hover:bg-eucalipto/90 transition-all shadow-xs disabled:opacity-60 flex items-center gap-2 cursor-pointer active:scale-95"
+                  className="py-2.5 px-5 rounded-xl bg-cochinilla text-piedra text-xs font-bold uppercase tracking-wider hover:bg-cochinilla/90 transition-all shadow-xs disabled:opacity-60 flex items-center gap-2 cursor-pointer active:scale-95"
                 >
                   {formStatus === "submitting" ? (
                     <>

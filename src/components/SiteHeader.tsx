@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "@tanstack/react-router";
 import { SiteNavigationMenu } from "./SiteNavigationMenu";
+import { LanguageSelector } from "./LanguageSelector";
 import { AnimatedCartButton } from "./AnimatedCartButton";
 import { useCart } from "../context/CartContext";
 import { getDeliveryButtonVisibilityClass } from "../utils/siteHeader";
@@ -48,12 +49,13 @@ export function SiteHeader({
       className={`fixed top-0 left-0 right-0 z-50 flex items-center justify-between gap-3 px-4 md:px-10 transition-all duration-500 ease-out pointer-events-none ${
         solid
           ? "py-2 md:py-3 bg-piedra/95 backdrop-blur-md text-nogal shadow-sm border-b border-nogal/10"
-          : "py-3 md:py-4 bg-transparent text-piedra border-b border-transparent"
+          : "py-5 md:py-9 bg-transparent text-piedra border-b border-transparent"
       }`}
     >
-      {/* ── Izquierda: Menú Hamburguesa + Perfil de Usuario ── */}
-      <div className="flex items-center">
+      {/* ── Izquierda: Menú Hamburguesa + Perfil de Usuario + Idioma ── */}
+      <div className="flex items-center gap-2 md:gap-4">
         <SiteNavigationMenu isScrolled={solid} />
+        <LanguageSelector solid={solid} />
       </div>
 
       {/* ── Centro: Logo Las Flores ── */}
