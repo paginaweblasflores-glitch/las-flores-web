@@ -692,10 +692,6 @@ function TesorosAyacuchoPage() {
             <h1 className="font-serif text-4xl md:text-6xl text-piedra font-normal leading-tight">
               Productos de temporada
             </h1>
-            <p className="text-base md:text-lg text-piedra/90 max-w-3xl mx-auto leading-relaxed">
-              Ingredientes autóctonos que dan vida a nuestra cocina. Cada temporada trae los mejores
-              productos de nuestra tierra, cosechados en su punto perfecto.
-            </p>
           </div>
         </div>
       </header>

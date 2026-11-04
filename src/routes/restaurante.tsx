@@ -84,10 +84,11 @@ const chefRecommendations = [
 
 const VIDEOS_CLIENTES = "/imagenes-reales/testimonios";
 
-const clientTestimonials = [1, 2, 3, 4].map((n) => ({
+// Orden en pantalla: los archivos 1, 3, 4 y 2 (en ese orden).
+const clientTestimonials = [1, 3, 4, 2].map((n, posicion) => ({
   video: `${VIDEOS_CLIENTES}/cliente-${n}.mp4`,
   poster: `${VIDEOS_CLIENTES}/cliente-${n}-poster.webp`,
-  alt: `Testimonio ${n} de un cliente de Restaurante Las Flores`,
+  alt: `Testimonio ${posicion + 1} de un cliente de Restaurante Las Flores`,
 }));
 
 function GenerationsSection() {
