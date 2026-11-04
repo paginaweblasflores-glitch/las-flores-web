@@ -148,7 +148,7 @@ function LugarDetailPage() {
             className="flex items-start px-6 md:px-16 py-16 md:py-24 md:order-2"
           >
             <div className="max-w-lg">
-              <span className="text-eucalipto text-[0.625rem] uppercase tracking-[0.3em] font-semibold mb-4 block">
+              <span className="text-eucalipto text-[0.6875rem] uppercase tracking-[0.3em] font-semibold mb-4 block">
                 {lugar.categoria}
               </span>
               <h2 className="font-serif text-3xl md:text-4xl leading-tight mb-5">{lugar.nombre}</h2>
@@ -192,7 +192,7 @@ function LugarDetailPage() {
               </div>
             )}
             <span
-              className={`absolute text-piedra text-[0.625rem] uppercase tracking-[0.35em] font-semibold drop-shadow ${
+              className={`absolute text-piedra text-[0.6875rem] uppercase tracking-[0.35em] font-semibold drop-shadow ${
                 lugar.consejo
                   ? "top-20 right-6 md:top-auto md:bottom-10 md:right-10"
                   : "bottom-6 md:bottom-10 left-6 md:left-10"
@@ -266,7 +266,7 @@ function LugarDetailPage() {
               <div className="absolute inset-0 bg-ink/10" />
             </>
           )}
-          <span className="absolute bottom-6 left-6 md:bottom-10 md:left-10 text-piedra text-[0.625rem] uppercase tracking-[0.35em] font-semibold drop-shadow">
+          <span className="absolute bottom-6 left-6 md:bottom-10 md:left-10 text-piedra text-[0.6875rem] uppercase tracking-[0.35em] font-semibold drop-shadow">
             {lugar.etiquetaPantalla ?? lugar.videoSeccion?.etiqueta ?? lugar.nombre}
           </span>
         </section>

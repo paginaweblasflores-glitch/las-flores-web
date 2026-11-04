@@ -190,7 +190,7 @@ function PlatosTipicosGrid({
             />
           </div>
           <div className="pt-5">
-            <span className="block text-chilca font-bold text-[0.625rem] uppercase tracking-[0.25em] mb-2">
+            <span className="block text-chilca font-bold text-[0.6875rem] uppercase tracking-[0.25em] mb-2">
               {p.ocasion}
             </span>
             <h3 className="font-serif text-xl md:text-2xl leading-tight">{p.nombre}</h3>
@@ -224,13 +224,13 @@ function FestividadesSlider() {
                 alt={fest.nombre}
                 className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
               />
-              <span className="absolute top-4 right-4 bg-ink/70 text-piedra text-[0.625rem] uppercase tracking-[0.25em] px-3 py-1.5">
+              <span className="absolute top-4 right-4 bg-ink/70 text-piedra text-[0.6875rem] uppercase tracking-[0.25em] px-3 py-1.5">
                 {fest.fecha}
               </span>
             </div>
             <div className="pt-5">
               <h3 className="font-serif text-2xl md:text-3xl leading-tight">{fest.nombre}</h3>
-              <span className="mt-3 inline-flex items-center gap-2 text-[0.625rem] uppercase tracking-[0.22em] font-semibold text-piedra underline underline-offset-4">
+              <span className="mt-3 inline-flex items-center gap-2 text-[0.6875rem] uppercase tracking-[0.22em] font-semibold text-piedra underline underline-offset-4">
                 Descubrir <span aria-hidden>→</span>
               </span>
             </div>
@@ -575,7 +575,7 @@ function Index() {
 
                 {/* Pie de foto: fuera del cuadro de la imagen y dentro del retablo */}
                 <p
-                  className="retablo-content-caption w-full shrink-0 text-center font-sans text-[0.625rem] leading-snug sm:text-[0.6875rem]"
+                  className="retablo-content-caption w-full shrink-0 text-center font-sans text-[0.6875rem] leading-snug sm:text-[0.6875rem]"
                   style={{ color: "#3d2010" }}
                 >
                   Joaquín López Antay (1897-1981), maestro del retablo ayacuchano

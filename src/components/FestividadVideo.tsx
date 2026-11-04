@@ -80,7 +80,12 @@ export function FestividadVideo({ src, srcMobile, poster, alt, className = "", p
     const MARGEN = priority ? 0 : 150;
     const aLaVista = () => {
       const r = el.getBoundingClientRect();
-      return r.bottom > -MARGEN && r.top < window.innerHeight + MARGEN;
+      return (
+        r.bottom > -MARGEN &&
+        r.top < window.innerHeight + MARGEN &&
+        r.right > -MARGEN &&
+        r.left < window.innerWidth + MARGEN
+      );
     };
 
     // Tarjetas: la descarga empieza cuando el usuario está a ~1.5 pantallas de distancia (no antes), para no
@@ -88,7 +93,8 @@ export function FestividadVideo({ src, srcMobile, poster, alt, className = "", p
     const cercaParaCargar = () => {
       const r = el.getBoundingClientRect();
       const h = window.innerHeight;
-      return r.top < h * 2.5 && r.bottom > -h * 1.5;
+      const w = window.innerWidth;
+      return r.top < h * 2.5 && r.bottom > -h * 1.5 && r.left < w * 1.5 && r.right > -w * 0.5;
     };
 
     // Un solo punto decide si debe cargar, correr (a la vista y pestaña visible) o estar en pausa, y lo corrige.

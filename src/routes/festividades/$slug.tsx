@@ -81,7 +81,7 @@ function FestividadDetailPage() {
             className={`flex items-center px-6 md:px-16 py-16 md:py-24 ${invertido ? "md:order-2" : "md:order-1"}`}
           >
             <div className="max-w-lg">
-              <span className="text-eucalipto text-[0.625rem] uppercase tracking-[0.3em] font-semibold mb-4 block">
+              <span className="text-eucalipto text-[0.6875rem] uppercase tracking-[0.3em] font-semibold mb-4 block">
                 {fest.categoria}
               </span>
               <h2 className="font-serif text-3xl md:text-4xl leading-tight mb-5">{fest.nombre}</h2>
@@ -92,7 +92,7 @@ function FestividadDetailPage() {
             className={`flex items-center px-6 md:px-16 py-16 md:py-24 bg-cafe/[0.03] ${invertido ? "md:order-1" : "md:order-2"}`}
           >
             <div className="max-w-lg w-full">
-              <span className="text-eucalipto text-[0.625rem] uppercase tracking-[0.3em] font-semibold mb-6 block">
+              <span className="text-eucalipto text-[0.6875rem] uppercase tracking-[0.3em] font-semibold mb-6 block">
                 Datos clave
               </span>
               <dl className="space-y-4 mb-8">
@@ -110,7 +110,7 @@ function FestividadDetailPage() {
                 </div>
               </dl>
               <div className="border-l-2 border-eucalipto pl-5 py-1">
-                <p className="text-[0.625rem] uppercase tracking-[0.3em] text-eucalipto font-semibold mb-1">
+                <p className="text-[0.6875rem] uppercase tracking-[0.3em] text-eucalipto font-semibold mb-1">
                   Dato curioso
                 </p>
                 <p className="text-sm md:text-base text-nogal/70 leading-relaxed">{fest.dato}</p>
@@ -163,7 +163,7 @@ function FestividadDetailPage() {
               <div className="absolute inset-0 bg-ink/10" />
             </>
           )}
-          <span className="absolute bottom-6 left-6 md:bottom-10 md:left-10 text-piedra text-[0.625rem] uppercase tracking-[0.35em] font-semibold drop-shadow">
+          <span className="absolute bottom-6 left-6 md:bottom-10 md:left-10 text-piedra text-[0.6875rem] uppercase tracking-[0.35em] font-semibold drop-shadow">
             {fest.videoSeccion?.etiqueta ?? fest.nombre}
           </span>
         </section>

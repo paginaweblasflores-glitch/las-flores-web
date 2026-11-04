@@ -152,7 +152,7 @@ export function SiteNavigationMenu({
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Instagram"
-              className="text-nogal/50 hover:text-nogal transition-colors"
+              className="-m-2 p-2 text-nogal/50 hover:text-nogal transition-colors"
             >
               <Instagram size={20} strokeWidth={1.8} />
             </a>
@@ -161,11 +161,11 @@ export function SiteNavigationMenu({
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Facebook"
-              className="text-nogal/50 hover:text-nogal transition-colors"
+              className="-m-2 p-2 text-nogal/50 hover:text-nogal transition-colors"
             >
               <Facebook size={20} strokeWidth={1.8} />
             </a>
-            <a href="https://www.tiktok.com/@lasfloresayacucho" target="_blank" rel="noopener noreferrer" aria-label="TikTok" className="text-nogal/50 hover:text-nogal transition-colors">
+            <a href="https://www.tiktok.com/@lasfloresayacucho" target="_blank" rel="noopener noreferrer" aria-label="TikTok" className="-m-2 p-2 text-nogal/50 hover:text-nogal transition-colors">
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5" />
               </svg>

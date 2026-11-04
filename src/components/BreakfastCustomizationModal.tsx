@@ -181,10 +181,10 @@ export function BreakfastCustomizationModal({ dish, open, onClose }: BreakfastCu
           {/* Información del Plato */}
           <div className="absolute bottom-4 left-5 right-5 z-10 text-white">
             <div className="flex items-center gap-2 mb-1.5">
-              <span className="text-[0.625rem] uppercase tracking-[0.22em] font-bold px-3 py-1 rounded-full bg-retablo text-white shadow-xs flex items-center gap-1">
+              <span className="text-[0.6875rem] uppercase tracking-[0.22em] font-bold px-3 py-1 rounded-full bg-retablo text-white shadow-xs flex items-center gap-1">
                 <Sparkles size={11} /> Personaliza tu pedido
               </span>
-              <span className="text-[0.625rem] uppercase tracking-[0.15em] font-bold px-2.5 py-1 rounded-full bg-white/20 backdrop-blur-md text-piedra">
+              <span className="text-[0.6875rem] uppercase tracking-[0.15em] font-bold px-2.5 py-1 rounded-full bg-white/20 backdrop-blur-md text-piedra">
                 {selectedCount}/{sectionsList.length} Seleccionados
               </span>
             </div>
@@ -223,7 +223,7 @@ export function BreakfastCustomizationModal({ dish, open, onClose }: BreakfastCu
                       <Check size={13} /> Listo
                     </span>
                   ) : (
-                    <span className="text-[0.625rem] uppercase font-bold tracking-wider text-amber-700 bg-amber-50 px-2.5 py-1 rounded-full border border-amber-200">
+                    <span className="text-[0.6875rem] uppercase font-bold tracking-wider text-amber-700 bg-amber-50 px-2.5 py-1 rounded-full border border-amber-200">
                       Requerido
                     </span>
                   )}
@@ -254,7 +254,7 @@ export function BreakfastCustomizationModal({ dish, open, onClose }: BreakfastCu
                             {item.name}
                           </span>
                           {item.desc && (
-                            <span className="block text-[0.625rem] text-black/50 truncate font-medium">
+                            <span className="block text-[0.6875rem] text-black/50 truncate font-medium">
                               {item.desc}
                             </span>
                           )}

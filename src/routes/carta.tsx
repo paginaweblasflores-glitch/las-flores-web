@@ -161,7 +161,7 @@ function CartaPage() {
           {/* Título de Categoría */}
           <div className="flex justify-between items-end mb-5">
             <h2 className="font-serif text-3xl md:text-4xl text-nogal">{active.label}</h2>
-            <span className="text-[0.625rem] uppercase tracking-[0.3em] font-bold text-nogal/40 bg-nogal/5 px-4 py-2 rounded-full hidden sm:inline-block">
+            <span className="text-[0.6875rem] uppercase tracking-[0.3em] font-bold text-nogal/40 bg-nogal/5 px-4 py-2 rounded-full hidden sm:inline-block">
               {active.dishes.length} platos
             </span>
           </div>
@@ -223,7 +223,7 @@ function CartaPage() {
                       <div className={`grid gap-2 border-t border-nogal/10 pt-4 ${pastaPriceOptions.length === 3 ? "grid-cols-3" : "grid-cols-2"}`}>
                         {pastaPriceOptions.map((option) => (
                           <div key={option.id} className="text-center min-w-0">
-                            <span className="block text-[0.625rem] leading-tight text-nogal/70 min-h-[2rem]">
+                            <span className="block text-[0.6875rem] leading-tight text-nogal/70 min-h-[2rem]">
                               {option.name}
                             </span>
                             <span className="block mt-1 text-sm font-bold text-adobe-new">

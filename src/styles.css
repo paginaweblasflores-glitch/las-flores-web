@@ -171,13 +171,13 @@
 
 @layer base {
   /*
-   * Escala fluida para pantallas grandes: 16px hasta 1440px de ancho y, desde ahi, crece de forma continua
-   * (unos 19px a 1920px, unos 23px a 2560px) con tope en 24px. Todo lo medido en rem (letras, espacios,
-   * botones, tarjetas, anchos y altos) crece junto y mantiene sus proporciones. La base usa rem para respetar
-   * la preferencia de tamano de letra del visitante y el zoom del navegador.
+   * Escala fluida para pantallas grandes: 16px hasta 1440px de ancho y, desde ahi, crece en proporcion directa
+   * con el ancho de la pantalla (unos 21px a 1920px) hasta el tope de 24px (desde unos 2160px). Todo lo medido
+   * en rem (letras, espacios, botones, tarjetas, modales, anchos y altos) crece junto y mantiene sus
+   * proporciones. La base usa rem para respetar la preferencia de tamano de letra del visitante y el zoom.
    */
   html {
-    font-size: clamp(1rem, 0.4rem + 0.667vw, 1.5rem);
+    font-size: clamp(1rem, 1.111vw, 1.5rem);
   }
 
   * {

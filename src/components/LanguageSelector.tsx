@@ -39,7 +39,7 @@ export function LanguageSelector({ solid }: { solid: boolean }) {
         aria-haspopup="listbox"
         aria-expanded={abierto}
         aria-label={`Idioma: ${idiomaActual.label}`}
-        className={`flex items-center gap-1 text-[0.6875rem] md:text-sm font-semibold uppercase tracking-[0.15em] leading-none transition-colors hover:text-chilca cursor-pointer ${
+        className={`-mx-1 -my-3 flex items-center gap-1 px-1 py-3 text-[0.6875rem] md:text-sm font-semibold uppercase tracking-[0.15em] leading-none transition-colors hover:text-chilca cursor-pointer ${
           solid ? "text-nogal" : "text-piedra"
         }`}
       >

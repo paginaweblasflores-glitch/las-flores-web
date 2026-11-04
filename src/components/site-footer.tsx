@@ -38,9 +38,9 @@ export function SiteFooter() {
             >
               <BookOpen size={24} className="text-eucalipto group-hover:scale-110 transition-transform" />
               <div className="leading-none text-left">
-                <span className="text-[0.625rem] uppercase font-bold text-eucalipto tracking-wider">Libro de</span>
+                <span className="text-[0.6875rem] uppercase font-bold text-eucalipto tracking-wider">Libro de</span>
                 <br />
-                <span className="text-[0.625rem] uppercase font-extrabold text-eucalipto tracking-wider">
+                <span className="text-[0.6875rem] uppercase font-extrabold text-eucalipto tracking-wider">
                   Reclamaciones
                 </span>
               </div>

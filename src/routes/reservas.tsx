@@ -713,7 +713,7 @@ function ReservasPage() {
                   {isDone ? <Check size={20} strokeWidth={3} /> : s.num}
                 </button>
                 <span
-                  className={`text-center leading-tight text-[0.5rem] tracking-tight sm:text-[0.6875rem] sm:tracking-wider uppercase font-semibold ${
+                  className={`text-center leading-tight text-[0.6875rem] tracking-tight sm:text-[0.6875rem] sm:tracking-wider uppercase font-semibold ${
                     isCurrent || isDone ? "text-[#A32638]" : "text-gray-400"
                   }`}
                 >
@@ -782,12 +782,12 @@ function ReservasPage() {
                       <div className="absolute inset-0 bg-black/10 group-hover:bg-black/0 transition-colors duration-500" />
 
                       {blockReason && (
-                        <span className="absolute top-3 left-3 right-3 bg-red-700/90 backdrop-blur-xs text-white text-[0.625rem] font-bold uppercase tracking-wide px-3 py-2 rounded-xs text-center leading-snug">
+                        <span className="absolute top-3 left-3 right-3 bg-red-700/90 backdrop-blur-xs text-white text-[0.6875rem] font-bold uppercase tracking-wide px-3 py-2 rounded-xs text-center leading-snug">
                           Reservada / No disponible: {blockReason}
                         </span>
                       )}
 
-                      <span className="absolute bottom-3 left-3 bg-black/65 backdrop-blur-xs text-white text-[0.625rem] font-semibold uppercase tracking-widest px-3 py-1.5 rounded-xs">
+                      <span className="absolute bottom-3 left-3 bg-black/65 backdrop-blur-xs text-white text-[0.6875rem] font-semibold uppercase tracking-widest px-3 py-1.5 rounded-xs">
                         {z.capacidad}
                       </span>
                     </div>
@@ -951,7 +951,7 @@ function ReservasPage() {
                   {/* Mensaje Informativo & WhatsApp para grupos mayores al límite de esta zona */}
                   <div className="mt-4 p-4 bg-[#fdf8f0] rounded-none border border-[#d4a373]/30 text-xs text-gray-700 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
                     <div>
-                      <p className="font-bold text-[#3b1f10] uppercase tracking-wider text-[0.625rem] mb-0.5">
+                      <p className="font-bold text-[#3b1f10] uppercase tracking-wider text-[0.6875rem] mb-0.5">
                         Capacidad Máxima del Ambiente ({selectedZona.nombre}): {selectedZona.maxCap} personas
                       </p>
                       <p>
@@ -1034,7 +1034,7 @@ function ReservasPage() {
                       }`}
                     >
                       <span className="text-[0.875rem] font-bold leading-none mb-1">{item.dayNum}</span>
-                      <span className="text-[0.625rem] uppercase font-semibold opacity-90">{item.dayShortCap}</span>
+                      <span className="text-[0.6875rem] uppercase font-semibold opacity-90">{item.dayShortCap}</span>
                     </button>
                   );
                 })}
@@ -1067,7 +1067,7 @@ function ReservasPage() {
                         title={hourBlackout ? `Horario reservado: ${hourBlackout}` : undefined}
                       >
                         {h}
-                        {hourBlackout && <span className="block text-[0.5rem] uppercase tracking-wider font-extrabold text-amber-800/80 mt-0.5">Reservado</span>}
+                        {hourBlackout && <span className="block text-[0.6875rem] uppercase tracking-wider font-extrabold text-amber-800/80 mt-0.5">Reservado</span>}
                       </button>
                     );
                   })}
@@ -1098,7 +1098,7 @@ function ReservasPage() {
                         title={hourBlackout ? `Horario reservado: ${hourBlackout}` : undefined}
                       >
                         {h}
-                        {hourBlackout && <span className="block text-[0.5rem] uppercase tracking-wider font-extrabold text-amber-800/80 mt-0.5">Reservado</span>}
+                        {hourBlackout && <span className="block text-[0.6875rem] uppercase tracking-wider font-extrabold text-amber-800/80 mt-0.5">Reservado</span>}
                       </button>
                     );
                   })}
@@ -1392,7 +1392,7 @@ function ReservasPage() {
               {/* Header del Pase */}
               <div className="border-b border-[#d4a373]/40 pb-4 flex justify-between items-center">
                 <div>
-                  <span className="text-[0.625rem] uppercase font-bold tracking-widest text-[#d4a373] block">
+                  <span className="text-[0.6875rem] uppercase font-bold tracking-widest text-[#d4a373] block">
                     Pase Digital de Reserva
                   </span>
                   <span className="font-serif font-bold text-lg text-[#A32638]">
@@ -1409,7 +1409,7 @@ function ReservasPage() {
                 <div className="flex items-center gap-3">
                   <Calendar size={18} className="text-[#A32638] shrink-0" />
                   <div>
-                    <span className="text-[0.625rem] text-gray-500 uppercase block font-semibold">Fecha & Hora</span>
+                    <span className="text-[0.6875rem] text-gray-500 uppercase block font-semibold">Fecha & Hora</span>
                     <span className="font-bold text-[#A32638] text-sm">{form.date} — {form.time}h.</span>
                   </div>
                 </div>
@@ -1417,7 +1417,7 @@ function ReservasPage() {
                 <div className="flex items-center gap-3">
                   <UserIcon size={18} className="text-[#A32638] shrink-0" />
                   <div>
-                    <span className="text-[0.625rem] text-gray-500 uppercase block font-semibold">Comensales & Zona</span>
+                    <span className="text-[0.6875rem] text-gray-500 uppercase block font-semibold">Comensales & Zona</span>
                     <span className="font-bold text-[#A32638] text-sm">{form.guests} personas · {form.zona.nombre}</span>
                   </div>
                 </div>
@@ -1425,7 +1425,7 @@ function ReservasPage() {
                 <div className="flex items-center gap-3">
                   <MapPin size={18} className="text-[#A32638] shrink-0" />
                   <div>
-                    <span className="text-[0.625rem] text-gray-500 uppercase block font-semibold">Ubicación</span>
+                    <span className="text-[0.6875rem] text-gray-500 uppercase block font-semibold">Ubicación</span>
                     <span className="font-bold text-gray-800">Jr. José Olaya 106, Huamanga — Ayacucho</span>
                   </div>
                 </div>
@@ -1434,13 +1434,13 @@ function ReservasPage() {
               {/* Titular de la Reserva */}
               <div className="pt-3 border-t border-[#d4a373]/30 flex justify-between items-end">
                 <div>
-                  <span className="text-[0.625rem] text-gray-500 uppercase font-bold block mb-0.5">
+                  <span className="text-[0.6875rem] text-gray-500 uppercase font-bold block mb-0.5">
                     Titular de la Reserva:
                   </span>
                   <span className="font-serif text-base font-bold text-[#3b1f10] block">
                     {form.firstName.toUpperCase()} {form.lastName.toUpperCase()}
                   </span>
-                  <span className="text-[0.625rem] text-gray-500 font-medium block">
+                  <span className="text-[0.6875rem] text-gray-500 font-medium block">
                     {form.phoneCountry} {form.phone}
                   </span>
                 </div>
@@ -1534,7 +1534,7 @@ function ReservasPage() {
               <Calendar size={26} />
             </div>
             <div>
-              <span className="text-[0.625rem] font-bold uppercase tracking-[0.25em] text-[#d4a373] block mb-1">
+              <span className="text-[0.6875rem] font-bold uppercase tracking-[0.25em] text-[#d4a373] block mb-1">
                 Restaurante Las Flores
               </span>
               <h3 className="font-serif italic text-2xl md:text-3xl text-[#3b1f10] font-bold">
@@ -1547,7 +1547,7 @@ function ReservasPage() {
             </p>
             {noticeModal.reason && (
               <div className="bg-white/80 p-3.5 rounded-2xl border border-[#d4a373]/30 text-left space-y-1">
-                <span className="text-[0.625rem] font-extrabold uppercase tracking-wider text-[#d4a373] block">
+                <span className="text-[0.6875rem] font-extrabold uppercase tracking-wider text-[#d4a373] block">
                   Información:
                 </span>
                 <p className="text-xs text-gray-800 font-medium">
@@ -1579,7 +1579,7 @@ function ReservasPage() {
                   <ShieldCheck size={22} className="text-[#d4a373]" />
                 </div>
                 <div>
-                  <span className="text-[0.5625rem] uppercase tracking-[0.25em] text-[#d4a373] font-bold block">
+                  <span className="text-[0.6875rem] uppercase tracking-[0.25em] text-[#d4a373] font-bold block">
                     Restaurante Turístico Las Flores
                   </span>
                   <h3 className="font-serif text-lg md:text-xl font-bold">

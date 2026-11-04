@@ -69,7 +69,7 @@ export function SiteHeader({
           src={solid ? LOGO_COLOR : LOGO_BLANCO}
           alt="Restaurante Las Flores Logo"
           className={`w-auto object-contain transition-all duration-500 ease-out ${
-            solid ? "h-8" : "h-12 md:h-16"
+            solid ? "h-8" : "h-10 min-[400px]:h-12 md:h-16"
           }`}
         />
       </Link>
@@ -90,7 +90,7 @@ export function SiteHeader({
         {showReservar && (
           <Link
             to="/reservas"
-            className={`pointer-events-auto px-4.5 py-1.5 md:px-5 md:py-2 text-[0.6875rem] md:text-xs font-semibold uppercase tracking-[0.2em] transition-colors duration-300 rounded-md border ${
+            className={`pointer-events-auto px-3 min-[400px]:px-4.5 py-1.5 md:px-5 md:py-2 text-[0.6875rem] md:text-xs font-semibold uppercase tracking-[0.12em] min-[400px]:tracking-[0.2em] transition-colors duration-300 rounded-md border ${
               solid
                 ? "border-nogal/50 text-nogal hover:border-nogal hover:bg-nogal/10"
                 : "border-piedra/50 text-piedra hover:border-piedra/80 hover:bg-piedra/15"
