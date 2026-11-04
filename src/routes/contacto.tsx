@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { supabase } from "@/lib/supabase";
 import { sendContactEmail, OFFICIAL_EMAIL } from "@/lib/emailService";
 import { SiteFooter } from "@/components/site-footer";
@@ -10,9 +10,7 @@ import {
   Send, 
   CheckCircle2, 
   MessageSquare, 
-  ChevronDown,
   Compass, 
-  HelpCircle, 
   ExternalLink,
   Sparkles
 } from "lucide-react";
@@ -40,57 +38,15 @@ export const Route = createFileRoute("/contacto")({
       { name: "twitter:image", content: "https://www.restaurantelasflores.com/imagenes-reales/hero-paginas/hero-contacto.webp" },
     ],
     links: [{ rel: "canonical", href: "https://www.restaurantelasflores.com/contacto" }],
-    scripts: [
-      {
-        type: "application/ld+json",
-        children: JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "FAQPage",
-          "mainEntity": FAQS.map((f) => ({
-            "@type": "Question",
-            "name": f.q,
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": f.a,
-            },
-          })),
-        }),
-      },
-    ],
   }),
   component: ContactoPage,
 });
 
 const heroImg = "/imagenes-reales/hero-paginas/hero-contacto.webp";
 
-// FAQS reales y congruentes del Restaurante Las Flores Ayacucho
-const FAQS = [
-  {
-    q: "¿Cuáles son sus horarios de atención?",
-    a: "Atendemos de Lunes a Domingo de 7:00 a.m. a 5:30 p.m. Servimos desayunos tradicionales ayacuchanos desde temprano y almuerzos típicos hasta la tarde.",
-  },
-  {
-    q: "¿Con cuánta anticipación debo realizar una reserva?",
-    a: "Recomendamos reservar con al menos 24 horas de anticipación para fines de semana, días festivos (como Semana Santa o Fiestas Patrias) o para grupos mayores a 6 personas.",
-  },
-  {
-    q: "¿Realizan envíos a domicilio (Delivery)?",
-    a: "Sí, realizamos delivery a todo Huamanga y también puedes hacer tu pedido para llevar directamente en el restaurante o por WhatsApp.",
-  },
-  {
-    q: "¿Cuáles son las especialidades tradicionales de la casa?",
-    a: "Nuestros platos estrella son el Chicharrón con Chapla Ayacuchana, Cuy Chactado, Puca Picante, Mondongo Ayacuchano y nuestro tradicional Ponche Ayacuchano.",
-  },
-  {
-    q: "¿Cuáles son los métodos de pago aceptados?",
-    a: "Aceptamos pagos con Yape, Plin, tarjetas de crédito y débito (Visa, Mastercard, Amex), transferencias bancarias y efectivo.",
-  },
-];
-
 function ContactoPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
-  const [openFaq, setOpenFaq] = useState<number | null>(0);
   const [isOpenNow, setIsOpenNow] = useState(true);
   const [isMounted, setIsMounted] = useState(false);
 
@@ -402,57 +358,9 @@ function ContactoPage() {
 
         </div>
 
-        {/* ── PREGUNTAS FRECUENTES LIMPIAS ── */}
-        <div className="max-w-4xl mx-auto pt-16">
-          <div className="text-center mb-8 space-y-1">
-            <h2 className="font-serif text-2xl md:text-3xl text-[#2e5339] font-bold">
-              Preguntas Frecuentes
-            </h2>
-            <p className="text-xs text-gray-500">
-              Información relevante sobre nuestros horarios, atención y servicios.
-            </p>
-          </div>
-
-          <div className="space-y-2.5">
-            {FAQS.map((faq, index) => {
-              const isOpen = openFaq === index;
-              return (
-                <div
-                  key={index}
-                  className="bg-white rounded-xl border border-gray-200 overflow-hidden shadow-2xs"
-                >
-                  <button
-                    type="button"
-                    onClick={() => setOpenFaq(isOpen ? null : index)}
-                    className="w-full p-4 text-left flex justify-between items-center gap-4 cursor-pointer hover:bg-gray-50 transition-colors"
-                  >
-                    <span className="font-serif font-bold text-sm text-[#2c2a29] flex items-center gap-2.5">
-                      <HelpCircle size={16} className="text-[#d4a373] shrink-0" />
-                      {faq.q}
-                    </span>
-                    <ChevronDown
-                      size={16}
-                      className={`text-[#2e5339] shrink-0 transition-transform duration-200 ${
-                        isOpen ? "rotate-180" : ""
-                      }`}
-                    />
-                  </button>
-
-                  {isOpen && (
-                    <div className="px-4 pb-4 pt-1 text-xs text-gray-600 leading-relaxed border-t border-gray-100 bg-gray-50/50">
-                      {faq.a}
-                    </div>
-                  )}
-                </div>
-              );
-            })}
-          </div>
-        </div>
-
       </section>
 
       <SiteFooter />
     </div>
   );
 }
-
