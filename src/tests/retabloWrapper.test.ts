@@ -22,6 +22,30 @@ describe("RetabloWrapper", () => {
     expect(markup).toContain("#fdf8f0");
   });
 
+  it("keeps the sloped pediment frame the same width along both sides", () => {
+    const markup = renderToStaticMarkup(
+      React.createElement(RetabloWrapper, null, React.createElement("p", null, "Contenido")),
+    );
+    const getTrianglePoints = (fill: string) => {
+      const points = markup.match(
+        new RegExp(`<polygon points="([^"]+)" fill="${fill}"[^>]*>`),
+      )?.[1];
+      return points?.split(" ").map((point) => point.split(",").map(Number));
+    };
+    const outer = getTrianglePoints("#8f1d35");
+    const inner = getTrianglePoints("#ffffff");
+
+    expect(outer).toBeDefined();
+    expect(inner).toBeDefined();
+    if (!outer || !inner) throw new Error("Expected outer and inner pediment triangles");
+
+    const slope = (tip: number[], base: number[]) =>
+      Math.abs((base[1] - tip[1]) / (base[0] - tip[0]));
+
+    expect(slope(inner[0], inner[1])).toBeCloseTo(slope(outer[0], outer[1]));
+    expect(slope(inner[0], inner[2])).toBeCloseTo(slope(outer[0], outer[2]));
+  });
+
   it("stretches only the image width to fill the door panel", () => {
     const markup = renderToStaticMarkup(
       React.createElement(RetabloWrapper, null, React.createElement("p", null, "Contenido")),
@@ -125,15 +149,15 @@ describe("RetabloWrapper", () => {
     expect(interior).toContain("lg:mb-[14px]");
   });
 
-  it("adds 2 cm to the pediment only at desktop viewport widths of 1600 px or more", () => {
+  it("reduces the pediment by 1 cm only at desktop viewport widths of 1600 px or more", () => {
     expect(wrapperSource).toMatch(
-      /@media \(min-width: 1600px\) \{[\s\S]*?\.retablo-copete \{[\s\S]*?height: calc\(6rem \+ 2cm\);/,
+      /@media \(min-width: 1600px\) \{[\s\S]*?\.retablo-copete \{[\s\S]*?height: calc\(6rem \+ 1cm\);/,
     );
     expect(wrapperSource).toMatch(
-      /@media \(min-width: 1600px\) \{[\s\S]*?\.retablo-content-layer \{[\s\S]*?padding-top: calc\(6rem \+ 2cm\);/,
+      /@media \(min-width: 1600px\) \{[\s\S]*?\.retablo-content-layer \{[\s\S]*?padding-top: calc\(6rem \+ 1cm\);/,
     );
     expect(wrapperSource).toMatch(
-      /@media \(min-width: 1600px\) \{[\s\S]*?\.retablo-house-frame \{[\s\S]*?calc\(6rem \+ 2cm\)/,
+      /@media \(min-width: 1600px\) \{[\s\S]*?\.retablo-house-frame \{[\s\S]*?calc\(6rem \+ 1cm\)/,
     );
   });
 

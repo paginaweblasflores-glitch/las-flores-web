@@ -233,20 +233,20 @@ const RetabloWrapper = ({ children }: { children: ReactNode }) => {
         }
         @media (min-width: 1600px) {
           .retablo-copete {
-            height: calc(6rem + 2cm);
+            height: calc(6rem + 1cm);
           }
 
           .retablo-content-layer {
-            padding-top: calc(6rem + 2cm);
+            padding-top: calc(6rem + 1cm);
           }
 
           .retablo-house-frame {
             clip-path: polygon(
               50% 0%,
-              100% calc(6rem + 2cm),
+              100% calc(6rem + 1cm),
               100% 100%,
               0% 100%,
-              0% calc(6rem + 2cm)
+              0% calc(6rem + 1cm)
             );
           }
         }
@@ -302,7 +302,7 @@ const RetabloWrapper = ({ children }: { children: ReactNode }) => {
           <defs>
             {/* ClipPath para la ilustración floral recortada exactamente dentro del marco */}
             <clipPath id="copeteFlowerClip">
-              <polygon points="500,38 946,224 54,224" />
+              <polygon points="500,16 950,232 50,232" />
             </clipPath>
           </defs>
 
@@ -310,7 +310,7 @@ const RetabloWrapper = ({ children }: { children: ReactNode }) => {
           <polygon points="500,0 1000,240 0,240" fill="#8f1d35" />
 
           {/* 2. Fondo blanco interior para eliminar el efecto cuadriculado del copete */}
-          <polygon points="500,36 948,226 52,226" fill="#ffffff" />
+          <polygon points="500,16 950,232 50,232" fill="#ffffff" />
 
           {/* 3. Ilustración floral interior recortada por el clipPath */}
           <image
@@ -326,7 +326,7 @@ const RetabloWrapper = ({ children }: { children: ReactNode }) => {
 
           {/* 4. Bisel interior de separación de madera rojo cochinilla */}
           <polygon
-            points="500,36 948,226 52,226"
+            points="500,16 950,232 50,232"
             fill="none"
             stroke="#8f1d35"
             strokeWidth="3"
@@ -335,7 +335,7 @@ const RetabloWrapper = ({ children }: { children: ReactNode }) => {
 
           {/* 5. Filete en Pan de Oro interior (#d4a373) que enmarca artesanalmente las flores */}
           <polygon
-            points="500,36 948,226 52,226"
+            points="500,16 950,232 50,232"
             fill="none"
             stroke="#d4a373"
             strokeWidth="2.5"
