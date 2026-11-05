@@ -120,6 +120,8 @@ function GenerationsSection() {
 }
 
 function ChefVideosSection() {
+  const [mostrarIndicacion, setMostrarIndicacion] = useState(true);
+
   return (
     <section className="bg-piedra py-16 md:py-20 px-6">
       <div className="container-flores mx-auto">
@@ -127,9 +129,18 @@ function ChefVideosSection() {
           Recomendaciones del chef
         </h2>
 
-        <div className="mt-8 -mx-6 flex snap-x snap-mandatory scroll-px-6 gap-4 overflow-x-auto px-6 pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:mx-0 md:grid md:grid-cols-2 md:gap-5 md:overflow-visible md:px-0 md:pb-0 lg:grid-cols-4 md:gap-y-10">
+        {mostrarIndicacion && (
+          <p className="mt-4 inline-flex items-center gap-1 text-sm text-nogal/65 md:hidden">
+            Desliza para ver más <ChevronRight size={16} aria-hidden="true" />
+          </p>
+        )}
+
+        <div
+          onScroll={() => setMostrarIndicacion(false)}
+          className="mt-6 -mx-6 flex snap-x snap-mandatory scroll-px-6 gap-4 overflow-x-auto px-6 pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:mx-0 md:mt-8 md:grid md:grid-cols-2 md:gap-5 md:overflow-visible md:px-0 md:pb-0 lg:grid-cols-4 md:gap-y-10"
+        >
           {chefRecommendations.map((plate) => (
-            <article key={plate.name} className="w-[74%] shrink-0 snap-start md:w-auto">
+            <article key={plate.name} className="w-full shrink-0 snap-start md:w-auto">
               <div className="relative aspect-[9/16] overflow-hidden bg-black">
                 <FestividadVideo
                   src={plate.video}
@@ -151,6 +162,8 @@ function ChefVideosSection() {
 }
 
 function ClientVideosSection() {
+  const [mostrarIndicacion, setMostrarIndicacion] = useState(true);
+
   return (
     <section className="bg-eucalipto text-piedra py-16 md:py-20 px-6">
       <div className="container-flores mx-auto">
@@ -158,9 +171,18 @@ function ClientVideosSection() {
           Recomendado por quienes nos visitan
         </h2>
 
-        <div className="mt-8 -mx-6 flex snap-x snap-mandatory scroll-px-6 gap-4 overflow-x-auto px-6 pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:mx-0 md:grid md:grid-cols-2 md:gap-5 md:overflow-visible md:px-0 md:pb-0 lg:grid-cols-4">
+        {mostrarIndicacion && (
+          <p className="mt-4 inline-flex items-center gap-1 text-sm text-piedra/75 md:hidden">
+            Desliza para ver más <ChevronRight size={16} aria-hidden="true" />
+          </p>
+        )}
+
+        <div
+          onScroll={() => setMostrarIndicacion(false)}
+          className="mt-6 -mx-6 flex snap-x snap-mandatory scroll-px-6 gap-4 overflow-x-auto px-6 pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:mx-0 md:mt-8 md:grid md:grid-cols-2 md:gap-5 md:overflow-visible md:px-0 md:pb-0 lg:grid-cols-4"
+        >
           {clientTestimonials.map((t) => (
-            <div key={t.video} className="relative aspect-[9/16] w-[74%] shrink-0 snap-start overflow-hidden bg-black md:w-auto">
+            <div key={t.video} className="relative aspect-[9/16] w-full shrink-0 snap-start overflow-hidden bg-black md:w-auto">
               <FestividadVideo
                 src={t.video}
                 poster={t.poster}
