@@ -674,7 +674,7 @@ function Index() {
               {
                 img: "/imagenes-reales/seccion-gastronomia/puca-picante.webp",
                 nombre: "Puca Picante",
-                ocasion: "Festividades y picanterías",
+                ocasion: "Celebración tradicional",
                 desc: "Puca significa rojo en quechua. Es un guiso de intenso color rojo. Lleva papa, maní tostado, betarraga y chicharrón de cerdo.",
               },
               {
@@ -686,7 +686,7 @@ function Index() {
               {
                 img: "/imagenes-reales/seccion-gastronomia/cuy-frito-ayacuchano.webp",
                 nombre: "Cuy Frito Ayacuchano",
-                ocasion: "Celebraciones y picanterías",
+                ocasion: "Celebración tradicional",
                 desc: "Es un plato crujiente hecho con cuy. El consumo de este animal andino se remonta a la época prehispánica.",
               },
               {
