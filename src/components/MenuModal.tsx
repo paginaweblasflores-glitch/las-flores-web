@@ -114,17 +114,17 @@ function DishCard({ dish, categoryId, onSelectBreakfast }: DishCardProps) {
         </div>
       )}
       <div className="px-5 pb-5 pt-3 flex flex-col flex-1">
-        <div className="flex justify-between items-start gap-3 mb-2">
+        <div className="mb-2">
           <h3 className="text-lg font-serif font-bold leading-tight text-nogal">
             {dish.name}
           </h3>
-          <span className="font-serif font-bold text-sm flex-shrink-0 px-3 py-1 rounded-full bg-eucalipto/10 text-eucalipto">
-            {dish.price}
-          </span>
         </div>
         <p className="text-black/60 text-xs flex-1 mb-5 leading-relaxed font-medium">
           {dish.description}
         </p>
+        <span className="self-start font-serif font-bold text-sm px-3 py-1 rounded-full bg-eucalipto/10 text-eucalipto mb-3">
+          {dish.price}
+        </span>
         <button
           onClick={(e) => {
             e.stopPropagation();
@@ -327,7 +327,6 @@ export function MenuModal({ open, onClose }: MenuModalProps) {
     </div>
   );
 }
-
 
 
 

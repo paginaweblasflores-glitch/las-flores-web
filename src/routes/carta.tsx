@@ -206,15 +206,10 @@ function CartaPage() {
                     </div>
                   )}
                   <div className="p-5 flex flex-col flex-1">
-                    <div className="flex justify-between items-start gap-3 mb-3">
+                    <div className="mb-3">
                       <h3 className="text-base font-serif leading-tight text-nogal group-hover:text-cochinilla transition-colors">
                         {dish.name}
                       </h3>
-                      {pastaPriceOptions.length === 0 && (
-                        <span className="text-adobe-new font-bold text-sm flex-shrink-0 tracking-wide bg-adobe-new/10 px-2 py-1 rounded-sm">
-                          {displayPrice}
-                        </span>
-                      )}
                     </div>
                     <p className="text-nogal/70 text-xs flex-1 mb-4 leading-relaxed font-light">
                       {dish.description}
@@ -232,6 +227,11 @@ function CartaPage() {
                           </div>
                         ))}
                       </div>
+                    )}
+                    {pastaPriceOptions.length === 0 && (
+                      <span className="self-start text-adobe-new font-bold text-sm tracking-wide bg-adobe-new/10 px-2 py-1 rounded-sm">
+                        {displayPrice}
+                      </span>
                     )}
                   </div>
                 </div>
