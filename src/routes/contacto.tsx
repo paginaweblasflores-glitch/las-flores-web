@@ -132,7 +132,7 @@ function ContactoPage() {
             {/* Tarjeta de Datos de Contacto */}
             <div className="bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-gray-200 space-y-6">
               <div className="flex items-center justify-between border-b border-gray-100 pb-4">
-                <h3 className="font-serif text-lg font-bold text-[#2e5339]">
+                <h3 className="font-serif text-lg font-bold text-nogal">
                   Atención al Cliente
                 </h3>
                 <span
@@ -226,12 +226,12 @@ function ContactoPage() {
             <div className="bg-white rounded-2xl p-6 md:p-10 shadow-sm border border-gray-200">
               {submitted ? (
                 <div className="text-center py-12 space-y-4">
-                  <div className="w-16 h-16 bg-[#2e5339] text-white rounded-full flex items-center justify-center mx-auto shadow-md">
+                  <div className="w-16 h-16 bg-cochinilla text-white rounded-full flex items-center justify-center mx-auto shadow-md">
                     <CheckCircle2 size={36} strokeWidth={2.5} />
                   </div>
                   <div className="space-y-1">
                     <span className="text-xs uppercase tracking-widest font-bold text-[#d4a373] block">Mensaje Recibido</span>
-                    <h3 className="font-serif text-2xl text-[#2e5339] font-bold">¡Gracias por Escribirnos!</h3>
+                    <h3 className="font-serif text-2xl text-nogal font-bold">¡Gracias por Escribirnos!</h3>
                   </div>
                   <p className="text-gray-600 text-xs max-w-sm mx-auto leading-relaxed">
                     Hemos recibido tu consulta y nos pondremos en contacto contigo a la brevedad.
@@ -239,7 +239,7 @@ function ContactoPage() {
                   <div className="pt-2">
                     <button
                       onClick={() => setSubmitted(false)}
-                      className="px-6 py-3 bg-[#2e5339] hover:bg-[#23412c] text-white rounded-xl font-bold uppercase tracking-wider text-xs transition-all cursor-pointer"
+                      className="px-6 py-3 bg-cochinilla hover:bg-[#7a1c29] text-white rounded-xl font-bold uppercase tracking-wider text-xs transition-all cursor-pointer"
                     >
                       Enviar otro mensaje
                     </button>
@@ -248,7 +248,7 @@ function ContactoPage() {
               ) : (
                 <>
                   <div className="mb-6 space-y-1">
-                    <h2 className="font-serif text-2xl md:text-3xl text-[#2e5339] font-bold">
+                    <h2 className="font-serif text-2xl md:text-3xl text-nogal font-bold">
                       Envíanos un Mensaje
                     </h2>
                     <p className="text-xs text-gray-500">
@@ -333,7 +333,7 @@ function ContactoPage() {
                     <button 
                       type="submit" 
                       disabled={isSubmitting}
-                      className="w-full py-3.5 bg-[#2e5339] hover:bg-[#23412c] text-white rounded-xl font-bold uppercase tracking-widest text-xs transition-all flex items-center justify-center gap-2 disabled:opacity-70 shadow-sm cursor-pointer"
+                      className="w-full py-3.5 bg-cochinilla hover:bg-[#7a1c29] text-white rounded-xl font-bold uppercase tracking-widest text-xs transition-all flex items-center justify-center gap-2 disabled:opacity-70 shadow-sm cursor-pointer"
                     >
                       {isSubmitting ? (
                         <span>Enviando...</span>

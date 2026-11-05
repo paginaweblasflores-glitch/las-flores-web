@@ -323,11 +323,6 @@ function EventosPage() {
           <h1 className="font-serif text-4xl md:text-6xl text-piedra font-normal leading-tight">
             Celebra en Las Flores
           </h1>
-
-          <p className="text-base md:text-lg text-piedra/90 max-w-3xl mx-auto leading-relaxed">
-            Comparte momentos inolvidables con los tuyos, con nuestra cocina y la hospitalidad de una
-            familia ayacuchana.
-          </p>
         </div>
 
       </section>

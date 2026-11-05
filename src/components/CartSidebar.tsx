@@ -95,10 +95,10 @@ interface CardCheckoutResult {
 /* ─── Paleta de Lujo (Eucalipto & Crema) ─── */
 const R = {
   rojo: "#8B261D",
-  verde: "var(--color-eucalipto)",
-  morado: "var(--color-eucalipto)",
-  eucalipto: "var(--color-eucalipto)",
-  amarillo: "var(--color-eucalipto)",
+  verde: "var(--color-cochinilla)",
+  morado: "var(--color-cochinilla)",
+  eucalipto: "var(--color-cochinilla)",
+  amarillo: "var(--color-cochinilla)",
   crema: "#FBF5E6",
   blanco: "#FFFFFF",
 };
@@ -872,7 +872,7 @@ export function CartSidebar() {
                         <img
                           src={activeUser.user_metadata.avatar_url}
                           alt="Foto de perfil"
-                          className="w-7 h-7 rounded-full object-cover border border-eucalipto/30 shadow-sm"
+                          className="w-7 h-7 rounded-full object-cover border border-cochinilla/30 shadow-sm"
                         />
                       ) : (
                         <div className="w-7 h-7 rounded-full bg-black/5 text-nogal flex items-center justify-center text-xs font-serif font-bold border border-black/10">
@@ -892,7 +892,7 @@ export function CartSidebar() {
                           console.error(e);
                         }
                       }}
-                      className="flex items-center justify-center text-nogal/50 hover:text-eucalipto transition-colors"
+                      className="flex items-center justify-center text-nogal/50 hover:text-cochinilla transition-colors"
                       aria-label="Iniciar sesión"
                     >
                       <svg
@@ -924,7 +924,7 @@ export function CartSidebar() {
                   <button
                     type="button"
                     onClick={handleClose}
-                    className="flex items-center justify-center text-nogal/50 hover:text-eucalipto transition-colors"
+                    className="flex items-center justify-center text-nogal/50 hover:text-cochinilla transition-colors"
                     aria-label="Cerrar"
                   >
                     <svg
@@ -959,7 +959,7 @@ export function CartSidebar() {
                       className="flex-1 py-3 flex flex-col items-center gap-1.5 text-xs font-bold tracking-wider uppercase transition-all"
                       style={{
                         borderBottom: isActive
-                          ? `3px solid var(--color-eucalipto)`
+                          ? `3px solid var(--color-cochinilla)`
                           : "3px solid transparent",
                       }}
                     >
@@ -967,23 +967,23 @@ export function CartSidebar() {
                         className="w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold transition-all"
                         style={{
                           background: isActive
-                            ? "rgba(36,63,50,0.1)"
+                            ? "rgba(163,38,56,0.1)"
                             : isPast
-                              ? "var(--color-eucalipto)"
+                              ? "var(--color-cochinilla)"
                               : "rgba(0,0,0,0.05)",
                           color: isActive
-                            ? "var(--color-eucalipto)"
+                            ? "var(--color-cochinilla)"
                             : isPast
                               ? "white"
                               : "rgba(0,0,0,0.3)",
-                          border: isActive ? "1.5px solid var(--color-eucalipto)" : "none",
+                          border: isActive ? "1.5px solid var(--color-cochinilla)" : "none",
                         }}
                       >
                         {isPast ? "✓" : i + 1}
                       </div>
                       <span
                         style={{
-                          color: isActive || isPast ? "var(--color-eucalipto)" : "rgba(0,0,0,0.3)",
+                          color: isActive || isPast ? "var(--color-cochinilla)" : "rgba(0,0,0,0.3)",
                         }}
                       >
                         {s === "cart" ? "Carrito" : s === "delivery" ? "Entrega" : "Pago"}
@@ -1070,7 +1070,7 @@ export function CartSidebar() {
                                       </p>
                                       {formatCustomizations(item.customizations) && (
                                         <p className="mt-1 text-xs text-black/60 font-medium">
-                                          <span className="font-bold text-eucalipto">
+                                          <span className="font-bold text-cochinilla">
                                             Personalización:
                                           </span>{" "}
                                           {formatCustomizations(item.customizations)}
@@ -1086,13 +1086,13 @@ export function CartSidebar() {
                                     </button>
                                   </div>
                                   <div className="flex items-center justify-between mt-2 pt-1 border-t border-black/4">
-                                    <p className="text-xs font-serif font-bold text-eucalipto">
+                                    <p className="text-xs font-serif font-bold text-cochinilla">
                                       S/ {item.price.toFixed(2)}
                                     </p>
                                     <div className="flex items-center gap-2 bg-black/4 rounded-lg p-1 border border-black/5">
                                       <button
                                         onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                                        className="w-8 h-8 rounded-md flex items-center justify-center font-bold text-nogal/70 hover:text-eucalipto hover:bg-white active:scale-95 transition-all"
+                                        className="w-8 h-8 rounded-md flex items-center justify-center font-bold text-nogal/70 hover:text-cochinilla hover:bg-white active:scale-95 transition-all"
                                       >
                                         <Minus size={13} strokeWidth={2.5} />
                                       </button>
@@ -1101,7 +1101,7 @@ export function CartSidebar() {
                                       </span>
                                       <button
                                         onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                                        className="w-8 h-8 rounded-md flex items-center justify-center font-bold text-nogal/70 hover:text-eucalipto hover:bg-white active:scale-95 transition-all"
+                                        className="w-8 h-8 rounded-md flex items-center justify-center font-bold text-nogal/70 hover:text-cochinilla hover:bg-white active:scale-95 transition-all"
                                       >
                                         <Plus size={13} strokeWidth={2.5} />
                                       </button>
@@ -1143,14 +1143,14 @@ export function CartSidebar() {
                                   onClick={() => setOrderType(type)}
                                   className={`rounded-xl p-3 text-left transition-all border-2 flex items-center gap-3 ${
                                     active
-                                      ? "bg-eucalipto/10 border-eucalipto text-eucalipto shadow-xs"
+                                      ? "bg-cochinilla/10 border-cochinilla text-cochinilla shadow-xs"
                                       : "bg-white border-black/10 text-nogal/60 hover:border-black/20 hover:text-nogal"
                                   }`}
                                 >
                                   <div
                                     className={`w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0 transition-colors ${
                                       active
-                                        ? "bg-eucalipto text-piedra"
+                                        ? "bg-cochinilla text-piedra"
                                         : "bg-black/5 text-nogal/60"
                                     }`}
                                   >
@@ -1213,7 +1213,7 @@ export function CartSidebar() {
                                 <button
                                   type="submit"
                                   disabled={validatingCoupon || !couponCodeInput.trim()}
-                                  className="px-3 py-2 bg-[#14231D] hover:bg-[#1E322A] text-[#FAF8F5] font-serif font-bold text-xs rounded-lg shadow-xs transition-colors disabled:opacity-50 flex items-center gap-1"
+                                  className="px-3 py-2 bg-cochinilla hover:bg-[#7a1c29] text-[#FAF8F5] font-serif font-bold text-xs rounded-lg shadow-xs transition-colors disabled:opacity-50 flex items-center gap-1"
                                 >
                                   {validatingCoupon ? "..." : "Aplicar"}
                                 </button>
@@ -1253,7 +1253,7 @@ export function CartSidebar() {
 
                             <div className="flex justify-between font-serif font-bold text-base pt-2 border-t border-black/5">
                               <span className="text-nogal/80">Total</span>
-                              <span className="text-eucalipto font-serif font-bold text-lg">
+                              <span className="text-cochinilla font-serif font-bold text-lg">
                                 S/ {total.toFixed(2)}
                               </span>
                             </div>
@@ -1277,7 +1277,7 @@ export function CartSidebar() {
                       }}
                     >
                       {orderType === "delivery" && (
-                        <div className="rounded-xl p-3.5 flex gap-2.5 text-sm bg-eucalipto/8 border border-eucalipto/20 text-eucalipto">
+                        <div className="rounded-xl p-3.5 flex gap-2.5 text-sm bg-cochinilla/8 border border-cochinilla/20 text-cochinilla">
                           <MapPin size={15} className="flex-shrink-0 mt-0.5" />
                           <span>
                             Solo en Huamanga, Ayacucho — <strong>30 minutos estimados</strong>
@@ -1302,7 +1302,7 @@ export function CartSidebar() {
                       ) : (
                         <div className="space-y-4 animate-in fade-in duration-300">
                           {/* Banner de Usuario Google */}
-                          <div className="flex items-center gap-2.5 p-3 rounded-xl text-xs font-medium border bg-eucalipto/10 border-eucalipto/20 text-eucalipto">
+                          <div className="flex items-center gap-2.5 p-3 rounded-xl text-xs font-medium border bg-cochinilla/10 border-cochinilla/20 text-cochinilla">
                             <CheckCircle size={16} />
                             <span className="flex-1 truncate font-bold">
                               {delivery.name ||
@@ -1334,7 +1334,7 @@ export function CartSidebar() {
                                 <button
                                   type="button"
                                   onClick={handleUseGPS}
-                                  className="text-xs font-bold text-eucalipto flex items-center gap-1 hover:underline mb-2"
+                                  className="text-xs font-bold text-cochinilla flex items-center gap-1 hover:underline mb-2"
                                 >
                                   <MapPin size={13} /> usar mi GPS
                                 </button>
@@ -1353,10 +1353,10 @@ export function CartSidebar() {
                               {clientLocation ? (
                                 <div className="p-3 bg-white rounded-xl border border-black/5 text-xs text-nogal/80 flex items-center justify-between">
                                   <span className="flex items-center gap-1.5">
-                                    <MapPin size={12} className="text-eucalipto flex-shrink-0" />{" "}
+                                    <MapPin size={12} className="text-cochinilla flex-shrink-0" />{" "}
                                     Distancia estimada: <strong>{distanceKm.toFixed(1)} km</strong>
                                   </span>
-                                  <span className="font-bold text-eucalipto">
+                                  <span className="font-bold text-cochinilla">
                                     Costo: S/ {DELIVERY_FEE.toFixed(2)}
                                   </span>
                                 </div>
@@ -1407,7 +1407,7 @@ export function CartSidebar() {
                                 <div className="p-3 bg-white rounded-xl border border-black/10 flex items-center justify-between text-xs">
                                   <div className="min-w-0 pr-2">
                                     <span className="block font-bold text-nogal truncate">
-                                      <MapPin size={11} className="inline mr-1 text-eucalipto" />
+                                      <MapPin size={11} className="inline mr-1 text-cochinilla" />
                                       {delivery.address || "Ubicación fijada"}
                                     </span>
                                     <span className="block text-xs text-black/50">
@@ -1417,7 +1417,7 @@ export function CartSidebar() {
                                   <button
                                     type="button"
                                     onClick={() => setDeliverySubStep("location")}
-                                    className="text-xs font-bold text-eucalipto hover:underline flex-shrink-0"
+                                    className="text-xs font-bold text-cochinilla hover:underline flex-shrink-0"
                                   >
                                     Modificar mapa
                                   </button>
@@ -1490,7 +1490,7 @@ export function CartSidebar() {
                               onClick={() => setPaymentMethod(id)}
                               className={`py-3 px-2 rounded-2xl font-serif font-bold text-xs flex flex-col items-center gap-2 transition-all border-2 cursor-pointer ${
                                 active
-                                  ? "bg-[#2c4a3e] text-white border-[#2c4a3e] shadow-md scale-[1.02]"
+                                  ? "bg-cochinilla text-white border-cochinilla shadow-md scale-[1.02]"
                                   : "bg-white text-nogal/70 border-nogal/15 hover:border-nogal/30 hover:bg-piedra/30"
                               }`}
                             >
@@ -1506,12 +1506,12 @@ export function CartSidebar() {
                       {paymentMethod === "efectivo" && (
                         <div className="bg-white rounded-2xl p-5 border border-nogal/10 shadow-sm space-y-2 text-left animate-in fade-in duration-300">
                           <div className="flex items-center gap-2 font-bold text-xs text-nogal">
-                            <Banknote size={18} className="text-eucalipto" />
+                            <Banknote size={18} className="text-cochinilla" />
                             <span>Pago Contra Entrega en Efectivo</span>
                           </div>
                           <p className="text-xs text-nogal/70 leading-relaxed font-medium">
                             Pagarás un total de{" "}
-                            <strong className="text-eucalipto">S/ {total.toFixed(2)}</strong>{" "}
+                            <strong className="text-cochinilla">S/ {total.toFixed(2)}</strong>{" "}
                             directamente al motorizado al recibir tu pedido.
                           </p>
                         </div>
@@ -1535,7 +1535,7 @@ export function CartSidebar() {
                                 </p>
                                 <p className="text-xs text-black/60 mt-0.5 text-center">
                                   A nombre de{" "}
-                                  <strong className="text-[#2D473C] font-bold">
+                                  <strong className="text-nogal font-bold">
                                     {activeAccount.name}
                                   </strong>
                                 </p>
@@ -1776,8 +1776,8 @@ export function CartSidebar() {
                         }}
                         className="flex-none w-12 h-[3.25rem] rounded-xl flex items-center justify-center border-2 transition-colors hover:bg-black/5"
                         style={{
-                          borderColor: "var(--color-eucalipto)",
-                          color: "var(--color-eucalipto)",
+                          borderColor: "var(--color-cochinilla)",
+                          color: "var(--color-cochinilla)",
                         }}
                       >
                         <ArrowLeft size={20} />
@@ -1823,8 +1823,8 @@ export function CartSidebar() {
                         onClick={() => setStep("delivery")}
                         className="flex-none w-12 h-[3.25rem] rounded-xl flex items-center justify-center border-2 transition-colors hover:bg-black/5"
                         style={{
-                          borderColor: "var(--color-eucalipto)",
-                          color: "var(--color-eucalipto)",
+                          borderColor: "var(--color-cochinilla)",
+                          color: "var(--color-cochinilla)",
                         }}
                       >
                         <ArrowLeft size={20} />

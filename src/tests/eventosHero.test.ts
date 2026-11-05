@@ -10,4 +10,8 @@ describe("encabezado de eventos", () => {
     expect(source).not.toContain("Celebre con nosotros");
     expect(source).toContain("Celebra en Las Flores");
   });
+
+  it("muestra solo el título, sin descripción en el hero", () => {
+    expect(source).not.toContain("Comparte momentos inolvidables");
+  });
 });

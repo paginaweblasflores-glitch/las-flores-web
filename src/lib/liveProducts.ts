@@ -176,6 +176,46 @@ export function resolveProductCustomOptions(productName: string, basePrice: numb
 }
 
 /**
+ * Precio de un plato personalizado. Una opción con precio mayor que cero reemplaza el precio base
+ * (por ejemplo la proteína del espagueti al pesto o el tamaño del cuy). Una opción sin precio o con
+ * precio 0 no cambia nada: el plato conserva su precio (por ejemplo el carbohidrato y la ensalada del
+ * Gran Filet Mignon). Es la misma regla que usa el salón.
+ */
+export function precioConPersonalizacion(
+  precioBase: string | number,
+  secciones: Array<{
+    id?: string;
+    title: string;
+    options: Array<{ id?: string; name: string; price?: string | number | null }>;
+  }>,
+  selecciones: Record<string, string>,
+): number {
+  const aNumero = (valor: string | number) =>
+    Number(String(valor).replace(/[^\d.,-]/g, "").replace(",", "."));
+
+  let precio = aNumero(precioBase);
+
+  for (const seccion of secciones) {
+    const elegida = selecciones[seccion.id || seccion.title];
+    if (!elegida) continue;
+    const opcion = seccion.options.find((o) => o.name === elegida || o.id === elegida);
+    if (!opcion || opcion.price === undefined || opcion.price === null) continue;
+    const precioOpcion = aNumero(opcion.price);
+    if (Number.isFinite(precioOpcion) && precioOpcion > 0) precio = precioOpcion;
+  }
+
+  return precio;
+}
+
+/**
+ * Nombre de la categoría tal como se muestra al cliente: el "&" de la base de datos se escribe "y"
+ * (la tipografía de los títulos dibuja un "&" decorativo que cuesta leer).
+ */
+export function etiquetaCategoria(nombre: string): string {
+  return (nombre || "").replace(/\s*&\s*/g, " y ").trim();
+}
+
+/**
  * Normaliza nombres de categorías para emparejar slug/id
  */
 function normalizeCategorySlug(nameOrSlug: string): string {
@@ -233,7 +273,7 @@ export async function getLiveCategories(): Promise<Category[]> {
         if (c.is_active !== false && !categoriesMap.has(slug)) {
           categoriesMap.set(slug, {
             id: slug,
-            label: c.name,
+            label: etiquetaCategoria(c.name),
             dishes: [],
           });
         }
