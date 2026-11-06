@@ -236,7 +236,7 @@ export const lugares: Lugar[] = [
     slug: "abismo-puncupata",
     numeral: "III",
     nombre: "Abismo de Puncupata",
-    nombreLista: "Abismo de Puncupata, Puerta Celestial",
+    nombreLista: "Abismo de Puncupata",
     categoria: "Paisaje Andino",
     provincia: "Huamanga",
     provinciaSombreada: "/imagenes-reales/mapas/provincia-huamanga.webp",

@@ -113,3 +113,29 @@ describe("Pruebas Unitarias de Cálculo de Delivery", () => {
     );
   });
 });
+
+describe("precio de un plato personalizado", () => {
+  it("el Gran Filet Mignon conserva su precio al elegir carbohidrato y ensalada", async () => {
+    const { precioConPersonalizacion } = await import("../lib/liveProducts");
+    const secciones = resolveProductCustomOptions("Gran Filet Mignon", 80)!;
+
+    expect(precioConPersonalizacion("S/ 80.00", secciones, {})).toBe(80);
+    expect(
+      precioConPersonalizacion("S/ 80.00", secciones, { carbohidrato: "Papas fritas francesas" }),
+    ).toBe(80);
+    expect(
+      precioConPersonalizacion("S/ 80.00", secciones, {
+        carbohidrato: "papas_salteadas_mantequilla",
+        ensalada: "Ensalada orgánica",
+      }),
+    ).toBe(80);
+  });
+
+  it("una opción con precio reemplaza el precio base", async () => {
+    const { precioConPersonalizacion } = await import("../lib/liveProducts");
+    const secciones = resolveProductCustomOptions("Espagueti al pesto", 0)!;
+
+    expect(precioConPersonalizacion("S/ 0.00", secciones, { proteina: "Pollo al grill" })).toBe(40);
+    expect(precioConPersonalizacion("S/ 0.00", secciones, { proteina: "filet_mignon" })).toBe(46);
+  });
+});

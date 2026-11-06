@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
 import { X, GlassWater, Check, ShoppingBag, Sparkles, Utensils } from "lucide-react";
 import { useCart } from "../context/CartContext";
+import { precioConPersonalizacion } from "../lib/liveProducts";
 import type { Dish } from "./MenuModal";
 
 interface BreakfastCustomizationModalProps {
@@ -90,25 +91,8 @@ export function BreakfastCustomizationModal({ dish, open, onClose }: BreakfastCu
     }));
   };
 
-  const resolveSelectedPrice = () => {
-    let priceString = dish.price;
-
-    sectionsList.forEach((section) => {
-      const selectedOptionName = selections[section.id || section.title];
-      if (!selectedOptionName) return;
-
-      const matched = section.options.find(
-        (option: any) => option.name === selectedOptionName || option.id === selectedOptionName,
-      );
-
-      const anyMatched = matched as any;
-      if (anyMatched?.price !== undefined && anyMatched?.price !== null) {
-        priceString = typeof anyMatched.price === "number" ? `S/ ${anyMatched.price.toFixed(2)}` : anyMatched.price;
-      }
-    });
-
-    return parseFloat(priceString.toString().replace("S/ ", ""));
-  };
+  const resolveSelectedPrice = () =>
+    precioConPersonalizacion(dish.price, sectionsList as any, selections);
 
   const handleConfirm = () => {
     if (!isComplete) return;
@@ -210,7 +194,7 @@ export function BreakfastCustomizationModal({ dish, open, onClose }: BreakfastCu
               <div key={secKey} className="bg-white rounded-2xl p-4 sm:p-5 shadow-xs border border-black/5">
                 <div className="flex items-center justify-between mb-4 border-b border-black/5 pb-3">
                   <div className="flex items-center gap-2.5">
-                    <div className="w-8 h-8 rounded-xl bg-eucalipto/10 text-eucalipto flex items-center justify-center font-serif font-bold text-sm">
+                    <div className="w-8 h-8 rounded-xl bg-cochinilla/10 text-cochinilla flex items-center justify-center font-serif font-bold text-sm">
                       {idx + 1}
                     </div>
                     <div>
@@ -219,7 +203,7 @@ export function BreakfastCustomizationModal({ dish, open, onClose }: BreakfastCu
                     </div>
                   </div>
                   {isSecComplete ? (
-                    <span className="text-[0.6875rem] font-bold text-eucalipto bg-eucalipto/10 px-2.5 py-1 rounded-full flex items-center gap-1">
+                    <span className="text-[0.6875rem] font-bold text-cochinilla bg-cochinilla/10 px-2.5 py-1 rounded-full flex items-center gap-1">
                       <Check size={13} /> Listo
                     </span>
                   ) : (
@@ -238,13 +222,13 @@ export function BreakfastCustomizationModal({ dish, open, onClose }: BreakfastCu
                         onClick={() => handleSelectOption(secKey, item.name)}
                         className={`flex items-center gap-3 p-3.5 rounded-2xl border-2 cursor-pointer transition-all duration-200 ${
                           isSelected
-                            ? "bg-eucalipto/10 border-eucalipto text-nogal shadow-xs"
+                            ? "bg-cochinilla/10 border-cochinilla text-nogal shadow-xs"
                             : "bg-black/2 border-transparent hover:border-black/10 hover:bg-black/4"
                         }`}
                       >
                         <div
                           className={`w-5 h-5 rounded-full border-2 flex items-center justify-center flex-shrink-0 transition-colors ${
-                            isSelected ? "border-eucalipto bg-eucalipto text-white" : "border-black/30 bg-white"
+                            isSelected ? "border-cochinilla bg-cochinilla text-white" : "border-black/30 bg-white"
                           }`}
                         >
                           {isSelected && <Check size={12} strokeWidth={3} />}
@@ -282,11 +266,11 @@ export function BreakfastCustomizationModal({ dish, open, onClose }: BreakfastCu
                   <div
                     key={secKey}
                     className={`flex items-center justify-between px-3.5 py-2.5 rounded-xl border text-xs ${
-                      val ? "bg-white border-eucalipto/30 text-nogal" : "bg-white/40 border-black/5 text-nogal/40"
+                      val ? "bg-white border-cochinilla/30 text-nogal" : "bg-white/40 border-black/5 text-nogal/40"
                     }`}
                   >
                     <span className="font-bold truncate max-w-[40%]">{cleanTitle}:</span>
-                    <span className={`truncate max-w-[55%] font-medium ${val ? "text-eucalipto font-bold" : "italic text-black/30"}`}>
+                    <span className={`truncate max-w-[55%] font-medium ${val ? "text-cochinilla font-bold" : "italic text-black/30"}`}>
                       {val || "— Pendiente —"}
                     </span>
                   </div>
@@ -302,7 +286,7 @@ export function BreakfastCustomizationModal({ dish, open, onClose }: BreakfastCu
             <span className="text-[0.6875rem] font-serif tracking-[0.15em] font-bold text-black/45 uppercase block">
               Precio Total
             </span>
-            <span className="font-serif font-bold text-2xl md:text-3xl text-eucalipto">S/ {resolveSelectedPrice().toFixed(2)}</span>
+            <span className="font-serif font-bold text-2xl md:text-3xl text-cochinilla">S/ {resolveSelectedPrice().toFixed(2)}</span>
           </div>
 
           <button
@@ -310,7 +294,7 @@ export function BreakfastCustomizationModal({ dish, open, onClose }: BreakfastCu
             disabled={!isComplete}
             className={`px-6 sm:px-8 py-3.5 rounded-2xl font-bold text-sm transition-all flex items-center justify-center gap-2.5 ${
               isComplete
-                ? "bg-eucalipto text-white hover:bg-eucalipto/90 shadow-md active:scale-[0.98]"
+                ? "bg-cochinilla text-white hover:bg-cochinilla/90 shadow-md active:scale-[0.98]"
                 : "bg-[#E5E5E5] text-[#8E8E8E] cursor-not-allowed shadow-none"
             }`}
           >

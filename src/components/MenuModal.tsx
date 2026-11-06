@@ -9,7 +9,7 @@ import { MobileCategoryFilter } from "./MobileCategoryFilter";
 const R = {
   rojo: "#8B261D",
   verde: "var(--color-eucalipto)",
-  morado: "var(--color-eucalipto)",
+  morado: "var(--color-nogal)",
   eucalipto: "var(--color-eucalipto)",
   amarillo: "var(--color-eucalipto)",
   crema: "#FBF5E6",
@@ -122,7 +122,7 @@ function DishCard({ dish, categoryId, onSelectBreakfast }: DishCardProps) {
         <p className="text-black/60 text-xs flex-1 mb-5 leading-relaxed font-medium">
           {dish.description}
         </p>
-        <span className="self-start font-serif font-bold text-sm px-3 py-1 rounded-full bg-eucalipto/10 text-eucalipto mb-3">
+        <span className="self-start font-serif font-bold text-sm px-3 py-1 rounded-full bg-cochinilla/10 text-cochinilla mb-3">
           {dish.price}
         </span>
         <button
@@ -130,7 +130,7 @@ function DishCard({ dish, categoryId, onSelectBreakfast }: DishCardProps) {
             e.stopPropagation();
             handleAdd();
           }}
-          className="w-full py-2.5 rounded-xl flex items-center justify-center gap-2 transition-all border border-eucalipto/30 text-eucalipto font-bold text-sm bg-piedra hover:bg-eucalipto hover:text-white shadow-xs hover:shadow-sm active:scale-[0.99]"
+          className="w-full py-2.5 rounded-xl flex items-center justify-center gap-2 transition-all border border-cochinilla/30 text-cochinilla font-bold text-sm bg-piedra hover:bg-cochinilla hover:text-white shadow-xs hover:shadow-sm active:scale-[0.99]"
         >
           <Plus size={15} strokeWidth={2.5} />
           {isCustomizable ? "Personalizar y Agregar" : "Agregar"}
@@ -199,16 +199,16 @@ export function MenuModal({ open, onClose }: MenuModalProps) {
       >
         <div className="flex items-center gap-4 relative">
           <div
-            className="hidden md:flex w-12 h-12 rounded-full border border-eucalipto/20 overflow-hidden flex-shrink-0 bg-white p-1 shadow-sm"
+            className="hidden md:flex w-12 h-12 rounded-full border border-cochinilla/20 overflow-hidden flex-shrink-0 bg-white p-1 shadow-sm"
           >
             <img src="/favicon.png" alt="Las Flores" className="w-full h-full object-contain" />
           </div>
           <div className="flex flex-col">
-            <h2 className="font-serif font-bold tracking-wide text-2xl md:text-3xl text-eucalipto">
+            <h2 className="font-serif font-bold tracking-wide text-2xl md:text-3xl text-nogal">
               Nuestra Carta
             </h2>
             <p
-              className="text-[0.6875rem] md:text-[0.6875rem] uppercase tracking-[0.25em] font-bold text-eucalipto/60"
+              className="text-[0.6875rem] md:text-[0.6875rem] uppercase tracking-[0.25em] font-bold text-nogal/60"
             >
               Para Delivery & Recojo
             </p>
@@ -219,15 +219,15 @@ export function MenuModal({ open, onClose }: MenuModalProps) {
             onClick={() => {
               setSidebarOpen(true);
             }}
-            className={`relative transition-all duration-300 flex items-center gap-2 text-sm font-bold px-5 py-2.5 rounded-xl shadow-sm hover:shadow-md hover:-translate-y-0.5 bg-eucalipto text-piedra ${
-              isBouncing ? "scale-[1.03] ring-4 ring-cafe/30 shadow-lg bg-eucalipto" : ""
+            className={`relative transition-all duration-300 flex items-center gap-2 text-sm font-bold px-5 py-2.5 rounded-xl shadow-sm hover:shadow-md hover:-translate-y-0.5 bg-cochinilla hover:bg-[#7a1c29] text-piedra ${
+              isBouncing ? "scale-[1.03] ring-4 ring-cochinilla/30 shadow-lg" : ""
             }`}
           >
             <ShoppingCart size={18} className={`transition-transform duration-300 ${isBouncing ? "-rotate-12 scale-110" : ""}`} />
             <span className="hidden md:inline">Ver Pedido</span>
             {totalItems > 0 && (
               <span
-                className={`absolute -top-2 -right-2 text-white text-[0.6875rem] w-5 h-5 rounded-full flex items-center justify-center font-bold shadow-sm bg-cochinilla transition-all duration-300 ${
+                className={`absolute -top-2 -right-2 text-[0.6875rem] w-5 h-5 rounded-full flex items-center justify-center font-bold shadow-sm bg-white text-cochinilla border border-cochinilla/40 transition-all duration-300 ${
                   isBouncing ? "scale-[1.35] rotate-12" : "scale-100"
                 }`}
               >
@@ -253,7 +253,7 @@ export function MenuModal({ open, onClose }: MenuModalProps) {
               categories={currentCategories.map((c) => ({ key: c.id, label: c.label }))}
               activeKey={activeId}
               onSelect={setActiveId}
-              accentColor={R.eucalipto}
+              accentColor="#A32638"
               accentTextColor={R.crema}
             />
           </div>
@@ -276,8 +276,8 @@ export function MenuModal({ open, onClose }: MenuModalProps) {
                   onClick={() => setActiveId(cat.id)}
                   className={`text-left whitespace-normal px-6 py-3.5 text-xs font-bold uppercase tracking-[0.15em] transition-all rounded-xl ${
                     isActive
-                      ? "bg-eucalipto text-piedra shadow-xs font-bold"
-                      : "text-nogal/60 hover:text-eucalipto hover:bg-black/5 font-medium"
+                      ? "bg-cochinilla text-piedra shadow-xs font-bold"
+                      : "text-nogal/60 hover:text-cochinilla hover:bg-black/5 font-medium"
                   }`}
                 >
                   {cat.label}
@@ -291,7 +291,7 @@ export function MenuModal({ open, onClose }: MenuModalProps) {
         <div className="flex-1 overflow-y-auto p-6 md:p-10" style={{ background: `${R.crema}80` }}>
           <div className="container-flores mx-auto">
             <div className="flex justify-between items-center mb-8 border-b border-black/5 pb-4">
-              <h2 className="font-serif text-3xl md:text-4xl font-bold" style={{ color: R.morado }}>
+              <h2 className="font-serif text-3xl md:text-4xl font-bold text-nogal">
                 {active?.label || "Cargando..."}
               </h2>
               <span
