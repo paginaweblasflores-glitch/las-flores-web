@@ -1,6 +1,7 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState, useRef } from "react";
 import { supabase, signOut } from "../lib/supabase";
+import { registerPageRestoreAuthCheck } from "../lib/staffSessionRestore";
 import { sendReviewRequestEmail } from "../lib/emailService";
 import { playOrderChime } from "../utils/audioAlert";
 import { shouldNotifyCashierOrder } from "../lib/cashierNotifications";
@@ -47,7 +48,6 @@ export const Route = createFileRoute("/caja")({
 });
 
 function CashierDashboardRoute() {
-  const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const [isAuthorized, setIsAuthorized] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
@@ -125,7 +125,7 @@ function CashierDashboardRoute() {
       } = await supabase.auth.getUser();
 
       if (userError || !user) {
-        navigate({ to: "/staff-login" });
+        window.location.replace("/staff-login");
         return;
       }
 
@@ -141,7 +141,7 @@ function CashierDashboardRoute() {
         (userRole !== "admin" && userRole !== "cashier" && userRole !== "staff")
       ) {
         console.warn("Acceso denegado a caja. Rol insuficiente:", userRole);
-        navigate({ to: "/staff-login" });
+        window.location.replace("/staff-login");
         return;
       }
 
@@ -151,7 +151,7 @@ function CashierDashboardRoute() {
       await fetchData();
     } catch (err) {
       console.error("Error al comprobar permisos de caja:", err);
-      navigate({ to: "/staff-login" });
+      window.location.replace("/staff-login");
     } finally {
       setLoading(false);
     }
@@ -159,7 +159,7 @@ function CashierDashboardRoute() {
 
   const handleSignOut = async () => {
     await signOut();
-    window.location.href = "/staff-login";
+    window.location.replace("/staff-login");
   };
 
   const fetchData = async (isSilent = false) => {
@@ -229,7 +229,13 @@ function CashierDashboardRoute() {
 
   // checkAuth se ejecuta solo una vez al montar — no debe depender de soundEnabled
   useEffect(() => {
+    const unregisterPageRestore = registerPageRestoreAuthCheck(() => {
+      setIsAuthorized(false);
+      setLoading(true);
+      void checkAuth();
+    });
     checkAuth();
+    return unregisterPageRestore;
   }, []);
 
   const soundEnabledRef = useRef(soundEnabled);

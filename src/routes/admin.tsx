@@ -1,6 +1,7 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { supabase, signOut } from "../lib/supabase";
+import { registerPageRestoreAuthCheck } from "../lib/staffSessionRestore";
 import {
   Search,
   RefreshCw,
@@ -45,7 +46,6 @@ export const Route = createFileRoute("/admin")({
 });
 
 function AdminRoute() {
-  const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const [isAuthorized, setIsAuthorized] = useState(false);
   const [userEmail, setUserEmail] = useState<string>("");
@@ -108,6 +108,11 @@ function AdminRoute() {
   const [isCategoryModalOpen, setIsCategoryModalOpen] = useState(false);
 
   useEffect(() => {
+    const unregisterPageRestore = registerPageRestoreAuthCheck(() => {
+      setIsAuthorized(false);
+      setLoading(true);
+      void checkAuth();
+    });
     checkAuth();
 
     const channel = supabase
@@ -120,6 +125,7 @@ function AdminRoute() {
       .subscribe();
 
     return () => {
+      unregisterPageRestore();
       supabase.removeChannel(channel);
     };
   }, []);
@@ -129,7 +135,7 @@ function AdminRoute() {
       const { data: { user }, error: userError } = await supabase.auth.getUser();
 
       if (userError || !user) {
-        navigate({ to: "/staff-login" });
+        window.location.replace("/staff-login");
         return;
       }
 
@@ -142,7 +148,7 @@ function AdminRoute() {
         .single();
 
       if (profileError || profile?.role !== "admin") {
-        navigate({ to: "/staff-login" });
+        window.location.replace("/staff-login");
         return;
       }
 
@@ -150,7 +156,7 @@ function AdminRoute() {
       await fetchData();
     } catch (error) {
       console.error("Error checking auth:", error);
-      navigate({ to: "/staff-login" });
+      window.location.replace("/staff-login");
     } finally {
       setLoading(false);
     }
@@ -255,7 +261,7 @@ function AdminRoute() {
 
   const handleSignOut = async () => {
     await signOut();
-    window.location.href = "/staff-login";
+    window.location.replace("/staff-login");
   };
 
   const handleUpdateOrderStatus = async (orderId: string, newStatus: string) => {
