@@ -587,7 +587,7 @@ function Index() {
       </section>
 
       {/* FESTIVIDADES DE HUAMANGA */}
-      <section id="festividades-de-huamanga" className="py-16 md:py-32 px-6 bg-eucalipto text-piedra">
+      <section id="festividades-de-huamanga" className="mt-4 md:mt-0 py-16 md:py-32 px-6 bg-eucalipto text-piedra">
         <div className="container-flores mx-auto">
           <div className="mb-16 flex flex-col md:flex-row md:items-end md:justify-between gap-6">
             <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl leading-[1.05] text-balance max-w-[28ch]">

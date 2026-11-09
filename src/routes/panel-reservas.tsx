@@ -1,6 +1,7 @@
-import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState, useRef, useMemo } from "react";
 import { supabase, signOut } from "../lib/supabase";
+import { registerPageRestoreAuthCheck } from "../lib/staffSessionRestore";
 import { playOrderChime } from "../utils/audioAlert";
 import { CashierReservationCard } from "../components/CashierReservationCard";
 import { ReservasClientsSection } from "../components/ReservasClientsSection";
@@ -46,7 +47,6 @@ export const Route = createFileRoute("/panel-reservas")({
 });
 
 function PanelReservasRoute() {
-  const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const [isAuthorized, setIsAuthorized] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
@@ -133,7 +133,7 @@ function PanelReservasRoute() {
       const { data: { user }, error: userError } = await supabase.auth.getUser();
 
       if (userError || !user) {
-        navigate({ to: "/staff-login" });
+        window.location.replace("/staff-login");
         return;
       }
 
@@ -146,7 +146,7 @@ function PanelReservasRoute() {
       const userRole = profile?.role?.toLowerCase();
       if (profileError || (userRole !== "admin" && userRole !== "ventas")) {
         console.warn("Acceso denegado al panel de reservas. Rol insuficiente:", userRole);
-        navigate({ to: "/staff-login" });
+        window.location.replace("/staff-login");
         return;
       }
 
@@ -155,7 +155,7 @@ function PanelReservasRoute() {
       await fetchData();
     } catch (err) {
       console.error("Error al comprobar permisos del panel de reservas:", err);
-      navigate({ to: "/staff-login" });
+      window.location.replace("/staff-login");
     } finally {
       setLoading(false);
     }
@@ -163,7 +163,7 @@ function PanelReservasRoute() {
 
   const handleSignOut = async () => {
     await signOut();
-    window.location.href = "/staff-login";
+    window.location.replace("/staff-login");
   };
 
   const fetchData = async (isSilent = false) => {
@@ -241,8 +241,14 @@ function PanelReservasRoute() {
   };
 
   useEffect(() => {
+    const unregisterPageRestore = registerPageRestoreAuthCheck(() => {
+      setIsAuthorized(false);
+      setLoading(true);
+      void checkAuth();
+    });
     checkAuth();
     fetchMonthCount();
+    return unregisterPageRestore;
   }, []);
 
   useEffect(() => {
