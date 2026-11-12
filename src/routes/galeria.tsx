@@ -116,7 +116,7 @@ const GALLERY_CATEGORIES: Category[] = [
   },
   {
     id: "postres-bebidas",
-    label: "Gastronomías",
+    label: "Gastronomía",
     images: [
       foto("postres-bebidas", "chicha-uno", "Chicha de molle"),
       foto("postres-bebidas", "chicha-dos", "Chicha de jora"),
@@ -187,7 +187,7 @@ function GaleriaPage() {
         </div>
         <div className="max-w-4xl mx-auto text-center relative z-10 space-y-6">
           <h1 className="font-serif text-4xl md:text-6xl text-piedra font-normal leading-tight">
-            Nuestras costumbres para el mundo
+            Ayacucho, ciudad de las costumbres
           </h1>
           <p className="text-base md:text-lg text-piedra/90 max-w-3xl mx-auto leading-relaxed">
             Siéntate en primera fila y mira cómo se vive Ayacucho.
@@ -239,9 +239,11 @@ function GaleriaPage() {
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 loading="lazy"
               />
-              <span className="absolute right-6 top-6 max-w-[calc(100%-3rem)] rounded-xs bg-black/65 backdrop-blur-xs px-3 py-1.5 text-right text-[0.6875rem] font-semibold uppercase leading-snug tracking-widest text-white pointer-events-none">
-                {img.titulo}
-              </span>
+              {activeCategory !== "postres-bebidas" && activeCategory !== "experiencia" && (
+                <span className="absolute right-6 top-6 max-w-[calc(100%-3rem)] rounded-xs bg-black/65 backdrop-blur-xs px-3 py-1.5 text-right text-[0.6875rem] font-semibold uppercase leading-snug tracking-widest text-white pointer-events-none">
+                  {img.titulo}
+                </span>
+              )}
             </div>
           ))}
         </div>
