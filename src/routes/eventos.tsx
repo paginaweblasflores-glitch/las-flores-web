@@ -34,6 +34,7 @@ import {
 import { SiteHeader } from '../components/SiteHeader';
 import { useState, useTransition, useEffect } from 'react';
 import { FestividadVideo } from "@/components/FestividadVideo";
+import { MobileCategoryFilter } from "@/components/MobileCategoryFilter";
 
 import { MenuModal } from "@/components/MenuModal";
 
@@ -111,7 +112,7 @@ const EVENT_SECTIONS: EventSectionData[] = [
     description: "El entorno perfecto para los negocios. Contamos con salones acondicionados para almuerzos ejecutivos, conferencias y cenas de gala empresariales, garantizando privacidad y distinción.",
     clips: [
       clip("corporativas-7-mesa", "Mesa larga de invitados con jugos y copas"),
-      clip("corporativas-10-comidas-mesa", "Platos con frituras, salsas verdes y papas servidos sobre una mesa"),
+      clip("corporativas-11-plato", "Plato servido con ají amarillo, lechuga y zanahoria"),
       clip("corporativas-8-danzante-tijeras", "Danzante de tijeras en el salón del restaurante"),
       clip("corporativas-6-baile", "Dos invitados bailando en el salón"),
     ]
@@ -130,39 +131,19 @@ const EVENT_SECTIONS: EventSectionData[] = [
   }
 ];
 
-// Una sección por tipo de evento: título, clips en cuadrícula (4 por fila en escritorio, 2 en tablet,
+// Contenido de la categoría elegida: título, clips en cuadrícula (4 por fila en escritorio, 2 en tablet,
 // deslizables en celular) y, al centro debajo de ellos, la descripción con el botón.
-function EventoSeccion({
-  data,
-  oscuro,
-  onCotizar,
-}: {
-  data: EventSectionData;
-  oscuro: boolean;
-  onCotizar: () => void;
-}) {
+function EventoSeccion({ data, onCotizar }: { data: EventSectionData; onCotizar: () => void }) {
   // Indicación "Desliza para ver más" (solo celular): se oculta apenas la persona desliza.
   const [mostrarIndicacion, setMostrarIndicacion] = useState(true);
-  const tono = oscuro
-    ? {
-        fondo: "bg-eucalipto text-piedra",
-        descripcion: "text-piedra/75",
-        indicacion: "text-piedra/75",
-      }
-    : {
-        fondo: "bg-piedra text-nogal",
-        descripcion: "text-nogal/70",
-        indicacion: "text-nogal/65",
-      };
-
   return (
-    <section id={data.id} className={`${tono.fondo} scroll-mt-16 py-16 md:py-24 px-6`}>
+    <section id={data.id} className="bg-piedra text-nogal py-16 md:py-24 lg:pt-10 px-6 animate-in fade-in duration-500">
       <div className="container-flores mx-auto">
         {/* Primero el título y los clips: es lo que la gente mira antes de leer */}
         <h2 className="font-serif text-4xl md:text-5xl leading-[1.05] text-balance">{data.title}</h2>
 
         {mostrarIndicacion && (
-          <p className={`mt-6 inline-flex items-center gap-1 text-sm md:hidden ${tono.indicacion}`}>
+          <p className="mt-6 inline-flex items-center gap-1 text-sm text-nogal/65 md:hidden">
             Desliza para ver más <ChevronRight size={16} aria-hidden="true" />
           </p>
         )}
@@ -185,7 +166,7 @@ function EventoSeccion({
 
         {/* Después, al centro: descripción y botón. En escritorio el texto ocupa el ancho de los dos clips del medio (del inicio del 2.º al final del 3.º) */}
         <div className="mx-auto mt-12 md:mt-14 flex max-w-[60ch] flex-col items-center text-center lg:w-[calc(50%-0.625rem)] lg:max-w-none">
-          <p className={`text-base md:text-lg leading-[1.7] ${tono.descripcion}`}>{data.description}</p>
+          <p className="text-base md:text-lg leading-[1.7] text-nogal/70">{data.description}</p>
           <button
             onClick={onCotizar}
             className="mt-8 px-10 py-5 text-[0.6875rem] uppercase tracking-[0.25em] font-bold rounded-sm btn-yellow-hover"
@@ -210,6 +191,10 @@ function EventosPage() {
   const [isContactOpen, setIsContactOpen] = useState(false);
   const [formStatus, setFormStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
   const [isPending, startTransition] = useTransition();
+
+  // Los tres botones de categoría muestran su sección; solo se ve la elegida.
+  const [activeTab, setActiveTab] = useState<EventSectionId>(EVENT_SECTIONS[0].id);
+  const seccionActual = EVENT_SECTIONS.find((sec) => sec.id === activeTab) ?? EVENT_SECTIONS[0];
 
   // Cerrar Drawer al presionar Escape
   useEffect(() => {
@@ -298,15 +283,38 @@ function EventosPage() {
 
       </section>
 
-      {/* Tres secciones, una por tipo de evento; los fondos se alternan para separarlas */}
-      {EVENT_SECTIONS.map((section, index) => (
-        <EventoSeccion
-          key={section.id}
-          data={section}
-          oscuro={index % 2 === 1}
-          onCotizar={() => setIsContactOpen(true)}
-        />
-      ))}
+      {/* ── BOTONES DE CATEGORÍA MÓVIL: sticky pegado al header (solo < lg) ── */}
+      <div className="block lg:hidden sticky top-12 z-30 w-full bg-[#F9F8F3] border-b border-gray-200 shadow-sm">
+        <div className="container-flores mx-auto pl-6">
+          <MobileCategoryFilter
+            categories={EVENT_SECTIONS.map((sec) => ({ key: sec.id, label: sec.title }))}
+            activeKey={activeTab}
+            onSelect={(key) => setActiveTab(key as EventSectionId)}
+          />
+        </div>
+      </div>
+
+      {/* ── BOTONES DE CATEGORÍA DESKTOP: centrados (solo lg+) ── */}
+      <nav aria-label="Tipos de evento" className="hidden lg:block bg-piedra">
+        <div className="container-flores mx-auto flex justify-center gap-3 px-6 pt-14">
+          {EVENT_SECTIONS.map((sec) => (
+            <button
+              key={sec.id}
+              onClick={() => setActiveTab(sec.id)}
+              aria-pressed={activeTab === sec.id}
+              className={`whitespace-nowrap px-6 py-2.5 rounded-full text-sm font-bold transition-all ${activeTab === sec.id
+                  ? "bg-[#2D473C] text-[#D4AF37] shadow-md"
+                  : "bg-white border border-gray-200 text-gray-700 hover:bg-gray-100"
+                }`}
+            >
+              {sec.title}
+            </button>
+          ))}
+        </div>
+      </nav>
+
+      {/* Solo se muestra la categoría elegida; key para que al cambiar entre con un fundido suave */}
+      <EventoSeccion key={seccionActual.id} data={seccionActual} onCotizar={() => setIsContactOpen(true)} />
 
       <SiteFooter />
       {isMenuOpen && <MenuModal open={isMenuOpen} onClose={() => setIsMenuOpen(false)} />}
