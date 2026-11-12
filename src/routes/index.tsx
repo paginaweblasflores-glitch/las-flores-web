@@ -1,5 +1,14 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Star, MapPin, ChefHat, Info, ArrowRight, ArrowRightCircle } from "lucide-react";
+import {
+  Star,
+  MapPin,
+  ChefHat,
+  Info,
+  ArrowRight,
+  ArrowRightCircle,
+  ChevronLeft,
+  ChevronRight,
+} from "lucide-react";
 import { SiteHeader } from "../components/SiteHeader";
 import { useState, useEffect, useRef } from "react";
 const ayacuchoHero = "/imagenes-reales/premios/ayacucho.webp";
@@ -241,146 +250,175 @@ function FestividadesSlider() {
   );
 }
 
-// ─── SECCIÓN LUGARES — Acordeón Expandible ───────────────────────────────────
+// ─── SECCIÓN LUGARES — Carrusel Infinito ─────────────────────────────────────
 
-function LugaresAccordion() {
-  const [hovered, setHovered] = useState<number | null>(null);
-  const [activeId, setActiveId] = useState<number>(lugares[0].id);
-  const [isMobile, setIsMobile] = useState(false);
-  const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
+function LugaresCarousel() {
+  const [reducedMotion, setReducedMotion] = useState(false);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [cycleWidth, setCycleWidth] = useState(0);
+  const viewportRef = useRef<HTMLDivElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
+  const isHovered = useRef(false);
+  const slides = [...lugares, ...lugares];
 
   useEffect(() => {
-    const mediaQuery = window.matchMedia("(max-width: 767px)");
-    const updateIsMobile = () => setIsMobile(mediaQuery.matches);
-    updateIsMobile();
-    mediaQuery.addEventListener("change", updateIsMobile);
-    return () => mediaQuery.removeEventListener("change", updateIsMobile);
+    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const updateReducedMotion = () => setReducedMotion(mediaQuery.matches);
+    updateReducedMotion();
+    mediaQuery.addEventListener("change", updateReducedMotion);
+    return () => mediaQuery.removeEventListener("change", updateReducedMotion);
   }, []);
 
   useEffect(() => {
-    if (!isMobile) return;
+    const track = trackRef.current;
+    if (!track) return;
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visible = entries.filter((entry) => entry.isIntersecting);
-        if (visible.length === 0) return;
-
-        const bestEntry = visible.reduce((best, current) =>
-          current.intersectionRatio > best.intersectionRatio ? current : best,
-        );
-
-        const id = Number(bestEntry.target.getAttribute("data-lugar-id"));
-        if (!Number.isNaN(id)) {
-          setActiveId(id);
-        }
-      },
-      {
-        root: null,
-        rootMargin: "-45% 0px -45% 0px",
-        threshold: 0.5,
-      },
-    );
-
-    itemRefs.current.forEach((node) => node && observer.observe(node));
+    const updateCycleWidth = () => setCycleWidth(track.scrollWidth / 2);
+    const observer = new ResizeObserver(updateCycleWidth);
+    observer.observe(track);
+    updateCycleWidth();
     return () => observer.disconnect();
-  }, [isMobile]);
+  }, []);
+
+  useEffect(() => {
+    const viewport = viewportRef.current;
+    if (!viewport || !cycleWidth || reducedMotion) return;
+
+    const speed = 60;
+    let frame = 0;
+    let previousTime: number | null = null;
+    let previousIndex = -1;
+
+    const animate = (time: number) => {
+      const elapsed = previousTime === null ? 0 : Math.min(time - previousTime, 50);
+      previousTime = time;
+
+      if (!isHovered.current && elapsed > 0) {
+        viewport.scrollLeft = (viewport.scrollLeft + (elapsed * speed) / 1000) % cycleWidth;
+
+        const index = Math.floor((viewport.scrollLeft / cycleWidth) * lugares.length);
+        if (index !== previousIndex) {
+          previousIndex = index;
+          setActiveIndex(index);
+        }
+      }
+
+      frame = window.requestAnimationFrame(animate);
+    };
+
+    frame = window.requestAnimationFrame(animate);
+    return () => window.cancelAnimationFrame(frame);
+  }, [cycleWidth, reducedMotion]);
+
+  const moveByCard = (direction: number) => {
+    const viewport = viewportRef.current;
+    if (!viewport || !cycleWidth) return;
+
+    const step = cycleWidth / lugares.length;
+    viewport.scrollLeft = (viewport.scrollLeft + direction * step + cycleWidth) % cycleWidth;
+    setActiveIndex(Math.floor((viewport.scrollLeft / cycleWidth) * lugares.length));
+  };
+
+  const moveToCard = (index: number) => {
+    const viewport = viewportRef.current;
+    if (!viewport || !cycleWidth) return;
+
+    viewport.scrollLeft = (index * cycleWidth) / lugares.length;
+    setActiveIndex(index);
+  };
 
   return (
-    <div className="flex flex-col md:flex-row h-[51.25rem] md:h-[31.25rem] w-full gap-3 md:gap-5 overflow-hidden">
-      {lugares.map((lugar, i) => {
-        // Nombre general de cada destino (dentro de cada página hay más de un lugar).
-        const titulo = lugar.nombreLista ?? lugar.nombre;
-        const isExpanded = isMobile
-          ? lugar.id === activeId
-          : hovered === null
-            ? i === 0
-            : hovered === lugar.id;
+    <div
+      role="region"
+      className="relative w-full"
+      aria-label="Lugares para visitar en Ayacucho"
+      aria-roledescription="carrusel"
+    >
+      <div
+        ref={viewportRef}
+        className="h-[31.25rem] w-full overflow-hidden [container-type:inline-size]"
+        onMouseEnter={() => (isHovered.current = true)}
+        onMouseLeave={() => (isHovered.current = false)}
+      >
+        <div ref={trackRef} className="flex w-max gap-5 pr-5">
+          {slides.map((lugar, slideIndex) => {
+            const titulo = lugar.nombreLista ?? lugar.nombre;
 
-        return (
-          <div
-            key={lugar.id}
-            ref={(el) => {
-              itemRefs.current[i] = el;
-            }}
-            data-lugar-id={lugar.id}
-            onMouseEnter={() => setHovered(lugar.id)}
-            className={`relative overflow-hidden transition-all duration-500 ease-out shadow-sm group ${
-              isExpanded ? "flex-[4] md:flex-[5]" : "flex-[1]"
-            }`}
-          >
-            <Link
-              to="/destinos/$slug"
-              params={{ slug: lugar.slug }}
-              onClick={() => setActiveId(lugar.id)}
-              className="absolute inset-0 block cursor-pointer"
-            >
-              <img
-                src={lugar.imagen}
-                alt={titulo}
-                loading={isMobile && isExpanded ? "eager" : "lazy"}
-                fetchPriority={isMobile && isExpanded ? "high" : "low"}
-                decoding="async"
-                width={1600}
-                height={900}
-                className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 will-change-transform"
-              />
-              {/* Gradiente más oscuro abajo para que lea el texto */}
+            return (
               <div
-                className={`absolute inset-0 transition-opacity duration-500 ${isExpanded ? "bg-gradient-to-t from-ink via-ink/20 to-transparent" : "bg-cafe/60 hover:bg-cafe/40"}`}
-              />
-
-              {/* Número Romano */}
-              <div
-                className={`absolute top-4 transition-all duration-700 z-20 ${isExpanded ? "right-5 md:right-8" : "left-1/2 -translate-x-1/2 md:left-4 md:translate-x-0"}`}
+                key={`${lugar.id}-${slideIndex}`}
+                className="h-full w-[100cqw] shrink-0 md:w-[calc(50cqw-0.625rem)]"
               >
-                <span
-                  className={`font-serif text-piedra/40 select-none transition-all duration-700 ${isExpanded ? "text-4xl" : "text-xl md:text-2xl"}`}
-                >
-                  {lugar.numeral}
-                </span>
+                <div className="group relative h-[31.25rem] w-full overflow-hidden shadow-sm">
+                  <Link
+                    to="/destinos/$slug"
+                    params={{ slug: lugar.slug }}
+                    className="absolute inset-0 block cursor-pointer"
+                  >
+                    <img
+                      src={lugar.imagen}
+                      alt={titulo}
+                      loading={slideIndex < 2 ? "eager" : "lazy"}
+                      fetchPriority={slideIndex < 2 ? "high" : "low"}
+                      decoding="async"
+                      width={1600}
+                      height={900}
+                      className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/20 to-transparent" />
+                    <span className="absolute right-5 top-4 z-20 font-serif text-4xl text-piedra/50">
+                      {lugar.numeral}
+                    </span>
+                    <div className="absolute bottom-0 left-0 z-20 flex w-full flex-col items-start p-6 md:p-8">
+                      <h3 className="mb-5 font-serif text-2xl leading-tight text-piedra md:text-4xl">
+                        {titulo}
+                      </h3>
+                      <span className="inline-flex items-center gap-2 bg-cochinilla px-5 py-3 text-[0.6875rem] font-bold uppercase tracking-[0.25em] text-piedra transition-colors hover:bg-cochinilla/90">
+                        Descubrir <ArrowRight size={14} />
+                      </span>
+                    </div>
+                  </Link>
+                </div>
               </div>
+            );
+          })}
+        </div>
+      </div>
 
-              {/* Contenido expandido */}
-              <div
-                className={`absolute bottom-0 left-0 w-full p-6 md:p-8 flex flex-col justify-end transition-all duration-500 z-20 ${
-                  isExpanded
-                    ? "opacity-100 translate-y-0"
-                    : "opacity-0 translate-y-8 pointer-events-none"
-                }`}
-              >
-                <h3 className="font-serif text-piedra text-2xl md:text-4xl leading-tight mb-5">
-                  {titulo}
-                </h3>
-                <span className="inline-flex items-center gap-2 self-start text-piedra text-[0.6875rem] uppercase tracking-[0.25em] font-bold bg-cochinilla hover:bg-cochinilla/90 transition-colors px-5 py-3">
-                  Descubrir <ArrowRight size={14} />
-                </span>
-              </div>
+      <button
+        type="button"
+        aria-label="Destino anterior"
+        onClick={() => moveByCard(-1)}
+        className="absolute left-4 top-1/2 z-30 -translate-y-1/2 bg-ink/60 p-3 text-piedra transition-colors hover:bg-ink"
+      >
+        <ChevronLeft size={24} aria-hidden="true" />
+      </button>
+      <button
+        type="button"
+        aria-label="Siguiente destino"
+        onClick={() => moveByCard(1)}
+        className="absolute right-4 top-1/2 z-30 -translate-y-1/2 bg-ink/60 p-3 text-piedra transition-colors hover:bg-ink"
+      >
+        <ChevronRight size={24} aria-hidden="true" />
+      </button>
 
-              {/* Título para versión colapsada (Desktop) */}
-              <div
-                className={`absolute inset-0 flex items-center justify-center pointer-events-none hidden md:flex transition-opacity duration-500 z-10 ${
-                  isExpanded ? "opacity-0" : "opacity-100"
-                }`}
-              >
-                <span className="w-[27.5rem] max-w-none shrink-0 text-center text-piedra font-serif text-xl leading-tight tracking-wider -rotate-90">
-                  {titulo}
-                </span>
-              </div>
-
-              {/* Título para versión colapsada (Mobile) */}
-              <div
-                className={`absolute inset-0 flex items-center justify-center pointer-events-none md:hidden transition-opacity duration-500 z-10 ${
-                  isExpanded ? "opacity-0" : "opacity-100"
-                }`}
-              >
-                <span className="text-piedra font-serif text-sm tracking-widest text-center px-4 drop-shadow-md">
-                  {titulo}
-                </span>
-              </div>
-            </Link>
-          </div>
-        );
-      })}
+      <div className="absolute bottom-4 right-6 z-30 flex gap-2 md:right-8">
+        {lugares.map((lugar, index) => {
+          const titulo = lugar.nombreLista ?? lugar.nombre;
+          return (
+            <button
+              key={lugar.id}
+              type="button"
+              aria-label={`Ir a ${titulo}`}
+              aria-current={activeIndex === index ? "true" : undefined}
+              onClick={() => moveToCard(index)}
+              className={`h-2.5 w-2.5 rounded-full transition-colors ${
+                activeIndex === index ? "bg-piedra" : "bg-piedra/50 hover:bg-piedra/80"
+              }`}
+            />
+          );
+        })}
+      </div>
     </div>
   );
 }
@@ -587,7 +625,10 @@ function Index() {
       </section>
 
       {/* FESTIVIDADES DE HUAMANGA */}
-      <section id="festividades-de-huamanga" className="mt-4 md:mt-0 py-16 md:py-32 px-6 bg-eucalipto text-piedra">
+      <section
+        id="festividades-de-huamanga"
+        className="mt-4 md:mt-0 py-16 md:py-32 px-6 bg-eucalipto text-piedra"
+      >
         <div className="container-flores mx-auto">
           <div className="mb-16 flex flex-col md:flex-row md:items-end md:justify-between gap-6">
             <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl leading-[1.05] text-balance max-w-[28ch]">
@@ -609,8 +650,8 @@ function Index() {
               Lugares históricos y naturales de Ayacucho
             </h2>
           </div>
-          {/* Acordeón expandible */}
-          <LugaresAccordion />
+          {/* Carrusel de destinos */}
+          <LugaresCarousel />
         </div>
       </section>
 
@@ -643,9 +684,9 @@ function Index() {
               Productos de temporada
             </h2>
             <p className="text-base md:text-lg leading-[1.7] text-nogal/70 mb-8">
-              En la región de Ayacucho la temporada de cada producto se rige fundamentalmente por
-              el calendario andino de lluvias y de meses secos. Por eso la cocina ayacuchana tiene
-              una variedad propia de platos típicos.
+              En la región de Ayacucho la temporada de cada producto se rige fundamentalmente por el
+              calendario andino de lluvias y de meses secos. Por eso la cocina ayacuchana tiene una
+              variedad propia de platos típicos.
             </p>
             <Link
               to="/tesoros-ayacucho"

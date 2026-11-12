@@ -10,24 +10,31 @@ describe("etiquetas de las tarjetas de galería", () => {
     const galleryHero = source.match(/\{\/\* Header Banner \*\/\}([\s\S]*?)<\/section>/)?.[1] ?? "";
 
     expect(galleryHero).not.toContain("Nuestra Galería");
-    expect(galleryHero).toContain("Nuestras costumbres para el mundo");
+    expect(galleryHero).toContain("Ayacucho, ciudad de las costumbres");
   });
 
   it("muestra el título actualizado en el encabezado", () => {
-    expect(source).toContain("Nuestras costumbres para el mundo");
+    expect(source).toContain("Ayacucho, ciudad de las costumbres");
   });
 
-  it("muestra el título en las tarjetas y lo conserva para accesibilidad y el visor", () => {
+  it("oculta las etiquetas en Gastronomía y Experiencias y conserva los textos accesibles", () => {
     const galleryGrid =
       source.match(/\{\/\* Gallery Grid \*\/\}([\s\S]*?)\{\/\* Lightbox Modal \*\/\}/)?.[1] ?? "";
     const lightbox =
       source.match(/\{\/\* Lightbox Modal \*\/\}([\s\S]*?)\{\/\* Footer \*\/\}/)?.[1] ?? "";
 
+    expect(galleryGrid).toContain(
+      'activeCategory !== "postres-bebidas" && activeCategory !== "experiencia"',
+    );
     expect(galleryGrid).toContain("absolute right-6 top-6");
-    expect(galleryGrid).toContain("{img.titulo}");
     expect(galleryGrid).toContain("alt={img.titulo}");
     expect(lightbox).toContain("<figcaption");
     expect(lightbox).toContain("{images[selectedIndex].titulo}");
+  });
+
+  it("nombra la categoría como Gastronomía", () => {
+    expect(source).toContain('label: "Gastronomía"');
+    expect(source).not.toContain('label: "Gastronomías"');
   });
 
   it("reemplaza los títulos genéricos por descripciones de las imágenes de experiencia", () => {
