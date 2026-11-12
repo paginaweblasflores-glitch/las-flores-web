@@ -80,6 +80,8 @@ export function FestividadVideo({ src, srcMobile, poster, alt, className = "", p
     const MARGEN = priority ? 0 : 150;
     const aLaVista = () => {
       const r = el.getBoundingClientRect();
+      // Oculto (display: none): no tiene caja, por lo que no se reproduce.
+      if (r.width === 0 && r.height === 0) return false;
       return (
         r.bottom > -MARGEN &&
         r.top < window.innerHeight + MARGEN &&
@@ -92,6 +94,7 @@ export function FestividadVideo({ src, srcMobile, poster, alt, className = "", p
     // competir con el resto de la página ni gastar datos de quien nunca llega a esa sección.
     const cercaParaCargar = () => {
       const r = el.getBoundingClientRect();
+      if (r.width === 0 && r.height === 0) return false;
       const h = window.innerHeight;
       const w = window.innerWidth;
       return r.top < h * 2.5 && r.bottom > -h * 1.5 && r.left < w * 1.5 && r.right > -w * 0.5;

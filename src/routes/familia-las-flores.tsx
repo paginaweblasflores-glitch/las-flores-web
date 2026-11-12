@@ -44,7 +44,7 @@ const COLLABORATORS: Collaborator[] = [
   {
     id: "1",
     name: "Betsy",
-    photo: "/familia/Cena.webp",
+    photo: "/imagenes-reales/EQUIPO/2026.webp",
     quote: "Trabajar en el Restaurante Las Flores es una experiencia que me permite crecer tanto profesional como personalmente. Como administradora, me siento comprometida con mis responsabilidades y con el buen funcionamiento del restaurante, pero también valoro mucho los momentos que compartimos como equipo.",
   },
   {
@@ -110,7 +110,8 @@ function FamiliaLasFloresPage() {
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                   style={{
                     objectPosition:
-                      c.id === "4" ? "center 5%"
+                      c.id === "1" ? "center 60%"
+                      : c.id === "4" ? "center 5%"
                         : c.id === "3" ? "center 8%"
                           : c.id === "cocina-2" ? "center 10%"
                             : c.id === "10" ? "center 12%"
