@@ -11,7 +11,8 @@ describe("encabezado de eventos", () => {
     expect(source).toContain("Celebra en Las Flores");
   });
 
-  it("muestra solo el título, sin descripción en el hero", () => {
+  it("complementa el título con una descripción corta que no repite sus palabras", () => {
     expect(source).not.toContain("Comparte momentos inolvidables");
+    expect(source).toContain("Todo momento importante merece una buena mesa.");
   });
 });

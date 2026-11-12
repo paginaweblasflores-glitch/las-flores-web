@@ -16,7 +16,6 @@ import {
   CheckCircle2,
   ChevronUp,
   ChevronDown,
-  ChevronLeft,
   ChevronRight,
   User,
   Mail,
@@ -34,7 +33,7 @@ import {
 } from "lucide-react";
 import { SiteHeader } from '../components/SiteHeader';
 import { useState, useTransition, useEffect } from 'react';
-import { MobileCategoryFilter } from "@/components/MobileCategoryFilter";
+import { FestividadVideo } from "@/components/FestividadVideo";
 
 import { MenuModal } from "@/components/MenuModal";
 
@@ -67,66 +66,137 @@ export const Route = createFileRoute("/eventos")({
   component: EventosPage,
 });
 
-type EventTabId = "familiares" | "corporativas" | "bodas";
+type EventSectionId = "familiares" | "corporativas" | "bodas";
 
-interface EventTabData {
-  id: EventTabId;
-  label: string;
-  title: string;
-  description: string;
-  bullets: string[];
-  images: string[];
+// Clip corto en bucle, sin audio. Cada uno tiene su portada (poster) con el mismo nombre.
+interface EventClip {
+  video: string;
+  poster: string;
+  alt: string;
 }
 
-const EVENT_TABS: EventTabData[] = [
+const CARPETA_CLIPS = "/imagenes-reales/eventos";
+const clip = (nombre: string, alt: string): EventClip => ({
+  video: `${CARPETA_CLIPS}/${nombre}.mp4`,
+  poster: `${CARPETA_CLIPS}/${nombre}-poster.webp`,
+  alt,
+});
+
+interface EventSectionData {
+  id: EventSectionId;
+  title: string;
+  description: string;
+  boton: string;
+  // Ordenados de más a menos atractivo para quien decide: los dos primeros son lo que se ve al entrar.
+  clips: EventClip[];
+}
+
+const EVENT_SECTIONS: EventSectionData[] = [
   {
     id: "familiares",
-    label: "Celebraciones Familiares",
-    title: "Celebraciones Familiares",
-    description: "Desde cumpleaños hasta aniversarios, Las Flores es el hogar perfecto para celebrar la vida con sus seres queridos. Disfrute de nuestra propuesta tradicional de compartir en el centro de la mesa, rodeado de un ambiente cálido y acogedor.",
-    bullets: [
-      "Platos diseñados para compartir",
-      "Espacios modulares según la cantidad de invitados"
-    ],
-    images: [
-      "/imagenes-reales/eventos/familia-uno.webp",
-      "/imagenes-reales/eventos/familia-dos.webp",
-      "/imagenes-reales/eventos/familia-tres.webp",
-      "/imagenes-reales/eventos/familia-cuatro.webp"
+    title: "Celebraciones familiares",
+    boton: "Cotizar mi celebración",
+    description: "Desde cumpleaños hasta aniversarios, en Las Flores cada celebración es una excusa para estar juntos.",
+    clips: [
+      clip("familiares-3-danza-mesas", "Bailarina con vestimenta típica entre las mesas"),
+      clip("familiares-12-cumple", "Postre con una vela y frutas sobre un plato con el mensaje de feliz cumpleaños"),
+      clip("familiares-10-pan-crema", "Mujer untando crema en un pan sobre la mesa"),
+      clip("familiares-1-baile-grupal", "Hombre cantando y tocando la guitarra, y comensales bailando entre las mesas del restaurante"),
     ]
   },
   {
     id: "corporativas",
-    label: "Reuniones Corporativas",
-    title: "Reuniones Corporativas",
-    description: "El entorno perfecto para los negocios. Contamos con salones acondicionados para almuerzos ejecutivos, conferencias, y cenas de gala empresariales, garantizando privacidad y distinción.",
-    bullets: [
-      "Opciones de menú ejecutivo",
-      "Equipamiento audiovisual (bajo solicitud)",
-      "Coffee breaks premium"
-    ],
-    images: [
-      "/imagenes-reales/eventos/coorporativo-uno.webp",
-      "/imagenes-reales/eventos/coorporativo-dos.webp",
-      "/imagenes-reales/eventos/coorporativo-tres.webp"
+    title: "Reuniones corporativas",
+    boton: "Cotizar mi reunión",
+    description: "El entorno perfecto para los negocios. Contamos con salones acondicionados para almuerzos ejecutivos, conferencias y cenas de gala empresariales, garantizando privacidad y distinción.",
+    clips: [
+      clip("corporativas-7-mesa", "Mesa larga de invitados con jugos y copas"),
+      clip("corporativas-10-comidas-mesa", "Platos con frituras, salsas verdes y papas servidos sobre una mesa"),
+      clip("corporativas-8-danzante-tijeras", "Danzante de tijeras en el salón del restaurante"),
+      clip("corporativas-6-baile", "Dos invitados bailando en el salón"),
     ]
   },
   {
     id: "bodas",
-    label: "Bodas y Recepciones",
-    title: "Bodas y Recepciones",
-    description: "Haga de su día especial un momento inolvidable. Ofrecemos ambientes íntimos y majestuosos, un servicio impecable y propuestas gastronómicas diseñadas a medida para usted y sus invitados, fusionando la alta cocina con los sabores tradicionales.",
-    bullets: [
-      "Menú de degustación personalizado",
-      "Salones privados exclusivos",
-      "Atención preferencial"
-    ],
-    images: [
-      "/imagenes-reales/eventos/boda-uno.webp",
-      "/imagenes-reales/eventos/boda-dos.webp"
+    title: "Bodas y recepciones",
+    boton: "Cotizar mi recepción",
+    description: "Haga de su día especial un momento inolvidable. Ofrecemos ambientes íntimos y majestuosos con un servicio impecable. Nuestras propuestas gastronómicas se diseñan a medida para usted y sus invitados.",
+    clips: [
+      clip("bodas-1-torta", "Torta de varios pisos con flores y el letrero luminoso de Las Flores"),
+      clip("bodas-2-marinera", "Pareja con trajes típicos bailando marinera en el salón"),
+      clip("bodas-3-bocaditos", "Tabla de frutas, quesos y frutos secos"),
+      clip("bodas-4-vino", "Vino rosado servido en copas sobre una mesa puesta"),
     ]
   }
 ];
+
+// Una sección por tipo de evento: título, clips en cuadrícula (4 por fila en escritorio, 2 en tablet,
+// deslizables en celular) y, al centro debajo de ellos, la descripción con el botón.
+function EventoSeccion({
+  data,
+  oscuro,
+  onCotizar,
+}: {
+  data: EventSectionData;
+  oscuro: boolean;
+  onCotizar: () => void;
+}) {
+  // Indicación "Desliza para ver más" (solo celular): se oculta apenas la persona desliza.
+  const [mostrarIndicacion, setMostrarIndicacion] = useState(true);
+  const tono = oscuro
+    ? {
+        fondo: "bg-eucalipto text-piedra",
+        descripcion: "text-piedra/75",
+        indicacion: "text-piedra/75",
+      }
+    : {
+        fondo: "bg-piedra text-nogal",
+        descripcion: "text-nogal/70",
+        indicacion: "text-nogal/65",
+      };
+
+  return (
+    <section id={data.id} className={`${tono.fondo} scroll-mt-16 py-16 md:py-24 px-6`}>
+      <div className="container-flores mx-auto">
+        {/* Primero el título y los clips: es lo que la gente mira antes de leer */}
+        <h2 className="font-serif text-4xl md:text-5xl leading-[1.05] text-balance">{data.title}</h2>
+
+        {mostrarIndicacion && (
+          <p className={`mt-6 inline-flex items-center gap-1 text-sm md:hidden ${tono.indicacion}`}>
+            Desliza para ver más <ChevronRight size={16} aria-hidden="true" />
+          </p>
+        )}
+
+        <div
+          onScroll={() => setMostrarIndicacion(false)}
+          className="mt-4 -mx-6 flex snap-x snap-mandatory scroll-px-6 gap-4 overflow-x-auto px-6 pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:mx-0 md:mt-10 md:grid md:grid-cols-2 md:gap-5 md:overflow-visible md:px-0 md:pb-0 lg:grid-cols-4"
+        >
+          {data.clips.map((item) => (
+            <div key={item.video} className="relative aspect-[9/16] w-full shrink-0 snap-start overflow-hidden bg-black md:w-auto">
+              <FestividadVideo
+                src={item.video}
+                poster={item.poster}
+                alt={item.alt}
+                className="absolute inset-0 h-full w-full object-cover"
+              />
+            </div>
+          ))}
+        </div>
+
+        {/* Después, al centro: descripción y botón. En escritorio el texto ocupa el ancho de los dos clips del medio (del inicio del 2.º al final del 3.º) */}
+        <div className="mx-auto mt-12 md:mt-14 flex max-w-[60ch] flex-col items-center text-center lg:w-[calc(50%-0.625rem)] lg:max-w-none">
+          <p className={`text-base md:text-lg leading-[1.7] ${tono.descripcion}`}>{data.description}</p>
+          <button
+            onClick={onCotizar}
+            className="mt-8 px-10 py-5 text-[0.6875rem] uppercase tracking-[0.25em] font-bold rounded-sm btn-yellow-hover"
+          >
+            {data.boton}
+          </button>
+        </div>
+      </div>
+    </section>
+  );
+}
 
 function EventosPage() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -140,108 +210,6 @@ function EventosPage() {
   const [isContactOpen, setIsContactOpen] = useState(false);
   const [formStatus, setFormStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
   const [isPending, startTransition] = useTransition();
-
-  const [activeTab, setActiveTab] = useState<EventTabId>("familiares");
-  // visualIndex: posición dentro de la pista renderizada (incluye un clon al
-  // inicio y otro al final para lograr el efecto de scroll infinito). El
-  // índice 1 apunta siempre a la primera ventana "real" de imágenes.
-  const [carouselIndices, setCarouselIndices] = useState<Record<EventTabId, number>>({
-    familiares: 1,
-    corporativas: 1,
-    bodas: 1,
-  });
-  // Controla si la pista debe animar la transición o saltar sin transición
-  // (usado solo para el "reseteo silencioso" al cruzar los clones del loop).
-  const [carouselTransitions, setCarouselTransitions] = useState<Record<EventTabId, boolean>>({
-    familiares: true,
-    corporativas: true,
-    bodas: true,
-  });
-
-  // Estado para el carrusel móvil (imagen individual por tab). Igual que en
-  // desktop, visualIndex 1 apunta a la primera imagen real (hay un clon de la
-  // última imagen antes y un clon de la primera después, para el loop infinito).
-  const [mobileImageIndices, setMobileImageIndices] = useState<Record<EventTabId, number>>({
-    familiares: 1,
-    corporativas: 1,
-    bodas: 1,
-  });
-  const [mobileTransitions, setMobileTransitions] = useState<Record<EventTabId, boolean>>({
-    familiares: true,
-    corporativas: true,
-    bodas: true,
-  });
-  const [touchStartX, setTouchStartX] = useState<number | null>(null);
-
-  const handleMobileSwipe = (direction: 'next' | 'prev') => {
-    const total = (EVENT_TABS.find(t => t.id === activeTab)?.images || []).length;
-    if (total <= 1) return;
-    const tabId = activeTab;
-    setMobileTransitions(prev => ({ ...prev, [tabId]: true }));
-    setMobileImageIndices(prev => {
-      const current = prev[tabId];
-      const next = direction === 'next' ? current + 1 : current - 1;
-      if (next === total + 1) {
-        window.setTimeout(() => {
-          setMobileTransitions(t => ({ ...t, [tabId]: false }));
-          setMobileImageIndices(p => ({ ...p, [tabId]: 1 }));
-        }, CAROUSEL_TRANSITION_MS);
-      } else if (next === 0) {
-        window.setTimeout(() => {
-          setMobileTransitions(t => ({ ...t, [tabId]: false }));
-          setMobileImageIndices(p => ({ ...p, [tabId]: total }));
-        }, CAROUSEL_TRANSITION_MS);
-      }
-      return { ...prev, [tabId]: next };
-    });
-  };
-
-  const handleMobileDotClick = (tabId: EventTabId, realIndex: number) => {
-    setMobileTransitions(prev => ({ ...prev, [tabId]: true }));
-    setMobileImageIndices(prev => ({ ...prev, [tabId]: realIndex + 1 }));
-  };
-
-  // Duración de la transición del carrusel (debe calzar con "duration-1000" en las clases).
-  const CAROUSEL_TRANSITION_MS = 1000;
-
-  // Al llegar al clon del final/inicio de la pista, tras la animación
-  // saltamos sin transición a la ventana real equivalente, logrando un
-  // scroll circular que nunca "reinicia" hacia atrás. Se usa un timeout (en
-  // vez de depender del evento transitionend) porque ese evento no siempre
-  // se dispara en pestañas en segundo plano.
-  const handleNextSlide = () => {
-    const total = (EVENT_TABS.find((t) => t.id === activeTab)?.images || []).length;
-    if (total <= 1) return;
-    const tabId = activeTab;
-    setCarouselTransitions((prev) => ({ ...prev, [tabId]: true }));
-    setCarouselIndices((prev) => {
-      const nextIndex = prev[tabId] + 1;
-      if (nextIndex === total + 1) {
-        window.setTimeout(() => {
-          setCarouselTransitions((t) => ({ ...t, [tabId]: false }));
-          setCarouselIndices((p) => ({ ...p, [tabId]: 1 }));
-        }, CAROUSEL_TRANSITION_MS);
-      }
-      return { ...prev, [tabId]: nextIndex };
-    });
-  };
-
-  const handlePrevSlide = () => {
-    const total = (EVENT_TABS.find((t) => t.id === activeTab)?.images || []).length;
-    if (total <= 1) return;
-    const tabId = activeTab;
-    setCarouselTransitions((prev) => ({ ...prev, [tabId]: true }));
-    setCarouselIndices((prev) => {
-      const prevIndex = prev[tabId] - 1;
-      if (prevIndex === 0) {
-        window.setTimeout(() => {
-          setCarouselTransitions((t) => ({ ...t, [tabId]: false }));
-          setCarouselIndices((p) => ({ ...p, [tabId]: total }));
-        }, CAROUSEL_TRANSITION_MS);
-      }
-      return { ...prev, [tabId]: prevIndex };
-    });
-  };
 
   // Cerrar Drawer al presionar Escape
   useEffect(() => {
@@ -323,223 +291,22 @@ function EventosPage() {
           <h1 className="font-serif text-4xl md:text-6xl text-piedra font-normal leading-tight">
             Celebra en Las Flores
           </h1>
+          <p className="text-base md:text-lg text-piedra/90 max-w-3xl mx-auto leading-relaxed">
+            Todo momento importante merece una buena mesa.
+          </p>
         </div>
 
       </section>
 
-      {/* ── TABS MÓVIL: sticky pegado al header (solo < lg) ── */}
-      <div className="block lg:hidden sticky top-12 z-30 w-full bg-[#F9F8F3] border-b border-gray-200 shadow-sm">
-        <div className="container-flores mx-auto pl-6">
-          <MobileCategoryFilter
-            categories={EVENT_TABS.map((tab) => ({ key: tab.id, label: tab.label }))}
-            activeKey={activeTab}
-            onSelect={(key) => setActiveTab(key as EventTabId)}
-          />
-        </div>
-      </div>
-
-      {/* Servicios de Eventos - 3 Column Layout */}
-      <section className="bg-piedra w-full overflow-hidden">
-        {/* ── TABS DESKTOP: dentro del contenido, centrados (solo lg+) ── */}
-        <div className="hidden lg:flex justify-center gap-3 pt-16 pb-0">
-          {EVENT_TABS.map((tab) => (
-            <button
-              key={tab.id}
-              onClick={() => setActiveTab(tab.id)}
-              className={`whitespace-nowrap px-6 py-2.5 rounded-full text-sm font-bold transition-all ${activeTab === tab.id
-                  ? "bg-[#2D473C] text-[#D4AF37] shadow-md"
-                  : "bg-white border border-gray-200 text-gray-700 hover:bg-gray-100"
-                }`}
-            >
-              {tab.label}
-            </button>
-          ))}
-        </div>
-
-        {/* Tab Content (3 Columns) */}
-        <div className="relative w-full max-w-[112.5rem] mx-auto flex">
-          {EVENT_TABS.map((tab) => {
-            const visualIndex = carouselIndices[tab.id];
-            const transitionEnabled = carouselTransitions[tab.id];
-            const currentImages = tab.images;
-            const total = currentImages.length;
-            // Ventanas de 2 imágenes consecutivas y circulares: la ventana i
-            // muestra [imagen(i), imagen(i+1)], con vuelta al inicio al llegar
-            // al final (ej. con 3 imágenes: [1,2] → [2,3] → [3,1] → [1,2]...).
-            const windows = total > 0
-              ? Array.from({ length: total }, (_, i) => [
-                currentImages[i % total],
-                currentImages[(i + 1) % total],
-              ])
-              : [];
-            // Clon del último al inicio y del primero al final, para que el
-            // scroll nunca tenga que "saltar hacia atrás" visualmente.
-            const renderedWindows = total > 1
-              ? [windows[total - 1], ...windows, windows[0]]
-              : windows;
-
-            // Móvil: mismo truco de clones, pero con 1 imagen por "ventana".
-            const mobileVisualIndex = mobileImageIndices[tab.id];
-            const mobileTransitionEnabled = mobileTransitions[tab.id];
-            const mobileImages = total > 1
-              ? [currentImages[total - 1], ...currentImages, currentImages[0]]
-              : currentImages;
-            const mobileActiveDot = total > 0 ? ((mobileVisualIndex - 1) % total + total) % total : 0;
-
-            return (
-              <div
-                key={tab.id}
-                className={`transition-opacity duration-500 ease-in-out w-full flex flex-col lg:flex-row items-stretch ${activeTab === tab.id
-                  ? "opacity-100 relative z-10"
-                  : "opacity-0 absolute inset-0 z-0 pointer-events-none hidden"
-                  }`}
-              >
-                {/* Columna 1 (Izquierda - 40%) */}
-                <div className="w-full lg:w-[40%] flex flex-col justify-center px-8 lg:px-16 pt-6 pb-6 lg:pt-12 lg:pb-16">
-                  <h2 className="font-serif text-4xl md:text-5xl leading-[1.1] text-balance mb-6 text-nogal">
-                    {tab.title}
-                  </h2>
-                  <p className="text-lg text-nogal/70 leading-[1.7] mb-8">
-                    {tab.description}
-                  </p>
-                  <ul className="space-y-2 lg:space-y-4 text-nogal/80 font-medium mb-6 lg:mb-12">
-                    {tab.bullets.map((bullet, idx) => (
-                      <li key={idx} className="flex items-center gap-3">
-                        <span className="w-1.5 h-1.5 bg-[#2D473C] rounded-full flex-shrink-0"></span>
-                        <span>{bullet}</span>
-                      </li>
-                    ))}
-                  </ul>
-                  <div className="mt-auto">
-                    <button
-                      onClick={() => setIsContactOpen(true)}
-                      className="px-10 py-5 text-[0.6875rem] uppercase tracking-[0.25em] font-bold rounded-sm btn-yellow-hover"
-                    >
-                      Cotizar Evento
-                    </button>
-                  </div>
-                </div>
-
-                {/* Columna 2 (Centro - Controles): solo tiene sentido con más de 1 imagen */}
-                {total > 1 && (
-                  <div className="hidden lg:flex w-fit px-4 flex-col justify-end items-center gap-3 pb-16">
-                    <button
-                      onClick={handlePrevSlide}
-                      aria-label="Foto anterior"
-                      className="w-11 h-11 border border-nogal/40 rounded-md flex items-center justify-center text-nogal hover:border-nogal hover:bg-nogal/5 transition-colors cursor-pointer"
-                    >
-                      <ChevronLeft size={20} strokeWidth={1.8} />
-                    </button>
-                    <button
-                      onClick={handleNextSlide}
-                      aria-label="Foto siguiente"
-                      className="w-11 h-11 border border-nogal/40 rounded-md flex items-center justify-center text-nogal hover:border-nogal hover:bg-nogal/5 transition-colors cursor-pointer"
-                    >
-                      <ChevronRight size={20} strokeWidth={1.8} />
-                    </button>
-                  </div>
-                )}
-
-                {/* ─── COLUMNA 3 MÓVIL: una imagen a la vez con swipe táctil ─── */}
-                <div
-                  className="block lg:hidden w-full h-[18.75rem] mb-8 relative overflow-hidden"
-                  onTouchStart={(e) => setTouchStartX(e.touches[0].clientX)}
-                  onTouchEnd={(e) => {
-                    if (touchStartX === null) return;
-                    const dx = e.changedTouches[0].clientX - touchStartX;
-                    if (Math.abs(dx) > 40) handleMobileSwipe(dx < 0 ? 'next' : 'prev');
-                    setTouchStartX(null);
-                  }}
-                >
-                  {total > 1 ? (
-                    <>
-                      {/* Carril de imágenes individuales */}
-                      <div
-                        className={`flex h-full ${mobileTransitionEnabled ? "transition-transform duration-1000 ease-[cubic-bezier(0.25,1,0.5,1)]" : ""}`}
-                        style={{ transform: `translateX(-${mobileVisualIndex * 100}%)` }}
-                      >
-                        {mobileImages.map((img, imgIdx) => (
-                          <div key={imgIdx} className="w-full h-full flex-shrink-0 relative">
-                            <img
-                              src={img}
-                              alt={`${tab.title} ${imgIdx}`}
-                              className="absolute inset-0 w-full h-full object-cover"
-                              loading="lazy"
-                            />
-                          </div>
-                        ))}
-                      </div>
-                      {/* Dots de navegación */}
-                      <div className="absolute bottom-3 left-0 right-0 flex justify-center gap-2">
-                        {currentImages.map((_, i) => (
-                          <button
-                            key={i}
-                            onClick={() => handleMobileDotClick(tab.id, i)}
-                            className={`w-2 h-2 rounded-full transition-all ${mobileActiveDot === i ? 'bg-white scale-125' : 'bg-white/50'
-                              }`}
-                          />
-                        ))}
-                      </div>
-                    </>
-                  ) : (
-                    currentImages[0] && (
-                      <div className="w-full h-full relative">
-                        <img
-                          src={currentImages[0]}
-                          alt={`${tab.title} 1`}
-                          className="absolute inset-0 w-full h-full object-cover"
-                          loading="lazy"
-                        />
-                      </div>
-                    )
-                  )}
-                </div>
-
-                {/* ─── COLUMNA 3 DESKTOP: Galería Carrusel infinito, de a una imagen ─── */}
-                <div className="hidden lg:block lg:w-[52%] pt-12 pb-16 pr-4 relative self-stretch">
-                  <div className="overflow-hidden h-full">
-                    {total > 1 ? (
-                      <div
-                        className={`flex h-full ${transitionEnabled ? "transition-transform duration-1000 ease-[cubic-bezier(0.25,1,0.5,1)]" : ""}`}
-                        style={{ transform: `translateX(-${visualIndex * 100}%)` }}
-                      >
-                        {renderedWindows.map((pair, pairIdx) => (
-                          <div
-                            key={pairIdx}
-                            className="w-full h-full flex-shrink-0 flex gap-6"
-                          >
-                            {pair.map((img, imgIdx) => (
-                              <div key={imgIdx} className="flex-1 h-full relative overflow-hidden">
-                                <img
-                                  src={img}
-                                  alt={`${tab.title} ${pairIdx}-${imgIdx + 1}`}
-                                  className="absolute inset-0 w-full h-full object-cover"
-                                  loading="lazy"
-                                />
-                              </div>
-                            ))}
-                          </div>
-                        ))}
-                      </div>
-                    ) : (
-                      currentImages[0] && (
-                        <div className="w-full h-full relative overflow-hidden">
-                          <img
-                            src={currentImages[0]}
-                            alt={`${tab.title} 1`}
-                            className="absolute inset-0 w-full h-full object-cover"
-                            loading="lazy"
-                          />
-                        </div>
-                      )
-                    )}
-                  </div>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      </section>
+      {/* Tres secciones, una por tipo de evento; los fondos se alternan para separarlas */}
+      {EVENT_SECTIONS.map((section, index) => (
+        <EventoSeccion
+          key={section.id}
+          data={section}
+          oscuro={index % 2 === 1}
+          onCotizar={() => setIsContactOpen(true)}
+        />
+      ))}
 
       <SiteFooter />
       {isMenuOpen && <MenuModal open={isMenuOpen} onClose={() => setIsMenuOpen(false)} />}
@@ -715,13 +482,13 @@ function EventosPage() {
                         className="w-full px-3.5 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-xs font-medium text-gray-800 focus:outline-none focus:border-eucalipto focus:bg-white transition-all cursor-pointer"
                       >
                         <option value="" disabled>Seleccione el tipo...</option>
-                        <option value="bodas">Boda o Recepción</option>
-                        <option value="corporativo">Reunión Corporativa o Empresa</option>
-                        <option value="familiar">Celebración Familiar o Cumpleaños</option>
+                        <option value="bodas">Boda o recepción</option>
+                        <option value="corporativo">Reunión corporativa o de empresa</option>
+                        <option value="familiar">Celebración familiar o cumpleaños</option>
                         <option value="aniversario">Aniversario</option>
-                        <option value="graduacion">Graduación o Fiesta de Promoción</option>
-                        <option value="bautizo">Bautizo o Primera Comunión</option>
-                        <option value="cena_privada">Cena Privada</option>
+                        <option value="graduacion">Graduación o fiesta de promoción</option>
+                        <option value="bautizo">Bautizo o primera comunión</option>
+                        <option value="cena_privada">Cena privada</option>
                         <option value="otro">Otro</option>
                       </select>
                     </div>
@@ -729,7 +496,7 @@ function EventosPage() {
                     <div className="grid grid-cols-2 gap-2.5">
                       <div className="space-y-1">
                         <label htmlFor="invitados" className="text-xs font-bold text-nogal block">
-                          Nº Invitados *
+                          N.º de invitados *
                         </label>
                         <input
                           type="number"
@@ -751,8 +518,8 @@ function EventosPage() {
                           className="w-full px-3.5 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-xs font-medium text-gray-800 focus:outline-none focus:border-eucalipto focus:bg-white transition-all cursor-pointer"
                         >
                           <option value="almuerzo">Almuerzo</option>
-                          <option value="cena">Tarde / Noche</option>
-                          <option value="completo">Día Completo</option>
+                          <option value="cena">Tarde o noche</option>
+                          <option value="completo">Día completo</option>
                         </select>
                       </div>
                     </div>
