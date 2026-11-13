@@ -171,6 +171,18 @@ describe("home retablo content layout", () => {
     expect(narrative.getText()).not.toContain("Cultura y Tradición");
   });
 
+  it("uses the approved non-redundant retablo description", () => {
+    const normalizedSource = routeSource.replace(/\s+/g, " ");
+
+    expect(normalizedSource).toContain(
+      "Esta capilla portátil de dos puertas, elaborada a mano, reúne santos y escenas de la vida del campo.",
+    );
+    expect(normalizedSource).toContain(
+      "En Las Flores compartimos esta expresión artesanal, parte de la memoria cultural ayacuchana.",
+    );
+    expect(normalizedSource).not.toContain("Un retablo ayacuchano es una capilla portátil");
+  });
+
   it("rejects excessive fixed desktop padding even alongside viewport padding", () => {
     expect(hasExcessiveFixedVerticalPadding("lg:pb-[10vh] lg:pb-48")).toBe(true);
     expect(hasExcessiveFixedVerticalPadding("lg:py-40 lg:pb-[10vh]")).toBe(true);

@@ -14,23 +14,31 @@ describe("carrusel de lugares para visitar", () => {
     expect(carousel).toContain("md:w-[calc(50cqw-0.625rem)]");
   });
 
-  it("se desplaza continuamente sin intervalos ni pausas por interacción", () => {
+  it("avanza por grupos temporizados en vez de desplazarse continuamente", () => {
     expect(carousel).toContain("window.requestAnimationFrame(animate)");
     expect(carousel).toContain("viewport.scrollLeft");
+    expect(carousel).toContain("advanceCarouselMotion");
+    expect(carousel).not.toContain("const speed = 60");
     expect(carousel).not.toContain("window.setInterval");
     expect(carousel).not.toContain("setIsPaused");
   });
 
-  it("se detiene mientras el cursor está encima de las imágenes y reanuda al salir", () => {
+  it("pausa el avance temporizado mientras el cursor está encima y reanuda al salir", () => {
     expect(carousel).toContain("onMouseEnter={() => (isHovered.current = true)}");
     expect(carousel).toContain("onMouseLeave={() => (isHovered.current = false)}");
     expect(carousel).toContain("if (!isHovered.current && elapsed > 0)");
+    expect(carousel).toContain("motionRef.current");
   });
 
   it("duplica la secuencia y reinicia el desplazamiento al terminar el ciclo", () => {
     expect(carousel).toContain("[...lugares, ...lugares]");
     expect(carousel).toContain("track.scrollWidth / 2");
-    expect(carousel).toContain("% cycleWidth");
+  });
+
+  it("avanza según el número de tarjetas visibles antes de repetir", () => {
+    expect(carousel).toContain("const visibleCards = Math.round");
+    expect(carousel).toContain("Math.min(visibleCards, lugares.length)");
+    expect(carousel).toContain("const stepWidth = cardWidth * Math.max(1");
   });
 
   it("mantiene navegables los enlaces de Descubrir en las tarjetas duplicadas", () => {
@@ -44,5 +52,11 @@ describe("carrusel de lugares para visitar", () => {
   it("permite recorrer los destinos con controles accesibles", () => {
     expect(carousel).toContain('aria-label="Destino anterior"');
     expect(carousel).toContain('aria-label="Siguiente destino"');
+  });
+
+  it("permite recorrer los destinos desde los indicadores de paginación", () => {
+    expect(carousel).toContain("Ir a ${titulo}");
+    expect(carousel).toContain("activeIndex === index");
+    expect(carousel).toContain("onClick={() => moveToCard(index)}");
   });
 });

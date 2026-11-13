@@ -23,6 +23,7 @@ import { LocationSelector } from "../components/LocationSelector";
 import RetabloWrapper, { AyacuchoFlowerInline } from "../components/RetabloWrapper";
 import { MenuModal } from "@/components/MenuModal";
 import { FamiliaLasFloresSection } from "../components/FamiliaLasFloresSection";
+import { advanceCarouselMotion, type CarouselMotionState } from "../lib/carouselMotion";
 import { getFestividadesDestacadas } from "../lib/festividadesLayout";
 import { FaunaAndina } from "@/components/FaunaAndina";
 import { FestividadVideo } from "@/components/FestividadVideo";
@@ -259,6 +260,7 @@ function LugaresCarousel() {
   const viewportRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
   const isHovered = useRef(false);
+  const motionRef = useRef<CarouselMotionState>({ phase: "pause", elapsedMs: 0, offset: 0 });
   const slides = [...lugares, ...lugares];
 
   useEffect(() => {
@@ -284,7 +286,13 @@ function LugaresCarousel() {
     const viewport = viewportRef.current;
     if (!viewport || !cycleWidth || reducedMotion) return;
 
-    const speed = 60;
+    const cardWidth = cycleWidth / lugares.length;
+    const visibleCards = Math.round(viewport.clientWidth / cardWidth);
+    const stepWidth = cardWidth * Math.max(1, Math.min(visibleCards, lugares.length));
+    const initialOffset = viewport.scrollLeft % cycleWidth;
+    motionRef.current = { phase: "pause", elapsedMs: 0, offset: initialOffset };
+    viewport.scrollLeft = initialOffset;
+
     let frame = 0;
     let previousTime: number | null = null;
     let previousIndex = -1;
@@ -294,9 +302,11 @@ function LugaresCarousel() {
       previousTime = time;
 
       if (!isHovered.current && elapsed > 0) {
-        viewport.scrollLeft = (viewport.scrollLeft + (elapsed * speed) / 1000) % cycleWidth;
+        const motion = advanceCarouselMotion(motionRef.current, elapsed, cycleWidth, stepWidth);
+        motionRef.current = motion.state;
+        viewport.scrollLeft = motion.scrollLeft;
 
-        const index = Math.floor((viewport.scrollLeft / cycleWidth) * lugares.length);
+        const index = Math.floor((motion.scrollLeft / cycleWidth) * lugares.length);
         if (index !== previousIndex) {
           previousIndex = index;
           setActiveIndex(index);
@@ -315,7 +325,9 @@ function LugaresCarousel() {
     if (!viewport || !cycleWidth) return;
 
     const step = cycleWidth / lugares.length;
-    viewport.scrollLeft = (viewport.scrollLeft + direction * step + cycleWidth) % cycleWidth;
+    const offset = (viewport.scrollLeft + direction * step + cycleWidth) % cycleWidth;
+    viewport.scrollLeft = offset;
+    motionRef.current = { phase: "pause", elapsedMs: 0, offset };
     setActiveIndex(Math.floor((viewport.scrollLeft / cycleWidth) * lugares.length));
   };
 
@@ -323,7 +335,9 @@ function LugaresCarousel() {
     const viewport = viewportRef.current;
     if (!viewport || !cycleWidth) return;
 
-    viewport.scrollLeft = (index * cycleWidth) / lugares.length;
+    const offset = (index * cycleWidth) / lugares.length;
+    viewport.scrollLeft = offset;
+    motionRef.current = { phase: "pause", elapsedMs: 0, offset };
     setActiveIndex(index);
   };
 
@@ -588,9 +602,9 @@ function Index() {
                     color: "#3d2010",
                   }}
                 >
-                  Un retablo ayacuchano es una capilla portátil con dos puertas. Dentro hay santos y
-                  escenas de la vida del campo, hechos a mano. En Las Flores damos a conocer el
-                  retablo porque forma parte de nuestra historia.
+                  Esta capilla portátil de dos puertas, elaborada a mano, reúne santos y escenas de
+                  la vida del campo. En Las Flores compartimos esta expresión artesanal, parte de
+                  la memoria cultural ayacuchana.
                 </p>
               </div>
 
