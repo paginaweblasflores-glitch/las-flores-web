@@ -356,7 +356,8 @@ function LugaresCarousel() {
                     className="absolute inset-0 block cursor-pointer"
                   >
                     <img
-                      src={lugar.imagen}
+                      src={lugar.imagenTarjeta ?? lugar.imagen}
+                      style={lugar.posicionTarjeta ? { objectPosition: lugar.posicionTarjeta } : undefined}
                       alt={titulo}
                       loading={slideIndex < 2 ? "eager" : "lazy"}
                       fetchPriority={slideIndex < 2 ? "high" : "low"}

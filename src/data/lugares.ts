@@ -8,7 +8,7 @@ export type GaleriaItem = {
   posicion?: string;
 };
 
-/** Escena de la sección "… de cerca": clip en bucle (`video`) con la foto como póster, y su título y descripción debajo. */
+/** Escena de la sección "Detalles de …": clip en bucle (`video`) con la foto como póster, y su título y descripción debajo. */
 export type EscenaCard = { imagen: string; titulo: string; descripcion: string; video?: string };
 
 export type Lugar = {
@@ -27,6 +27,10 @@ export type Lugar = {
   /** Texto corto para buscadores y redes (una o dos frases); si falta se usa `descripcion`. */
   metaDescripcion?: string;
   imagen: string;
+  /** Foto distinta para la tarjeta del carrusel del inicio (si falta se usa `imagen`, la misma del hero de la página). */
+  imagenTarjeta?: string;
+  /** Punto de enfoque del recorte de la foto de la tarjeta (CSS `object-position`); por defecto, el centro. */
+  posicionTarjeta?: string;
   imagenSecundaria: string;
   /** Párrafos separados por una línea en blanco; *texto* se muestra en cursiva. */
   descripcion: string;
@@ -34,7 +38,7 @@ export type Lugar = {
   consejo?: string;
   /** Imagen a pantalla completa con una etiqueta encima, entre el mapa y la galería (opcional). */
   seccionImagen?: { imagen: string; etiqueta: string };
-  /** Título de la sección de clips ("… de cerca"); va sin descripción. */
+  /** Título de la sección de clips ("Detalles de …"); va sin descripción. */
   escenasTitulo: string;
   /** Etiquetas de 2-4 palabras para los 4 clips de video (brief de rodaje para Marketing). */
   clipTags: [string, string, string, string];
@@ -77,7 +81,7 @@ export const lugares: Lugar[] = [
       "Basílica Catedral de Ayacucho, en la Plaza Mayor de Huamanga. Se construyó entre 1632 y 1672 y guarda diez retablos con pan de oro.",
     consejo:
       "Sube al campanario por la escalera de piedra para ver la ciudad en panorámica. Si quieres más, el museo y las catacumbas están dentro de la misma Catedral.",
-    escenasTitulo: "Basílica Catedral de cerca",
+    escenasTitulo: "Detalles de la Basílica Catedral",
     clipTags: ["Fachada de la Catedral", "Portada y esculturas", "Naves y arcos", "Retablos de pan de oro"],
     mapLat: -13.1588,
     mapLng: -74.2239,
@@ -122,7 +126,7 @@ export const lugares: Lugar[] = [
         video: "/videos/lugares-visitar/catedral-retablos.mp4",
       },
     ],
-    galeriaTitulo: "Cuatro visitas más en Huamanga",
+    galeriaTitulo: "¿Qué más visitar en Huamanga?",
     galeria: [
       {
         imagen: "/imagenes-reales/catedral-de-ayacucho/plaza-mayor-de-huamanga.webp",
@@ -169,7 +173,7 @@ export const lugares: Lugar[] = [
       "El Santuario Histórico Pampa de Ayacucho está a unos cuarenta y cinco minutos en vehículo de Huamanga, en el distrito de Quinua. Es el escenario donde el 9 de diciembre de 1824 el Ejército Unido Libertador selló la independencia de Sudamérica, y fue declarado Santuario Histórico en 1980.\n\nLo corona un obelisco de 44 metros revestido de mármol. A pocos minutos queda el pueblo de Quinua, reconocido por el Mincetur como “Pueblo con Encanto” en 2024, una distinción para localidades con atributos naturales y culturales auténticos que favorecen el turismo. Su cerámica, hecha con arcilla local, da forma a toritos de techo, iglesias en miniatura y figuras costumbristas. Sus saberes y prácticas son Patrimonio Cultural de la Nación desde 2019.",
     consejo:
       "A unos 3400 m s. n. m. el clima es frío y el sol es fuerte, así que lleva abrigo, protector solar y agua. De enero a marzo llueve, por eso conviene sumar un impermeable.",
-    escenasTitulo: "Pampa de Ayacucho de cerca",
+    escenasTitulo: "Detalles de la Pampa de Ayacucho",
     clipTags: ["El obelisco", "Cerámica de Quinua", "Abuelos de Quinua", "Escenificación de la batalla"],
     mapLat: -13.0811,
     mapLng: -74.1322,
@@ -214,7 +218,7 @@ export const lugares: Lugar[] = [
         video: "/imagenes-reales/pampa-de-ayacucho/pampa-escenificacion.mp4",
       },
     ],
-    galeriaTitulo: "Dos visitas más en la ruta a Quinua",
+    galeriaTitulo: "¿Qué más visitar en Quinua?",
     galeria: [
       {
         imagen: "/imagenes-reales/pampa-de-ayacucho/wari.webp",
@@ -240,7 +244,7 @@ export const lugares: Lugar[] = [
     categoria: "Paisaje Andino",
     provincia: "Huamanga",
     provinciaSombreada: "/imagenes-reales/mapas/provincia-huamanga.webp",
-    heroTitulo: "Abismo de Puncupata, Puerta Celestial",
+    heroTitulo: "Abismo de Puncupata, donde el cielo y la tierra se unen",
     metaDescripcion:
       "Un desfiladero a 4200 m s. n. m., a una hora y media de Huamanga. Qué ver y qué llevar.",
     imagen: "/imagenes-reales/abismo-puncupata/acantilado.webp",
@@ -249,7 +253,7 @@ export const lugares: Lugar[] = [
       "A una hora y media en vehículo de Huamanga, el abismo de Puncupata se abre a 4200 m s. n. m. como un gran desfiladero.\n\nUn sendero peatonal de cerca de un kilómetro, habilitado por la comunidad local, lleva hasta su borde, un mirador natural con vistas a los pueblos de Ccaccamarca y Chumbes. En el camino pastan vicuñas y, sobre el acantilado, planean las aves de altura. Se le conoce también como la «Puerta Celestial», nombre que alude a su profundidad y a sus vistas panorámicas.",
     consejo:
       "Lleva ropa abrigadora e impermeable, botas resistentes, agua y algo de comer. A 4200 m s. n. m. el clima puede cambiar rápidamente. Camina con precaución por el sendero y sigue las indicaciones de tu guía local. Mantén una distancia segura del borde, especialmente si sufres de vértigo.",
-    escenasTitulo: "Puncupata de cerca",
+    escenasTitulo: "Detalles de Puncupata",
     clipTags: [
       "Al filo del acantilado",
       "Vicuñas en la puna",
@@ -264,25 +268,21 @@ export const lugares: Lugar[] = [
       heroMobile: "/videos/hero/abismo-puncupata-mobile.mp4",
       poster: "/videos/hero/abismo-puncupata-poster.webp",
     },
-    videoSeccion: {
-      src: "/videos/lugares-visitar/pachapupum.mp4",
-      srcMobile: "/videos/lugares-visitar/pachapupum-mobile.mp4",
-      poster: "/videos/lugares-visitar/pachapupum-poster.webp",
-      etiqueta: "Volcán inactivo de Pachapupum",
-    },
-    galeriaTitulo: "Dos visitas más desde Huamanga",
+    galeriaTitulo: "¿Qué más visitar en Puncupata?",
+    // Dos pueblos del recorrido por la carretera a Vilcas Huamán. Las fotos son de referencia temporal (papa y puyas del banco
+    // de imágenes del sitio) hasta tener fotos propias de cada lugar.
     galeria: [
       {
-        imagen: "/imagenes-reales/abismo-puncupata/vicuna-habitat.webp",
-        titulo: "Vicuñas en el camino a Puncupata",
+        imagen: "/imagenes-reales/productosAyacucho/Otoño/papa.webp",
+        titulo: "Pueblo de Condorcocha",
         descripcion:
-          "En el tramo final de la carretera al abismo, a más de 4000 m s. n. m., es común ver vicuñas silvestres entre los pastizales. Cada año, de mayo a noviembre, las comunidades de la región realizan el chaccu, un ritual ancestral que esquila a las vicuñas con más fibra y las devuelve a su hábitat sin dañarlas.",
+          "Aquí la gente es muy amable y las mañanas frías invitan a desayunar un caldo. En sus campos se aprende cómo llega la papa desde la siembra hasta el plato. Por el camino hay restaurantes y tiendas con queso y yogurt. Queda a unos cuarenta y cinco minutos de Huamanga.",
       },
       {
-        imagen: "/imagenes-reales/abismo-puncupata/canones-de-qorihuillca.webp",
-        titulo: "Cañones de Qorihuillca",
+        imagen: "/imagenes-reales/vilcas-huaman/puyas-de-raimondi-de-titankayocc.webp",
+        titulo: "Pueblo de Manallasacc",
         descripcion:
-          "Son un laberinto rocoso de pasadizos oscuros. Quedan a unos cuarenta minutos en vehículo de Huamanga. Se recomienda ir por la mañana, y es indispensable hacerlo con un guía especializado y equipo de seguridad.",
+          "Cada año la pampa de Titankapampa se llena de caballos de paso y concursos de ordeño en la feria ganadera. Cerca del pueblo crece además un bosque de puyas de Raimondi, que florecen una sola vez en su vida. Queda a poco más de una hora de Huamanga.",
       },
     ],
     escenasCards: [
@@ -334,7 +334,7 @@ export const lugares: Lugar[] = [
       imagen: "/imagenes-reales/vilcas-huaman/vilcas-huaman-parque.webp",
       etiqueta: "Plaza de Vilcas Huamán",
     },
-    escenasTitulo: "Vilcas Huamán de cerca",
+    escenasTitulo: "Detalles de Vilcas Huamán",
     clipTags: ["Ushnu inca", "Templo del Sol", "Plaza ceremonial", "Halcón sagrado"],
     mapLat: -13.6558,
     mapLng: -73.95,
@@ -349,7 +349,7 @@ export const lugares: Lugar[] = [
       poster: "/videos/lugares-visitar/puyas-de-raimondi-poster.webp",
       etiqueta: "Puyas de Raimondi",
     },
-    galeriaTitulo: "Dos visitas más en Vischongo",
+    galeriaTitulo: "¿Qué más visitar en Vilcas Huamán?",
     galeria: [
       {
         imagen: "/imagenes-reales/vilcas-huaman/puyas-de-raimondi-de-titankayocc.webp",
@@ -408,7 +408,7 @@ export const lugares: Lugar[] = [
       "Ritipata es un nevado de unos 5000 m s. n. m. en la cordillera Chonta, en el distrito de Paras (provincia de Cangallo), a unas tres horas en auto de Huamanga. En la cosmovisión andina es un apu sagrado. Su nombre viene del quechua *riti* (nieve) y *pata* (lugar elevado).\n\nEntre diciembre y abril suelen producirse nevadas. De junio a septiembre, el cielo está más despejado para recorrer las lagunas, como la Ñawi, y las cataratas cercanas. Desde el abra, a más de 4900 m s. n. m., una caminata de media hora permite acercarse al nevado. En la zona también habitan alpacas, vicuñas y vizcachas silvestres.",
     consejo:
       "Para ver nieve, visita entre diciembre y abril, porque su presencia depende del clima. Lleva ropa térmica, chaqueta impermeable, gorro y guantes, además de agua y comida porque no hay restaurantes en el lugar. Aclimátate antes de subir a esta altitud.",
-    escenasTitulo: "Ritipata de cerca",
+    escenasTitulo: "Detalles de Ritipata",
     clipTags: ["Camino al abra", "Lagunas de Ritipata", "Cumbres y valles andinos", "Alpacas de las faldas"],
     mapLat: -13.42917,
     mapLng: -74.69167,
@@ -427,7 +427,7 @@ export const lugares: Lugar[] = [
       imagen: "/imagenes-reales/ritipata/laguna-nevado.webp",
       etiqueta: "Lagunas de Ritipata",
     },
-    galeriaTitulo: "Dos visitas más en Cangallo",
+    galeriaTitulo: "¿Qué más visitar en Cangallo?",
     galeria: [
       {
         imagen: "/imagenes-reales/ritipata/pumapaqcha.webp",
@@ -486,7 +486,7 @@ export const lugares: Lugar[] = [
       "Millpu es una serie de unas 20 pozas turquesas que descienden por un cañón a unos 3600 m s. n. m. Queda en la comunidad de Circamarca, en el distrito de Huancaraylla (provincia de Víctor Fajardo). Desde Huamanga se llega en unas tres horas y media por carretera hasta Pataqocha, y de ahí se camina unos veinte minutos.\n\nEl color turquesa viene de los minerales de las rocas del río y de la luz del sol. Su nombre viene del quechua *millpuy* (tragar), porque el río desaparece en una grieta subterránea. En lluvias se forma una gran represa natural, a la que algunos llaman «garganta del diablo».",
     consejo:
       "Visita Millpu entre mayo y septiembre para ver el agua más turquesa, ya que de enero a abril las lluvias la enturbian. Lleva calzado con buen agarre para los senderos y respeta la prohibición de bañarse en las pozas, vigente desde 2018 para conservar su color.",
-    escenasTitulo: "Millpu de cerca",
+    escenasTitulo: "Detalles de Millpu",
     clipTags: ["Pozas escalonadas", "Caídas de agua entre terrazas", "Cañón de Millpu", "Poza al pie de la caída"],
     mapLat: -13.7207,
     mapLng: -74.1339,
@@ -504,7 +504,7 @@ export const lugares: Lugar[] = [
       srcMobile: "/imagenes-reales/aguas-turquesas/aguas-turquesas-seccion-mobile.mp4",
       poster: "/imagenes-reales/aguas-turquesas/aguas-turquesas-seccion-poster.webp",
     },
-    galeriaTitulo: "Dos visitas más en Víctor Fajardo",
+    galeriaTitulo: "¿Qué más visitar en Sarhua?",
     galeria: [
       {
         imagen: "/imagenes-reales/aguas-turquesas/tabla-sarhua.webp",
@@ -544,6 +544,150 @@ export const lugares: Lugar[] = [
         titulo: "Poza al pie de la caída",
         descripcion: "El agua se reúne en una poza rodeada de roca al pie de la caída.",
         video: "/videos/lugares-visitar/aguas-turquesas-caida.mp4",
+      },
+    ],
+  },
+  {
+    id: 8,
+    slug: "canones-de-qorihuillca",
+    numeral: "VII",
+    nombre: "Cañones de Qorihuillca",
+    categoria: "Turismo de Aventura",
+    provincia: "Huamanga",
+    provinciaSombreada: "/imagenes-reales/mapas/provincia-huamanga.webp",
+    heroTitulo: "Cañones de Qorihuillca, un laberinto de roca",
+    metaDescripcion:
+      "Un laberinto de pasadizos de roca a unos cuarenta minutos de Huamanga. Qué ver y qué llevar.",
+    // Fotos provisionales mientras llegan los videos y los clips propios del lugar.
+    imagen: "/imagenes-reales/canones-de-qorihuillca/canones-de-qorihuillca.webp",
+    // La tarjeta del inicio usa la misma foto de la sección Consejo de visita.
+    imagenTarjeta: "/imagenes-reales/canones-de-qorihuillca/fondo-del-canon.webp",
+    posicionTarjeta: "50% 40%",
+    // Foto de la sección a pantalla completa del final de la página (la misma de la escena "Rapel con equipo").
+    imagenPantalla: "/imagenes-reales/canones-de-qorihuillca/tours-rapel.webp",
+    imagenSecundaria: "/imagenes-reales/canones-de-qorihuillca/fondo-del-canon.webp",
+    descripcion:
+      "A unos cuarenta minutos de Huamanga, la roca se abre en pasadizos tan angostos que en algunos tramos casi no entra la luz. Son los siete cañones de Qorihuillca, un laberinto que el agua fue tallando con el tiempo.\n\nLas paredes miden entre veinticinco y cincuenta metros y algunas son curvas y de colores. Es un lugar para el turismo de aventura, con caminata y rapel.",
+    consejo:
+      "Ve por la mañana y con un guía especializado, que es indispensable. Usa el equipo de seguridad que indique tu guía y ropa cómoda de abrigo. Evita los pantalones cortos por lo estrecho de algunos tramos. Si ves murciélagos o insectos, los guías indican que no representan peligro.",
+    escenasTitulo: "Detalles de los Cañones de Qorihuillca",
+    clipTags: ["Pasadizos de roca", "Cielo entre paredes", "Descenso en rapel", "Rapel con equipo"],
+    // Ubicación aproximada (unos cuatro kilómetros al noroeste del centro de Huamanga); el mapa es referencial.
+    mapLat: -13.13,
+    mapLng: -74.25,
+    galeriaTitulo: "¿Qué más visitar en Huamanga?",
+    galeria: [
+      {
+        imagen: "/imagenes-reales/canones-de-qorihuillca/mirador-inti-warkuna.webp",
+        titulo: "Mirador de Inti Warkuna",
+        descripcion:
+          "Desde el cerro La Picota se ve toda la ciudad con la Plaza de Armas al centro. En la cima está la Cruz de la Paz. De noche es más bonito subir, porque la ciudad se ve iluminada a tus pies. Abre hasta la medianoche y queda a unos veinte minutos de la ciudad.",
+      },
+      {
+        imagen: "/imagenes-reales/canones-de-qorihuillca/cueva-de-pikimachay.webp",
+        titulo: "Cueva de Pikimachay",
+        descripcion:
+          "Es una cueva de unos veinticuatro metros de ancho donde se hallaron herramientas de piedra de hace más de veinte mil años. Queda en el distrito de Pacaycasa, a unos treinta minutos de Huamanga, y la entrada es gratuita.",
+      },
+    ],
+    escenasCards: [
+      {
+        imagen: "/imagenes-reales/canones-de-qorihuillca/canones-de-qorihuillca.webp",
+        titulo: "Pasadizos de roca",
+        descripcion: "Un visitante recorre un pasadizo angosto entre paredes de roca.",
+      },
+      {
+        imagen: "/imagenes-reales/canones-de-qorihuillca/fondo-del-canon.webp",
+        titulo: "Cielo entre paredes",
+        descripcion: "Desde el fondo, las paredes se cierran y dejan ver apenas una franja de cielo.",
+      },
+      {
+        imagen: "/imagenes-reales/canones-de-qorihuillca/rapel-guiado.webp",
+        titulo: "Descenso en rapel",
+        descripcion: "Una persona baja en rapel por una pared de roca de tonos anaranjados.",
+      },
+      {
+        imagen: "/imagenes-reales/canones-de-qorihuillca/tours-rapel.webp",
+        titulo: "Rapel con equipo",
+        descripcion: "Dos personas con casco y cuerdas durante un descenso en rapel.",
+      },
+    ],
+  },
+  {
+    id: 9,
+    slug: "volcan-pachapupum",
+    numeral: "VIII",
+    nombre: "Volcán inactivo de Pachapupum",
+    categoria: "Volcán y Aguas Termales",
+    provincia: "Huanca Sancos",
+    provinciaSombreada: "/imagenes-reales/mapas/provincia-huanca-sancos.webp",
+    heroTitulo: "Pachapupum, el ombligo de la tierra",
+    metaDescripcion:
+      "Un volcán inactivo de roca y aguas termales a 4022 m s. n. m., en Huanca Sancos. Cuándo ir y qué llevar.",
+    // Fotos provisionales mientras llegan los videos y los clips propios del lugar. Atención: "cono-escalonado" y
+    // "poza-termal" vienen de imágenes generadas con IA ("ChatGPT Image"); hay que cambiarlas por fotos reales.
+    imagen: "/imagenes-reales/volcan-pachapupum/crater-con-agua.webp",
+    imagenSecundaria: "/imagenes-reales/volcan-pachapupum/cono-escalonado.webp",
+    descripcion:
+      "Pachapupum se alza a 4022 m s. n. m. en el distrito de Sacsamarca de la provincia de Huanca Sancos, a unas cinco horas de Huamanga. Se le llama volcán por su forma, pero es un géiser inactivo que las aguas termales con sal y azufre fueron levantando capa por capa hasta formar un cono escalonado de roca caliza de unos treinta metros de alto. Su nombre en quechua significa ombligo de la tierra y también se le conoce como el volcán de agua.\n\nEn la cima se abre un cráter de unos diez metros de ancho. Se sube por gradas de roca y una escalera de madera, y alrededor hay pozas termales ricas en azufre para descansar después de la subida.",
+    consejo:
+      "Lleva traje de baño, protector solar y ropa abrigadora. El viento frío suele empezar después de las tres de la tarde. Visita entre mayo y mediados de diciembre y deja el viaje para el segundo o tercer día en Ayacucho, así te aclimatas a la altura.",
+    escenasTitulo: "Detalles de Pachapupum",
+    clipTags: ["Cono escalonado", "Pozas termales", "Terrazas de roca", "Pozo de roca"],
+    // Ubicación aproximada en el sur de la provincia de Huanca Sancos (unos 35 km al sur de Sancos); el mapa es referencial.
+    mapLat: -13.94,
+    mapLng: -74.415,
+    video: {
+      hero: "/videos/lugares-visitar/pachapupum.mp4",
+      heroMobile: "/videos/lugares-visitar/pachapupum-mobile.mp4",
+      poster: "/videos/lugares-visitar/pachapupum-poster.webp",
+    },
+    // Video completo a pantalla completa bajo la galería, sin audio (versión vertical para celular).
+    videoSeccion: {
+      src: "/videos/lugares-visitar/pachapupum-volcan.mp4",
+      srcMobile: "/videos/lugares-visitar/pachapupum-volcan-mobile.mp4",
+      poster: "/videos/lugares-visitar/pachapupum-volcan-poster.webp",
+      etiqueta: "Volcán inactivo de Pachapupum",
+    },
+    galeriaTitulo: "¿Qué más visitar en Huanca Sancos?",
+    galeria: [
+      {
+        imagen: "/imagenes-reales/huanca-sancos/catarata-de-wisquiri.webp",
+        titulo: "Catarata de Wisquiri",
+        descripcion:
+          "Un lugar donde la naturaleza habla por sí sola. Entre montañas y caminos escondidos cae esta catarata de agua cristalina que pocos conocen. Se encuentra en el centro poblado de Porta Cruz, en el distrito de Carapo de la provincia de Huanca Sancos.",
+      },
+      {
+        imagen: "/imagenes-reales/huanca-sancos/ituni.webp",
+        titulo: "Ituni",
+        descripcion:
+          "Es un sitio arqueológico de la provincia de Huanca Sancos con unas doscientas chullpas, las construcciones funerarias de los antiguos pobladores andinos.",
+      },
+    ],
+    escenasCards: [
+      {
+        imagen: "/imagenes-reales/volcan-pachapupum/escena-cono.webp",
+        titulo: "Cono escalonado",
+        descripcion: "Vista aérea del cono escalonado, con una escalera de madera que sube hacia el cráter.",
+        video: "/videos/lugares-visitar/pachapupum-cono.mp4",
+      },
+      {
+        imagen: "/imagenes-reales/volcan-pachapupum/escena-pozas.webp",
+        titulo: "Pozas termales",
+        descripcion: "Una poza termal de aguas verdosas rodeada de tonos amarillos y anaranjados.",
+        video: "/videos/lugares-visitar/pachapupum-pozas.mp4",
+      },
+      {
+        imagen: "/imagenes-reales/volcan-pachapupum/escena-terrazas.webp",
+        titulo: "Terrazas de roca",
+        descripcion: "Las capas de roca del cono forman terrazas bajo un cielo azul intenso.",
+        video: "/videos/lugares-visitar/pachapupum-terrazas.mp4",
+      },
+      {
+        imagen: "/imagenes-reales/volcan-pachapupum/escena-pozo.webp",
+        titulo: "Pozo de roca",
+        descripcion: "Un pozo profundo de paredes de roca con agua en el fondo, visto desde el borde.",
+        video: "/videos/lugares-visitar/pachapupum-pozo.mp4",
       },
     ],
   },
