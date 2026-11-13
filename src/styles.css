@@ -315,6 +315,35 @@
   }
 }
 
+/* Lista de lugares del inicio. La primera tarjeta alinea con el titulo (mismo margen que .container-flores) y al
+   deslizar las tarjetas llegan hasta los bordes de la pantalla, sin margen a los lados. */
+.lugares-slider {
+  --margen: max(1.5rem, calc((100% - 80rem) / 2 + 1.5rem));
+}
+@media (min-width: 1440px) {
+  .lugares-slider {
+    --margen: max(1.5rem, calc((100% - 90rem) / 2 + 1.5rem));
+  }
+}
+.lugares-slider__lista {
+  padding-inline: var(--margen);
+  scroll-padding-inline: var(--margen);
+}
+.lugares-slider__flecha {
+  top: calc(22rem * 0.756);
+}
+@media (min-width: 1024px) {
+  .lugares-slider__flecha {
+    top: calc(25.8rem * 0.756);
+  }
+}
+.lugares-slider__flecha--atras {
+  left: calc(var(--margen) + 2rem);
+}
+.lugares-slider__flecha--adelante {
+  right: calc(var(--margen) + 2rem);
+}
+
 /* Fauna Andina: deslizamiento lateral suave entre especies (la duración se fija desde el componente). */
 @keyframes fauna-entra-der {
   from { transform: translateX(100%); }

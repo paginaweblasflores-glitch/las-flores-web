@@ -5,15 +5,18 @@ import { describe, expect, it } from "vitest";
 const homeRoutePath = resolve(process.cwd(), "src/routes/index.tsx");
 
 describe("sección de premios de la página de inicio", () => {
-  it("reduce el espacio vertical y la altura de la imagen", () => {
+  it("pone el texto a la izquierda y una foto grande a la derecha, como en Productos de temporada", () => {
     const routeSource = readFileSync(homeRoutePath, "utf8");
     const awardsSection =
       routeSource.match(/\{\/\* PREMIOS \*\/\}([\s\S]*?)\{\/\* CTA FINAL \*\/\}/)?.[1] ?? "";
 
-    expect(awardsSection).toContain('className="py-12 md:py-20 px-6"');
+    expect(awardsSection).toContain('className="py-16 md:py-28 px-6"');
+    expect(awardsSection).toContain("md:grid-cols-12");
+    expect(awardsSection).toContain('className="md:col-span-5"');
+    expect(awardsSection).toContain("md:col-span-7");
     expect(awardsSection).toContain('className="space-y-6 max-w-md mt-8"');
-    expect(awardsSection).toContain("aspect-square");
-    expect(awardsSection).not.toContain("min-h-[500px] md:min-h-[600px]");
+    expect(awardsSection).not.toContain("shadow-2xl");
+    expect(awardsSection.indexOf("<h2")).toBeLessThan(awardsSection.indexOf("<img"));
   });
 
   it("muestra el título con su descripción breve y separa los premios", () => {
@@ -36,23 +39,21 @@ describe("sección de premios de la página de inicio", () => {
     expect(awardsSection).not.toContain("Ser el mejor restaurante de Ayacucho");
   });
 
-  it("llena un card cuadrado con la foto WebP completa y optimizada", () => {
+  it("muestra la foto de la entrega del premio en WebP optimizado", () => {
     const routeSource = readFileSync(homeRoutePath, "utf8");
     const awardsSection =
       routeSource.match(/\{\/\* PREMIOS \*\/\}([\s\S]*?)\{\/\* CTA FINAL \*\/\}/)?.[1] ?? "";
     const imagePath = resolve(
       process.cwd(),
-      "public/imagenes-reales/premios-restaurante/premios-las-flores.webp",
+      "public/imagenes-reales/premios-restaurante/premios.webp",
     );
 
-    expect(awardsSection).toContain(
-      'src="/imagenes-reales/premios-restaurante/premios-las-flores.webp"',
-    );
-    expect(awardsSection).toContain(
-      'className="w-full aspect-square object-cover shadow-2xl"',
-    );
-    expect(awardsSection).not.toContain("h-[360px] md:h-[460px]");
+    expect(awardsSection).toContain('src="/imagenes-reales/premios-restaurante/premios.webp"');
+    expect(awardsSection).toContain('className="w-full aspect-[3/2] object-cover"');
     expect(existsSync(imagePath)).toBe(true);
     expect(statSync(imagePath).size).toBeLessThan(500_000);
+    expect(
+      existsSync(resolve(process.cwd(), "public/imagenes-reales/premios-restaurante/premius.jpeg")),
+    ).toBe(false);
   });
 });

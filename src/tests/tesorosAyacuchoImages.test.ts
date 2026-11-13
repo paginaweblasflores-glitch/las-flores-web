@@ -1,4 +1,4 @@
-import { existsSync, readFileSync } from "node:fs";
+import { existsSync, readFileSync, statSync } from "node:fs";
 import { resolve } from "node:path";
 import { describe, expect, it } from "vitest";
 
@@ -39,15 +39,16 @@ describe("imágenes de Tesoros de Ayacucho", () => {
     ).toBe(true);
   });
 
-  it("usa la imagen riti de productosAyacucho en el encabezado", () => {
+  it("usa la imagen hero de productosAyacucho en el encabezado", () => {
     const routeSource = readFileSync(routePath, "utf8");
-    const heroImage = "/imagenes-reales/productosAyacucho/riti.png";
+    const heroImage = "/imagenes-reales/productosAyacucho/hero.webp";
 
     expect(existsSync(resolve(publicPath, heroImage.slice(1)))).toBe(true);
+    expect(statSync(resolve(publicPath, heroImage.slice(1))).size).toBeLessThan(300_000);
     expect(routeSource).toContain(`src="${heroImage}"`);
   });
 
-  it("encuadra la imagen del encabezado hacia los cerros", () => {
+  it("encuadra la imagen del encabezado hacia la parte alta de las panojas", () => {
     const routeSource = readFileSync(routePath, "utf8");
 
     expect(routeSource).toContain("object-[center_35%]");

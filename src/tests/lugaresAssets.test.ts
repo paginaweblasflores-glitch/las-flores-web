@@ -45,6 +45,16 @@ describe("lugares para visitar", () => {
     expect(volcan?.escenasCards).toHaveLength(4);
     expect(volcan?.galeria).toHaveLength(2);
     const puncupata = lugares.find((l) => l.slug === "abismo-puncupata");
-    expect(puncupata?.videoSeccion).toBeUndefined();
+    expect(puncupata?.videoSeccion?.src).toContain("abismo-puncupata");
+    expect(puncupata?.videoSeccion?.src).not.toContain("pachapupum");
+  });
+
+  it("el clip final de Puncupata tiene video de escritorio, de celular y póster", () => {
+    const puncupata = lugares.find((l) => l.slug === "abismo-puncupata");
+    const clip = puncupata?.videoSeccion;
+    expect(clip).toBeDefined();
+    for (const ruta of [clip!.src, clip!.srcMobile, clip!.poster]) {
+      expect(existsSync(resolve(process.cwd(), "public", ruta.replace(/^\//, ""))), ruta).toBe(true);
+    }
   });
 });

@@ -95,8 +95,8 @@ export const festividades: Festividad[] = [
     },
     preguntasTitulo: "Preguntas frecuentes sobre el carnaval",
     preguntasImagen: {
-      src: "/imagenes-reales/carnaval-ayacuchano/danzantes-carnaval.webp",
-      alt: "Danzante de carnaval con poncho y sombrero bailando en una calle decorada con cintas y globos",
+      src: "/imagenes-reales/carnaval-ayacucho/carnaval-2026.webp",
+      alt: "Danzante de carnaval con sombrero blanco, manta bordada dorada y vestido morado",
     },
     escenasClips: [
       {
@@ -181,7 +181,7 @@ export const festividades: Festividad[] = [
           "Fundada en Huamanga el 8 de febrero de 1987 por residentes de Cangallo, esta asociación cultural ganó cinco concursos de carnaval consecutivos y, en 2008, obtuvo el título de Comparsa Señorial.",
       },
       {
-        imagen: "/imagenes-reales/carnaval-ayacuchano/sentimiento-fajardino.webp",
+        imagen: "/imagenes-reales/carnaval-ayacucho/sentimiento-fajardino.webp",
         nombre: "Sentimiento Fajardino",
         descripcion:
           "Comparsa de la provincia de Víctor Fajardo que lleva a Huamanga el pumpín fajardino, expresión musical declarada Patrimonio Cultural de la Nación en 2022. Sus canciones combinan picardía y crítica social, y sus cerca de 320 músicos y danzantes destacan por sus trajes morados.",

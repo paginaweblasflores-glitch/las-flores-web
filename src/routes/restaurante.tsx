@@ -242,16 +242,29 @@ function RestaurantePage() {
       <GenerationsSection />
 
       {/* Familia Las Flores */}
-      <section id="familia" className="bg-eucalipto text-piedra py-16 md:py-32 px-6">
-        <div className="container-flores mx-auto flex flex-col lg:flex-row items-center gap-12 md:gap-20">
-          <div className="flex-1 max-w-none">
+      <section id="familia" className="bg-eucalipto text-piedra py-16 md:py-28 px-6">
+        {/* Foto grande a la izquierda y el texto a la derecha, centrado en vertical */}
+        <div className="container-flores mx-auto grid grid-cols-1 items-center gap-8 md:grid-cols-12 md:gap-x-10">
+          <div className="md:col-span-8">
+            {/* Formato 2:1 para que entren completas las cinco personas del equipo */}
+            <div className="aspect-[2/1] overflow-hidden">
+              <img
+                src="/inicio/Equipolasflores.webp"
+                alt="Equipo humano de Restaurante Las Flores"
+                loading="lazy"
+                decoding="async"
+                className="h-full w-full object-cover"
+              />
+            </div>
+          </div>
+          <div className="md:col-span-4">
             <span className="text-chilca font-medium uppercase tracking-[0.3em] text-xs mb-6 block">
               Nuestra gente
             </span>
-            <h2 className="font-serif text-4xl md:text-5xl leading-[1.1] text-balance mb-6">
+            <h2 className="font-serif text-4xl md:text-4xl lg:text-5xl leading-[1.1] text-balance mb-6">
               Familia Las Flores
             </h2>
-            <p className="text-lg text-piedra/70 leading-[1.7] mb-8">
+            <p className="text-base leading-[1.7] text-piedra/75 mb-8">
               Detrás de cada plato sabroso y cada sonrisa en la mesa hay hombres y mujeres
               ayacuchanos que trabajan con dignidad, pasión y profundo amor por nuestras raíces.
             </p>
@@ -263,17 +276,6 @@ function RestaurantePage() {
               <span>CONOCE A LA FAMILIA</span>
             </Link>
           </div>
-          <div className="flex-1 w-full flex justify-end">
-            <div className="relative aspect-4/3 w-full max-w-[33.5rem] overflow-hidden shadow-2xl group">
-              <img
-                src="/inicio/Equipolasflores.webp"
-                alt="Equipo humano de Restaurante Las Flores"
-                loading="lazy"
-                decoding="async"
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-              />
-            </div>
-          </div>
         </div>
       </section>
 
@@ -282,19 +284,25 @@ function RestaurantePage() {
       <ClientVideosSection />
 
       {/* CTA Reservas y Delivery */}
-      <section id="reservas" className="bg-piedra text-nogal py-16 md:py-32 px-6">
-        <div className="container-flores mx-auto grid items-center gap-10 md:grid-cols-[1fr_1.35fr] md:gap-16">
-          <div className="text-center md:text-left">
-            <h2 className="font-serif text-4xl md:text-6xl leading-[1.05] mb-8 text-balance">
+      <section id="reservas" className="bg-piedra text-nogal py-16 md:py-28 px-6">
+        {/* El mapa lleva el protagonismo (dos tercios del ancho) y el texto queda a su izquierda */}
+        <div className="container-flores mx-auto grid grid-cols-1 items-center gap-8 md:grid-cols-12 md:gap-x-10">
+          <div className="md:col-span-4">
+            <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl leading-[1.1] text-balance">
               ¿Dónde nos encuentras?
             </h2>
-            <p className="text-lg text-nogal/80 leading-[1.7] max-w-[52ch]">
+            <p className="mt-5 text-base leading-[1.7] text-nogal/80">
               Estamos en Huamanga, Ayacucho. Nuestra dirección es el Jr. José Olaya 106, a siete minutos
-              de la Plaza Mayor y a seis del aeropuerto Alfredo Mendívil Duarte. Atendemos de lunes a viernes de 7:00&nbsp;a.&nbsp;m.
-              a 5:30&nbsp;p.&nbsp;m., y los sábados y domingos de 7:00&nbsp;a.&nbsp;m. a 6:00&nbsp;p.&nbsp;m.
+              de la Plaza Mayor y a seis del aeropuerto Alfredo Mendívil Duarte.
+            </p>
+            <p className="mt-4 text-base leading-[1.7] text-nogal/80">
+              Atendemos de lunes a viernes de 7:00&nbsp;a.&nbsp;m. a 5:30&nbsp;p.&nbsp;m., y los sábados
+              y domingos de 7:00&nbsp;a.&nbsp;m. a 6:00&nbsp;p.&nbsp;m.
             </p>
           </div>
-          <MapaUbicacion />
+          <div className="md:col-span-8">
+            <MapaUbicacion />
+          </div>
         </div>
       </section>
 

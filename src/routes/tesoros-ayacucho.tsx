@@ -678,12 +678,12 @@ function TesorosAyacuchoPage() {
       {/* Hero */}
       <header className="relative h-[max(60vh,29rem)] w-full overflow-hidden bg-eucalipto flex items-center pt-32 pb-24">
         <img
-          src="/imagenes-reales/productosAyacucho/riti.png"
-          alt="Paisaje de Riti, Ayacucho"
+          src="/imagenes-reales/productosAyacucho/hero.webp"
+          alt="Plantas de quinua en flor con panojas rojas y amarillas"
           loading="eager"
           decoding="async"
           fetchPriority="high"
-          className="absolute inset-0 w-full h-full object-cover object-[center_35%] opacity-65 filter brightness-105 saturate-[1.1]"
+          className="absolute inset-0 w-full h-full object-cover object-[center_35%]"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-ink/90 via-ink/45 to-black/30" />
 
