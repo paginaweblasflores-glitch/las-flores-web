@@ -142,7 +142,7 @@ export const festividades: Festividad[] = [
           "La celebración culmina con la lectura del testamento y la quema simbólica del Ño Carnavalón, una tradición que reúne a las comparsas y al público en la Plaza Mayor de Huamanga.",
       },
       {
-        pregunta: "¿Dónde comer comida ayacuchana antes de la fiesta?",
+        pregunta: "¿Dónde comer comida ayacuchana tradicional?",
         respuesta:
           "A solo siete minutos de la Plaza Mayor, el Restaurante Las Flores ofrece desayunos y almuerzos con sabor ayacuchano. Una buena opción para recargar energías antes de salir a disfrutar de las comparsas.",
         carta: true,
@@ -249,7 +249,7 @@ export const festividades: Festividad[] = [
           "El Sábado de Gloria reúne diversas actividades tradicionales y preparativos para la celebración pascual. La festividad culmina el Domingo de Resurrección con la procesión del Señor Resucitado, que recorre la Plaza Mayor al amanecer.",
       },
       {
-        pregunta: "¿Dónde comer comida ayacuchana antes de las procesiones?",
+        pregunta: "¿Dónde comer comida ayacuchana tradicional?",
         respuesta:
           "A solo siete minutos de la Plaza Mayor, el Restaurante Las Flores sirve desayunos y almuerzos con sabor ayacuchano desde 1980. Una buena opción para disfrutar de la gastronomía local antes de salir a acompañar las procesiones.",
         carta: true,
@@ -475,7 +475,7 @@ export const festividades: Festividad[] = [
           "Puedes visitar el obelisco conmemorativo y recorrer la planicie donde se libró la batalla, rodeada de paisajes andinos. Muy cerca se encuentra Quinua, conocido por su tradición alfarera y sus talleres de cerámica, ideales para complementar la visita.",
       },
       {
-        pregunta: "¿Dónde comer comida ayacuchana antes de la ceremonia?",
+        pregunta: "¿Dónde comer comida ayacuchana tradicional?",
         respuesta:
           "A solo siete minutos de la Plaza Mayor, el Restaurante Las Flores sirve desayunos y almuerzos con sabor ayacuchano desde 1980. Una buena opción para empezar el día antes de viajar hacia la Pampa de Ayacucho.",
         carta: true,
