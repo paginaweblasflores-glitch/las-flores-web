@@ -255,11 +255,15 @@ export const lugares: Lugar[] = [
     // Fotos provisionales mientras llegan los videos y los clips propios del lugar.
     imagen: "/imagenes-reales/canones-de-qorihuillca/canones-de-qorihuillca.webp",
     // La tarjeta del inicio usa la misma foto de la sección Consejo de visita.
-    imagenTarjeta: "/imagenes-reales/canones-de-qorihuillca/fondo-del-canon.webp",
-    posicionTarjeta: "50% 40%",
+    imagenTarjeta: "/imagenes-reales/canones-de-qorihuillca/canones-consejo.webp",
+    posicionTarjeta: "54% 50%",
     // Foto de la sección a pantalla completa del final de la página (la misma de la escena "Rapel con equipo").
     imagenPantalla: "/imagenes-reales/canones-de-qorihuillca/tours-rapel.webp",
     imagenSecundaria: "/imagenes-reales/canones-de-qorihuillca/fondo-del-canon.webp",
+    seccionImagen: {
+      imagen: "/imagenes-reales/canones-de-qorihuillca/canones-consejo.webp",
+      etiqueta: "Cañones de Qorihuillca",
+    },
     descripcion:
       "A unos cuarenta minutos de Huamanga, la roca se abre en pasadizos tan angostos que en algunos tramos casi no entra la luz. Son los siete cañones de Qorihuillca, un laberinto que el agua fue tallando con el tiempo.\n\nLas paredes miden entre veinticinco y cincuenta metros y algunas son curvas y de colores. Es un lugar para el turismo de aventura, con caminata y rapel.",
     consejo:
@@ -280,6 +284,7 @@ export const lugares: Lugar[] = [
       },
       {
         imagen: "/imagenes-reales/canones-de-qorihuillca/cueva-de-pikimachay.webp",
+        posicion: "35% 50%",
         titulo: "Cueva de Pikimachay",
         descripcion:
           "Es una cueva de unos veinticuatro metros de ancho donde se hallaron herramientas de piedra de hace más de veinte mil años. Queda en el distrito de Pacaycasa, a unos treinta minutos de Huamanga, y la entrada es gratuita.",
@@ -571,8 +576,8 @@ export const lugares: Lugar[] = [
     metaDescripcion:
       "Unas 20 pozas turquesas en un cañón de Ayacucho a unos 3600 m s. n. m. Cómo llegar y cuándo ir.",
     imagen: "/imagenes-reales/aguas-turquesas/aguas-turquesas-card.webp",
-    imagenTarjeta: "/imagenes-reales/aguas-turquesas/millpu-opt.webp",
-    posicionTarjeta: "50% 50%",
+    imagenTarjeta: "/imagenes-reales/aguas-turquesas/millpu-card.webp",
+    posicionTarjeta: "54% 50%",
     imagenSecundaria: "/imagenes-reales/galeria/destino/Turquesa3.webp",
     descripcion:
       "Millpu es una serie de unas 20 pozas turquesas que descienden por un cañón a unos 3600 m s. n. m. Queda en la comunidad de Circamarca, en el distrito de Huancaraylla (provincia de Víctor Fajardo). Desde Huamanga se llega en unas tres horas y media por carretera hasta Pataqocha, y de ahí se camina unos veinte minutos.\n\nEl color turquesa viene de los minerales de las rocas del río y de la luz del sol. Su nombre viene del quechua *millpuy* (tragar), porque el río desaparece en una grieta subterránea. En lluvias se forma una gran represa natural, a la que algunos llaman «garganta del diablo».",
@@ -583,7 +588,7 @@ export const lugares: Lugar[] = [
     mapLat: -13.7207,
     mapLng: -74.1339,
     seccionImagen: {
-      imagen: "/imagenes-reales/aguas-turquesas/millpu-opt.webp",
+      imagen: "/imagenes-reales/aguas-turquesas/millpu-card.webp",
       etiqueta: "Pozas escalonadas de Millpu",
     },
     video: {
@@ -606,7 +611,6 @@ export const lugares: Lugar[] = [
       },
       {
         imagen: "/imagenes-reales/aguas-turquesas/cascadas-sarhua.webp",
-        posicion: "50% 80%",
         titulo: "Cascadas de Sarhua",
         descripcion:
           "Se suceden por el valle de Campanayuq hasta unas aguas termales. Desde Huamanga se llega a Sarhua en unas tres horas en vehículo, y de ahí se camina cerca de una hora. Conviene ir a primera hora y llevar calzado antideslizante.",
