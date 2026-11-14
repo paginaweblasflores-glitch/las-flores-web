@@ -2,7 +2,6 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 const equipoImg = "/imagenes-reales/EQUIPO/02042026-DSC04926.webp";
 const casaImg = "/imagenes-reales/EQUIPO/Gregoria.webp";
 const heroRestauranteImg = "/imagenes-reales/hero-paginas/hero-restaurante.webp";
-const cocinaImg = "/imagenes-reales/EQUIPO/02042026-DSC05081-opt.webp";
 import { SiteFooter } from "@/components/site-footer";
 import { useState, useTransition, useEffect } from "react";
 import { Calendar, CreditCard, ChevronRight, Check } from "lucide-react";

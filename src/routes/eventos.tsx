@@ -101,7 +101,7 @@ const EVENT_SECTIONS: EventSectionData[] = [
     clips: [
       clip("familiares-3-danza-mesas", "Bailarina con vestimenta típica entre las mesas"),
       clip("familiares-12-cumple", "Postre con una vela y frutas sobre un plato con el mensaje de feliz cumpleaños"),
-      clip("familiares-10-pan-crema", "Mujer untando crema en un pan sobre la mesa"),
+      clip("familiares-13-sacudiendo", "Dos chicas sacudiendo cocteleras entre globos dorados y naranjas"),
       clip("familiares-1-baile-grupal", "Hombre cantando y tocando la guitarra, y comensales bailando entre las mesas del restaurante"),
     ]
   },

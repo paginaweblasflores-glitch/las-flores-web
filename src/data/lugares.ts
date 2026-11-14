@@ -276,18 +276,18 @@ export const lugares: Lugar[] = [
     galeriaTitulo: "¿Qué más visitar en Huamanga?",
     galeria: [
       {
-        // Foto de referencia (vista aérea de Huamanga) hasta tener una propia del mirador.
-        imagen: "/imagenes-reales/premios/ayacucho.webp",
-        titulo: "Mirador de La Picota",
+        imagen: "/imagenes-reales/canones-de-qorihuillca/chullpas-de-huancayocc.webp",
+        posicion: "45% 50%",
+        titulo: "Huanta, la Esmeralda de los Andes",
         descripcion:
-          "Desde el cerro La Picota se ve toda la ciudad con la Plaza de Armas al centro. En la cima está la Cruz de la Paz, y de noche es más bonito subir, porque la ciudad se ve iluminada a tus pies.",
+          "Queda a unos cuarenta y cinco minutos de Huamanga. A cinco minutos de su plaza principal está el Cristo Blanco, una figura de más de veinte metros desde donde se ve la ciudad. En el centro poblado de Huancayocc, a unos treinta minutos de la plaza, se visitan la catarata de Occochaca y las chullpas de piedra, junto a la ciudadela de piedra Huayra Patamarca.",
       },
       {
         imagen: "/imagenes-reales/canones-de-qorihuillca/cueva-de-pikimachay.webp",
         posicion: "35% 50%",
         titulo: "Cueva de Pikimachay",
         descripcion:
-          "Es una cueva de unos veinticuatro metros de ancho donde se hallaron herramientas de piedra de hace más de veinte mil años. Queda en el distrito de Pacaycasa, a unos treinta minutos de Huamanga, y la entrada es gratuita.",
+          "Es una cueva de unos veinticuatro metros de ancho donde se hallaron herramientas de piedra de hace más de veinte mil años. Queda en el distrito de Pacaycasa, a unos cincuenta minutos de Huamanga, y la entrada es gratuita.",
       },
     ],
     escenasCards: [
@@ -366,7 +366,7 @@ export const lugares: Lugar[] = [
         imagen: "/imagenes-reales/abismo-puncupata/condorcocha.webp",
         titulo: "Pueblo de Condorcocha",
         descripcion:
-          "Aquí la gente es muy amable y las mañanas frías invitan a desayunar un caldo. En sus campos se aprende cómo llega la papa desde la siembra hasta el plato. Por el camino hay restaurantes y tiendas con queso y yogurt. Queda a unos cuarenta y cinco minutos de Huamanga.",
+          "El pueblo está junto a la carretera de Huamanga a Vilcas Huamán y Cangallo, un lugar de paso de muchos viajeros. Su gente es muy amable y vende caldo para desayunar en las mañanas frías, además de queso y yogurt. Queda a unos cuarenta y cinco minutos de Huamanga.",
       },
       {
         imagen: "/imagenes-reales/abismo-puncupata/manallasacc.webp",
@@ -605,15 +605,16 @@ export const lugares: Lugar[] = [
     galeria: [
       {
         imagen: "/imagenes-reales/aguas-turquesas/tabla-sarhua.webp",
+        posicion: "50% 15%",
         titulo: "Las Tablas de Sarhua",
         descripcion:
           "Son tablas de madera pintadas que cuentan historias de familias y de la vida comunitaria. Tradicionalmente se regalan al terminar una casa nueva y se colocan entre las vigas del techo. Se pueden ver y comprar en Sarhua, a unas tres horas en vehículo de Huamanga, y están declaradas Patrimonio Cultural de la Nación desde 2018.",
       },
       {
         imagen: "/imagenes-reales/aguas-turquesas/cascadas-sarhua.webp",
-        titulo: "Cascadas de Sarhua",
+        titulo: "Las Cascadas de Campanayuq",
         descripcion:
-          "Se suceden por el valle de Campanayuq hasta unas aguas termales. Desde Huamanga se llega a Sarhua en unas tres horas en vehículo, y de ahí se camina cerca de una hora. Conviene ir a primera hora y llevar calzado antideslizante.",
+          "Se suceden por el valle hasta unas aguas termales. Desde Huamanga se llega a Sarhua en unas tres horas en vehículo, y de ahí se camina cerca de una hora. Conviene ir a primera hora y llevar calzado antideslizante.",
       },
     ],
     escenasCards: [

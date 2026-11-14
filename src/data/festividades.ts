@@ -68,14 +68,14 @@ export const festividades: Festividad[] = [
     imagen: "/imagenes-reales/galeria/festividades/carnaval-uno.webp",
     imagenSecundaria: "/imagenes-reales/galeria/festividades/carnaval-tres.webp",
     descripcion:
-      "El Carnaval Ayacuchano combina la herencia de los carnavales españoles con el antiguo Pukllay andino, una celebración vinculada al juego y la fertilidad. Cada año, las comparsas de los barrios y las provincias llenan las calles de Huamanga con huaynos, cantos, danzas y competencias tradicionales como el warakanakuy. Fue el primer carnaval regional declarado Patrimonio Cultural de la Nación, en 2003.",
+      "Combina la herencia de los carnavales españoles con el antiguo Pukllay andino, una celebración vinculada al juego y la fertilidad. Cada año las comparsas de los barrios y las provincias llenan las calles de Huamanga con huaynos y danzas, y con competencias tradicionales como el warakanakuy. En 2003 fue el primer carnaval regional en recibir esa declaratoria.",
     metaDescripcion:
       "Comparsas, huaynos y el Ño Carnavalón en las calles de Huamanga hacia febrero y marzo. Qué ver y dónde comer.",
     consejo:
       "Llevar ropa que se pueda mojar: el agua, el talco y la espuma son parte esencial de la fiesta.",
     frase: "Cómo vivir el Carnaval Ayacuchano",
     escenas: "Color, música y comparsas: así se vive el Carnaval Ayacuchano.",
-    dato: "Cada año, las comparsas de Huamanga, Cangallo, Huanta y otras provincias renuevan sus canciones para el carnaval.",
+    dato: "Cada año las comparsas de Huamanga, Cangallo, Huanta y otras provincias renuevan sus canciones para el carnaval.",
     clipTags: [
       "Comparsas en la plaza",
       "Yunza y corta-montes",
@@ -129,7 +129,7 @@ export const festividades: Festividad[] = [
       {
         pregunta: "¿Cuántos días dura?",
         respuesta:
-          "Los días centrales suelen ser cinco, aunque las actividades previas comienzan antes. En 2026, la celebración oficial se realizó del 14 al 18 de febrero. Como las fechas cambian cada año, consulta el cronograma de la Municipalidad Provincial de Huamanga antes de viajar.",
+          "Los días centrales suelen ser cinco, aunque las actividades previas comienzan antes. En 2026 la celebración oficial se realizó del 14 al 18 de febrero. Como las fechas cambian cada año, consulta el cronograma de la Municipalidad Provincial de Huamanga antes de viajar.",
       },
       {
         pregunta: "¿Qué comparsas puedes conocer?",
@@ -150,7 +150,7 @@ export const festividades: Festividad[] = [
       {
         pregunta: "¿Dónde descansar después de la fiesta?",
         respuesta:
-          "A solo diez minutos de la Plaza Mayor, el Hotel Umaru, ubicado en el valle de Huatatas, ofrece un ambiente tranquilo rodeado de naturaleza, con piscina al aire libre, jardines y terrazas con vistas al valle. Es una alternativa para descansar lejos del bullicio del centro.",
+          "A solo diez minutos de la Plaza Mayor, el Hotel Umaru queda en el valle de Huatatas y ofrece un ambiente tranquilo, con piscina al aire libre y terrazas con vistas al valle. Es una alternativa para descansar lejos del bullicio del centro.",
       },
       {
         pregunta: "¿Cómo organizar tu día de carnaval?",
@@ -201,14 +201,14 @@ export const festividades: Festividad[] = [
     imagen: "/imagenes-reales/galeria/festividades/samana-santa-uno.webp",
     imagenSecundaria: "/imagenes-reales/galeria/festividades/semana-santa-tres.webp",
     descripcion:
-      "Con raíces en la época virreinal y más de 150 años de celebración ininterrumpida, la Semana Santa de Ayacucho reúne procesiones, rituales católicos y tradiciones andinas en las calles de Huamanga. Es una de las festividades religiosas y culturales más representativas del Perú. Sus celebraciones centrales se extienden durante once días, desde el Jueves de Pasión hasta el Domingo de Resurrección.",
+      "Con raíces en la época virreinal y más de 150 años de celebración ininterrumpida, reúne procesiones y rituales católicos con tradiciones andinas en las calles de Huamanga. Es una de las festividades religiosas y culturales más representativas del Perú. Sus celebraciones centrales duran once días, del Jueves de Pasión al Domingo de Resurrección.",
     metaDescripcion:
       "Once días de procesiones en el centro histórico de Huamanga, del Jueves de Pasión al Domingo de Resurrección. Qué ver y dónde comer.",
     consejo:
       "Llegar con anticipación a la Plaza Mayor para presenciar la salida de las procesiones; los hospedajes se llenan con semanas de anticipación.",
     frase: "Cómo vivir la Semana Santa de Ayacucho",
     escenas: "Incienso, flores y fe: así se vive la Semana Santa en Huamanga.",
-    dato: "Huamanga es conocida como la ciudad de las iglesias. Durante la Semana Santa, sus templos se convierten en punto de partida de procesiones y ceremonias que reúnen a fieles y visitantes.",
+    dato: "Huamanga es conocida como la ciudad de las iglesias. Durante la Semana Santa sus templos se convierten en punto de partida de procesiones y ceremonias que reúnen a fieles y visitantes.",
     clipTags: ["Anda cargada entre flores", "Alfombras de flores", "Fogatas de chamizo", "Pascua Toro por las calles"],
     video: {
       hero: "/videos/festividades/semana-santa.mp4",
@@ -236,7 +236,7 @@ export const festividades: Festividad[] = [
       {
         pregunta: "¿Cuántos días dura?",
         respuesta:
-          "Las celebraciones abarcan once días, del Jueves de Pasión al Domingo de Resurrección. En 2026, se realizaron del 26 de marzo al 5 de abril. Como las fechas cambian cada año según el calendario de Pascua, consulta el programa oficial de la Municipalidad Provincial de Huamanga antes de viajar.",
+          "Las celebraciones abarcan once días, del Jueves de Pasión al Domingo de Resurrección. En 2026 se realizaron del 26 de marzo al 5 de abril. Como las fechas cambian cada año según el calendario de Pascua, consulta el programa oficial de la Municipalidad Provincial de Huamanga antes de viajar.",
       },
       {
         pregunta: "¿Qué procesiones puedes conocer?",
@@ -257,7 +257,7 @@ export const festividades: Festividad[] = [
       {
         pregunta: "¿Dónde descansar después de las procesiones?",
         respuesta:
-          "A diez minutos de la Plaza Mayor, el Hotel Umaru, ubicado en el valle de Huatatas, ofrece un ambiente tranquilo rodeado de naturaleza, con piscina al aire libre, jardines y terrazas con vistas al valle. Durante la Semana Santa, la demanda de alojamiento puede aumentar, por lo que conviene reservar con anticipación.",
+          "A diez minutos de la Plaza Mayor, el Hotel Umaru queda en el valle de Huatatas y ofrece un ambiente tranquilo, con piscina al aire libre y terrazas con vistas al valle. Durante la Semana Santa la demanda de alojamiento puede aumentar, por lo que conviene reservar con anticipación.",
       },
       {
         pregunta: "¿Cómo organizar tu día en Semana Santa?",
@@ -392,7 +392,7 @@ export const festividades: Festividad[] = [
     imagenSecundaria: "/imagenes-reales/galeria/destino/Quinua1.webp",
     imagenSeccion: "/imagenes-reales/9-de-diciembre/escenificacion-9-de-diciembre.webp",
     descripcion:
-      "El 9 de diciembre de 1824, en la Pampa de Ayacucho, cerca de Quinua, las fuerzas patriotas al mando de Antonio José de Sucre derrotaron al ejército realista en una batalla decisiva para la independencia del Perú y de América del Sur. Cada año, esta fecha se conmemora con una ceremonia cívico-militar y una escenificación histórica en el Santuario Histórico Pampa de Ayacucho. Desde 2022, el 9 de diciembre es feriado nacional en el Perú.",
+      "El 9 de diciembre de 1824 las fuerzas patriotas al mando de Antonio José de Sucre derrotaron al ejército realista en la Pampa de Ayacucho, cerca de Quinua. Fue una batalla decisiva para la independencia del Perú y de América del Sur. Cada año esta fecha se conmemora con una ceremonia cívico-militar y una escenificación histórica en el Santuario Histórico Pampa de Ayacucho. Desde 2022 es feriado nacional.",
     consejo:
       "Asistir temprano a la ceremonia oficial en el Santuario Histórico Pampa de Ayacucho y complementar con una visita a Quinua, Pueblo con Encanto, y sus ceramistas.",
     frase: "Cómo vivir el 9 de Diciembre",
@@ -462,7 +462,7 @@ export const festividades: Festividad[] = [
       {
         pregunta: "¿Dónde se vive la conmemoración?",
         respuesta:
-          "En el Santuario Histórico Pampa de Ayacucho, en Quinua, donde se libró la batalla. Cada año, el lugar acoge una ceremonia cívico-militar y una escenificación histórica cuyo programa y número de participantes pueden variar.",
+          "En el Santuario Histórico Pampa de Ayacucho, en Quinua, donde se libró la batalla. Cada año el lugar acoge una ceremonia cívico-militar y una escenificación histórica cuyo programa y número de participantes pueden variar.",
       },
       {
         pregunta: "¿Cómo llegar a la Pampa de Ayacucho?",
@@ -483,7 +483,7 @@ export const festividades: Festividad[] = [
       {
         pregunta: "¿Dónde descansar después de la jornada?",
         respuesta:
-          "A diez minutos de la Plaza Mayor, el Hotel Umaru, ubicado en el valle de Huatatas, ofrece un entorno tranquilo rodeado de naturaleza, con piscina al aire libre, jardines y terrazas con vistas al valle, lejos del bullicio del centro.",
+          "A diez minutos de la Plaza Mayor, el Hotel Umaru queda en el valle de Huatatas y ofrece un entorno tranquilo y lejos del bullicio del centro, con piscina al aire libre y terrazas con vistas al valle.",
       },
       {
         pregunta: "¿Cómo organizar tu día del 9 de diciembre?",

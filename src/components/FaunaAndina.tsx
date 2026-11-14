@@ -14,33 +14,33 @@ const ESPECIES: EspecieFauna[] = [
     quechua: "qinti",
     imagen: "/imagenes-reales/fauna/colibri.webp",
     descripcion:
-      "Vive en los valles y campiñas de Ayacucho. Se alimenta del néctar de las flores silvestres y las poliniza. Se mantiene en el aire frente a las flores con un vuelo estacionario.",
+      "Es tan pequeño que se oye antes de verse. En los valles y campiñas de Ayacucho se queda suspendido frente a las flores silvestres para beber su néctar y puede incluso volar hacia atrás.",
   },
   {
     nombre: "Cernícalo",
     quechua: "killinchu",
     imagen: "/imagenes-reales/fauna/cernicalo.webp",
     descripcion:
-      "Vuela sobre los cielos y valles de Ayacucho. Es una pequeña ave rapaz andina y veloz. Contribuye al control natural de las plagas agrícolas.",
+      "Es una de las rapaces más pequeñas del Perú y se queda quieto en el aire sobre los campos de cultivo. Desde allí vigila el suelo y cuida las chacras de plagas y pequeños roedores.",
   },
   {
     nombre: "Cóndor Andino",
     imagen: "/imagenes-reales/fauna/condor.webp",
     descripcion:
-      "Habita las alturas de Lucanas (sobre todo el Valle de Sondondo) y de Sucre. En la cosmovisión andina es el mensajero de los Apus y un símbolo milenario. También es vital para el ecosistema.",
+      "Para la cosmovisión andina es el mensajero de los Apus. Con casi tres metros de punta a punta, recorre las alturas de Lucanas (sobre todo el Valle de Sondondo) y de Sucre casi sin aletear, y al alimentarse de animales muertos mantiene sano el ecosistema.",
   },
   {
     nombre: "Halcón Peregrino",
     quechua: "waman",
     imagen: "/imagenes-reales/fauna/halcon.webp",
     descripcion:
-      "Habita los altos riscos y cañones de Ayacucho. Es el animal más veloz del planeta cuando cae en picada. Como depredador tope mantiene el equilibrio del ecosistema andino.",
+      "Su caída en picada llega a los 320 kilómetros por hora y es la más veloz que se conoce en el mundo animal. Desde los altos riscos y cañones de Ayacucho caza otras aves en pleno vuelo, y así mantiene el equilibrio del ecosistema andino.",
   },
   {
     nombre: "Vicuña",
     imagen: "/imagenes-reales/fauna/vicuna.webp",
     descripcion:
-      "Habita las planicies altoandinas (sobre todo la Reserva Nacional Pampa Galeras). Es un camélido silvestre y un símbolo patrio. Su fibra es considerada la más fina del mundo.",
+      "Ayacucho es la región del Perú que más fibra de vicuña produce, y el Perú es el primer productor del mundo. Esa fibra sale de los chaccus, la esquila que se hace varias veces al año en la Reserva Nacional Pampa Galeras.",
   },
 ];
 

@@ -29,7 +29,7 @@ const defaultReviews: CollaboratorReview[] = [
     name: "Dante Galindo",
     role: "Capitán de Salón & Hospitalidad",
     years: "4 años en Las Flores",
-    photo: "/imagenes-reales/EQUIPO/02042026-DSC05081-opt.webp",
+    photo: "/imagenes-reales/EQUIPO/02042026-DSC05081.webp",
     quote:
       "Trabajar aquí es como recibir a invitados en mi propia casa. El respeto, la dignidad y el buen ambiente que nos da la empresa se refleja en la atención cálida y sonriente con la que atendemos cada mesa.",
     recommendedDish: "Chicha de Jora Especial de la Casa",
