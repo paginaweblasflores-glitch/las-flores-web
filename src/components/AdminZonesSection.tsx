@@ -112,7 +112,7 @@ export function AdminZonesSection() {
             Gestión del Establecimiento
           </span>
           <h2 className="font-serif italic text-2xl font-bold text-[#3b1f10]">
-            Salones y Apagado de Reservas
+            Salones y apagado de reservas
           </h2>
           <p className="text-xs text-[#3b1f10]/60 mt-1 max-w-2xl font-sans">
             Administra la configuración de fotos, aforo y mesas por salón. Bloquea la entrada de reservas por teléfono o eventos especiales para evitar cruces.
@@ -246,7 +246,7 @@ export function AdminZonesSection() {
       {activeSubTab === "blackouts" && (
         <div className="bg-white rounded-3xl border border-[#d4a373]/25 shadow-sm overflow-hidden">
           <div className="p-5 bg-[#f7f5ef] border-b border-[#d4a373]/20 flex items-center justify-between">
-            <h3 className="font-serif font-bold text-lg text-[#3b1f10]">Historial de Apagados y Bloqueos</h3>
+            <h3 className="font-serif font-bold text-lg text-[#3b1f10]">Historial de apagados y bloqueos</h3>
             <span className="text-xs text-[#3b1f10]/60 font-semibold">
               Total registrados: {blackouts.length}
             </span>

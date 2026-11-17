@@ -157,7 +157,7 @@ export function AdminCouponModal({
           <div className="flex items-center gap-2.5">
             <Ticket className="text-[#D4AF37]" size={20} />
             <h2 className="font-sans font-extrabold text-base sm:text-lg text-white">
-              {coupon ? "Editar Cupón de Descuento" : "Crear Código de Descuento"}
+              {coupon ? "Editar cupón de descuento" : "Crear código de descuento"}
             </h2>
           </div>
           <button

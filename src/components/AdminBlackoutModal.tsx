@@ -74,7 +74,7 @@ export function AdminBlackoutModal({ isOpen, onClose, zones, onCreated }: AdminB
               <ShieldAlert size={22} />
             </div>
             <div>
-              <h3 className="font-serif italic font-bold text-2xl text-[#3b1f10]">Apagado de Reservas</h3>
+              <h3 className="font-serif italic font-bold text-2xl text-[#3b1f10]">Apagado de reservas</h3>
               <p className="text-xs text-[#3b1f10]/60">Bloquea la recepción de reservas en línea</p>
             </div>
           </div>

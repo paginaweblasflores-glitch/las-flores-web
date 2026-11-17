@@ -6,11 +6,11 @@ import { ShieldCheck, Lock, Eye, FileText, CheckCircle2, ArrowLeft } from "lucid
 export const Route = createFileRoute("/politica-de-privacidad")({
   head: () => ({
     meta: [
-      { title: "Política de Privacidad | Restaurante Las Flores Ayacucho" },
+      { title: "Política de privacidad | Restaurante Las Flores Ayacucho" },
       {
         name: "description",
         content:
-          "Conoce nuestra Política de Privacidad y Tratamiento de Datos Personales en Restaurante Las Flores conforme a la Ley N° 29733 de la República del Perú.",
+          "Conoce nuestra Política de privacidad y Tratamiento de Datos Personales en Restaurante Las Flores conforme a la Ley N° 29733 de la República del Perú.",
       },
     ],
     links: [{ rel: "canonical", href: "https://www.restaurantelasflores.com/politica-de-privacidad" }],
@@ -29,10 +29,10 @@ function PoliticaPrivacidadPage() {
         <div className="max-w-4xl mx-auto text-center relative z-10 space-y-4">
           <div className="inline-flex items-center gap-2 bg-white/10 border border-[#d4a373]/40 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-[0.25em] text-[#d4a373]">
             <ShieldCheck size={16} />
-            <span>Marco Legal & Confidencialidad</span>
+            <span>Marco legal & confidencialidad</span>
           </div>
           <h1 className="font-serif text-4xl md:text-6xl font-normal leading-tight">
-            Política de Privacidad
+            Política de privacidad
           </h1>
           <p className="text-sm md:text-base text-cream/80 max-w-2xl mx-auto font-light leading-relaxed">
             Compromiso de protección y tratamiento responsable de los datos personales de nuestros comensales y visitantes, conforme a la Ley N° 29733 de la República del Perú.
@@ -58,7 +58,7 @@ function PoliticaPrivacidadPage() {
           <section className="space-y-3">
             <h2 className="font-serif text-xl md:text-2xl font-bold text-ink flex items-center gap-2">
               <span className="text-eucalipto">1.</span>
-              <span>Marco Legal y Normativa Aplicable</span>
+              <span>Marco legal y normativa aplicable</span>
             </h2>
             <p>
               El tratamiento de datos personales realizado por Las Flores se rige de forma estricta por la <strong>Ley N° 29733 — Ley de Protección de Datos Personales</strong>, su Reglamento aprobado mediante Decreto Supremo N° 003-2013-JUS, y las directivas emitidas por la Autoridad Nacional de Protección de Datos Personales (APDP) del Ministerio de Justicia y Derechos Humanos del Perú.
@@ -69,25 +69,25 @@ function PoliticaPrivacidadPage() {
           <section className="space-y-3">
             <h2 className="font-serif text-xl md:text-2xl font-bold text-ink flex items-center gap-2">
               <span className="text-eucalipto">2.</span>
-              <span>Datos Personales Recopilados</span>
+              <span>Datos personales recopilados</span>
             </h2>
             <p>Para brindarle un servicio gastronómico seguro y personalizado, recopilamos la siguiente información:</p>
             <ul className="space-y-2 pl-4">
               <li className="flex items-start gap-2">
                 <span className="text-eucalipto font-bold">•</span>
-                <span><strong>Para Reservas de Mesa:</strong> Nombres, apellidos, teléfono de contacto, correo electrónico, fecha y hora de la visita, zona seleccionada, notas sobre intolerancias alimentarias o requerimientos de accesibilidad.</span>
+                <span><strong>Para reservas de mesa:</strong> Nombres, apellidos, teléfono de contacto, correo electrónico, fecha y hora de la visita, zona seleccionada, notas sobre intolerancias alimentarias o requerimientos de accesibilidad.</span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-eucalipto font-bold">•</span>
-                <span><strong>Para Pedidos Delivery y Compras en Línea:</strong> Nombres, apellidos, número telefónico, dirección exacta de entrega, referencias geográficas y detalles del pedido.</span>
+                <span><strong>Para pedidos delivery y compras en línea:</strong> Nombres, apellidos, número telefónico, dirección exacta de entrega, referencias geográficas y detalles del pedido.</span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-eucalipto font-bold">•</span>
-                <span><strong>Para Postulaciones Laborales (Únete al Equipo):</strong> Datos de identificación, currículum vitae (CV), historial laboral, teléfono, ciudad y disponibilidad.</span>
+                <span><strong>Para postulaciones laborales (únete al equipo):</strong> Datos de identificación, currículum vitae (CV), historial laboral, teléfono, ciudad y disponibilidad.</span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-eucalipto font-bold">•</span>
-                <span><strong>Para el Libro de Reclamaciones:</strong> Datos de identificación según formato estipulado por el Código de Protección y Defensa del Consumidor (Ley N° 29571).</span>
+                <span><strong>Para el libro de reclamaciones:</strong> Datos de identificación según formato estipulado por el Código de Protección y Defensa del Consumidor (Ley N° 29571).</span>
               </li>
             </ul>
           </section>
@@ -96,24 +96,24 @@ function PoliticaPrivacidadPage() {
           <section className="space-y-3">
             <h2 className="font-serif text-xl md:text-2xl font-bold text-ink flex items-center gap-2">
               <span className="text-eucalipto">3.</span>
-              <span>Finalidad del Tratamiento de Datos</span>
+              <span>Finalidad del tratamiento de datos</span>
             </h2>
             <p>Sus datos personales son tratados con las siguientes finalidades legítimas:</p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
               <div className="p-4 rounded-2xl bg-cream/50 border border-black/5 space-y-1">
-                <span className="font-bold text-eucalipto block">Gestión Operativa</span>
+                <span className="font-bold text-eucalipto block">Gestión operativa</span>
                 <p className="text-sm text-nogal/75">Confirmación de reservas, despacho de delivery, rastreo en vivo y emisión de comprobantes de pago.</p>
               </div>
               <div className="p-4 rounded-2xl bg-cream/50 border border-black/5 space-y-1">
-                <span className="font-bold text-eucalipto block">Seguridad del Comensal</span>
+                <span className="font-bold text-eucalipto block">Seguridad del comensal</span>
                 <p className="text-sm text-nogal/75">Adaptación de insumos ante alergias alimentarias o preparación de accesos para movilidad reducida.</p>
               </div>
               <div className="p-4 rounded-2xl bg-cream/50 border border-black/5 space-y-1">
-                <span className="font-bold text-eucalipto block">Atención al Cliente</span>
+                <span className="font-bold text-eucalipto block">Atención al cliente</span>
                 <p className="text-sm text-nogal/75">Respuesta a consultas, solicitudes, coordinación por WhatsApp y atención de reclamos.</p>
               </div>
               <div className="p-4 rounded-2xl bg-cream/50 border border-black/5 space-y-1">
-                <span className="font-bold text-eucalipto block">Comunicaciones Oficiales</span>
+                <span className="font-bold text-eucalipto block">Comunicaciones oficiales</span>
                 <p className="text-sm text-nogal/75">Envío de novedades sobre eventos y festividades solo si el usuario ha brindado su consentimiento previo.</p>
               </div>
             </div>
@@ -123,13 +123,13 @@ function PoliticaPrivacidadPage() {
           <section className="space-y-3">
             <h2 className="font-serif text-xl md:text-2xl font-bold text-ink flex items-center gap-2">
               <span className="text-eucalipto">4.</span>
-              <span>Confidencialidad y Seguridad de la Información</span>
+              <span>Confidencialidad y seguridad de la información</span>
             </h2>
             <p>
               Las Flores aplica rigurosos estándares técnicos, organizativos y de cifrado para salvaguardar sus datos contra accesos no autorizados, pérdida o alteración.
             </p>
             <div className="p-4 rounded-2xl bg-green-50/80 border border-green-200 text-green-900 font-medium">
-              ✓ <strong>Garantía de Confidencialidad:</strong> Sus datos personales no serán vendidos, transferidos ni comercializados a terceras empresas bajo ningún concepto.
+              ✓ <strong>Garantía de confidencialidad:</strong> Sus datos personales no serán vendidos, transferidos ni comercializados a terceras empresas bajo ningún concepto.
             </div>
           </section>
 
@@ -137,7 +137,7 @@ function PoliticaPrivacidadPage() {
           <section id="cookies" className="space-y-3 scroll-mt-28">
             <h2 className="font-serif text-xl md:text-2xl font-bold text-ink flex items-center gap-2">
               <span className="text-eucalipto">5.</span>
-              <span>Cookies y Analítica</span>
+              <span>Cookies y analítica</span>
             </h2>
             <p>
               Este sitio utiliza <strong>Google Analytics</strong> para entender cómo los visitantes usan la web (páginas visitadas, tiempo de permanencia) y así mejorar la experiencia. Esto implica el uso de cookies de analítica que identifican su navegador de forma anónima, sin recopilar su nombre ni datos de contacto.
@@ -154,7 +154,7 @@ function PoliticaPrivacidadPage() {
           <section className="space-y-3">
             <h2 className="font-serif text-xl md:text-2xl font-bold text-ink flex items-center gap-2">
               <span className="text-eucalipto">6.</span>
-              <span>Ejercicio de Derechos ARCO</span>
+              <span>Ejercicio de derechos ARCO</span>
             </h2>
             <p>
               Usted tiene derecho a ejercer en cualquier momento sus derechos de <strong>Acceso, Rectificación, Cancelación y Oposición (ARCO)</strong> respecto a su información personal.
@@ -172,12 +172,12 @@ function PoliticaPrivacidadPage() {
           <section className="space-y-3 border-t border-black/10 pt-6">
             <h2 className="font-serif text-xl md:text-2xl font-bold text-ink flex items-center gap-2">
               <span className="text-eucalipto">7.</span>
-              <span>Domicilio Legal y Canales de Atención</span>
+              <span>Domicilio legal y canales de atención</span>
             </h2>
             <p>
               <strong>Restaurante Turístico Las Flores</strong><br />
               Dirección: Jr. José Olaya 106, Huamanga, Ayacucho, Perú.<br />
-              Correo Electrónico: contacto@restaurantelasflores.com<br />
+              Correo electrónico: contacto@restaurantelasflores.com<br />
               Teléfono: +51 967 456 230 / WhatsApp: +51 980 723 422
             </p>
           </section>

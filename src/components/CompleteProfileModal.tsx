@@ -202,7 +202,7 @@ export function CompleteProfileModal({
             <ShieldCheck size={24} />
           </div>
           <h2 className="font-serif font-bold text-2xl text-white">
-            Completa tu Perfil
+            Completa tu perfil
           </h2>
           <p className="text-sm text-[#FAF6ED]/75 mt-1.5 max-w-xs mx-auto leading-relaxed">
             Ingresa tu número de WhatsApp para confirmar y coordinar tus entregas de delivery de forma segura.
@@ -215,7 +215,7 @@ export function CompleteProfileModal({
           {/* Nombre Completo */}
           <div>
             <label className="block text-xs font-bold text-[#2C4A3E] uppercase tracking-[0.14em] mb-1.5">
-              Nombre Completo *
+              Nombre completo *
             </label>
             <input
               type="text"
@@ -230,7 +230,7 @@ export function CompleteProfileModal({
           {/* Correo Electrónico (BLOQUEADO SI YA TIENE CUENTA) */}
           <div>
             <label className="block text-xs font-bold text-[#2C4A3E] uppercase tracking-[0.14em] mb-1.5 flex items-center gap-1.5">
-              <Mail size={13} className="text-[#2C4A3E]/70" /> Correo Electrónico {initialEmail ? "(Asociado a tu cuenta)" : "*"}
+              <Mail size={13} className="text-[#2C4A3E]/70" /> Correo electrónico {initialEmail ? "(Asociado a tu cuenta)" : "*"}
             </label>
             <input
               type="email"
@@ -268,7 +268,7 @@ export function CompleteProfileModal({
           {/* Fecha de Nacimiento (OPCIONAL) */}
           <div>
             <label className="block text-xs font-bold text-[#2C4A3E] uppercase tracking-[0.14em] mb-1.5 flex items-center gap-1.5">
-              <Calendar size={13} className="text-[#2C4A3E]/70" /> Fecha de Nacimiento *
+              <Calendar size={13} className="text-[#2C4A3E]/70" /> Fecha de nacimiento *
             </label>
             <div className="grid grid-cols-3 gap-2">
               <select
@@ -332,7 +332,7 @@ export function CompleteProfileModal({
               </>
             ) : (
               <>
-                <Check size={18} /> Guardar y Continuar
+                <Check size={18} /> Guardar y continuar
               </>
             )}
           </button>

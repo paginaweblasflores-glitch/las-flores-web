@@ -78,7 +78,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Restaurante Las Flores — El Mejor Restaurante en Ayacucho | Comida Típica & Parrillas" },
+      { title: "Restaurante Las Flores — El mejor restaurante en Ayacucho | Comida típica & parrillas" },
       {
         name: "description",
         content:
@@ -92,7 +92,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "google-site-verification", content: "googleffddf4f084c15495" },
       { name: "google-site-verification", content: "PVG5Mt598l5OmFVAXef31ZLlxFEVcq_PbERBYKQ9AgQ" },
       { name: "robots", content: "index, follow, max-image-preview:large" },
-      { property: "og:title", content: "Restaurante Las Flores — El Mejor Restaurante en Ayacucho" },
+      { property: "og:title", content: "Restaurante Las Flores — El mejor restaurante en Ayacucho" },
       {
         property: "og:description",
         content: "Cocina ayacuchana de autor y platos típicos de tradición. Reservas en línea y delivery en Ayacucho.",

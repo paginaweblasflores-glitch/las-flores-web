@@ -5,7 +5,7 @@ import { supabase } from "@/lib/supabase";
 
 export const Route = createFileRoute("/rastreo/$orderId")({
   head: () => ({
-    meta: [{ title: "Estado de Pedido en Vivo | Las Flores" }],
+    meta: [{ title: "Estado de pedido en vivo | Las Flores" }],
   }),
   component: ClientTrackingLink,
 });
@@ -104,7 +104,7 @@ function ClientTrackingLink() {
       <div className="min-h-screen bg-[#f8f4e6] flex flex-col items-center justify-center p-6 text-nogal font-sans">
         <div className="bg-white p-8 rounded-3xl border border-nogal/10 shadow-xl max-w-sm text-center space-y-4">
           <AlertTriangle size={40} className="text-amber-500 mx-auto" />
-          <h2 className="font-serif font-bold text-xl">Pedido No Encontrado</h2>
+          <h2 className="font-serif font-bold text-xl">Pedido no encontrado</h2>
           <p className="text-xs text-nogal/60 leading-relaxed">{error}</p>
         </div>
       </div>
@@ -127,25 +127,25 @@ function ClientTrackingLink() {
   const steps = [
     {
       num: 1,
-      title: "Comanda Confirmada",
+      title: "Comanda confirmada",
       desc: "Tu pedido ha sido recibido y registrado en caja.",
       icon: Package,
     },
     {
       num: 2,
-      title: "En Preparación en Cocina",
+      title: "En preparación en cocina",
       desc: "Nuestros chefs están preparando tus platos.",
       icon: Utensils,
     },
     {
       num: 3,
-      title: "Repartidor en Camino",
+      title: "Repartidor en camino",
       desc: "Tu motorizado ya tiene la orden y se dirige a tu domicilio.",
       icon: Truck,
     },
     {
       num: 4,
-      title: "Entregado en Domicilio",
+      title: "Entregado en domicilio",
       desc: "¡Pedido entregado! Buen provecho con la experiencia Las Flores.",
       icon: CheckCircle2,
     },
@@ -164,7 +164,7 @@ function ClientTrackingLink() {
             </span>
             <h1 className="font-serif italic text-4xl md:text-5xl text-nogal tracking-tight leading-[1.1]">
               {isDelivered 
-                ? "¡Pedido Entregado!" 
+                ? "¡Pedido entregado!"
                 : isOnWay 
                 ? "Tu repartidor está en camino." 
                 : isKitchen 
@@ -178,7 +178,7 @@ function ClientTrackingLink() {
               <Package className="text-eucalipto" size={20} strokeWidth={2.5} />
             </div>
             <div>
-              <p className="text-[0.5625rem] uppercase font-bold text-nogal/40 tracking-[0.2em] mb-0.5">Orden de Compra</p>
+              <p className="text-[0.5625rem] uppercase font-bold text-nogal/40 tracking-[0.2em] mb-0.5">Orden de compra</p>
               <p className="text-sm font-bold text-nogal tracking-wide">#{order.order_number || orderId}</p>
             </div>
           </div>
@@ -188,10 +188,10 @@ function ClientTrackingLink() {
         {!isDelivered && (
           <section className="bg-white p-6 md:p-8 rounded-[2rem] shadow-xl shadow-nogal/5 border border-nogal/10 relative z-10 space-y-8">
             <div className="flex items-center justify-between border-b border-nogal/10 pb-4">
-              <h2 className="font-serif text-xl font-bold text-nogal">Seguimiento en Tiempo Real</h2>
+              <h2 className="font-serif text-xl font-bold text-nogal">Seguimiento en tiempo real</h2>
               <span className="text-[0.625rem] uppercase font-extrabold tracking-widest bg-eucalipto/10 text-eucalipto px-3 py-1 rounded-full flex items-center gap-1.5">
                 <span className="w-2 h-2 rounded-full bg-eucalipto animate-ping" />
-                Sincronizado en Vivo
+                Sincronizado en vivo
               </span>
             </div>
 
@@ -225,7 +225,7 @@ function ClientTrackingLink() {
                         </h3>
                         {isCurrent && (
                           <span className="text-[0.5625rem] uppercase font-extrabold px-2 py-0.5 bg-nogal text-chilca rounded-full animate-pulse">
-                            En Proceso
+                            En proceso
                           </span>
                         )}
                       </div>
@@ -275,7 +275,7 @@ function ClientTrackingLink() {
               <MapPin className="text-nogal" size={22} />
             </div>
             <div>
-              <h3 className="font-bold text-xs uppercase tracking-[0.15em] text-nogal/50 mb-2">Destino Registrado</h3>
+              <h3 className="font-bold text-xs uppercase tracking-[0.15em] text-nogal/50 mb-2">Destino registrado</h3>
               <p className="text-nogal text-sm font-medium leading-relaxed">{order.address || "Dirección registrada"}</p>
               {order.reference && (
                 <p className="text-nogal/50 text-[0.6875rem] mt-1 italic">Ref: {order.reference}</p>
@@ -288,7 +288,7 @@ function ClientTrackingLink() {
              <h3 className="font-serif italic text-xl mb-1">¿Algún inconveniente?</h3>
              <p className="text-[0.6875rem] text-piedra/60 mb-5 max-w-[12.5rem] leading-relaxed">Nuestro equipo de soporte está listo para ayudarte con tu orden.</p>
              <a href="https://wa.me/51980723422" target="_blank" rel="noreferrer" className="w-full max-w-[12.5rem] py-3.5 bg-pacay text-white rounded-xl font-bold text-[0.625rem] uppercase tracking-widest hover:bg-pacay/90 transition-all shadow-md active:scale-95">
-               Contactar Soporte
+               Contactar soporte
              </a>
           </div>
         </section>

@@ -1,3 +1,4 @@
+import { nombreEnCarta } from "../lib/menuLabels";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
 import { SiteHeader } from "@/components/SiteHeader";
@@ -12,7 +13,7 @@ import { MobileCategoryFilter } from "@/components/MobileCategoryFilter";
 export const Route = createFileRoute("/carta")({
   head: () => ({
     meta: [
-      { title: "Carta Digital y Menú — Restaurante Las Flores Ayacucho | Platos Típicos & Delivery" },
+      { title: "Carta digital y menú — Restaurante Las Flores Ayacucho | Platos típicos & delivery" },
       {
         name: "description",
         content:
@@ -23,7 +24,7 @@ export const Route = createFileRoute("/carta")({
         content:
           "carta restaurante las flores, menu restaurante las flores, precios restaurante las flores, platos tipicos ayacucho, puca picante ayacucho, cuy frito ayacucho, delivery comida ayacucho, chicharrones ayacucho",
       },
-      { property: "og:title", content: "Carta Digital y Menú — Restaurante Las Flores Ayacucho" },
+      { property: "og:title", content: "Carta digital y menú — Restaurante Las Flores Ayacucho" },
       {
         property: "og:description",
         content: "Conoce nuestra variada carta de platos típicos ayacuchanos, desayunos y bebidas tradicionales. Pide delivery o reserva tu mesa.",
@@ -39,30 +40,30 @@ export const Route = createFileRoute("/carta")({
         children: JSON.stringify({
           "@context": "https://schema.org",
           "@type": "Menu",
-          "name": "Carta Digital Restaurante Las Flores Ayacucho",
+          "name": "Carta digital Restaurante Las Flores Ayacucho",
           "url": "https://www.restaurantelasflores.com/carta",
           "mainEntityOfPage": "https://www.restaurantelasflores.com/carta",
           "inLanguage": "es-PE",
           "hasMenuSection": [
             {
               "@type": "MenuSection",
-              "name": "Platos Típicos Ayacuchanos",
+              "name": "Platos típicos ayacuchanos",
               "hasMenuItem": [
                 {
                   "@type": "MenuItem",
-                  "name": "Puca Picante con Chicharrón",
+                  "name": "Puca picante con chicharrón",
                   "description": "El plato bandera de Ayacucho preparado a base de maní, ají panca y chicharrón crocante de cerdo.",
                   "offers": { "@type": "Offer", "price": "38.00", "priceCurrency": "PEN" }
                 },
                 {
                   "@type": "MenuItem",
-                  "name": "Cuy Frito Tradicional",
+                  "name": "Cuy frito tradicional",
                   "description": "Cuy crocante macerado en hierbas andinas, acompañado de papas doradas y qapchi ayacuchano.",
                   "offers": { "@type": "Offer", "price": "55.00", "priceCurrency": "PEN" }
                 },
                 {
                   "@type": "MenuItem",
-                  "name": "Mondongo Ayacuchano",
+                  "name": "Mondongo ayacuchano",
                   "description": "Sopa reconfortante de maíz blanco pelado, mote y carne de res cocida a fuego lento.",
                   "offers": { "@type": "Offer", "price": "32.00", "priceCurrency": "PEN" }
                 }
@@ -113,7 +114,7 @@ function CartaPage() {
 
       {/* Page Title */}
       <div className="bg-piedra pt-16 md:pt-20 pb-4 text-center">
-        <h1 className="font-serif text-4xl md:text-6xl text-nogal font-normal leading-tight">Nuestra Carta</h1>
+        <h1 className="font-serif text-4xl md:text-6xl text-nogal font-normal leading-tight">Nuestra carta</h1>
       </div>
 
       {/* Filtros móvil: carrusel + botón "..." con hoja de todas las categorías */}
@@ -194,21 +195,21 @@ function CartaPage() {
                       <div className="absolute inset-0 bg-nogal/10 group-hover:bg-transparent transition-colors z-10 pointer-events-none" />
                       <img
                         src={dish.image}
-                        alt={dish.name}
+                        alt={nombreEnCarta(dish.name)}
                         className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                       />
                     </div>
                   ) : (
                     <div className="h-48 bg-nogal/5 flex items-center justify-center relative border-b border-pacay/30">
                       <span className="font-serif italic text-nogal/30 text-xl px-4 text-center">
-                        {dish.name}
+                        {nombreEnCarta(dish.name)}
                       </span>
                     </div>
                   )}
                   <div className="p-5 flex flex-col flex-1">
                     <div className="mb-3">
                       <h3 className="text-base font-serif leading-tight text-nogal group-hover:text-cochinilla transition-colors">
-                        {dish.name}
+                        {nombreEnCarta(dish.name)}
                       </h3>
                     </div>
                     <p className="text-nogal/70 text-xs flex-1 mb-4 leading-relaxed font-light">

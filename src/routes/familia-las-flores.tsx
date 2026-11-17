@@ -6,7 +6,7 @@ import { ArrowRight } from "lucide-react";
 export const Route = createFileRoute("/familia-las-flores")({
   head: () => ({
     meta: [
-      { title: "Familia Las Flores — El Alma Detrás del Sabor | Ayacucho" },
+      { title: "Familia Las Flores — El alma detrás del sabor | Ayacucho" },
       {
         name: "description",
         content:
@@ -17,7 +17,7 @@ export const Route = createFileRoute("/familia-las-flores")({
         content:
           "familia las flores, equipo restaurante las flores, historia restaurante ayacucho, colaboradores restaurante ayacucho, tradicion familiar ayacucho",
       },
-      { property: "og:title", content: "Familia Las Flores — El Alma Detrás del Sabor" },
+      { property: "og:title", content: "Familia Las Flores — El alma detrás del sabor" },
       {
         property: "og:description",
         content: "Conozca al equipo humano de Restaurante Las Flores. Historias de orgullo, pasión y excelencia culinaria de quienes hacen posible la magia ayacuchana.",
@@ -135,10 +135,10 @@ function FamiliaLasFloresPage() {
         <div className="mt-12 bg-[#2D473C] text-white rounded-3xl p-8 md:p-12 shadow-xl border-2 border-[#D4AF37]/40 flex flex-col lg:flex-row items-center justify-between gap-8">
           <div className="space-y-3 text-center lg:text-left max-w-2xl">
             <span className="text-xs uppercase font-black text-[#D4AF37] tracking-widest">
-              Únete a Nuestra Historia
+              Únete a nuestra historia
             </span>
             <h3 className="font-serif text-3xl md:text-4xl">
-              ¿Te gustaría formar parte de la Familia Las Flores?
+              ¿Te gustaría formar parte de la familia Las Flores?
             </h3>
             <p className="text-sm text-emerald-100/90 leading-relaxed">
               Buscamos personas apasionadas por el buen servicio, la riqueza cultural de Ayacucho y el crecimiento profesional en un ambiente respetuoso y acogedor.
@@ -149,7 +149,7 @@ function FamiliaLasFloresPage() {
             to="/unete-al-equipo"
             className="px-8 py-4 rounded-2xl bg-[#D4AF37] hover:bg-[#c29e2f] text-[#2D473C] font-black text-sm transition-all shadow-lg shrink-0 flex items-center gap-2 active:scale-95"
           >
-            <span>Ver Convocatorias Laborales</span>
+            <span>Ver convocatorias laborales</span>
             <ArrowRight size={18} />
           </Link>
         </div>

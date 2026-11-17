@@ -293,7 +293,7 @@ export function YapeConfigModal({
             </div>
             <div>
               <h3 className="font-serif font-black text-lg text-[#2D473C]">
-                {isCashier ? "Alternar QR de Yape (Caja)" : "Gestión de Códigos QR de Yape"}
+                {isCashier ? "Alternar QR de Yape (Caja)" : "Gestión de códigos QR de Yape"}
               </h3>
               <p className="text-xs text-gray-500">
                 {isCashier
@@ -458,7 +458,7 @@ export function YapeConfigModal({
                 <div className="flex items-center justify-between border-b border-gray-200 pb-3">
                   <h4 className="font-bold text-sm text-gray-900 flex items-center gap-2">
                     <Sparkles size={16} className="text-[#D4AF37]" />
-                    {isAddingNew ? "Agregar Nueva Cuenta de Yape" : `Editar Cuenta: ${formLabel}`}
+                    {isAddingNew ? "Agregar nueva cuenta de Yape" : `Editar cuenta: ${formLabel}`}
                   </h4>
                   <button
                     type="button"

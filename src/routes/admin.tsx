@@ -808,7 +808,7 @@ function AdminRoute() {
             <div className="bg-white rounded-2xl border border-gray-200 shadow-2xs p-5 space-y-4">
               <div className="flex items-center justify-between">
                 <div>
-                  <h3 className="font-serif font-black text-lg text-[#2D473C]">Cupones y Códigos Promocionales</h3>
+                  <h3 className="font-serif font-black text-lg text-[#2D473C]">Cupones y códigos promocionales</h3>
                   <p className="text-xs text-gray-500">Gestión de descuentos y promociones especiales</p>
                 </div>
 

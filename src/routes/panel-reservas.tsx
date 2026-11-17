@@ -39,7 +39,7 @@ const getLocalYYYYMMDD = (d?: Date | string) => {
 export const Route = createFileRoute("/panel-reservas")({
   head: () => ({
     meta: [
-      { title: "Panel de Reservas | Restaurante Las Flores" },
+      { title: "Panel de reservas | Restaurante Las Flores" },
       { name: "robots", content: "noindex, nofollow" },
     ],
   }),
@@ -415,7 +415,7 @@ function PanelReservasRoute() {
                   <img src="/favicon.png" alt="Las Flores" className="w-full h-full object-contain rounded-lg" />
                 </div>
                 <h1 className="font-serif text-sm font-black tracking-tight text-white leading-none">
-                  Panel de Reservas
+                  Panel de reservas
                 </h1>
               </div>
 

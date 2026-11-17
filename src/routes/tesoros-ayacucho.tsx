@@ -7,7 +7,7 @@ import { MobileCategoryFilter } from "@/components/MobileCategoryFilter";
 export const Route = createFileRoute("/tesoros-ayacucho")({
   head: () => ({
     meta: [
-      { title: "Tesoros de Ayacucho — Las Flores | Productos de Temporada" },
+      { title: "Tesoros de Ayacucho — Las Flores | Productos de temporada" },
       {
         name: "description",
         content:
@@ -432,7 +432,7 @@ const productosPorTemporadaAnterior: Record<string, ProductoAnterior[]> = {
       usos: ["Sopas", "Guisos", "Ensaladas", "Saltados"],
     },
     {
-      nombre: "Hierba Buena",
+      nombre: "Hierba buena",
       nombreCientifico: "Mentha spicata",
       descripcion: "Hierbas aromáticas frescas que reviven con el calor, para mondingo.",
       temporada: "Primavera",
@@ -519,7 +519,7 @@ const productosPorTemporadaAnterior: Record<string, ProductoAnterior[]> = {
 const productosPorTemporada: Record<string, Producto[]> = {
   Verano: [
     {
-      nombre: "Ají Amarillo",
+      nombre: "Ají amarillo",
       rangoAltitud: "2.500 m s. n. m.",
       temporada: "Verano",
       meses: "Diciembre - Marzo",
@@ -637,7 +637,7 @@ const productosPorTemporada: Record<string, Producto[]> = {
       imagen: "/imagenes-reales/productosAyacucho/Primavera/eucalipto.webp",
     },
     {
-      nombre: "Hierba Buena",
+      nombre: "Hierba buena",
       rangoAltitud: "2.500 m s. n. m.",
       temporada: "Primavera",
       meses: "Septiembre - Marzo",

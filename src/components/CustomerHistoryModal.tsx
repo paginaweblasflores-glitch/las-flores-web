@@ -333,7 +333,7 @@ export function CustomerHistoryModal({ open, onClose, user, inline }: CustomerHi
                 }`}
               >
                 <UserIcon size={14} />
-                <span className="truncate">Mi Perfil</span>
+                <span className="truncate">Mi perfil</span>
               </button>
             </div>
           )}
@@ -437,7 +437,7 @@ export function CustomerHistoryModal({ open, onClose, user, inline }: CustomerHi
                           className="w-full py-2.5 bg-eucalipto hover:bg-eucalipto/90 text-piedra rounded-xl font-bold text-xs uppercase tracking-widest transition-all shadow-sm flex items-center justify-center gap-2 cursor-pointer active:scale-95"
                         >
                           <MapPin size={14} />
-                          Rastrear Pedido en Vivo
+                          Rastrear pedido en vivo
                         </button>
                       </div>
                   )}
@@ -505,10 +505,10 @@ export function CustomerHistoryModal({ open, onClose, user, inline }: CustomerHi
                 <div className="flex items-center justify-between border-b border-black/5 pb-3">
                   <h4 className="font-serif font-bold text-base text-nogal flex items-center gap-2">
                     <UserIcon size={18} className="text-eucalipto" />
-                    <span>Datos del Cliente</span>
+                    <span>Datos del cliente</span>
                   </h4>
                   <span className="text-xs text-eucalipto font-bold bg-eucalipto/10 px-2.5 py-1 rounded-full uppercase tracking-wider">
-                    Información Oficial
+                    Información oficial
                   </span>
                 </div>
 
@@ -531,7 +531,7 @@ export function CustomerHistoryModal({ open, onClose, user, inline }: CustomerHi
 
                 <div>
                   <label className="block text-xs font-bold uppercase tracking-wider text-black/70 mb-1">
-                    Nombre Completo
+                    Nombre completo
                   </label>
                   <input
                     type="text"
@@ -558,7 +558,7 @@ export function CustomerHistoryModal({ open, onClose, user, inline }: CustomerHi
 
                 <div>
                   <label className="block text-xs font-bold uppercase tracking-wider text-black/70 mb-1">
-                    Fecha de Nacimiento
+                    Fecha de nacimiento
                   </label>
                   <div className="grid grid-cols-3 gap-2">
                     <select
@@ -604,7 +604,7 @@ export function CustomerHistoryModal({ open, onClose, user, inline }: CustomerHi
 
                 <div>
                   <label className="block text-xs font-bold uppercase tracking-wider text-black/45 mb-1">
-                    Correo Electrónico (Asociado a tu cuenta)
+                    Correo electrónico (Asociado a tu cuenta)
                   </label>
                   <input
                     type="email"
@@ -733,9 +733,9 @@ function InlineOrderTracker({ order, onBack }: { order: any; onBack: () => void 
   else if (isKitchen) activeStep = 2;
 
   const steps = [
-    { num: 1, title: "Comanda Registrada", desc: "Comanda registrada en caja Las Flores.", icon: Package },
-    { num: 2, title: "En Cocina", desc: "Nuestros chefs están preparando tu orden.", icon: Utensils },
-    { num: 3, title: "Repartidor en Camino", desc: "Tu motorizado ya tiene tu paquete y se dirige a tu domicilio.", icon: Truck },
+    { num: 1, title: "Comanda registrada", desc: "Comanda registrada en caja Las Flores.", icon: Package },
+    { num: 2, title: "En cocina", desc: "Nuestros chefs están preparando tu orden.", icon: Utensils },
+    { num: 3, title: "Repartidor en camino", desc: "Tu motorizado ya tiene tu paquete y se dirige a tu domicilio.", icon: Truck },
     { num: 4, title: "Entregado", desc: "¡Pedido completado con éxito! Buen provecho.", icon: CheckCircle2 },
   ];
 
@@ -748,7 +748,7 @@ function InlineOrderTracker({ order, onBack }: { order: any; onBack: () => void 
           className="text-xs font-bold text-eucalipto hover:underline flex items-center gap-1.5 cursor-pointer"
         >
           <ArrowLeft size={16} />
-          <span>Volver a Mis Pedidos</span>
+          <span>Volver a mis pedidos</span>
         </button>
         <span className="font-serif font-bold text-xs text-nogal">
           #{order.order_number}
@@ -758,11 +758,11 @@ function InlineOrderTracker({ order, onBack }: { order: any; onBack: () => void 
       <div className="bg-white p-5 rounded-2xl border border-black/5 shadow-xs space-y-6">
         <div className="flex items-center justify-between">
           <span className="text-xs uppercase font-extrabold tracking-widest text-nogal/50">
-            Seguimiento en Vivo
+            Seguimiento en vivo
           </span>
           <span className="text-xs uppercase font-bold px-2.5 py-0.5 bg-eucalipto/10 text-eucalipto rounded-full flex items-center gap-1">
             <span className="w-1.5 h-1.5 rounded-full bg-eucalipto animate-ping" />
-            En Tiempo Real
+            En tiempo real
           </span>
         </div>
 
@@ -794,7 +794,7 @@ function InlineOrderTracker({ order, onBack }: { order: any; onBack: () => void 
                     </h4>
                     {isCurrent && (
                       <span className="text-xs uppercase font-extrabold px-1.5 py-0.2 bg-nogal text-chilca rounded animate-pulse">
-                        En Proceso
+                        En proceso
                       </span>
                     )}
                   </div>
@@ -809,7 +809,7 @@ function InlineOrderTracker({ order, onBack }: { order: any; onBack: () => void 
 
         <div className="pt-3 border-t border-black/5 flex flex-col gap-3">
           <div>
-            <span className="text-xs uppercase font-bold text-nogal/40 block">Destino Registrado:</span>
+            <span className="text-xs uppercase font-bold text-nogal/40 block">Destino registrado:</span>
             <span className="text-xs font-bold text-nogal">{order.address || "Dirección registrada"}</span>
             {order.reference && (
               <span className="text-xs text-nogal/50 block italic mt-0.5">Ref: {order.reference}</span>
@@ -823,7 +823,7 @@ function InlineOrderTracker({ order, onBack }: { order: any; onBack: () => void 
             className="w-full py-3 bg-[#25D366] hover:bg-[#20bd5a] text-white rounded-xl font-bold text-xs uppercase tracking-wider transition-all shadow-xs flex items-center justify-center gap-2 cursor-pointer active:scale-95 mt-1"
           >
             <Phone size={15} />
-            <span>Contactar Soporte por WhatsApp</span>
+            <span>Contactar soporte por WhatsApp</span>
           </a>
         </div>
       </div>
@@ -836,10 +836,10 @@ function OrderStatusBadge({ status }: { status: string }) {
   const map: Record<string, { label: string; bg: string; text: string }> = {
     pendiente: { label: "Pendiente", bg: "bg-amber-100", text: "text-amber-800" },
     received: { label: "Pendiente", bg: "bg-amber-100", text: "text-amber-800" },
-    en_preparacion: { label: "En Cocina", bg: "bg-blue-100", text: "text-blue-800" },
-    preparing: { label: "En Cocina", bg: "bg-blue-100", text: "text-blue-800" },
-    en_camino: { label: "En Camino", bg: "bg-purple-100", text: "text-purple-800" },
-    on_the_way: { label: "En Camino", bg: "bg-purple-100", text: "text-purple-800" },
+    en_preparacion: { label: "En cocina", bg: "bg-blue-100", text: "text-blue-800" },
+    preparing: { label: "En cocina", bg: "bg-blue-100", text: "text-blue-800" },
+    en_camino: { label: "En camino", bg: "bg-purple-100", text: "text-purple-800" },
+    on_the_way: { label: "En camino", bg: "bg-purple-100", text: "text-purple-800" },
     entregado: { label: "Entregado", bg: "bg-emerald-100", text: "text-emerald-800" },
     delivered: { label: "Entregado", bg: "bg-emerald-100", text: "text-emerald-800" },
     cancelado: { label: "Cancelado", bg: "bg-red-100", text: "text-red-800" },

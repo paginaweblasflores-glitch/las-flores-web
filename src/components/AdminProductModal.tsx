@@ -415,7 +415,7 @@ export function AdminProductModal({
           <div className="flex items-center gap-2.5">
             <Utensils className="text-chilca" size={20} />
             <h2 className="font-sans font-extrabold text-base sm:text-lg text-white">
-              {product ? "Editar / Actualizar Plato" : "Nuevo Lanzamiento o Promoción"}
+              {product ? "Editar / actualizar plato" : "Nuevo lanzamiento o promoción"}
             </h2>
           </div>
           <button
@@ -653,7 +653,7 @@ export function AdminProductModal({
                 <div className="flex items-center gap-2">
                   <Layers className="text-amber-700" size={18} />
                   <h4 className="text-xs font-bold uppercase tracking-wider text-amber-950">
-                    Constructor de Secciones y Opciones
+                    Constructor de secciones y opciones
                   </h4>
                 </div>
 

@@ -6,7 +6,7 @@ import { supabase } from "@/lib/supabase";
 export const Route = createFileRoute("/d/$orderId")({
   component: DriverMagicLink,
   head: () => ({
-    meta: [{ title: "Ruta de Despacho | Motorizado" }],
+    meta: [{ title: "Ruta de despacho | Motorizado" }],
   }),
 });
 
@@ -202,7 +202,7 @@ function DriverMagicLink() {
       <div className="min-h-screen bg-[#f8f4e6] flex items-center justify-center p-6 font-sans">
         <div className="max-w-sm w-full bg-white rounded-3xl p-8 text-center shadow-xl border border-nogal/10 space-y-4">
           <AlertTriangle size={40} className="text-amber-500 mx-auto" />
-          <h2 className="font-serif text-xl font-bold text-nogal">Enlace No Válido</h2>
+          <h2 className="font-serif text-xl font-bold text-nogal">Enlace no válido</h2>
           <p className="text-xs text-nogal/60">{orderError || "No se pudo cargar el pedido especificado."}</p>
         </div>
       </div>
@@ -247,7 +247,7 @@ function DriverMagicLink() {
             <ShieldCheck size={36} />
           </div>
           <div>
-            <h2 className="font-serif text-xl font-bold text-nogal">Acceso de Motorizado</h2>
+            <h2 className="font-serif text-xl font-bold text-nogal">Acceso de motorizado</h2>
             <p className="text-xs text-nogal/60 mt-1">
               Ingresa el PIN de despacho o los últimos 4 dígitos del celular del cliente para ver los datos de entrega.
             </p>
@@ -278,7 +278,7 @@ function DriverMagicLink() {
             type="submit"
             className="w-full py-3.5 rounded-xl font-serif font-bold text-sm bg-eucalipto text-piedra hover:bg-eucalipto/90 transition-all shadow-md"
           >
-            Verificar y Acceder
+            Verificar y acceder
           </button>
         </form>
       </div>
@@ -295,9 +295,9 @@ function DriverMagicLink() {
           </div>
           <div>
             <span className="text-[0.625rem] uppercase font-bold tracking-[0.2em] text-eucalipto bg-eucalipto/10 px-3 py-1 rounded-full">
-              Entrega Completada
+              Entrega completada
             </span>
-            <h1 className="font-serif text-2xl font-bold text-nogal mt-3">Misión Cumplida</h1>
+            <h1 className="font-serif text-2xl font-bold text-nogal mt-3">Misión cumplida</h1>
             <p className="text-xs text-nogal/60 mt-2 leading-relaxed">
               El pedido <strong>#{orderData.order_number || orderId}</strong> ya fue entregado y finalizado.
             </p>
@@ -305,7 +305,7 @@ function DriverMagicLink() {
           <div className="bg-piedra p-4 rounded-2xl border border-nogal/5 text-left text-xs space-y-1">
             <div className="flex items-center gap-1.5 font-bold text-nogal text-xs mb-1">
               <ShieldCheck size={16} className="text-eucalipto" />
-              <span>Enlace Desactivado</span>
+              <span>Enlace desactivado</span>
             </div>
             <p className="text-[0.6875rem] text-nogal/60">
               Este enlace de despacho ha sido cerrado para liberar recursos y mantener la plataforma segura.
@@ -315,7 +315,7 @@ function DriverMagicLink() {
             href="/"
             className="block w-full py-3.5 bg-nogal text-piedra rounded-2xl font-bold text-xs uppercase tracking-widest hover:bg-nogal/90 transition-all shadow-md"
           >
-            Volver al Inicio
+            Volver al inicio
           </a>
         </div>
       </div>
@@ -340,7 +340,7 @@ function DriverMagicLink() {
             <Navigation2 size={28} className="text-chilca" />
           </div>
           <span className="text-[0.625rem] uppercase font-bold tracking-[0.2em] text-chilca mb-1 block">
-            Panel de Despacho Motorizado
+            Panel de despacho motorizado
           </span>
           <h2 className="text-2xl font-serif font-bold">#{orderData.order_number}</h2>
         </div>
@@ -378,7 +378,7 @@ function DriverMagicLink() {
 
             {/* Detalle de Comanda */}
             <div className="border-t border-nogal/10 pt-3 space-y-1.5">
-              <p className="text-[0.625rem] uppercase font-bold tracking-widest text-nogal/50">Platos de la Comanda:</p>
+              <p className="text-[0.625rem] uppercase font-bold tracking-widest text-nogal/50">Platos de la comanda:</p>
               {orderData.items?.map((item, idx) => (
                 <div key={idx} className="flex justify-between text-xs font-medium">
                   <span className="text-nogal/80">{item.quantity}x {item.product_name}</span>
@@ -434,7 +434,7 @@ function DriverMagicLink() {
                 disabled={processingState}
                 className="w-full py-4 bg-eucalipto hover:bg-[#2c4a3e] text-piedra rounded-2xl font-bold text-xs uppercase tracking-widest transition-all shadow-md active:scale-95 cursor-pointer flex items-center justify-center gap-2"
               >
-                <span>Voy a Recoger el Pedido</span>
+                <span>Voy a recoger el pedido</span>
                 <ArrowRight size={16} />
               </button>
             </div>
@@ -458,7 +458,7 @@ function DriverMagicLink() {
                 className="w-full py-4 bg-nogal hover:bg-nogal/90 text-piedra rounded-2xl font-bold text-xs uppercase tracking-widest transition-all shadow-lg active:scale-95 flex items-center justify-center gap-2 cursor-pointer"
               >
                 <Package size={18} />
-                <span>Pedido Recogido (En camino al cliente)</span>
+                <span>Pedido recogido (en camino al cliente)</span>
               </button>
             </div>
           )}
@@ -507,7 +507,7 @@ function DriverMagicLink() {
                 className="w-full py-4 mt-2 bg-pacay hover:bg-pacay/90 text-white rounded-2xl font-bold text-xs uppercase tracking-widest transition-all shadow-lg active:scale-95 flex items-center justify-center gap-2 cursor-pointer"
               >
                 <CheckCircle2 size={18} />
-                <span>Confirmar Entrega al Cliente</span>
+                <span>Confirmar entrega al cliente</span>
               </button>
             </div>
           )}
@@ -516,7 +516,7 @@ function DriverMagicLink() {
       
       <div className="mt-8 text-center text-nogal/40 text-[0.625rem] uppercase font-bold tracking-widest flex items-center justify-center gap-2">
         <img src="/images.png" className="h-4 brightness-0 opacity-40 grayscale" alt="Logo" />
-        Sistema de Seguimiento Las Flores
+        Sistema de seguimiento Las Flores
       </div>
     </div>
   );

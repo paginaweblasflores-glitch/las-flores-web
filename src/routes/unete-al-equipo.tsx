@@ -13,7 +13,7 @@ import { FamiliaLasFloresSection } from "../components/FamiliaLasFloresSection";
 export const Route = createFileRoute("/unete-al-equipo")({
   head: () => ({
     meta: [
-      { title: "Únete al Equipo | Restaurante Las Flores" },
+      { title: "Únete al equipo | Restaurante Las Flores" },
       {
         name: "description",
         content:
@@ -24,7 +24,7 @@ export const Route = createFileRoute("/unete-al-equipo")({
         content:
           "trabajo restaurante ayacucho, empleo restaurante las flores, convocatorias ayacucho, bolsa de trabajo ayacucho, trabajar en restaurante ayacucho",
       },
-      { property: "og:title", content: "Únete al Equipo | Restaurante Las Flores" },
+      { property: "og:title", content: "Únete al equipo | Restaurante Las Flores" },
       {
         property: "og:description",
         content: "Desarróllate profesionalmente en Restaurante Las Flores Ayacucho. Conoce nuestras convocatorias abiertas y forma parte de nuestra familia.",
@@ -115,7 +115,7 @@ function UneteAlEquipoPage() {
       {/* ── SECCIÓN DE VACANTES Y FORMULARIO (PRIMERO, PARA CONVERSIÓN INMEDIATA) ── */}
       <section className="py-16 md:py-24 px-6 md:px-12 lg:px-20 max-w-[87.5rem] mx-auto w-full flex-1">
         <div className="mb-10 text-center md:text-left">
-          <h2 className="font-serif text-3xl md:text-4xl text-ink mb-2">Convocatorias Abiertas</h2>
+          <h2 className="font-serif text-3xl md:text-4xl text-ink mb-2">Convocatorias abiertas</h2>
           <p className="text-ink/60 text-sm">
             Explora las oportunidades laborales disponibles y envía tu postulación.
           </p>
@@ -238,7 +238,7 @@ function UneteAlEquipoPage() {
                         }`}
                       >
                         <FileText size={16} />
-                        <span>1. Detalles y Requisitos</span>
+                        <span>1. Detalles y requisitos</span>
                       </button>
                       <button
                         type="button"
@@ -250,7 +250,7 @@ function UneteAlEquipoPage() {
                         }`}
                       >
                         <Send size={16} />
-                        <span>2. Postular Ahora</span>
+                        <span>2. Postular ahora</span>
                       </button>
                     </div>
 
@@ -260,7 +260,7 @@ function UneteAlEquipoPage() {
                         <div className="space-y-6 text-xs text-ink/80 leading-relaxed animate-in fade-in">
                           <div>
                             <h4 className="font-bold text-ink uppercase tracking-wider mb-2 text-[0.6875rem] text-eucalipto">
-                              Descripción del Puesto
+                              Descripción del puesto
                             </h4>
                             <p className="text-sm text-ink/90 leading-relaxed font-sans">
                               {selectedOffer.description || selectedOffer.summary}
@@ -271,7 +271,7 @@ function UneteAlEquipoPage() {
                           <div>
                             <h4 className="font-bold text-ink uppercase tracking-wider mb-3 text-[0.6875rem] flex items-center gap-1.5 text-eucalipto">
                               <CheckCircle2 size={16} />
-                              <span>Responsabilidades Principales</span>
+                              <span>Responsabilidades principales</span>
                             </h4>
                             <ul className="space-y-2">
                               {selectedOffer.responsibilities.map((resp, i) => (
@@ -288,7 +288,7 @@ function UneteAlEquipoPage() {
                           <div>
                             <h4 className="font-bold text-ink uppercase tracking-wider mb-3 text-[0.6875rem] flex items-center gap-1.5 text-eucalipto">
                               <ListChecks size={16} />
-                              <span>Requisitos del Candidato</span>
+                              <span>Requisitos del candidato</span>
                             </h4>
                             <ul className="space-y-2">
                               {selectedOffer.requirements.map((req, i) => (
@@ -305,7 +305,7 @@ function UneteAlEquipoPage() {
                           <div>
                             <h4 className="font-bold text-ink uppercase tracking-wider mb-3 text-[0.6875rem] flex items-center gap-1.5 text-eucalipto">
                               <Gift size={16} />
-                              <span>Beneficios & Ofrecimiento</span>
+                              <span>Beneficios & ofrecimiento</span>
                             </h4>
                             <ul className="space-y-2">
                               {selectedOffer.benefits.map((ben, i) => (
@@ -356,7 +356,7 @@ function UneteAlEquipoPage() {
       <section className="py-16 md:py-20 px-6 md:px-12 lg:px-20 bg-white/60 border-t border-b border-black/5">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12">
-            <h2 className="font-serif text-3xl md:text-4xl text-ink mb-3">Nuestra Cultura Laboral</h2>
+            <h2 className="font-serif text-3xl md:text-4xl text-ink mb-3">Nuestra cultura laboral</h2>
             <p className="text-ink/60 text-sm max-w-xl mx-auto">
               Nuestros valores fundamentales nos guían día a día para brindar experiencias inolvidables a nuestros visitantes.
             </p>
@@ -367,7 +367,7 @@ function UneteAlEquipoPage() {
               <div className="w-14 h-14 rounded-full bg-eucalipto/10 text-eucalipto flex items-center justify-center mb-5">
                 <Heart size={28} />
               </div>
-              <h3 className="font-serif font-bold text-xl text-ink mb-3">Pasión por el Servicio</h3>
+              <h3 className="font-serif font-bold text-xl text-ink mb-3">Pasión por el servicio</h3>
               <p className="text-xs text-ink/70 leading-relaxed">
                 Brindamos calidez, respeto y hospitalidad auténtica a cada uno de nuestros comensales y compañeros de trabajo.
               </p>
@@ -377,7 +377,7 @@ function UneteAlEquipoPage() {
               <div className="w-14 h-14 rounded-full bg-eucalipto/10 text-eucalipto flex items-center justify-center mb-5">
                 <Users size={28} />
               </div>
-              <h3 className="font-serif font-bold text-xl text-ink mb-3">Identidad y Equipo</h3>
+              <h3 className="font-serif font-bold text-xl text-ink mb-3">Identidad y equipo</h3>
               <p className="text-xs text-ink/70 leading-relaxed">
                 Promovemos un ambiente colaborativo, inclusivo y orgulloso de la riqueza histórica y cultural de Ayacucho.
               </p>
@@ -387,7 +387,7 @@ function UneteAlEquipoPage() {
               <div className="w-14 h-14 rounded-full bg-eucalipto/10 text-eucalipto flex items-center justify-center mb-5">
                 <Award size={28} />
               </div>
-              <h3 className="font-serif font-bold text-xl text-ink mb-3">Desarrollo Constante</h3>
+              <h3 className="font-serif font-bold text-xl text-ink mb-3">Desarrollo constante</h3>
               <p className="text-xs text-ink/70 leading-relaxed">
                 Apostamos por la capacitación continua, el reconocimiento del talento y la línea de carrera interna.
               </p>

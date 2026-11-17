@@ -1,3 +1,4 @@
+import { nombreEnCarta } from "../lib/menuLabels";
 import { useState, useEffect, useRef } from "react";
 import { Plus, X, ShoppingCart } from "lucide-react";
 import { useCart } from "../context/CartContext";
@@ -101,7 +102,7 @@ function DishCard({ dish, categoryId, onSelectBreakfast }: DishCardProps) {
           <div className="absolute inset-0 bg-black/5 group-hover:bg-transparent transition-colors z-10 pointer-events-none" />
           <img
             src={dish.image}
-            alt={dish.name}
+            alt={nombreEnCarta(dish.name)}
             decoding="async"
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
           />
@@ -109,14 +110,14 @@ function DishCard({ dish, categoryId, onSelectBreakfast }: DishCardProps) {
       ) : (
         <div className="h-44 m-2.5 rounded-xl bg-black/5 flex items-center justify-center relative">
           <span className="font-serif italic text-black/30 text-xl px-4 text-center">
-            {dish.name}
+            {nombreEnCarta(dish.name)}
           </span>
         </div>
       )}
       <div className="px-5 pb-5 pt-3 flex flex-col flex-1">
         <div className="mb-2">
           <h3 className="text-lg font-serif font-bold leading-tight text-nogal">
-            {dish.name}
+            {nombreEnCarta(dish.name)}
           </h3>
         </div>
         <p className="text-black/60 text-xs flex-1 mb-5 leading-relaxed font-medium">
@@ -133,7 +134,7 @@ function DishCard({ dish, categoryId, onSelectBreakfast }: DishCardProps) {
           className="w-full py-2.5 rounded-xl flex items-center justify-center gap-2 transition-all border border-cochinilla/30 text-cochinilla font-bold text-sm bg-piedra hover:bg-cochinilla hover:text-white shadow-xs hover:shadow-sm active:scale-[0.99]"
         >
           <Plus size={15} strokeWidth={2.5} />
-          {isCustomizable ? "Personalizar y Agregar" : "Agregar"}
+          {isCustomizable ? "Personalizar y agregar" : "Agregar"}
         </button>
       </div>
     </div>
@@ -205,12 +206,12 @@ export function MenuModal({ open, onClose }: MenuModalProps) {
           </div>
           <div className="flex flex-col">
             <h2 className="font-serif font-bold tracking-wide text-2xl md:text-3xl text-nogal">
-              Nuestra Carta
+              Nuestra carta
             </h2>
             <p
               className="text-[0.6875rem] md:text-[0.6875rem] uppercase tracking-[0.25em] font-bold text-nogal/60"
             >
-              Para Delivery & Recojo
+              Para delivery & recojo
             </p>
           </div>
         </div>
@@ -224,7 +225,7 @@ export function MenuModal({ open, onClose }: MenuModalProps) {
             }`}
           >
             <ShoppingCart size={18} className={`transition-transform duration-300 ${isBouncing ? "-rotate-12 scale-110" : ""}`} />
-            <span className="hidden md:inline">Ver Pedido</span>
+            <span className="hidden md:inline">Ver pedido</span>
             {totalItems > 0 && (
               <span
                 className={`absolute -top-2 -right-2 text-[0.6875rem] w-5 h-5 rounded-full flex items-center justify-center font-bold shadow-sm bg-white text-cochinilla border border-cochinilla/40 transition-all duration-300 ${

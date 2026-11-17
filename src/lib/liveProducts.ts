@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { supabase } from "./supabase";
+import { nombreEnCarta } from "./menuLabels";
 import { categories as staticCategories, Category, Dish } from "../components/MenuModal";
 
 export type { Category, Dish };
@@ -212,7 +213,8 @@ export function precioConPersonalizacion(
  * (la tipografía de los títulos dibuja un "&" decorativo que cuesta leer).
  */
 export function etiquetaCategoria(nombre: string): string {
-  return (nombre || "").replace(/\s*&\s*/g, " y ").trim();
+  const etiqueta = (nombre || "").replace(/\s*&\s*/g, " y ").trim();
+  return nombreEnCarta(etiqueta);
 }
 
 /**

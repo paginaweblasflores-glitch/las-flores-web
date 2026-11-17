@@ -5,9 +5,9 @@ import { Link } from '@tanstack/react-router';
 import { UserAuthButton } from './UserAuthButton';
 
 const NAV_LINKS = [
-  { label: 'Cultura Ayacuchana', to: '/', hash: '' },
-  { label: 'Nuestro Restaurante', to: '/restaurante', hash: '' },
-  { label: 'La Carta', to: '/carta', hash: '' },
+  { label: 'Cultura ayacuchana', to: '/', hash: '' },
+  { label: 'Nuestro restaurante', to: '/restaurante', hash: '' },
+  { label: 'La carta', to: '/carta', hash: '' },
   { label: 'Reservas', to: '/reservas', hash: '' },
   { label: 'Eventos', to: '/eventos', hash: '' },
   { label: 'Galería', to: '/galeria', hash: '' },

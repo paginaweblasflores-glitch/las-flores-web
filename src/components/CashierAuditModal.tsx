@@ -214,7 +214,7 @@ export function CashierAuditModal({ isOpen, onClose, orders }: CashierAuditModal
     const html = `
       <p class="center">RESTAURANTE LAS FLORES</p>
       <p class="center">Delivery de la Página Web</p>
-      <p class="center">Arqueo y Cierre de Caja</p>
+      <p class="center">Arqueo y cierre de caja</p>
       <p class="center" style="margin-bottom:8px;">Fecha: ${selectedDate}</p>
       <hr />
       <div class="row"><span>Efectivo a rendir</span><span>S/ ${totalCash.toFixed(2)}</span></div>
@@ -253,7 +253,7 @@ export function CashierAuditModal({ isOpen, onClose, orders }: CashierAuditModal
             </div>
             <div>
               <h2 className="font-serif font-bold text-lg leading-tight tracking-wide text-[#fbf5e6]">
-                Arqueo y Cierre de Caja
+                Arqueo y cierre de caja
               </h2>
               <p className="text-xs text-white/70">
                 Resumen contable y rendimiento diario de comandas
@@ -367,12 +367,12 @@ export function CashierAuditModal({ isOpen, onClose, orders }: CashierAuditModal
             </div>
           </div>
 
-          {/* Tabla de Detalle de Comandas (no se imprime, ver ticket compacto abajo) */}
+          {/* Tabla de Detalle de comandas (no se imprime, ver ticket compacto abajo) */}
           <div className="bg-white rounded-2xl border border-black/10 shadow-xs overflow-hidden">
             <div className="p-4 bg-black/3 border-b border-black/10 flex items-center justify-between">
               <h3 className="font-serif font-bold text-sm text-[#2c4a3e] flex items-center gap-2">
                 <ShoppingBag size={16} className="text-[#2c4a3e]" />
-                <span>Detalle de Comandas ({filteredOrders.length})</span>
+                <span>Detalle de comandas ({filteredOrders.length})</span>
               </h3>
               <span className="text-xs text-black/50 font-medium">
                 Fecha: <strong>{selectedDate}</strong>

@@ -64,7 +64,7 @@ export function CashierTopBar({
                 />
               </div>
               <h1 className="font-serif text-sm font-black tracking-tight text-white leading-none">
-                Panel de Caja
+                Panel de caja
               </h1>
             </div>
 

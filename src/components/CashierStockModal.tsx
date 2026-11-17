@@ -121,7 +121,7 @@ export function CashierStockModal({ isOpen, onClose }: CashierStockModalProps) {
             </div>
             <div>
               <h2 className="font-serif font-bold text-lg leading-tight tracking-wide text-[#fbf5e6]">
-                Control de Stock y Disponibilidad
+                Control de stock y disponibilidad
               </h2>
               <p className="text-xs text-white/70">
                 Apaga o activa platos agotados con 1 solo toque

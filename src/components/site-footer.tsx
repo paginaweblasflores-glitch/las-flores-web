@@ -22,13 +22,13 @@ export function SiteFooter() {
 
             <div className="flex flex-col space-y-2 text-sm">
               <Link to="/politica-de-privacidad" className="hover:text-chilca transition-colors">
-                Política de Privacidad
+                Política de privacidad
               </Link>
               <Link to="/terminos-y-condiciones" className="hover:text-chilca transition-colors">
-                Términos y Condiciones
+                Términos y condiciones
               </Link>
               <Link to="/unete-al-equipo" className="hover:text-chilca transition-colors font-semibold">
-                Únete al Equipo
+                Únete al equipo
               </Link>
             </div>
 
@@ -64,10 +64,10 @@ export function SiteFooter() {
           {/* Schedule and Socials */}
           <div className="md:col-span-4 flex flex-col items-start md:items-end justify-center space-y-4 text-left md:text-right">
             <div className="space-y-1">
-              <p className="font-semibold text-piedra">Horario de Atención</p>
-              <p>Lunes a Viernes</p>
+              <p className="font-semibold text-piedra">Horario de atención</p>
+              <p>Lunes a viernes</p>
               <p>7:00 a. m. - 5:30 p. m.</p>
-              <p>Sábado y Domingo</p>
+              <p>Sábado y domingo</p>
               <p>7:00 a. m. - 6:00 p. m.</p>
             </div>
 
@@ -110,7 +110,7 @@ export function SiteFooter() {
             <Link
               to="/staff-login"
               className="hover:text-piedra transition-colors"
-              title="Acceso Administrativo"
+              title="Acceso administrativo"
             >
               <Lock size={12} />
             </Link>

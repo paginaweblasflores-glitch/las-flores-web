@@ -18,7 +18,7 @@ const STAFF_USERS = [
 export const Route = createFileRoute("/staff-login")({
   head: () => ({
     meta: [
-      { title: "Acceso Administrativo | Restaurante Las Flores" },
+      { title: "Acceso administrativo | Restaurante Las Flores" },
       { name: "robots", content: "noindex, nofollow" },
     ],
   }),

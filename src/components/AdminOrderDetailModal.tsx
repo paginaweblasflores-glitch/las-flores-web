@@ -211,7 +211,7 @@ export function AdminOrderDetailModal({
           {/* Items Table */}
           <div>
             <h3 className="text-sm font-bold text-gray-900 mb-3 flex items-center gap-2">
-              Productos Solicitados ({items.length})
+              Productos solicitados ({items.length})
             </h3>
 
             {loading ? (

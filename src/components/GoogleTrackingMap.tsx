@@ -186,7 +186,7 @@ export function GoogleTrackingMap({
       <div className="w-full h-[25rem] flex flex-col items-center justify-center bg-piedra/50 rounded-2xl border border-nogal/10">
         <div className="w-8 h-8 border-[3px] border-nogal border-t-transparent rounded-full animate-spin mb-4" />
         <p className="text-xs font-bold text-nogal/50 uppercase tracking-widest">
-          {!API_KEY ? "Falta API Key de Google Maps" : "Cargando Mapa..."}
+          {!API_KEY ? "Falta API Key de Google Maps" : "Cargando mapa..."}
         </p>
         {!API_KEY && (
           <p className="text-[0.625rem] text-nogal/40 mt-2 text-center max-w-xs">
@@ -226,7 +226,7 @@ export function GoogleTrackingMap({
         {customerLocation && (
           <Marker 
             position={customerLocation}
-            title="Dirección de Entrega"
+            title="Dirección de entrega"
             icon={{
               url: "https://cdn-icons-png.flaticon.com/512/2555/2555572.png", // Icono casa
               scaledSize: new window.google.maps.Size(35, 35),

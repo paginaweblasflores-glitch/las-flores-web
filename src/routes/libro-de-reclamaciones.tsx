@@ -9,11 +9,11 @@ import { sendComplaintEmail } from "@/lib/emailService";
 export const Route = createFileRoute("/libro-de-reclamaciones")({
   head: () => ({
     meta: [
-      { title: "Libro de Reclamaciones Virtual | Restaurante Las Flores Ayacucho" },
+      { title: "Libro de reclamaciones virtual | Restaurante Las Flores Ayacucho" },
       {
         name: "description",
         content:
-          "Libro de Reclamaciones Virtual de Restaurante Turístico Las Flores en cumplimiento de la Ley N° 29571 del Código de Protección y Defensa del Consumidor del Perú.",
+          "Libro de reclamaciones virtual de Restaurante Turístico Las Flores en cumplimiento de la Ley N° 29571 del Código de Protección y Defensa del Consumidor del Perú.",
       },
     ],
     links: [{ rel: "canonical", href: "https://www.restaurantelasflores.com/libro-de-reclamaciones" }],
@@ -126,7 +126,7 @@ function LibroReclamacionesPage() {
             <span>Ley N° 29571 • Indecopi</span>
           </div>
           <h1 className="font-serif text-4xl md:text-6xl font-normal leading-tight">
-            Libro de Reclamaciones
+            Libro de reclamaciones
           </h1>
           <p className="text-sm md:text-base text-cream/80 max-w-2xl mx-auto font-light leading-relaxed">
             Plataforma virtual conforme a lo establecido en el Código de Protección y Defensa del Consumidor de la República del Perú.
@@ -144,14 +144,14 @@ function LibroReclamacionesPage() {
             </div>
             <div className="space-y-2">
               <span className="text-xs uppercase tracking-[0.25em] font-bold text-[#d4a373]">
-                Hoja de Reclamación Registrada
+                Hoja de reclamación registrada
               </span>
               <h2 className="font-serif text-3xl md:text-4xl text-ink font-bold">
                 Hemos recibido tu solicitud
               </h2>
             </div>
             <div className="p-6 rounded-2xl bg-[#fdf8f0] border border-[#d4a373]/40 max-w-md mx-auto space-y-2">
-              <span className="text-xs font-bold text-gray-500 uppercase tracking-widest block">Código de Seguimiento</span>
+              <span className="text-xs font-bold text-gray-500 uppercase tracking-widest block">Código de seguimiento</span>
               <span className="font-mono text-2xl font-black text-eucalipto block tracking-wider">{submittedCode}</span>
               <span className="text-xs text-gray-600 block pt-1">
                 Fecha y hora de registro: {new Date().toLocaleDateString("es-PE")} - {new Date().toLocaleTimeString("es-PE")}
@@ -165,7 +165,7 @@ function LibroReclamacionesPage() {
                 href="/"
                 className="inline-block bg-eucalipto hover:bg-eucalipto/90 text-cream px-8 py-3.5 rounded-xl font-bold uppercase tracking-widest text-xs transition-all shadow-md"
               >
-                Volver al Inicio
+                Volver al inicio
               </a>
             </div>
           </div>
@@ -177,7 +177,7 @@ function LibroReclamacionesPage() {
             <div className="border-b border-black/10 pb-6 space-y-2 text-xs text-nogal/80">
               <div className="flex flex-wrap items-center justify-between gap-2">
                 <span className="font-bold text-eucalipto text-sm">RESTAURANTE TURÍSTICO LAS FLORES</span>
-                <span className="bg-cream px-3 py-1 rounded-full border border-black/5 font-semibold">Razón Social: RESTAURANTE LAS FLORES S.A.C.</span>
+                <span className="bg-cream px-3 py-1 rounded-full border border-black/5 font-semibold">Razón social: RESTAURANTE LAS FLORES S.A.C.</span>
               </div>
               <p>RUC: <strong>20608514921</strong> • Domicilio: Jr. José Olaya 106, Huamanga, Ayacucho, Perú.</p>
               <p className="text-xs text-gray-500 italic">
@@ -191,12 +191,12 @@ function LibroReclamacionesPage() {
               <div className="space-y-4">
                 <h3 className="font-serif text-lg font-bold text-ink border-b border-black/5 pb-2 flex items-center gap-2">
                   <span className="w-6 h-6 rounded-full bg-eucalipto text-cream text-xs flex items-center justify-center font-sans font-bold">1</span>
-                  <span>Identificación del Consumidor Reclamante</span>
+                  <span>Identificación del consumidor reclamante</span>
                 </h3>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="md:col-span-2">
-                    <label className="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1">Nombre Completo *</label>
+                    <label className="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1">Nombre completo *</label>
                     <input
                       type="text"
                       required
@@ -208,7 +208,7 @@ function LibroReclamacionesPage() {
                   </div>
 
                   <div>
-                    <label className="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1">Tipo de Documento *</label>
+                    <label className="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1">Tipo de documento *</label>
                     <select
                       value={form.docType}
                       onChange={(e) => setForm({ ...form, docType: e.target.value })}
@@ -222,7 +222,7 @@ function LibroReclamacionesPage() {
                   </div>
 
                   <div>
-                    <label className="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1">Número de Documento *</label>
+                    <label className="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1">Número de documento *</label>
                     <input
                       type="text"
                       required
@@ -246,7 +246,7 @@ function LibroReclamacionesPage() {
                   </div>
 
                   <div>
-                    <label className="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1">Correo Electrónico *</label>
+                    <label className="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1">Correo electrónico *</label>
                     <input
                       type="email"
                       required
@@ -283,7 +283,7 @@ function LibroReclamacionesPage() {
 
                   {form.isMinor && (
                     <div className="md:col-span-2 p-4 rounded-xl bg-cream/60 border border-black/5">
-                      <label className="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1">Nombre del Padre, Madre o Tutor *</label>
+                      <label className="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1">Nombre del padre, madre o tutor *</label>
                       <input
                         type="text"
                         required={form.isMinor}
@@ -301,12 +301,12 @@ function LibroReclamacionesPage() {
               <div className="space-y-4">
                 <h3 className="font-serif text-lg font-bold text-ink border-b border-black/5 pb-2 flex items-center gap-2">
                   <span className="w-6 h-6 rounded-full bg-eucalipto text-cream text-xs flex items-center justify-center font-sans font-bold">2</span>
-                  <span>Identificación del Bien Contratado</span>
+                  <span>Identificación del bien contratado</span>
                 </h3>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-2">Tipo de Bien *</label>
+                    <label className="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-2">Tipo de bien *</label>
                     <div className="flex items-center gap-6">
                       <label className="flex items-center gap-2 cursor-pointer text-xs font-semibold">
                         <input
@@ -332,7 +332,7 @@ function LibroReclamacionesPage() {
                   </div>
 
                   <div>
-                    <label className="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1">Monto Reclamado en Soles (Opcional)</label>
+                    <label className="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1">Monto reclamado en soles (opcional)</label>
                     <input
                       type="number"
                       step="0.01"
@@ -344,7 +344,7 @@ function LibroReclamacionesPage() {
                   </div>
 
                   <div className="md:col-span-2">
-                    <label className="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1">Descripción del Producto o Servicio *</label>
+                    <label className="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1">Descripción del producto o servicio *</label>
                     <input
                       type="text"
                       required
@@ -361,12 +361,12 @@ function LibroReclamacionesPage() {
               <div className="space-y-4">
                 <h3 className="font-serif text-lg font-bold text-ink border-b border-black/5 pb-2 flex items-center gap-2">
                   <span className="w-6 h-6 rounded-full bg-eucalipto text-cream text-xs flex items-center justify-center font-sans font-bold">3</span>
-                  <span>Detalle de la Reclamación y Pedido del Consumidor</span>
+                  <span>Detalle de la reclamación y pedido del consumidor</span>
                 </h3>
 
                 <div className="space-y-4">
                   <div>
-                    <label className="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-2">Tipo de Incidencia *</label>
+                    <label className="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-2">Tipo de incidencia *</label>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                       <label className={`p-4 rounded-2xl border cursor-pointer transition-all flex items-start gap-3 ${form.claimType === "reclamo" ? "border-eucalipto bg-eucalipto/5 ring-1 ring-eucalipto" : "border-gray-200 bg-white"}`}>
                         <input
@@ -401,7 +401,7 @@ function LibroReclamacionesPage() {
                   </div>
 
                   <div>
-                    <label className="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1">Detalle de los Hechos (Explicación) *</label>
+                    <label className="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1">Detalle de los hechos (explicación) *</label>
                     <textarea
                       rows={4}
                       required
@@ -413,7 +413,7 @@ function LibroReclamacionesPage() {
                   </div>
 
                   <div>
-                    <label className="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1">Pedido Concreto del Consumidor (Qué solución solicita) *</label>
+                    <label className="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1">Pedido concreto del consumidor (Qué solución solicita) *</label>
                     <textarea
                       rows={3}
                       required
@@ -447,7 +447,7 @@ function LibroReclamacionesPage() {
                   className="w-full bg-eucalipto hover:bg-eucalipto/90 text-cream py-4 rounded-xl font-bold uppercase tracking-widest text-xs transition-all shadow-md active:scale-[0.99] disabled:opacity-50 cursor-pointer flex items-center justify-center gap-2"
                 >
                   <Send size={16} />
-                  <span>{isSubmitting ? "Registrando Reclamación..." : "ENVIAR HOJA DE RECLAMACIÓN"}</span>
+                  <span>{isSubmitting ? "Registrando reclamación..." : "ENVIAR HOJA DE RECLAMACIÓN"}</span>
                 </button>
               </div>
 

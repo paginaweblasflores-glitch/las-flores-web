@@ -318,7 +318,7 @@ export function AdminJobsSection({ onNewApplicationsCountChange }: AdminJobsSect
             className="flex items-center gap-2 px-5 py-2.5 bg-[#2e5339] hover:bg-[#23412c] text-white font-sans font-bold text-xs rounded-2xl shadow-md transition-all cursor-pointer border border-[#2e5339]"
           >
             <Plus size={16} />
-            <span>Nueva Convocatoria</span>
+            <span>Nueva convocatoria</span>
           </button>
         )}
       </div>
@@ -353,7 +353,7 @@ export function AdminJobsSection({ onNewApplicationsCountChange }: AdminJobsSect
                 {offers.length === 0 ? (
                   <tr>
                     <td colSpan={6} className="px-6 py-12 text-center text-[#3b1f10]/40 text-sm">
-                      No hay convocatorias creadas aún. Haz clic en "Nueva Convocatoria" para publicar una vacante.
+                      No hay convocatorias creadas aún. Haz clic en "Nueva convocatoria" para publicar una vacante.
                     </td>
                   </tr>
                 ) : (
@@ -398,7 +398,7 @@ export function AdminJobsSection({ onNewApplicationsCountChange }: AdminJobsSect
                           <button
                             onClick={() => handleOpenEditOffer(offer)}
                             className="p-2 rounded-xl text-[#3b1f10]/70 hover:text-[#2e5339] hover:bg-[#2e5339]/10 border border-transparent hover:border-[#2e5339]/20 transition-all cursor-pointer"
-                            title="Editar Convocatoria"
+                            title="Editar convocatoria"
                           >
                             <Edit2 size={16} />
                           </button>
@@ -583,7 +583,7 @@ export function AdminJobsSection({ onNewApplicationsCountChange }: AdminJobsSect
           <div className="bg-white rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl p-6 lg:p-8 space-y-6">
             <div className="flex items-center justify-between border-b border-black/10 pb-4">
               <h3 className="font-serif font-bold text-2xl text-ink">
-                {editingOffer ? "Editar Convocatoria" : "Nueva Convocatoria"}
+                {editingOffer ? "Editar convocatoria" : "Nueva convocatoria"}
               </h3>
               <button
                 onClick={() => setShowOfferModal(false)}

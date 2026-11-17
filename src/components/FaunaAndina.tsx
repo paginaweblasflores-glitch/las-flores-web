@@ -24,13 +24,13 @@ const ESPECIES: EspecieFauna[] = [
       "Es una de las rapaces más pequeñas del Perú y se queda quieto en el aire sobre los campos de cultivo. Desde allí vigila el suelo y cuida las chacras de plagas y pequeños roedores.",
   },
   {
-    nombre: "Cóndor Andino",
+    nombre: "Cóndor andino",
     imagen: "/imagenes-reales/fauna/condor.webp",
     descripcion:
       "Para la cosmovisión andina es el mensajero de los Apus. Con casi tres metros de punta a punta, recorre las alturas de Lucanas (sobre todo el Valle de Sondondo) y de Sucre casi sin aletear, y al alimentarse de animales muertos mantiene sano el ecosistema.",
   },
   {
-    nombre: "Halcón Peregrino",
+    nombre: "Halcón peregrino",
     quechua: "waman",
     imagen: "/imagenes-reales/fauna/halcon.webp",
     descripcion:

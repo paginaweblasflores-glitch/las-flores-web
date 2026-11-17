@@ -14,13 +14,13 @@ import { FamiliaLasFloresSection } from "../components/FamiliaLasFloresSection";
 export const Route = createFileRoute("/restaurante")({
   head: () => ({
     meta: [
-      { title: "Nuestra Historia — Las Flores, El Mejor Restaurante en Ayacucho" },
+      { title: "Nuestra historia — Las Flores, El mejor restaurante en Ayacucho" },
       {
         name: "description",
         content:
           "Tres generaciones de tradición culinaria hacen de Las Flores el mejor restaurante en Ayacucho. Conoce nuestra historia, el equipo y la firma del chef.",
       },
-      { property: "og:title", content: "Las Flores — El Mejor Restaurante en Ayacucho" },
+      { property: "og:title", content: "Las Flores — El mejor restaurante en Ayacucho" },
       {
         property: "og:description",
         content:
@@ -48,20 +48,20 @@ const VIDEOS_PLATOS = "/imagenes-reales/videos-de-platos";
 // Descripciones tomadas de la carta
 const chefRecommendations = [
   {
-    name: "Puca Picante",
+    name: "Puca picante",
     description:
       "Guiso de papa en salsa de ají panca con maní tostado, carne de cerdo y especias, servido con arroz blanco, ensalada y chicharrón.",
     video: `${VIDEOS_PLATOS}/puca-picante.mp4`,
     poster: `${VIDEOS_PLATOS}/puca-picante-poster.webp`,
-    alt: "Preparación y emplatado del Puca Picante",
+    alt: "Preparación y emplatado del Puca picante",
   },
   {
-    name: "Chicharrón Huamanguino",
+    name: "Chicharrón huamanguino",
     description:
       "Trozos de carne de cerdo dorados en su propia manteca, acompañados de papas sancochadas, qapchi, chips de camote y ensalada criolla.",
     video: `${VIDEOS_PLATOS}/chicharron-huamanguino.mp4`,
     poster: `${VIDEOS_PLATOS}/chicharron-huamanguino-poster.webp`,
-    alt: "Preparación y emplatado del Chicharrón Huamanguino",
+    alt: "Preparación y emplatado del Chicharrón huamanguino",
   },
   {
     name: "Cuy Las Flores",
@@ -72,12 +72,12 @@ const chefRecommendations = [
     alt: "Preparación y emplatado del Cuy Las Flores",
   },
   {
-    name: "Chancho Asado Las Flores",
+    name: "Chancho asado Las Flores",
     description:
       "Carne de cerdo macerada en distintas especias, acompañada de pastel de papa, crema de pimentón, chips de camote y ensalada hawaiana.",
     video: `${VIDEOS_PLATOS}/chancho-asado.mp4`,
     poster: `${VIDEOS_PLATOS}/chancho-asado-poster.webp`,
-    alt: "Preparación y emplatado del Chancho Asado Las Flores",
+    alt: "Preparación y emplatado del Chancho asado Las Flores",
   },
 ];
 
@@ -233,7 +233,7 @@ function RestaurantePage() {
         <div className="relative z-10 mx-auto flex w-full max-w-6xl items-center justify-center px-4 sm:px-6 lg:px-8 text-piedra">
           <div className="max-w-3xl text-center space-y-6">
             <h1 className="font-serif text-4xl md:text-6xl text-piedra font-normal leading-tight animate-reveal-left-to-right [animation-delay:200ms]">
-              Bienvenido a Nuestra Casa
+              Bienvenido a nuestra casa
             </h1>
           </div>
         </div>

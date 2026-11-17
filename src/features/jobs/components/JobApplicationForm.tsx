@@ -107,7 +107,7 @@ export function JobApplicationForm({ offer, onSuccess }: JobApplicationFormProps
     return (
       <div className="p-6 rounded-2xl bg-amber-50 border border-amber-200 text-amber-900 flex flex-col items-center text-center gap-3">
         <AlertCircle size={32} className="text-amber-600" />
-        <h4 className="font-serif font-bold text-lg">Convocatoria Cerrada</h4>
+        <h4 className="font-serif font-bold text-lg">Convocatoria cerrada</h4>
         <p className="text-sm leading-relaxed">
           Esta convocatoria acaba de cerrar. Revisa las demás oportunidades disponibles.
         </p>
@@ -119,7 +119,7 @@ export function JobApplicationForm({ offer, onSuccess }: JobApplicationFormProps
     return (
       <div className="p-8 rounded-2xl bg-eucalipto/10 border border-eucalipto/30 text-ink flex flex-col items-center text-center gap-4 animate-in fade-in">
         <CheckCircle2 size={48} className="text-eucalipto" />
-        <h4 className="font-serif font-bold text-2xl text-eucalipto">¡Postulación Enviada!</h4>
+        <h4 className="font-serif font-bold text-2xl text-eucalipto">¡Postulación enviada!</h4>
         <p className="text-sm text-ink/80 leading-relaxed max-w-md">
           Hemos recibido tu información y tu CV exitosamente. Si tu perfil coincide con la vacante de{" "}
           <strong className="text-ink font-semibold">{offer.title}</strong>, nos pondremos en contacto contigo.
@@ -373,7 +373,7 @@ export function JobApplicationForm({ offer, onSuccess }: JobApplicationFormProps
             <span>Enviando postulación…</span>
           </>
         ) : (
-          <span>Enviar Postulación</span>
+          <span>Enviar postulación</span>
         )}
       </button>
     </form>

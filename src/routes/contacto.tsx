@@ -143,7 +143,7 @@ function ContactoPage() {
                   }`}
                 >
                   <span className={`w-2 h-2 rounded-full ${(isMounted ? isOpenNow : true) ? "bg-emerald-500" : "bg-amber-500"}`} />
-                  {(isMounted ? isOpenNow : true) ? "Abierto Ahora" : "Atención por WhatsApp"}
+                  {(isMounted ? isOpenNow : true) ? "Abierto ahora" : "Atención por WhatsApp"}
                 </span>
               </div>
 
@@ -177,11 +177,11 @@ function ContactoPage() {
                   <span className="text-[0.6875rem] font-bold uppercase tracking-wider text-gray-400 block">Horario</span>
                   <div className="text-xs text-gray-700 space-y-1">
                     <p className="flex justify-between">
-                      <span>Lunes a Viernes:</span>
+                      <span>Lunes a viernes:</span>
                       <strong className="text-[#2e5339]">07:00 am – 05:30 pm</strong>
                     </p>
                     <p className="flex justify-between">
-                      <span>Sábados y Domingos:</span>
+                      <span>Sábados y domingos:</span>
                       <strong className="text-[#2e5339]">07:00 am – 06:00 pm</strong>
                     </p>
                   </div>
@@ -230,8 +230,8 @@ function ContactoPage() {
                     <CheckCircle2 size={36} strokeWidth={2.5} />
                   </div>
                   <div className="space-y-1">
-                    <span className="text-xs uppercase tracking-widest font-bold text-[#d4a373] block">Mensaje Recibido</span>
-                    <h3 className="font-serif text-2xl text-nogal font-bold">¡Gracias por Escribirnos!</h3>
+                    <span className="text-xs uppercase tracking-widest font-bold text-[#d4a373] block">Mensaje recibido</span>
+                    <h3 className="font-serif text-2xl text-nogal font-bold">¡Gracias por escribirnos!</h3>
                   </div>
                   <p className="text-gray-600 text-xs max-w-sm mx-auto leading-relaxed">
                     Hemos recibido tu consulta y nos pondremos en contacto contigo a la brevedad.
@@ -260,7 +260,7 @@ function ContactoPage() {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                       <div className="space-y-1">
                         <label htmlFor="name" className="text-xs font-bold uppercase tracking-wider text-gray-700">
-                          Nombre Completo *
+                          Nombre completo *
                         </label>
                         <input 
                           required
@@ -286,7 +286,7 @@ function ContactoPage() {
 
                     <div className="space-y-1">
                       <label htmlFor="email" className="text-xs font-bold uppercase tracking-wider text-gray-700">
-                        Correo Electrónico *
+                        Correo electrónico *
                       </label>
                       <input 
                         required
@@ -299,7 +299,7 @@ function ContactoPage() {
 
                     <div className="space-y-1">
                       <label htmlFor="subject" className="text-xs font-bold uppercase tracking-wider text-gray-700">
-                        Motivo de Consulta *
+                        Motivo de consulta *
                       </label>
                       <select 
                         required
@@ -308,12 +308,12 @@ function ContactoPage() {
                         className="w-full px-3.5 py-3 bg-gray-50 border border-gray-300 rounded-xl focus:outline-none focus:border-[#2e5339] focus:bg-white text-xs font-medium cursor-pointer"
                       >
                         <option value="" disabled>Selecciona el motivo de tu consulta</option>
-                        <option value="reserva">Reserva de Mesa o Ambiente</option>
-                        <option value="delivery">Consulta de Delivery / Pedidos</option>
-                        <option value="eventos">Eventos Privados & Reuniones</option>
-                        <option value="facturacion">Consultas de Facturación</option>
-                        <option value="sugerencia">Sugerencias o Comentarios</option>
-                        <option value="otro">Otras Consultas</option>
+                        <option value="reserva">Reserva de mesa o ambiente</option>
+                        <option value="delivery">Consulta de delivery / pedidos</option>
+                        <option value="eventos">Eventos privados & reuniones</option>
+                        <option value="facturacion">Consultas de facturación</option>
+                        <option value="sugerencia">Sugerencias o comentarios</option>
+                        <option value="otro">Otras consultas</option>
                       </select>
                     </div>
 
@@ -339,7 +339,7 @@ function ContactoPage() {
                         <span>Enviando...</span>
                       ) : (
                         <>
-                          <span>Enviar Mensaje</span>
+                          <span>Enviar mensaje</span>
                           <Send size={14} />
                         </>
                       )}

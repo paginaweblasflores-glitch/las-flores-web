@@ -309,7 +309,7 @@ export function AdminAnalyticsSection({
         <div className="xl:shrink-0">
           <h2 className="font-serif text-lg font-bold text-[#3b1f10] flex items-center gap-2.5">
             <BarChart3 size={20} className="text-[#2e5339]" />
-            Inteligencia de Negocios y Analítica Avanzada
+            Inteligencia de negocios y analítica avanzada
           </h2>
           <p className="text-xs text-[#3b1f10]/60 mt-0.5 font-sans">
             Analizando {validOrders.length} pedidos efectivos por un monto total de <strong className="text-[#3b1f10]">S/ {totalRevenue.toFixed(2)}</strong> <span className="font-medium text-[#2e5339]">{dateRangeString}</span>
@@ -438,7 +438,7 @@ export function AdminAnalyticsSection({
             <div>
               <h3 className="font-serif text-sm font-bold text-[#14231D] flex items-center gap-2">
                 <TrendingUp size={18} className="text-[#5F8575]" />
-                Evolución de Ingresos por Día (S/)
+                Evolución de ingresos por día (S/)
               </h3>
               <p className="text-xs text-[#14231D]/40 font-medium">Facturación diaria acumulada con guías de nivel</p>
             </div>
@@ -497,7 +497,7 @@ export function AdminAnalyticsSection({
           <div>
             <h3 className="font-serif text-sm font-bold text-[#14231D] flex items-center gap-2">
               <PieChartIcon size={18} className="text-blue-600" />
-              Canal de Venta Preferido
+              Canal de venta preferido
             </h3>
             <p className="text-xs text-[#14231D]/40 font-medium">Proporción Delivery vs Recojo en Local</p>
 
@@ -554,7 +554,7 @@ export function AdminAnalyticsSection({
           <div>
             <h3 className="font-serif text-sm font-bold text-[#14231D] flex items-center gap-2">
               <Clock size={18} className="text-amber-600" />
-              Mapa de Horas Pico de Pedidos (Cocina)
+              Mapa de horas pico de pedidos (cocina)
             </h3>
             <p className="text-xs text-[#14231D]/40 font-medium">Distribución de demanda por rango horario</p>
           </div>
@@ -585,7 +585,7 @@ export function AdminAnalyticsSection({
           <div>
             <h3 className="font-serif text-sm font-bold text-[#14231D] flex items-center gap-2">
               <CreditCard size={18} className="text-[#5F8575]" />
-              Métodos de Pago Utilizados
+              Métodos de pago utilizados
             </h3>
             <p className="text-xs text-[#14231D]/40 font-medium">Volumen cobrado por pasarela o efectivo</p>
           </div>
@@ -608,7 +608,7 @@ export function AdminAnalyticsSection({
         <div>
           <h3 className="font-serif text-sm font-bold text-[#14231D] flex items-center gap-2">
             <Award size={18} className="text-amber-500" />
-            Ranking: Top 5 Platos Más Vendidos y Facturación
+            Ranking: top 5 platos más vendidos y facturación
           </h3>
           <p className="text-xs text-[#14231D]/40 font-medium">Basado en volumen de unidades e ingresos generados</p>
         </div>

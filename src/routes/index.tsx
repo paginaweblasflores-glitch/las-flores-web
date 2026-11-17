@@ -34,7 +34,7 @@ import { festividades } from "@/data/festividades";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Restaurante Las Flores Ayacucho — Dónde Comer en Ayacucho | Carta & Reservas" },
+      { title: "Restaurante Las Flores Ayacucho — Dónde comer en Ayacucho | Carta & Reservas" },
       {
         name: "description",
         content:
@@ -47,7 +47,7 @@ export const Route = createFileRoute("/")({
       },
       {
         property: "og:title",
-        content: "Restaurante Las Flores Ayacucho — Dónde Comer en Ayacucho",
+        content: "Restaurante Las Flores Ayacucho — Dónde comer en Ayacucho",
       },
       {
         property: "og:description",
@@ -416,7 +416,7 @@ function Index() {
         <div className="absolute inset-0 bg-gradient-to-b from-ink/40 via-transparent to-ink/60 pointer-events-none" />
         <div className="relative h-full flex flex-col items-center justify-center text-center px-6 pt-24 pb-16">
           <h1 className="font-serif italic text-4xl sm:text-5xl md:text-[clamp(3rem,min(7vw,12vh),6rem)] text-piedra leading-[1.05] text-balance max-w-[20ch] animate-reveal [animation-delay:200ms]">
-            Guardianes de la Cultura Ayacuchana
+            Guardianes de la cultura ayacuchana
           </h1>
           <p className="mt-4 max-w-[52ch] text-base leading-relaxed text-balance text-piedra drop-shadow-md sm:text-lg">
             Una historia familiar que mantiene vivas las tradiciones y los sabores de nuestra tierra.
@@ -699,25 +699,25 @@ function Index() {
             const PLATOS = [
               {
                 img: "/imagenes-reales/seccion-gastronomia/puca-picante.webp",
-                nombre: "Puca Picante",
+                nombre: "Puca picante",
                 ocasion: "Celebración tradicional",
                 desc: "Puca significa rojo en quechua. Es un guiso de intenso color rojo. Lleva papa, maní tostado, betarraga y chicharrón de cerdo.",
               },
               {
                 img: "/imagenes-reales/seccion-gastronomia/mondongo ayacuchano.webp",
-                nombre: "Mondongo Ayacuchano",
+                nombre: "Mondongo ayacuchano",
                 ocasion: "Mañanas de domingo",
                 desc: "Es un caldo de maíz mote con carnes y panza. Lleva hierbabuena.",
               },
               {
                 img: "/imagenes-reales/seccion-gastronomia/cuy-frito-ayacuchano.webp",
-                nombre: "Cuy Frito Ayacuchano",
+                nombre: "Cuy frito ayacuchano",
                 ocasion: "Celebración tradicional",
                 desc: "Es un plato crujiente hecho con cuy. El consumo de este animal andino se remonta a la época prehispánica.",
               },
               {
                 img: "/imagenes-reales/seccion-gastronomia/chorizo-ayacuchano.webp",
-                nombre: "Chorizo Ayacuchano",
+                nombre: "Chorizo ayacuchano",
                 ocasion: "Semana Santa",
                 desc: "Es carne de cerdo finamente picada y macerada en ají panca. Se sirve sin embutir.",
               },
@@ -913,14 +913,14 @@ function Index() {
               to="/reservas"
               className="inline-flex items-center justify-center gap-3 px-8 py-4 border border-transparent text-[0.6875rem] uppercase tracking-[0.25em] font-bold rounded-sm btn-yellow-hover"
             >
-              <span>Reserva tu Mesa</span>
+              <span>Reserva tu mesa</span>
             </Link>
             <button
               type="button"
               onClick={() => setIsMenuOpen(true)}
               className="inline-flex items-center justify-center gap-3 px-8 py-4 border border-piedra/30 text-piedra text-[0.6875rem] uppercase tracking-[0.25em] font-bold hover:bg-piedra/10 transition-colors rounded-sm cursor-pointer"
             >
-              Pide por Delivery
+              Pide por delivery
             </button>
           </div>
         </div>

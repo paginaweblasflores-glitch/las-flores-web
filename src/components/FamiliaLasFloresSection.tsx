@@ -16,41 +16,41 @@ const defaultReviews: CollaboratorReview[] = [
   {
     id: "1",
     name: "Rosaura Huamán",
-    role: "Maestra Repostera y Bebidas Tradicionales",
+    role: "Maestra repostera y bebidas tradicionales",
     years: "6 años en Las Flores",
     photo: "/imagenes-reales/EQUIPO/02042026-DSC04926.webp",
     quote:
       "En Las Flores no solo servimos recetas, compartimos memorias de nuestros abuelos. Mi mayor orgullo es ver la cara de sorpresa y felicidad cuando nuestros clientes prueban los postres artesanales hechos con amor.",
-    recommendedDish: "Mazamorra de Llipta & Chapla Tradicional",
+    recommendedDish: "Mazamorra de llipta & chapla tradicional",
     dishPrice: "S/ 18.00",
   },
   {
     id: "2",
     name: "Dante Galindo",
-    role: "Capitán de Salón & Hospitalidad",
+    role: "Capitán de salón & hospitalidad",
     years: "4 años en Las Flores",
     photo: "/imagenes-reales/EQUIPO/02042026-DSC05081.webp",
     quote:
       "Trabajar aquí es como recibir a invitados en mi propia casa. El respeto, la dignidad y el buen ambiente que nos da la empresa se refleja en la atención cálida y sonriente con la que atendemos cada mesa.",
-    recommendedDish: "Chicha de Jora Especial de la Casa",
+    recommendedDish: "Chicha de jora especial de la casa",
     dishPrice: "S/ 16.00",
   },
   {
     id: "3",
     name: "Chef Flavio Solorzano",
-    role: "Chef de Fuegos & Carnes Andinas",
+    role: "Chef de fuegos & carnes andinas",
     years: "5 años en Las Flores",
     photo: "/imagenes-reales/EQUIPO/encantados-de-atenderlos.webp",
     quote:
       "El fuego ayacuchano requiere técnica, paciencia y mucho orgullo. Me llena el alma saber que el Cuy Chactado que sale de mi cocina deja un recuerdo imborrable en las familias que nos visitan.",
-    recommendedDish: "Cuy Chactado Crujiente Tradicional",
+    recommendedDish: "Cuy chactado crujiente tradicional",
     dishPrice: "S/ 68.00",
   },
 ];
 
 export function FamiliaLasFloresSection({
   title = "Familia Las Flores",
-  subtitle = "Nuestra Gente · Nuestro Orgullo",
+  subtitle = "Nuestra gente · Nuestro orgullo",
 }: {
   title?: string;
   subtitle?: string;
@@ -133,7 +133,7 @@ export function FamiliaLasFloresSection({
                   className="px-3 py-1.5 rounded-xl bg-[#2D473C] hover:bg-[#243B31] text-white text-[0.6875rem] font-black flex items-center gap-1 shadow-2xs transition-transform active:scale-95 shrink-0"
                 >
                   <Utensils size={12} className="text-[#D4AF37]" />
-                  <span>Ver Carta</span>
+                  <span>Ver carta</span>
                 </Link>
               </div>
             </div>
@@ -148,7 +148,7 @@ export function FamiliaLasFloresSection({
             </div>
             <div>
               <h4 className="font-serif font-bold text-base text-white">
-                ¿Quieres formar parte de la Familia Las Flores?
+                ¿Quieres formar parte de la familia Las Flores?
               </h4>
               <p className="text-xs text-emerald-100/80">
                 Buscamos personas apasionadas por la alta gastronomía y la cultura ayacuchana.
@@ -160,7 +160,7 @@ export function FamiliaLasFloresSection({
             to="/unete-al-equipo"
             className="px-5 py-2.5 rounded-xl bg-[#D4AF37] hover:bg-[#c29e2f] text-[#2D473C] font-black text-xs transition-all shadow-md shrink-0 active:scale-95"
           >
-            Postular a Oportunidades
+            Postular a oportunidades
           </Link>
         </div>
       </div>

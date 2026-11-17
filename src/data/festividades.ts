@@ -52,7 +52,7 @@ export type Festividad = {
   /** Título y descripción de la cronología (opcionales). */
   cronologiaTitulo?: string;
   cronologiaTexto?: string;
-  /** Cronología de la jornada (solo 9 de Diciembre: línea de tiempo, sin fotos). */
+  /** Cronología de la jornada (solo 9 de diciembre: línea de tiempo, sin fotos). */
   cronologia?: MomentoItem[];
 };
 
@@ -61,7 +61,7 @@ export const festividades: Festividad[] = [
     id: 2,
     slug: "carnaval-ayacuchano",
     nombre: "Carnaval Ayacuchano",
-    categoria: "Música y Tradición",
+    categoria: "Música y tradición",
     fecha: "Febrero / Marzo",
     reconocimiento: "Patrimonio Cultural de la Nación (2003)",
     lugarPrincipal: "Plaza Mayor y barrios de Huamanga",
@@ -195,7 +195,7 @@ export const festividades: Festividad[] = [
     slug: "semana-santa",
     invertido: true,
     nombre: "Semana Santa de Ayacucho",
-    categoria: "Fe y Tradición",
+    categoria: "Fe y tradición",
     fecha: "Marzo / Abril",
     reconocimiento: "Patrimonio Cultural de la Nación (2022)",
     lugarPrincipal: "Centro histórico de Huamanga",
@@ -386,9 +386,9 @@ export const festividades: Festividad[] = [
     slug: "9-de-diciembre",
     invertido: true,
     nombre: "Batalla de Ayacucho",
-    categoria: "Historia Viva",
+    categoria: "Historia viva",
     fecha: "Diciembre",
-    reconocimiento: "Feriado Nacional (Ley 31381)",
+    reconocimiento: "Feriado nacional (Ley 31381)",
     lugarPrincipal: "Santuario Histórico Pampa de Ayacucho",
     heroTitulo: "9 de diciembre, Día de la Batalla de Ayacucho",
     imagen: "/imagenes-reales/seccion-turs/pampa-quinua.webp",
@@ -399,8 +399,8 @@ export const festividades: Festividad[] = [
       "El 9 de diciembre de 1824, las fuerzas patriotas al mando de Antonio José de Sucre derrotaron al ejército realista en la Pampa de Ayacucho, cerca de Quinua. Fue una batalla decisiva para la independencia del Perú y de América del Sur. Cada año, esta fecha se recuerda con una ceremonia cívico-militar y una escenificación histórica en el Santuario Histórico de la Pampa de Ayacucho. Desde 2022 es feriado nacional.",
     consejo:
       "Asistir temprano a la ceremonia oficial en el Santuario Histórico Pampa de Ayacucho y complementar con una visita a Quinua, Pueblo con Encanto, y sus ceramistas.",
-    frase: "Cómo vivir el 9 de Diciembre",
-    escenas: "Historia, memoria y libertad: así se vive el 9 de Diciembre.",
+    frase: "Cómo vivir el 9 de diciembre",
+    escenas: "Historia, memoria y libertad: así se vive el 9 de diciembre.",
     dato: "El obelisco de la Pampa de Ayacucho mide 44 metros y se alza en el lugar donde se libró la batalla.",
     metaDescripcion:
       "Ceremonia cívico-militar y escenificación de la Batalla de Ayacucho en la Pampa de Ayacucho, en Quinua. Qué ver y cómo llegar.",

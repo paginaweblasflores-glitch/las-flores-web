@@ -76,7 +76,7 @@ export function LoginModal({
           </div>
 
           <h3 className="font-serif font-bold text-2xl text-ink mb-1 text-center">
-            Iniciar Sesión
+            Iniciar sesión
           </h3>
           <p className="text-xs text-ink/50 text-center mb-6 leading-relaxed max-w-[17.5rem]">
             {subtitle}

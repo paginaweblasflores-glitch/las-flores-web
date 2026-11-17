@@ -1,3 +1,4 @@
+import { nombreEnCarta } from "../lib/menuLabels";
 import { useState, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 import {
@@ -477,7 +478,7 @@ export function CartSidebar() {
 
       if (coupon.order_type_restriction !== "all" && coupon.order_type_restriction !== orderType) {
         setCouponError(
-          `Este cupón solo es válido para pedidos de tipo ${coupon.order_type_restriction === "delivery" ? "Delivery a Domicilio" : "Recojo en Tienda"}.`,
+          `Este cupón solo es válido para pedidos de tipo ${coupon.order_type_restriction === "delivery" ? "Delivery a domicilio" : "Recojo en tienda"}.`,
         );
         setAppliedCoupon(null);
         return;
@@ -1047,7 +1048,7 @@ export function CartSidebar() {
                                   <div className="w-16 h-16 rounded-xl overflow-hidden flex-shrink-0 border border-black/5 shadow-xs bg-white mt-0.5">
                                     <img
                                       src={item.image}
-                                      alt={item.name}
+                                      alt={nombreEnCarta(item.name)}
                                       onError={() =>
                                         setBrokenItemImages((prev) => ({
                                           ...prev,
@@ -1066,7 +1067,7 @@ export function CartSidebar() {
                                   <div className="flex justify-between items-start gap-2">
                                     <div>
                                       <p className="font-serif text-sm font-bold leading-snug text-nogal">
-                                        {item.name}
+                                        {nombreEnCarta(item.name)}
                                       </p>
                                       {formatCustomizations(item.customizations) && (
                                         <p className="mt-1 text-xs text-black/60 font-medium">
@@ -1130,7 +1131,7 @@ export function CartSidebar() {
                               },
                               {
                                 type: "pickup" as OrderType,
-                                label: "Para Llevar",
+                                label: "Para llevar",
                                 sub: "En restaurante",
                                 Icon: Store,
                               },
@@ -1330,7 +1331,7 @@ export function CartSidebar() {
                           {orderType === "delivery" && deliverySubStep === "location" && (
                             <div className="space-y-4 animate-in fade-in slide-in-from-right-3 duration-300">
                               <div className="flex items-center justify-between">
-                                <Label>1. Fijar Ubicación en el Mapa *</Label>
+                                <Label>1. Fijar ubicación en el mapa *</Label>
                                 <button
                                   type="button"
                                   onClick={handleUseGPS}
@@ -1438,7 +1439,7 @@ export function CartSidebar() {
                               </div>
 
                               <div>
-                                <Label>Notas o Comentarios del pedido (Opcional)</Label>
+                                <Label>Notas o comentarios del pedido (opcional)</Label>
                                 <textarea
                                   value={delivery.notes}
                                   onChange={(e) =>
@@ -1507,7 +1508,7 @@ export function CartSidebar() {
                         <div className="bg-white rounded-2xl p-5 border border-nogal/10 shadow-sm space-y-2 text-left animate-in fade-in duration-300">
                           <div className="flex items-center gap-2 font-bold text-xs text-nogal">
                             <Banknote size={18} className="text-cochinilla" />
-                            <span>Pago Contra Entrega en Efectivo</span>
+                            <span>Pago contra entrega en efectivo</span>
                           </div>
                           <p className="text-xs text-nogal/70 leading-relaxed font-medium">
                             Pagarás un total de{" "}
@@ -1589,7 +1590,7 @@ export function CartSidebar() {
                                 Culqi
                               </div>
                               <span className="text-xs text-black/50 font-medium flex items-center gap-1">
-                                <Lock size={12} /> Pago Seguro
+                                <Lock size={12} /> Pago seguro
                               </span>
                             </div>
                           </div>
@@ -1729,7 +1730,7 @@ export function CartSidebar() {
                             className="flex justify-between text-sm text-black/60 font-medium mb-1.5"
                           >
                             <span>
-                              {item.quantity}× {item.name}
+                              {item.quantity}× {nombreEnCarta(item.name)}
                             </span>
                             <span>S/ {(item.price * item.quantity).toFixed(2)}</span>
                           </div>
@@ -1846,7 +1847,7 @@ export function CartSidebar() {
                           : processing
                             ? "Procesando..."
                             : paymentMethod === "culqi" && !culqiToken
-                              ? "Validar Tarjeta"
+                              ? "Validar tarjeta"
                               : `Confirmar Pedido - S/ ${total.toFixed(2)}`}
                       </button>
                     </div>
@@ -1860,7 +1861,7 @@ export function CartSidebar() {
                         style={{ background: "var(--color-cochinilla)", color: "#FBF5E6" }}
                       >
                         <Plus size={18} />
-                        <span>Hacer otro Pedido</span>
+                        <span>Hacer otro pedido</span>
                       </button>
 
                       <button
@@ -1868,7 +1869,7 @@ export function CartSidebar() {
                         className="w-full py-2.5 rounded-xl font-serif font-bold text-xs tracking-wide transition-all border border-nogal/20 text-nogal hover:bg-nogal/5 flex items-center justify-center gap-2"
                       >
                         <Clock size={16} />
-                        <span>Ver Estado de mis Pedidos</span>
+                        <span>Ver estado de mis pedidos</span>
                       </button>
                     </div>
                   )}

@@ -17,7 +17,7 @@ export function ComparsasPaginadas({ comparsas, titulo, texto }: ComparsasPagina
   return (
     <section className="px-6 md:px-16 py-16 md:py-24">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-        <h2 className="font-serif text-3xl md:text-5xl leading-tight">{titulo ?? "Comparsas del Carnaval"}</h2>
+        <h2 className="font-serif text-3xl md:text-5xl leading-tight">{titulo ?? "Comparsas del carnaval"}</h2>
         {texto && (
           <p className="text-nogal/70 text-base leading-[1.7] md:self-end md:justify-self-end md:text-right max-w-[36ch]">
             {texto}

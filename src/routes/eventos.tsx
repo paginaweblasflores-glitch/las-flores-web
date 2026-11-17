@@ -41,7 +41,7 @@ import { MenuModal } from "@/components/MenuModal";
 export const Route = createFileRoute("/eventos")({
   head: () => ({
     meta: [
-      { title: "Eventos y Recepciones | Restaurante Las Flores" },
+      { title: "Eventos y recepciones | Restaurante Las Flores" },
       {
         name: "description",
         content:
@@ -52,7 +52,7 @@ export const Route = createFileRoute("/eventos")({
         content:
           "eventos ayacucho, salones para eventos ayacucho, local para bodas ayacucho, recepciones ayacucho, reuniones corporativas ayacucho, celebraciones familiares ayacucho, restaurante para eventos ayacucho",
       },
-      { property: "og:title", content: "Eventos y Recepciones | Restaurante Las Flores" },
+      { property: "og:title", content: "Eventos y recepciones | Restaurante Las Flores" },
       {
         property: "og:description",
         content: "Celebre bodas, almuerzos de negocios y reuniones familiares en los exclusivos ambientes de Restaurante Las Flores en Ayacucho.",
@@ -359,7 +359,7 @@ function EventosPage() {
               <div className="p-3">
                 <div className="flex items-center justify-center py-2 px-3 bg-gray-100/90 rounded-2xl border border-black/5 text-center">
                   <span className="text-xs font-extrabold uppercase tracking-wider text-nogal">
-                    Cotizar Evento o Celebración
+                    Cotizar evento o celebración
                   </span>
                 </div>
               </div>
@@ -374,7 +374,7 @@ function EventosPage() {
                   </div>
                   <div className="space-y-1">
                     <h4 className="font-serif font-bold text-lg text-nogal">
-                      Solicitud Enviada con Éxito
+                      Solicitud enviada con éxito
                     </h4>
                     <p className="text-xs text-black/60 leading-relaxed">
                       Hemos recibido su información. Nuestro equipo se comunicará con usted a la brevedad para coordinar la propuesta.
@@ -430,12 +430,12 @@ function EventosPage() {
                   {/* Tarjeta 1: Datos de Contacto */}
                   <div className="bg-white rounded-2xl p-4 border border-black/5 shadow-xs space-y-3">
                     <span className="text-xs font-extrabold uppercase tracking-wider text-black/50 block">
-                      Datos de Contacto
+                      Datos de contacto
                     </span>
 
                     <div className="space-y-1">
                       <label htmlFor="nombre" className="text-xs font-bold text-nogal block">
-                        Nombre Completo *
+                        Nombre completo *
                       </label>
                       <input
                         type="text"
@@ -461,7 +461,7 @@ function EventosPage() {
 
                     <div className="space-y-1">
                       <label htmlFor="email" className="text-xs font-bold text-nogal block">
-                        Correo Electrónico *
+                        Correo electrónico *
                       </label>
                       <input
                         type="email"
@@ -476,12 +476,12 @@ function EventosPage() {
                   {/* Tarjeta 2: Detalles del Evento */}
                   <div className="bg-white rounded-2xl p-4 border border-black/5 shadow-xs space-y-3">
                     <span className="text-xs font-extrabold uppercase tracking-wider text-black/50 block">
-                      Detalles del Evento
+                      Detalles del evento
                     </span>
 
                     <div className="space-y-1">
                       <label htmlFor="tipo" className="text-xs font-bold text-nogal block">
-                        Tipo de Evento *
+                        Tipo de evento *
                       </label>
                       <select
                         id="tipo"
@@ -534,7 +534,7 @@ function EventosPage() {
 
                     <div className="space-y-1">
                       <label htmlFor="fecha" className="text-xs font-bold text-nogal block">
-                        Fecha Deseada *
+                        Fecha deseada *
                       </label>
                       <input
                         type="date"
@@ -546,7 +546,7 @@ function EventosPage() {
 
                     <div className="space-y-1">
                       <label htmlFor="mensaje" className="text-xs font-bold text-nogal block">
-                        Detalles Adicionales
+                        Detalles adicionales
                       </label>
                       <textarea
                         id="mensaje"
@@ -586,7 +586,7 @@ function EventosPage() {
                       <span>Enviando...</span>
                     </>
                   ) : (
-                    <span>Solicitar Cotización</span>
+                    <span>Solicitar cotización</span>
                   )}
                 </button>
               )}

@@ -53,7 +53,7 @@ const foto = (carpeta: string, archivo: string, titulo: string): GalleryImage =>
 const GALLERY_CATEGORIES: Category[] = [
   {
     id: "arte-cultura",
-    label: "Artes y Culturas",
+    label: "Artes y culturas",
     images: [
       foto("arte-cultura", "textil-uno", "Pollera ayacuchana"),
       foto("arte-cultura", "textil-dos", "Chaqueta con bordado ayacuchano"),
@@ -63,7 +63,7 @@ const GALLERY_CATEGORIES: Category[] = [
       foto("arte-cultura", "ceramica-tres", "Iglesia de cerámica de Quinua"),
       foto("arte-cultura", "ceramica-cuatro", "Músicos de cerámica tradicional de Quinua"),
       foto("arte-cultura", "retablo-uno", "Exhibición de retablos ayacuchanos"),
-      foto("arte-cultura", "retablo-tres", "Retablos Ayacuchanos tradicionales"),
+      foto("arte-cultura", "retablo-tres", "Retablos ayacuchanos tradicionales"),
       foto("arte-cultura", "piedra-huamanga-uno", "Tallado en piedra de Huamanga"),
       foto("arte-cultura", "piedra-huamanga-tres", "El descendimiento de la cruz tallado en piedra de Huamanga"),
       foto("arte-cultura", "piedra-huamanga-cuatro", "Obelisco de la Pampa de Ayacucho talladas en piedra de Huamanga"),
@@ -85,7 +85,7 @@ const GALLERY_CATEGORIES: Category[] = [
       foto("festividades", "semana-santa-dos", "Miércoles de Encuentro de la Semana Santa de Ayacucho"),
       foto("festividades", "semana-santa-tres", "Alfombras florales de Semana Santa"),
       foto("festividades", "hatun-yacu-raymi-uno", "Hatun Yaku Raymi"),
-      foto("festividades", "hatun-yacu-raymi-dos", "Danza de las Tijeras"),
+      foto("festividades", "hatun-yacu-raymi-dos", "Danza de las tijeras"),
       foto("festividades", "vilcas-raymi-uno", "Plaza principal de Vilcashuamán"),
       foto("festividades", "vilcas-raymi-dos", "Escenificación del Vilcas Raymi"),
       foto("festividades", "chaccu-uno", "Chaccu de vicuñas"),
@@ -94,7 +94,7 @@ const GALLERY_CATEGORIES: Category[] = [
   },
   {
     id: "destino",
-    label: "Lugares Turísticos",
+    label: "Lugares turísticos",
     images: [
       foto("destino", "Cañon2", "Cañones de Qorihuillca"),
       foto("destino", "Arco1", "Jirón 28 de Julio"),
@@ -102,7 +102,7 @@ const GALLERY_CATEGORIES: Category[] = [
       foto("destino", "Catedral1", "Basílica Catedral de Ayacucho"),
       foto("destino", "Catedral2", "Retablos de pan de oro"),
       foto("destino", "Plaza1", "Plaza Mayor de Huamanga"),
-      foto("destino", "Plaza2", "Monumento ecuestre al Mariscal Antonio José de Sucre"),
+      foto("destino", "Plaza2", "Monumento ecuestre al mariscal Antonio José de Sucre"),
       foto("destino", "Pullas2", "Puyas de Raimondi"),
       foto("destino", "Acuchimay1", "Mirador de Acuchimay"),
       foto("destino", "Quinua2", "Obelisco de la Pampa de Ayacucho"),

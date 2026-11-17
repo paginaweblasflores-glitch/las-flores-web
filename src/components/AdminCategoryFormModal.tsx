@@ -151,7 +151,7 @@ export function AdminCategoryFormModal({
           <div className="flex items-center gap-2.5">
             <ListTree className="text-white/80" size={20} />
             <h2 className="font-sans font-extrabold text-base sm:text-lg text-white">
-              {category ? "Editar Categoría" : "Nueva Categoría"}
+              {category ? "Editar categoría" : "Nueva categoría"}
             </h2>
           </div>
           <button

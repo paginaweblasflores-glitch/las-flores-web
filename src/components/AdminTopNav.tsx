@@ -44,12 +44,12 @@ export function AdminTopNav({
   const menuItems = [
     { id: "analytics" as AdminTab, label: "Analítica", icon: BarChart3 },
     { id: "orders" as AdminTab, label: "Comandas", icon: ShoppingBag },
-    { id: "reservations" as AdminTab, label: "Reservas de Mesas", icon: Calendar },
+    { id: "reservations" as AdminTab, label: "Reservas de mesas", icon: Calendar },
     { id: "menu" as AdminTab, label: "Carta", icon: UtensilsCrossed },
     { id: "coupons" as AdminTab, label: "Cupones", icon: Ticket },
     { id: "clients" as AdminTab, label: "Usuarios", icon: Users },
-    { id: "jobs" as AdminTab, label: "Bolsa de Trabajo", icon: Briefcase, badge: applicationsCount },
-    { id: "complaints" as AdminTab, label: "Libro de Reclamaciones", icon: BookOpen, badge: complaintsCount },
+    { id: "jobs" as AdminTab, label: "Bolsa de trabajo", icon: Briefcase, badge: applicationsCount },
+    { id: "complaints" as AdminTab, label: "Libro de reclamaciones", icon: BookOpen, badge: complaintsCount },
     { id: "zones" as AdminTab, label: "Zonas", icon: Store },
   ];
 

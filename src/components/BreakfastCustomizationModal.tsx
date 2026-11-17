@@ -1,3 +1,4 @@
+import { nombreEnCarta } from "../lib/menuLabels";
 import { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
 import { X, GlassWater, Check, ShoppingBag, Sparkles, Utensils } from "lucide-react";
@@ -143,7 +144,7 @@ export function BreakfastCustomizationModal({ dish, open, onClose }: BreakfastCu
           {dish.image ? (
             <img
               src={dish.image}
-              alt={dish.name}
+              alt={nombreEnCarta(dish.name)}
               className="w-full h-full object-cover brightness-[0.82] hover:scale-105 transition-transform duration-700"
             />
           ) : (
@@ -174,7 +175,7 @@ export function BreakfastCustomizationModal({ dish, open, onClose }: BreakfastCu
             </div>
             <div className="flex justify-between items-end gap-3">
               <h2 className="font-serif font-bold text-2xl sm:text-3xl text-piedra drop-shadow-sm leading-tight">
-                {dish.name}
+                {nombreEnCarta(dish.name)}
               </h2>
               <span className="font-serif font-bold text-xl sm:text-2xl text-piedra flex-shrink-0 bg-white/15 px-3.5 py-1 rounded-2xl backdrop-blur-md border border-white/20 shadow-xs">
                 S/ {resolveSelectedPrice().toFixed(2)}
@@ -284,7 +285,7 @@ export function BreakfastCustomizationModal({ dish, open, onClose }: BreakfastCu
         <div className="p-4 sm:p-5 bg-white border-t border-black/10 flex items-center justify-between gap-4 shadow-lg flex-shrink-0">
           <div className="text-left">
             <span className="text-[0.6875rem] font-serif tracking-[0.15em] font-bold text-black/45 uppercase block">
-              Precio Total
+              Precio total
             </span>
             <span className="font-serif font-bold text-2xl md:text-3xl text-cochinilla">S/ {resolveSelectedPrice().toFixed(2)}</span>
           </div>
@@ -299,7 +300,7 @@ export function BreakfastCustomizationModal({ dish, open, onClose }: BreakfastCu
             }`}
           >
             <ShoppingBag size={18} />
-            {isComplete ? "Confirmar y Agregar al Carrito" : `Elige tus opciones (${selectedCount}/${sectionsList.length})`}
+            {isComplete ? "Confirmar y agregar al carrito" : `Elige tus opciones (${selectedCount}/${sectionsList.length})`}
           </button>
         </div>
       </div>

@@ -58,7 +58,7 @@ const FALLBACK_ZONES = [
     descripcion: "El corazón de Las Flores. Vista a los retablos andinos en pan de oro y carpintería artesanal.",
     imagen: "/imagenes-reales/Salones/salon-principal.webp",
     capacidad: "Mesa para 13 personas",
-    badge: "Retablos Pan de Oro",
+    badge: "Retablos pan de oro",
   },
   {
     id: "salon-ventana",
@@ -69,7 +69,7 @@ const FALLBACK_ZONES = [
     descripcion: "Luz natural envolvente y vistas a las casonas coloniales de Huamanga.",
     imagen: "/imagenes-reales/Salones/salon-ventana.webp",
     capacidad: "Mesa para 10 personas",
-    badge: "Luz Natural Colonial",
+    badge: "Luz natural colonial",
   },
   {
     id: "estrado",
@@ -80,7 +80,7 @@ const FALLBACK_ZONES = [
     descripcion: "Ambiente privado elevado en el escenario tradicional del restaurante.",
     imagen: "/imagenes-reales/Salones/estrado-principal.webp",
     capacidad: "Mesa para 6 personas",
-    badge: "Escenario Privado",
+    badge: "Escenario privado",
   },
   {
     id: "salon-entrada",
@@ -91,7 +91,7 @@ const FALLBACK_ZONES = [
     descripcion: "Cálida bienvenida rodeada de tallados en madera y artesanía viva ayacuchana.",
     imagen: "/imagenes-reales/Salones/salon-entrada.webp",
     capacidad: "Mesa para 6 personas",
-    badge: "Cálida Tradición",
+    badge: "Cálida tradición",
   },
   {
     id: "terraza",
@@ -102,7 +102,7 @@ const FALLBACK_ZONES = [
     descripcion: "Vista abierta al cielo andino de Ayacucho y brisa pura de montaña.",
     imagen: "/imagenes-reales/Salones/terraza-colonial.webp",
     capacidad: "Mesa para 6 personas",
-    badge: "Cielo Andino Abierto",
+    badge: "Cielo andino abierto",
   },
   {
     id: "pasillo",
@@ -124,7 +124,7 @@ const FALLBACK_ZONES = [
     descripcion: "Rodeado de flores autóctonas y serenidad andina bajo la sombra de la naturaleza.",
     imagen: "/imagenes-reales/Salones/jardin-andino.webp",
     capacidad: "Mesa para 4 personas",
-    badge: "Jardín Vivo & Flores",
+    badge: "Jardín vivo & flores",
   },
 ];
 
@@ -213,7 +213,7 @@ function ReservasPage() {
             descripcion: z.description || fallback?.descripcion || "",
             imagen: z.image_url || fallback?.imagen || "",
             capacidad: `Mesa para ${z.max_capacity_persons} personas`,
-            badge: fallback?.badge || "Zona Exclusiva",
+            badge: fallback?.badge || "Zona exclusiva",
           };
         });
         setFetchedZones(mapped);
@@ -583,7 +583,7 @@ function ReservasPage() {
       return;
     }
     if (!form.termsAccepted) {
-      alert("Debes aceptar los Términos y Condiciones para continuar.");
+      alert("Debes aceptar los Términos y condiciones para continuar.");
       return;
     }
     setMainStep(3); // Advance to Additional
@@ -747,7 +747,7 @@ function ReservasPage() {
           </div>
           <div className="max-w-4xl mx-auto text-center relative z-10 space-y-6 px-4 sm:px-6">
             <h1 className="font-serif text-4xl md:text-6xl text-piedra font-normal leading-tight">
-              Reserva tu Experiencia
+              Reserva tu experiencia
             </h1>
             <p className="text-base md:text-lg text-piedra/90 max-w-3xl mx-auto leading-relaxed">
               Asegura tu mesa y vive una experiencia gastronómica única en el corazón de Ayacucho. Te esperamos con los mejores sabores de nuestra tierra.
@@ -853,7 +853,7 @@ function ReservasPage() {
               </button>
 
               <span className="block text-xs font-bold uppercase tracking-[0.25em] text-[#d4a373] mb-2">
-                Ambiente Seleccionado
+                Ambiente seleccionado
               </span>
 
               <h1 className="font-sans text-4xl md:text-6xl text-piedra font-bold mb-4 leading-tight">
@@ -952,7 +952,7 @@ function ReservasPage() {
                   <div className="mt-4 p-4 bg-[#fdf8f0] rounded-none border border-[#d4a373]/30 text-xs text-gray-700 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
                     <div>
                       <p className="font-bold text-[#3b1f10] uppercase tracking-wider text-[0.6875rem] mb-0.5">
-                        Capacidad Máxima del Ambiente ({selectedZona.nombre}): {selectedZona.maxCap} personas
+                        Capacidad máxima del ambiente ({selectedZona.nombre}): {selectedZona.maxCap} personas
                       </p>
                       <p>
                         Para grupos de más de <strong>{selectedZona.maxCap} personas</strong>, realizamos la coordinación personalizada vía WhatsApp.
@@ -1238,7 +1238,7 @@ function ReservasPage() {
                       }}
                       className="text-[#A32638] underline font-bold hover:text-[#7a1c29] inline cursor-pointer"
                     >
-                      Términos y Condiciones y Política de Privacidad
+                      Términos y condiciones y Política de privacidad
                     </button>
                     , en donde se me informa sobre el tratamiento de datos personales y la política de puntualidad de mesas.
                   </span>
@@ -1260,7 +1260,7 @@ function ReservasPage() {
                   type="submit"
                   className="w-full bg-[#A32638] hover:bg-[#7a1c29] text-white py-4 rounded-md font-bold uppercase tracking-widest text-sm transition-all shadow-md active:scale-[0.99] cursor-pointer"
                 >
-                  Continuar a Experiencia →
+                  Continuar a experiencia →
                 </button>
               </div>
             </form>
@@ -1356,7 +1356,7 @@ function ReservasPage() {
                   disabled={isSubmitting}
                   className="w-full bg-[#A32638] hover:bg-[#7a1c29] text-white py-4 rounded-md font-bold uppercase tracking-widest text-sm transition-all shadow-md active:scale-[0.99] disabled:opacity-50 cursor-pointer"
                 >
-                  {isSubmitting ? "Procesando Reserva..." : "CONFIRMAR RESERVA"}
+                  {isSubmitting ? "Procesando reserva..." : "CONFIRMAR RESERVA"}
                 </button>
               </div>
             </div>
@@ -1372,13 +1372,13 @@ function ReservasPage() {
 
             <div className="space-y-2">
               <span className="text-xs font-bold uppercase tracking-[0.3em] text-[#d4a373] block">
-                ¡Mesa Reservada con Éxito!
+                ¡Mesa reservada con éxito!
               </span>
               <h2 className="font-serif italic text-3xl md:text-5xl text-[#A32638] font-bold">
-                Tu Experiencia en Las Flores
+                Tu experiencia en Las Flores
               </h2>
               <p className="text-xs text-gray-500 uppercase tracking-widest font-semibold pt-1">
-                Código de Confirmación: <span className="text-[#3b1f10] font-black text-sm">{form.reservationCode || "RES-FLORES-88219"}</span>
+                Código de confirmación: <span className="text-[#3b1f10] font-black text-sm">{form.reservationCode || "RES-FLORES-88219"}</span>
               </p>
             </div>
 
@@ -1393,7 +1393,7 @@ function ReservasPage() {
               <div className="border-b border-[#d4a373]/40 pb-4 flex justify-between items-center">
                 <div>
                   <span className="text-[0.6875rem] uppercase font-bold tracking-widest text-[#d4a373] block">
-                    Pase Digital de Reserva
+                    Pase digital de reserva
                   </span>
                   <span className="font-serif font-bold text-lg text-[#A32638]">
                     Restaurante Las Flores
@@ -1409,7 +1409,7 @@ function ReservasPage() {
                 <div className="flex items-center gap-3">
                   <Calendar size={18} className="text-[#A32638] shrink-0" />
                   <div>
-                    <span className="text-[0.6875rem] text-gray-500 uppercase block font-semibold">Fecha & Hora</span>
+                    <span className="text-[0.6875rem] text-gray-500 uppercase block font-semibold">Fecha & hora</span>
                     <span className="font-bold text-[#A32638] text-sm">{form.date} — {form.time}h.</span>
                   </div>
                 </div>
@@ -1417,7 +1417,7 @@ function ReservasPage() {
                 <div className="flex items-center gap-3">
                   <UserIcon size={18} className="text-[#A32638] shrink-0" />
                   <div>
-                    <span className="text-[0.6875rem] text-gray-500 uppercase block font-semibold">Comensales & Zona</span>
+                    <span className="text-[0.6875rem] text-gray-500 uppercase block font-semibold">Comensales & zona</span>
                     <span className="font-bold text-[#A32638] text-sm">{form.guests} personas · {form.zona.nombre}</span>
                   </div>
                 </div>
@@ -1435,7 +1435,7 @@ function ReservasPage() {
               <div className="pt-3 border-t border-[#d4a373]/30 flex justify-between items-end">
                 <div>
                   <span className="text-[0.6875rem] text-gray-500 uppercase font-bold block mb-0.5">
-                    Titular de la Reserva:
+                    Titular de la reserva:
                   </span>
                   <span className="font-serif text-base font-bold text-[#3b1f10] block">
                     {form.firstName.toUpperCase()} {form.lastName.toUpperCase()}
@@ -1538,7 +1538,7 @@ function ReservasPage() {
                 Restaurante Las Flores
               </span>
               <h3 className="font-serif italic text-2xl md:text-3xl text-[#3b1f10] font-bold">
-                Horario Reservado
+                Horario reservado
               </h3>
             </div>
             <p className="text-xs text-gray-700 font-light leading-relaxed">
@@ -1583,7 +1583,7 @@ function ReservasPage() {
                     Restaurante Turístico Las Flores
                   </span>
                   <h3 className="font-serif text-lg md:text-xl font-bold">
-                    Términos, Condiciones y Privacidad
+                    Términos, condiciones y privacidad
                   </h3>
                 </div>
               </div>
@@ -1602,7 +1602,7 @@ function ReservasPage() {
               {/* Sección 1: Política de Reserva y Tolerancia */}
               <div className="space-y-2">
                 <h4 className="font-serif text-sm font-bold text-[#A32638] uppercase tracking-wide flex items-center gap-2">
-                  <span>1. Política de Puntualidad y Tolerancia</span>
+                  <span>1. Política de puntualidad y tolerancia</span>
                 </h4>
                 <p>
                   Para garantizar la mejor experiencia gastronómica a todos nuestros comensales, las reservas cuentan con un tiempo de <strong>tolerancia máxima de 15 minutos</strong> a partir de la hora reservada. Pasado este lapso, la mesa podrá ser liberada para comensales en lista de espera.
@@ -1615,7 +1615,7 @@ function ReservasPage() {
               {/* Sección 2: Capacidad y Asignación de Ambientes */}
               <div className="space-y-2">
                 <h4 className="font-serif text-sm font-bold text-[#A32638] uppercase tracking-wide flex items-center gap-2">
-                  <span>2. Asignación de Ambientes y Salones</span>
+                  <span>2. Asignación de ambientes y salones</span>
                 </h4>
                 <p>
                   Las solicitudes de ubicación específica (Salón Principal, Terraza, Balcón Panorámico, Jardín) se priorizan según disponibilidad confirmada. En fechas festivas o eventos corporativos, la administración se reserva el derecho de optimizar la distribución de mesas respetando la capacidad solicitada.
@@ -1628,7 +1628,7 @@ function ReservasPage() {
               {/* Sección 3: Alergias y Restricciones Alimentarias */}
               <div className="space-y-2">
                 <h4 className="font-serif text-sm font-bold text-[#A32638] uppercase tracking-wide flex items-center gap-2">
-                  <span>3. Restricciones Alimentarias y Alergias</span>
+                  <span>3. Restricciones alimentarias y alergias</span>
                 </h4>
                 <p>
                   Restaurante Las Flores prepara cada plato con insumos frescos de la región. Si algún integrante de su grupo posee alergias severas (gluten, mariscos, frutos secos, lactosa), es indispensable indicarlo en el campo de observaciones y reconfirmarlo a su anfitrión al llegar.
@@ -1638,7 +1638,7 @@ function ReservasPage() {
               {/* Sección 4: Política de Privacidad y Tratamiento de Datos (Ley N° 29733) */}
               <div className="space-y-2">
                 <h4 className="font-serif text-sm font-bold text-[#A32638] uppercase tracking-wide flex items-center gap-2">
-                  <span>4. Protección de Datos Personales (Ley N° 29733)</span>
+                  <span>4. Protección de datos personales (Ley N° 29733)</span>
                 </h4>
                 <p>
                   De conformidad con la Ley de Protección de Datos Personales del Perú (Ley N° 29733), los datos recopilados (nombre, correo electrónico, teléfono) serán utilizados exclusivamente para la gestión, confirmación y recordatorio de su reserva, así como el envío del comprobante de pase digital.
@@ -1651,7 +1651,7 @@ function ReservasPage() {
               {/* Sección 5: Modificaciones y Cancelaciones */}
               <div className="space-y-2">
                 <h4 className="font-serif text-sm font-bold text-[#A32638] uppercase tracking-wide flex items-center gap-2">
-                  <span>5. Modificaciones y Cancelaciones</span>
+                  <span>5. Modificaciones y cancelaciones</span>
                 </h4>
                 <p>
                   Usted puede cancelar o modificar su reserva sin ningún costo hasta con <strong>2 horas de anticipación</strong> mediante el enlace recibido en su correo electrónico o comunicándose con nuestra central de atención.
@@ -1674,7 +1674,7 @@ function ReservasPage() {
                 className="w-full sm:w-auto bg-[#A32638] hover:bg-[#7a1c29] text-white px-8 py-3 rounded-xl text-xs font-bold uppercase tracking-widest transition-all shadow-md active:scale-98 cursor-pointer flex items-center justify-center gap-2 ml-auto"
               >
                 <Check size={16} />
-                <span>Entendido y Aceptar</span>
+                <span>Entendido y aceptar</span>
               </button>
             </div>
           </div>

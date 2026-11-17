@@ -20,7 +20,7 @@ export function AnimatedCartButton({
     <button
       onClick={onClick}
       className={`relative inline-flex items-center justify-center transition-transform active:scale-90 hover:scale-105 ${className}`}
-      aria-label="Ver Carrito de Compras"
+      aria-label="Ver carrito de compras"
     >
       <ShoppingCart 
         size={size} 

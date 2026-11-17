@@ -46,7 +46,7 @@ export function CookieConsentBanner() {
             hash="cookies"
             className="text-eucalipto font-semibold hover:underline"
           >
-            Consulta nuestra Política de Privacidad
+            Consulta nuestra Política de privacidad
           </Link>
           .
         </p>
