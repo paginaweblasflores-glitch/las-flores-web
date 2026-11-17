@@ -118,13 +118,26 @@ const GALLERY_CATEGORIES: Category[] = [
     id: "postres-bebidas",
     label: "Gastronomía",
     images: [
-      foto("postres-bebidas", "chicha-uno", "Chicha de molle"),
-      foto("postres-bebidas", "chicha-dos", "Chicha de jora"),
-      foto("postres-bebidas", "chicha-cinco", "Mazamorra de llipta"),
-      foto("postres-bebidas", "panes-dos", "Pan chapla"),
-      foto("postres-bebidas", "wawa-uno", "Tanta wawa"),
-      foto("postres-bebidas", "galleta-tres", "Suspiros ayacuchanos"),
-      foto("postres-bebidas", "galleta-cuatro", "Rosquitas de manteca"),
+      {
+        src: "/imagenes-reales/seccion-gastronomia/cuy-frito-ayacuchano.webp",
+        titulo: "Cuy frito",
+      },
+      {
+        src: "/imagenes-reales/seccion-gastronomia/puca-picante.webp",
+        titulo: "Puca con chicharrón",
+      },
+      {
+        src: "/imagenes-reales/seccion-gastronomia/chorizo-ayacuchano.webp",
+        titulo: "Chorizo",
+      },
+      {
+        src: "/imagenes-reales/seccion-gastronomia/mondongo ayacuchano.webp",
+        titulo: "Mondongo",
+      },
+      {
+        src: "/imagenes-reales/recomendaciones-chef/chicharon.webp",
+        titulo: "Chicharrón",
+      },
     ],
   },
   {
@@ -239,7 +252,7 @@ function GaleriaPage() {
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 loading="lazy"
               />
-              {activeCategory !== "postres-bebidas" && activeCategory !== "experiencia" && (
+              {activeCategory !== "experiencia" && (
                 <span className="absolute right-6 top-6 max-w-[calc(100%-3rem)] rounded-xs bg-black/65 backdrop-blur-xs px-3 py-1.5 text-right text-[0.6875rem] font-semibold uppercase leading-snug tracking-widest text-white pointer-events-none">
                   {img.titulo}
                 </span>

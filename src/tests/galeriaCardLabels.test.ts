@@ -17,15 +17,13 @@ describe("etiquetas de las tarjetas de galería", () => {
     expect(source).toContain("Nuestras costumbres para el mundo");
   });
 
-  it("oculta las etiquetas en Gastronomía y Experiencias y conserva los textos accesibles", () => {
+  it("oculta las etiquetas solo en Experiencias y conserva los textos accesibles", () => {
     const galleryGrid =
       source.match(/\{\/\* Gallery Grid \*\/\}([\s\S]*?)\{\/\* Lightbox Modal \*\/\}/)?.[1] ?? "";
     const lightbox =
       source.match(/\{\/\* Lightbox Modal \*\/\}([\s\S]*?)\{\/\* Footer \*\/\}/)?.[1] ?? "";
 
-    expect(galleryGrid).toContain(
-      'activeCategory !== "postres-bebidas" && activeCategory !== "experiencia"',
-    );
+    expect(galleryGrid).toMatch(/\{activeCategory !== "experiencia" && \(/);
     expect(galleryGrid).toContain("absolute right-6 top-6");
     expect(galleryGrid).toContain("alt={img.titulo}");
     expect(lightbox).toContain("<figcaption");
@@ -35,6 +33,53 @@ describe("etiquetas de las tarjetas de galería", () => {
   it("nombra la categoría como Gastronomía", () => {
     expect(source).toContain('label: "Gastronomía"');
     expect(source).not.toContain('label: "Gastronomías"');
+  });
+
+  it("muestra únicamente los cinco platos solicitados en Gastronomía", () => {
+    const gastronomyCategory =
+      source.match(/id: "postres-bebidas",[\s\S]*?images: \[([\s\S]*?)\n\s*\],\s*\n\s*\},/)?.[1] ??
+      "";
+
+    expect(gastronomyCategory).toContain(
+      'src: "/imagenes-reales/seccion-gastronomia/cuy-frito-ayacuchano.webp"',
+    );
+    expect(gastronomyCategory).toContain(
+      'src: "/imagenes-reales/seccion-gastronomia/puca-picante.webp"',
+    );
+    expect(gastronomyCategory).toContain(
+      'src: "/imagenes-reales/seccion-gastronomia/chorizo-ayacuchano.webp"',
+    );
+    expect(gastronomyCategory).toContain(
+      'src: "/imagenes-reales/seccion-gastronomia/mondongo ayacuchano.webp"',
+    );
+    expect(gastronomyCategory).toContain(
+      'src: "/imagenes-reales/recomendaciones-chef/chicharon.webp"',
+    );
+    expect(gastronomyCategory).toContain('titulo: "Cuy frito"');
+    expect(gastronomyCategory).toContain('titulo: "Puca con chicharrón"');
+    expect(gastronomyCategory).toContain('titulo: "Chorizo"');
+    expect(gastronomyCategory).toContain('titulo: "Mondongo"');
+    expect(gastronomyCategory).toContain('titulo: "Chicharrón"');
+    expect(gastronomyCategory.match(/\bsrc:/g)).toHaveLength(5);
+    expect(gastronomyCategory).not.toContain('titulo: "Cuy frito ayacuchano"');
+    expect(gastronomyCategory).not.toContain('titulo: "Chorizo ayacuchano"');
+    expect(gastronomyCategory).not.toContain('titulo: "Mondongo ayacuchano"');
+    expect(gastronomyCategory).not.toContain('titulo: "Chicharrón ayacuchano"');
+    expect(gastronomyCategory).not.toContain("chicha-");
+    expect(gastronomyCategory).not.toContain("panes-");
+  });
+
+  it("mantiene las tarjetas verticales y adapta las imágenes al marco", () => {
+    const galleryGrid =
+      source.match(/\{\/\* Gallery Grid \*\/\}([\s\S]*?)\{\/\* Lightbox Modal \*\/\}/)?.[1] ?? "";
+
+    expect(galleryGrid).toContain(
+      'className="relative aspect-[3/4] overflow-hidden group cursor-pointer shadow-md hover:shadow-xl transition-shadow duration-300"',
+    );
+    expect(galleryGrid).toContain(
+      '"w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"',
+    );
+    expect(galleryGrid).not.toContain("object-contain p-3");
   });
 
   it("reemplaza los títulos genéricos por descripciones de las imágenes de experiencia", () => {
