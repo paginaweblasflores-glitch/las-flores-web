@@ -602,7 +602,7 @@ function Index() {
               Festividades de nuestra tierra
             </h2>
             <p className="text-base text-piedra/70 leading-[1.7] max-w-[36ch] md:w-[43%] md:max-w-[48ch] md:shrink-0 md:text-right">
-              Cada celebración guarda su propia historia. Durante estas fechas, Ayacucho se llena de
+              Cada celebración guarda su propia historia. Durante estas fechas Ayacucho se llena de
               música, color y tradiciones que reúnen a distintas generaciones.
             </p>
           </div>

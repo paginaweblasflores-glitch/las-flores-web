@@ -81,11 +81,11 @@ export const lugares: Lugar[] = [
     imagenSecundaria: "/imagenes-reales/galeria/destino/Catedral1.webp",
     tituloPresentacion: "Un legado que permanece en el corazón de Huamanga",
     descripcion:
-      "Frente al lado este de la Plaza Mayor se alza la Basílica Catedral de Ayacucho, templo dedicado a Nuestra Señora de las Nieves. Su edificación inició en 1632 —con la primera piedra colocada por el obispo Francisco Verdugo— y concluyó en 1672.\n\nDe estilo renacentista y barroco, su fachada presenta tres portadas de acceso. Por dentro, 18 columnas sostienen tres amplias naves que albergan diez retablos tallados y recubiertos en pan de oro. En 1972 fue declarada Patrimonio Cultural de la Nación.",
+      "Frente al lado este de la Plaza Mayor se alza la Basílica Catedral de Ayacucho, templo dedicado a Nuestra Señora de las Nieves. Su edificación inició en 1632 con la primera piedra colocada por el obispo Francisco Verdugo y concluyó en 1672.\n\nDe estilo renacentista y barroco, su fachada presenta tres portadas de acceso. Por dentro, 18 columnas sostienen tres amplias naves que albergan diez retablos tallados y recubiertos en pan de oro. En 1972 fue declarada Patrimonio Cultural de la Nación.",
     metaDescripcion:
       "Basílica Catedral de Ayacucho, en la Plaza Mayor de Huamanga. Se construyó entre 1632 y 1672 y guarda diez retablos con pan de oro.",
     consejo:
-      "Sube al campanario por la escalera de piedra para ver la ciudad en panorámica. Si quieres más, el museo y las catacumbas están dentro de la misma Catedral.",
+      "Visita la Catedral por la mañana para apreciar su arquitectura con tranquilidad. Si deseas conocer el interior, consulta previamente los horarios de ingreso, ya que pueden variar por las celebraciones religiosas. Aprovecha también para recorrer la Plaza Mayor y sus alrededores.",
     escenasTitulo: "Detalles de la Basílica Catedral",
     clipTags: ["Fachada de la Catedral", "Portada y esculturas", "Naves y arcos", "Retablos de pan de oro"],
     mapLat: -13.1588,
@@ -226,7 +226,7 @@ export const lugares: Lugar[] = [
         video: "/imagenes-reales/pampa-de-ayacucho/pampa-escenificacion.mp4",
       },
     ],
-    galeriaTitulo: "¿Qué más visitar en Quinua?",
+    galeriaTitulo: "En el camino hacia la Pampa de Ayacucho",
     galeria: [
       {
         imagen: "/imagenes-reales/pampa-de-ayacucho/wari.webp",
