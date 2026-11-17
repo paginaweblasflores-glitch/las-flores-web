@@ -88,7 +88,7 @@ function FamiliaLasFloresPage() {
 
         <div className="max-w-4xl mx-auto text-center relative z-10 space-y-6">
           <h1 className="font-serif text-4xl md:text-6xl text-piedra font-normal leading-tight">
-            Familia Las Flores
+            Las personas que dan vida a Las Flores
           </h1>
         </div>
       </section>

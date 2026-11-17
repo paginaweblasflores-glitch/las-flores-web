@@ -84,7 +84,9 @@ function FestividadDetailPage() {
               <span className="text-eucalipto text-[0.6875rem] uppercase tracking-[0.3em] font-semibold mb-4 block">
                 {fest.categoria}
               </span>
-              <h2 className="font-serif text-3xl md:text-4xl leading-tight mb-5">{fest.nombre}</h2>
+              <h2 className="font-serif text-3xl md:text-4xl leading-tight mb-5">
+                {fest.tituloPresentacion ?? fest.nombre}
+              </h2>
               <p className="text-nogal/80 text-base md:text-lg leading-relaxed">{fest.descripcion}</p>
             </div>
           </div>

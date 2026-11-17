@@ -7,7 +7,7 @@ const hero = source.match(/\{\/\* Hero \*\/\}([\s\S]*?)<\/header>/)?.[1] ?? "";
 
 describe("título de productos de temporada", () => {
   it("muestra solo el título, sin descripción ni texto superior", () => {
-    expect(hero).toContain("Productos de temporada");
+    expect(hero).toContain("La tierra tiene sus propios tiempos");
     expect(hero).not.toContain("Productos de Temporada · Ayacucho");
     expect(hero).not.toContain("Tesoros de Ayacucho");
     expect(hero).not.toContain("Ingredientes autóctonos que dan vida a nuestra cocina.");

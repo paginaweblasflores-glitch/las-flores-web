@@ -171,14 +171,12 @@ describe("home retablo content layout", () => {
     expect(narrative.getText()).not.toContain("Cultura y Tradición");
   });
 
-  it("uses the approved non-redundant retablo description", () => {
+  it("uses the approved title and description about Ayacucho's traditions", () => {
     const normalizedSource = routeSource.replace(/\s+/g, " ");
 
+    expect(normalizedSource).toContain("Una tierra de tradiciones que perduran");
     expect(normalizedSource).toContain(
-      "Esta capilla portátil de dos puertas, elaborada a mano, reúne santos y escenas de la vida del campo.",
-    );
-    expect(normalizedSource).toContain(
-      "En Las Flores compartimos esta expresión artesanal, parte de la memoria cultural ayacuchana.",
+      "En Ayacucho la tradición toma muchas formas. Vive en las manos de nuestros artesanos, en las celebraciones de nuestros pueblos y en las recetas que pasan de generación en generación.",
     );
     expect(normalizedSource).not.toContain("Un retablo ayacuchano es una capilla portátil");
   });

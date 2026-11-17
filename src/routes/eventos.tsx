@@ -109,7 +109,7 @@ const EVENT_SECTIONS: EventSectionData[] = [
     id: "corporativas",
     title: "Reuniones corporativas",
     boton: "Cotizar mi reunión",
-    description: "El entorno perfecto para los negocios. Contamos con salones acondicionados para almuerzos ejecutivos, conferencias y cenas de gala empresariales, garantizando privacidad y distinción.",
+    description: "Organiza almuerzos de trabajo, encuentros empresariales y celebraciones con tu equipo en Las Flores. Contamos con espacios acondicionados y propuestas gastronómicas para cada ocasión.",
     clips: [
       clip("corporativas-7-mesa", "Mesa larga de invitados con jugos y copas"),
       clip("corporativas-11-plato", "Plato servido con ají amarillo, lechuga y zanahoria"),
@@ -121,7 +121,7 @@ const EVENT_SECTIONS: EventSectionData[] = [
     id: "bodas",
     title: "Bodas y recepciones",
     boton: "Cotizar mi recepción",
-    description: "Haga de su día especial un momento inolvidable. Ofrecemos ambientes íntimos y majestuosos con un servicio impecable. Nuestras propuestas gastronómicas se diseñan a medida para usted y sus invitados.",
+    description: "Celebra junto a tus familiares y amigos en Las Flores. Preparamos nuestros espacios y propuestas gastronómicas para acompañar uno de los días más importantes de tu vida.",
     clips: [
       clip("bodas-1-torta", "Torta de varios pisos con flores y el letrero luminoso de Las Flores"),
       clip("bodas-2-marinera", "Pareja con trajes típicos bailando marinera en el salón"),

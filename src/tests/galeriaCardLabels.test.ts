@@ -10,11 +10,11 @@ describe("etiquetas de las tarjetas de galería", () => {
     const galleryHero = source.match(/\{\/\* Header Banner \*\/\}([\s\S]*?)<\/section>/)?.[1] ?? "";
 
     expect(galleryHero).not.toContain("Nuestra Galería");
-    expect(galleryHero).toContain("Ayacucho, ciudad de las costumbres");
+    expect(galleryHero).toContain("Nuestras costumbres para el mundo");
   });
 
   it("muestra el título actualizado en el encabezado", () => {
-    expect(source).toContain("Ayacucho, ciudad de las costumbres");
+    expect(source).toContain("Nuestras costumbres para el mundo");
   });
 
   it("oculta las etiquetas en Gastronomía y Experiencias y conserva los textos accesibles", () => {

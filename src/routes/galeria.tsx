@@ -187,7 +187,7 @@ function GaleriaPage() {
         </div>
         <div className="max-w-4xl mx-auto text-center relative z-10 space-y-6">
           <h1 className="font-serif text-4xl md:text-6xl text-piedra font-normal leading-tight">
-            Ayacucho, ciudad de las costumbres
+            Nuestras costumbres para el mundo
           </h1>
           <p className="text-base md:text-lg text-piedra/90 max-w-3xl mx-auto leading-relaxed">
             Siéntate en primera fila y mira cómo se vive Ayacucho.

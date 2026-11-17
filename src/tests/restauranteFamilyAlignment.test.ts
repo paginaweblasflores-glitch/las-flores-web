@@ -25,7 +25,7 @@ describe("sección de familia en restaurante", () => {
   });
 
   it("conserva el antetítulo, el texto y el botón original", () => {
-    expect(familySection).toContain("Nuestra gente");
+    expect(familySection).toContain("NUESTRO EQUIPO");
     expect(familySection).toContain("btn-yellow-hover");
     expect(familySection).toContain("CONOCE A LA FAMILIA");
   });

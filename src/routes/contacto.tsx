@@ -133,7 +133,7 @@ function ContactoPage() {
             <div className="bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-gray-200 space-y-6">
               <div className="flex items-center justify-between border-b border-gray-100 pb-4">
                 <h3 className="font-serif text-lg font-bold text-nogal">
-                  Atención al Cliente
+                  Atención al cliente
                 </h3>
                 <span
                   className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[0.6875rem] font-bold uppercase tracking-wider ${
@@ -249,10 +249,10 @@ function ContactoPage() {
                 <>
                   <div className="mb-6 space-y-1">
                     <h2 className="font-serif text-2xl md:text-3xl text-nogal font-bold">
-                      Envíanos un Mensaje
+                      Envíanos un mensaje
                     </h2>
                     <p className="text-xs text-gray-500">
-                      Respondemosa todas las consultas a la brevedad posible.
+                      Cuéntanos en qué podemos ayudarte y te responderemos lo antes posible.
                     </p>
                   </div>
 

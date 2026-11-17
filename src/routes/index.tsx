@@ -418,6 +418,9 @@ function Index() {
           <h1 className="font-serif italic text-4xl sm:text-5xl md:text-[clamp(3rem,min(7vw,12vh),6rem)] text-piedra leading-[1.05] text-balance max-w-[20ch] animate-reveal [animation-delay:200ms]">
             Guardianes de la Cultura Ayacuchana
           </h1>
+          <p className="mt-4 max-w-[52ch] text-base leading-relaxed text-balance text-piedra drop-shadow-md sm:text-lg">
+            Una historia familiar que mantiene vivas las tradiciones y los sabores de nuestra tierra.
+          </p>
         </div>
       </header>
 
@@ -530,7 +533,7 @@ function Index() {
                     letterSpacing: "-0.01em",
                   }}
                 >
-                  El retablo ayacuchano
+                  Una tierra de tradiciones que perduran
                 </h2>
 
                 {/* Separador ornamental */}
@@ -551,9 +554,9 @@ function Index() {
                     color: "#3d2010",
                   }}
                 >
-                  Esta capilla portátil de dos puertas, elaborada a mano, reúne santos y escenas de
-                  la vida del campo. En Las Flores compartimos esta expresión artesanal, parte de
-                  la memoria cultural ayacuchana.
+                  En Ayacucho la tradición toma muchas formas. Vive en las manos de nuestros
+                  artesanos, en las celebraciones de nuestros pueblos y en las recetas que
+                  pasan de generación en generación.
                 </p>
               </div>
 
@@ -598,8 +601,9 @@ function Index() {
             <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl leading-[1.05] text-balance max-w-[28ch]">
               Festividades de nuestra tierra
             </h2>
-            <p className="text-base text-piedra/70 leading-[1.7] max-w-[36ch] md:text-right">
-              Descubre las principales festividades de Ayacucho y cuándo se celebran.
+            <p className="text-base text-piedra/70 leading-[1.7] max-w-[36ch] md:w-[43%] md:max-w-[48ch] md:shrink-0 md:text-right">
+              Cada celebración guarda su propia historia. Durante estas fechas, Ayacucho se llena de
+              música, color y tradiciones que reúnen a distintas generaciones.
             </p>
           </div>
           <FestividadesSlider />
@@ -609,10 +613,19 @@ function Index() {
       {/* LUGARES PARA VISITAR */}
       <section id="lugares-para-visitar" className="overflow-hidden py-16 md:py-32 bg-piedra">
         <div className="container-flores mx-auto px-6">
-          <div className="mb-16">
-            <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl leading-[1.05] text-balance max-w-[28ch]">
-              Lugares históricos y naturales de Ayacucho
-            </h2>
+          <div className="mb-16 flex flex-col md:flex-row md:items-end md:justify-between gap-6">
+            <div>
+              <p className="mb-3 text-xs font-medium uppercase tracking-[0.3em] text-eucalipto">
+                Lugares para visitar
+              </p>
+              <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl leading-[1.05] text-balance max-w-[28ch]">
+                Ayacucho más allá de la mesa
+              </h2>
+            </div>
+            <p className="text-base text-nogal/80 leading-[1.7] max-w-[36ch] md:w-[43%] md:max-w-[48ch] md:shrink-0 md:text-right">
+              Entre calles coloniales y paisajes andinos, Ayacucho guarda lugares que merecen ser
+              descubiertos. Cada uno ofrece una manera distinta de conocer nuestra tierra.
+            </p>
           </div>
         </div>
         {/* Fuera del contenedor para que las tarjetas lleguen a los bordes de la pantalla al deslizar */}
@@ -621,10 +634,14 @@ function Index() {
 
       {/* FAUNA ANDINA */}
       <section>
-        <div className="container-flores mx-auto px-6 mb-16">
+        <div className="container-flores mx-auto px-6 mb-16 flex flex-col md:flex-row md:items-end md:justify-between gap-6">
           <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl leading-[1.05] text-balance max-w-[28ch]">
             La fauna de los Andes
           </h2>
+          <p className="text-base text-nogal/80 leading-[1.7] max-w-[36ch] md:w-[43%] md:max-w-[48ch] md:shrink-0 md:text-right">
+            Entre montañas y extensas punas habitan especies que forman parte de la riqueza natural
+            de Ayacucho. Conoce a los animales que encuentran su hogar en estos paisajes.
+          </p>
         </div>
         <FaunaAndina />
       </section>
@@ -645,13 +662,15 @@ function Index() {
             </div>
           </div>
           <div className="md:col-span-4">
+            <p className="mb-3 text-xs font-medium uppercase tracking-[0.3em] text-eucalipto">
+              Sabores de nuestra tierra
+            </p>
             <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl leading-[1.1] text-nogal text-balance">
-              Productos de temporada
+              Productos ayacuchanos de temporada
             </h2>
             <p className="mt-5 text-base leading-[1.7] text-nogal/75">
-              En la región de Ayacucho la temporada de cada producto se rige fundamentalmente por el
-              calendario andino de lluvias y de meses secos. Por eso la cocina ayacuchana tiene una
-              variedad propia de platos típicos.
+              En Ayacucho, las lluvias y los meses secos marcan el ritmo de las cosechas. Cada
+              temporada trae consigo ingredientes que forman parte de la cocina ayacuchana.
             </p>
             <Link
               to="/tesoros-ayacucho"
@@ -668,11 +687,12 @@ function Index() {
         <div className="container-flores mx-auto w-full">
           <div className="mb-16 md:mb-8 flex flex-col md:flex-row md:items-end md:justify-between gap-6">
             <h2 className="font-serif text-3xl md:text-5xl leading-[1.1] text-balance max-w-[24ch]">
-              Platos típicos
+              Platos típicos de Ayacucho
             </h2>
-            <p className="text-base text-piedra/70 leading-[1.7] max-w-[36ch] md:text-right">
-              La gastronomía de Ayacucho mezcla la cocina andina con la herencia española de la
-              Colonia.
+            <p className="text-base text-piedra/70 leading-[1.7] max-w-[36ch] md:w-[43%] md:max-w-[48ch] md:shrink-0 md:text-right">
+              Hay platos que acompañan las grandes celebraciones y otros que reúnen a las familias
+              cada domingo. Son recetas que conservan los sabores y las costumbres de la cocina
+              ayacuchana.
             </p>
           </div>
           {(() => {
@@ -713,10 +733,12 @@ function Index() {
         <div className="container-flores mx-auto grid grid-cols-1 items-center gap-8 md:grid-cols-12 md:gap-x-10">
           <div className="md:col-span-5">
             <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl leading-[1.1] text-balance mb-5">
-              Reconocimientos
+              Una trayectoria reconocida
             </h2>
             <p className="text-base md:text-lg text-nogal/70 leading-[1.7] max-w-[46ch]">
-              Una muestra de los reconocimientos otorgados a Las Flores.
+              A lo largo de nuestra historia hemos recibido distinciones por nuestra labor
+              gastronómica, el compromiso con la cultura ayacuchana y el cuidado que ponemos en
+              nuestro servicio.
             </p>
             <ul className="space-y-6 max-w-md mt-8">
               <li className="flex items-start gap-5 w-full">
@@ -883,7 +905,8 @@ function Index() {
             De esta tierra nace Las Flores
           </h2>
           <p className="mt-6 max-w-[40ch] text-piedra/80 text-sm md:text-base leading-relaxed">
-            Desde 1980 servimos cocina ayacuchana a siete minutos de la Plaza Mayor.
+            Desde 1980 compartimos los sabores de Ayacucho. Nuestra casa está a solo siete minutos
+            de la Plaza Mayor.
           </p>
           <div className="mt-10 flex flex-col sm:flex-row gap-4">
             <Link

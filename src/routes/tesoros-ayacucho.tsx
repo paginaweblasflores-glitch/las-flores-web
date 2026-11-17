@@ -690,7 +690,7 @@ function TesorosAyacuchoPage() {
         <div className="relative z-10 mx-auto flex w-full max-w-4xl items-center justify-center px-6 text-piedra">
           <div className="max-w-3xl text-center">
             <h1 className="font-serif text-4xl md:text-6xl text-piedra font-normal leading-tight">
-              Productos de temporada
+              La tierra tiene sus propios tiempos
             </h1>
           </div>
         </div>

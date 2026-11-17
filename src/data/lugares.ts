@@ -34,6 +34,7 @@ export type Lugar = {
   /** Punto de enfoque del recorte de la foto de la tarjeta (CSS `object-position`); por defecto, el centro. */
   posicionTarjeta?: string;
   imagenSecundaria: string;
+  tituloPresentacion?: string;
   /** Párrafos separados por una línea en blanco; *texto* se muestra en cursiva. */
   descripcion: string;
   /** Texto del panel "Consejo de visita"; si falta, no se muestra el panel. */
@@ -78,8 +79,9 @@ export const lugares: Lugar[] = [
     heroTitulo: "Catedral de Ayacucho, Patrimonio Cultural de la Nación",
     imagen: "/imagenes-reales/catedral-de-ayacucho/plaza-de-sucre.webp",
     imagenSecundaria: "/imagenes-reales/galeria/destino/Catedral1.webp",
+    tituloPresentacion: "Un legado que permanece en el corazón de Huamanga",
     descripcion:
-      "La Basílica Catedral de Ayacucho, dedicada a Nuestra Señora de las Nieves, está en el lado este de la Plaza Mayor de Huamanga. Su construcción empezó en 1632, cuando el obispo Francisco Verdugo puso la primera piedra, y terminó en 1672, cuarenta años después.\n\nSu fachada tiene líneas renacentistas y barrocas y tres portadas hacia la plaza. Por dentro, tres naves sostenidas por 18 columnas guardan diez retablos tallados y bañados en pan de oro. Fue declarada Patrimonio Cultural de la Nación en 1972.",
+      "Frente al lado este de la Plaza Mayor se alza la Basílica Catedral de Ayacucho, templo dedicado a Nuestra Señora de las Nieves. Su edificación inició en 1632 —con la primera piedra colocada por el obispo Francisco Verdugo— y concluyó en 1672.\n\nDe estilo renacentista y barroco, su fachada presenta tres portadas de acceso. Por dentro, 18 columnas sostienen tres amplias naves que albergan diez retablos tallados y recubiertos en pan de oro. En 1972 fue declarada Patrimonio Cultural de la Nación.",
     metaDescripcion:
       "Basílica Catedral de Ayacucho, en la Plaza Mayor de Huamanga. Se construyó entre 1632 y 1672 y guarda diez retablos con pan de oro.",
     consejo:
@@ -135,26 +137,26 @@ export const lugares: Lugar[] = [
         imagen: "/imagenes-reales/catedral-de-ayacucho/plaza-mayor-de-huamanga.webp",
         titulo: "Plaza Mayor de Huamanga",
         descripcion:
-          "Las casonas que la rodean datan de los siglos XVI y XVII y tienen arquerías de piedra en el primer nivel. La Basílica Catedral está en su lado este.",
+          "Rodeada de casonas de los siglos XVI y XVII con arquerías de piedra en su primer nivel, es el punto de encuentro principal de la ciudad. En su lado este se alza la Basílica Catedral.",
       },
       {
         imagen: "/imagenes-reales/catedral-de-ayacucho/arco-del-triunfo.webp",
         posicion: "50% 54%",
         titulo: "Arco del Triunfo",
         descripcion:
-          "Se levantó en 1910 para recordar la victoria del combate del 2 de Mayo. Está a unos cuatro minutos a pie de la Plaza Mayor.",
+          "Levantado en 1910 para conmemorar la victoria del combate del 2 de Mayo, este monumento histórico se ubica a solo cuatro minutos a pie de la Plaza Mayor.",
       },
       {
         imagen: "/imagenes-reales/catedral-de-ayacucho/catedral-santo-domingo.webp",
         titulo: "Templo de Santo Domingo",
         descripcion:
-          "Se construyó entre los siglos XVI y XVII y su fachada tiene tres arcos y dos torres. Queda a unos tres minutos a pie de la Plaza Mayor, en la esquina de los jirones 9 de Diciembre y María Parado de Bellido.",
+          "Construido entre los siglos XVI y XVII, este templo destaca por su fachada de tres arcos y dos torres. Se encuentra a unos tres minutos a pie de la Plaza Mayor, en la esquina de los jirones 9 de Diciembre y María Parado de Bellido.",
       },
       {
         imagen: "/imagenes-reales/catedral-de-ayacucho/mirador-de-acuchimay.webp",
         titulo: "Mirador de Acuchimay",
         descripcion:
-          "Desde este mirador del cerro Acuchimay, en Carmen Alto, se ve la ciudad en 360 grados. Queda a unos diez minutos en vehículo de la Plaza Mayor, a 2865 m s. n. m., y la entrada es libre.",
+          "Ubicado en la cima del cerro Acuchimay, en el distrito de Carmen Alto, ofrece una vista panorámica de 360 grados de toda la ciudad. Se encuentra a 2865 m s. n. m., a unos diez minutos en vehículo de la Plaza Mayor y el ingreso es libre.",
       },
     ],
   },
@@ -176,10 +178,10 @@ export const lugares: Lugar[] = [
     metaDescripcion:
       "Santuario Histórico donde se libró la batalla de Ayacucho en 1824, a unos cuarenta y cinco minutos de Huamanga. Obelisco de 44 metros y cerámica de Quinua.",
     descripcion:
-      "El Santuario Histórico Pampa de Ayacucho está a unos cuarenta y cinco minutos en vehículo de Huamanga, en el distrito de Quinua. Es el escenario donde el 9 de diciembre de 1824 el Ejército Unido Libertador selló la independencia de Sudamérica, y fue declarado Santuario Histórico en 1980.\n\nLo corona un obelisco de 44 metros revestido de mármol. A pocos minutos queda el pueblo de Quinua, reconocido por el Mincetur como “Pueblo con Encanto” en 2024, una distinción para localidades con atributos naturales y culturales auténticos que favorecen el turismo. Su cerámica, hecha con arcilla local, da forma a toritos de techo, iglesias en miniatura y figuras costumbristas. Sus saberes y prácticas son Patrimonio Cultural de la Nación desde 2019.",
+      "Ubicado en el distrito de Quinua a unos cuarenta y cinco minutos en vehículo de Huamanga, este santuario fue el escenario donde el 9 de diciembre de 1824 el Ejército Unido Libertador selló la independencia de Sudamérica. En 1980 fue declarado Santuario Histórico y hoy está coronado por un obelisco de 44 metros revestido de mármol.\n\nA pocos minutos se encuentra el pueblo de Quinua, distinguido en 2024 por el Mincetur como «Pueblo con Encanto» gracias a su autenticidad cultural y natural. Allí, los artesanos moldean la arcilla local para crear los tradicionales toritos de techo, iglesias en miniatura y figuras costumbristas, saberes reconocidos como Patrimonio Cultural de la Nación desde 2019.",
     consejo:
       "A unos 3400 m s. n. m. el clima es frío y el sol es fuerte, así que lleva abrigo, protector solar y agua. De enero a marzo llueve, por eso conviene sumar un impermeable.",
-    escenasTitulo: "Detalles de la Pampa de Ayacucho",
+    escenasTitulo: "Detalles de Quinua",
     clipTags: ["El obelisco", "Cerámica de Quinua", "Abuelos de Quinua", "Escenificación de la batalla"],
     mapLat: -13.0811,
     mapLng: -74.1322,
@@ -230,13 +232,13 @@ export const lugares: Lugar[] = [
         imagen: "/imagenes-reales/pampa-de-ayacucho/wari.webp",
         titulo: "Complejo Arqueológico Wari",
         descripcion:
-          "Fue la capital del Estado Wari entre los años 600 y 1100 d. C. Queda a unos treinta minutos en vehículo de Huamanga, antes de llegar al pueblo de Quinua y a la Pampa de Ayacucho. Conviene visitarlo primero y continuar después hacia Quinua.",
+          "Antigua capital del Estado Wari entre los años 600 y 1100 d. C., este sitio se encuentra a unos treinta minutos en vehículo desde Huamanga, en la ruta hacia Quinua y la Pampa de Ayacucho. Por su ubicación en el camino, conviene visitarlo primero y continuar después hacia ambos destinos.",
       },
       {
         imagen: "/imagenes-reales/pampa-de-ayacucho/iglesia-quinua.webp",
         titulo: "Cerámica de Quinua",
         descripcion:
-          "Es un arte tradicional ayacuchano, Patrimonio Cultural de la Nación desde 2019, hecho con arcilla local. Para ver y adquirir estas piezas hay que ir al pueblo de Quinua, a unos cincuenta minutos en vehículo de Huamanga y justo antes de la Pampa de Ayacucho.",
+          "Declarado Patrimonio Cultural de la Nación en 2019, este arte tradicional ayacuchano se elabora íntegramente con arcilla local. Para apreciar y adquirir sus piezas es necesario visitar el pueblo de Quinua, ubicado a unos cincuenta minutos en vehículo desde Huamanga, justo antes de llegar a la Pampa de Ayacucho.",
       },
     ],
   },
@@ -245,6 +247,7 @@ export const lugares: Lugar[] = [
     slug: "canones-de-qorihuillca",
     numeral: "III",
     nombre: "Cañones de Qorihuillca",
+    tituloPresentacion: "Donde las montañas esconden pasadizos de roca",
     categoria: "Turismo de Aventura",
     resumen: "Siete cañones de roca con pasadizos tan angostos que casi no entra la luz, a unos cuarenta minutos de Huamanga.",
     provincia: "Huamanga",
@@ -265,7 +268,7 @@ export const lugares: Lugar[] = [
       etiqueta: "Cañones de Qorihuillca",
     },
     descripcion:
-      "A unos cuarenta minutos de Huamanga, la roca se abre en pasadizos tan angostos que en algunos tramos casi no entra la luz. Son los siete cañones de Qorihuillca, un laberinto que el agua fue tallando con el tiempo.\n\nLas paredes miden entre veinticinco y cincuenta metros y algunas son curvas y de colores. Es un lugar para el turismo de aventura, con caminata y rapel.",
+      "A unos cuarenta minutos de Huamanga, la montaña se abre en pasadizos tan angostos que en algunos tramos casi no entra la luz. Son los siete cañones de Qorihuillca, un laberinto natural que el agua fue tallando con el paso del tiempo.\n\nSus paredes alcanzan entre veinticinco y cincuenta metros de altura, muchas de ellas curvas y teñidas de distintos tonos. Este escenario resulta ideal para el turismo de aventura, con rutas de caminata y descenso en rapel.",
     consejo:
       "Ve por la mañana y con un guía especializado, que es indispensable. Usa el equipo de seguridad que indique tu guía y ropa cómoda de abrigo. Evita los pantalones cortos por lo estrecho de algunos tramos. Si ves murciélagos o insectos, los guías indican que no representan peligro.",
     escenasTitulo: "Detalles de los Cañones de Qorihuillca",
@@ -273,21 +276,21 @@ export const lugares: Lugar[] = [
     // Ubicación aproximada (unos cuatro kilómetros al noroeste del centro de Huamanga); el mapa es referencial.
     mapLat: -13.13,
     mapLng: -74.25,
-    galeriaTitulo: "¿Qué más visitar en Huamanga?",
+    galeriaTitulo: "Otros lugares por descubrir cerca de Huamanga",
     galeria: [
       {
         imagen: "/imagenes-reales/canones-de-qorihuillca/chullpas-de-huancayocc.webp",
         posicion: "45% 50%",
         titulo: "Huanta, la Esmeralda de los Andes",
         descripcion:
-          "Queda a unos cuarenta y cinco minutos de Huamanga. A cinco minutos de su plaza principal está el Cristo Blanco, una figura de más de veinte metros desde donde se ve la ciudad. En el centro poblado de Huancayocc, a unos treinta minutos de la plaza, se visitan la catarata de Occochaca y las chullpas de piedra, junto a la ciudadela de piedra Huayra Patamarca.",
+          "Ubicada a unos cuarenta y cinco minutos de Huamanga, esta ciudad destaca por su clima templado y sus miradores. A solo cinco minutos de su plaza principal se alza el Cristo Blanco, una estatua de más de veinte metros que ofrece una vista panorámica del valle. Además, a media hora del centro, en el poblado de Huancayocc, se pueden visitar la catarata de Occochaca, las chullpas y la ciudadela de piedra de Huayra Patamarca.",
       },
       {
         imagen: "/imagenes-reales/canones-de-qorihuillca/cueva-de-pikimachay.webp",
         posicion: "35% 50%",
         titulo: "Cueva de Pikimachay",
         descripcion:
-          "Es una cueva de unos veinticuatro metros de ancho donde se hallaron herramientas de piedra de hace más de veinte mil años. Queda en el distrito de Pacaycasa, a unos cincuenta minutos de Huamanga, y la entrada es gratuita.",
+          "Con unos veinticuatro metros de ancho, esta caverna es famosa por el hallazgo de herramientas de piedra con más de veinte mil años de antigüedad. Se encuentra en el distrito de Pacaycasa, a cincuenta minutos de Huamanga, y su ingreso es gratuito.",
       },
     ],
     escenasCards: [
@@ -318,6 +321,7 @@ export const lugares: Lugar[] = [
     slug: "abismo-puncupata",
     numeral: "IV",
     nombre: "Abismo de Puncupata",
+    tituloPresentacion: "Un profundo desfiladero en los Andes",
     nombreLista: "Abismo de Puncupata",
     categoria: "Paisaje Andino",
     resumen: "Un desfiladero a 4200 m s. n. m. con un sendero hasta su borde, a una hora y media de Huamanga.",
@@ -335,7 +339,7 @@ export const lugares: Lugar[] = [
       etiqueta: "Abismo de Puncupata",
     },
     descripcion:
-      "A una hora y media en vehículo de Huamanga, el abismo de Puncupata se abre a 4200 m s. n. m. como un gran desfiladero.\n\nUn sendero peatonal de cerca de un kilómetro, habilitado por la comunidad local, lleva hasta su borde, un mirador natural con vistas a los pueblos de Ccaccamarca y Chumbes. En el camino pastan vicuñas y, sobre el acantilado, planean las aves de altura. Se le conoce también como la «Puerta Celestial», nombre que alude a su profundidad y a sus vistas panorámicas.",
+      "A una hora y media en vehículo de Huamanga, el Abismo de Puncupata se encuentra a unos 4200 m s. n. m. y destaca por su imponente caída vertical.\n\nUn sendero peatonal de un kilómetro, habilitado por la comunidad local, llega hasta el borde y ofrece vistas de los pueblos de Ccaccamarca y Chumbes. En el camino pastan vicuñas y sobre el acantilado planean las aves de altura. Se le conoce también como la «Puerta Celestial», nombre que alude a su enorme abismo y a su amplitud panorámica.",
     consejo:
       "Lleva ropa abrigadora e impermeable, botas resistentes, agua y algo de comer. A 4200 m s. n. m. el clima puede cambiar rápidamente. Camina con precaución por el sendero y sigue las indicaciones de tu guía local. Mantén una distancia segura del borde, especialmente si sufres de vértigo.",
     escenasTitulo: "Detalles de Puncupata",
@@ -359,20 +363,20 @@ export const lugares: Lugar[] = [
       poster: "/videos/lugares-visitar/abismo-puncupata-seccion-poster.webp",
       etiqueta: "Abismo de Puncupata",
     },
-    galeriaTitulo: "¿Qué más visitar en Huamanga?",
+    galeriaTitulo: "Más lugares por descubrir en el camino",
     // Dos pueblos del recorrido por la carretera a Vilcas Huamán.
     galeria: [
       {
         imagen: "/imagenes-reales/abismo-puncupata/condorcocha.webp",
         titulo: "Pueblo de Condorcocha",
         descripcion:
-          "El pueblo está junto a la carretera de Huamanga a Vilcas Huamán y Cangallo, un lugar de paso de muchos viajeros. Su gente es muy amable y vende caldo para desayunar en las mañanas frías, además de queso y yogurt. Queda a unos cuarenta y cinco minutos de Huamanga.",
+          "Ubicado a unos cuarenta y cinco minutos de Huamanga, junto a la carretera hacia Vilcas Huamán y Cangallo, este acogedor poblado es una parada habitual para los viajeros. Su gente destaca por su amabilidad y ofrece caldo caliente para desayunar en las mañanas frías, además de queso y yogur artesanales.",
       },
       {
         imagen: "/imagenes-reales/abismo-puncupata/manallasacc.webp",
         titulo: "Pueblo de Manallasacc",
         descripcion:
-          "Cada año la pampa de Titankapampa se llena de caballos de paso y concursos de ordeño en la feria ganadera. Cerca del pueblo crece además un bosque de puyas de Raimondi, que florecen una sola vez en su vida. Queda a poco más de una hora de Huamanga.",
+          "Ubicado a poco más de una hora en vehículo de Huamanga, este pueblo celebra cada año su tradicional feria ganadera en la pampa de Titankapampa, donde destacan los caballos de paso y los concursos de ordeño. Muy cerca crece también un bosque de puyas de Raimondi, plantas emblemáticas que florecen una sola vez en su vida.",
       },
     ],
     escenasCards: [
@@ -419,8 +423,9 @@ export const lugares: Lugar[] = [
     imagenTarjeta: "/imagenes-reales/vilcas-huaman/vilcas-huaman-parque.webp",
     posicionTarjeta: "52% 50%",
     imagenSecundaria: "/imagenes-reales/vilcas-huaman/vilcas-huaman-parque.webp",
+    tituloPresentacion: "Una ciudad construida sobre su historia",
     descripcion:
-      "Vilcas Huamán es un complejo arqueológico inca a 3490 m s. n. m., a unas dos horas y media de Huamanga. Fue uno de los principales centros administrativos del Imperio inca y su importancia estuvo vinculada al Qhapaq Ñan, la red vial del Tahuantinsuyo. Su nombre viene del quechua *Willka Waman*, que significa «halcón sagrado».\n\nEn el complejo destacan el Ushnu y el Templo del Sol. El Ushnu es una estructura ceremonial de piedra con cuatro plataformas y entrada de doble jamba, y en su parte superior está el Asiento del Inca. El Templo del Sol estaba dedicado a Inti, y sus cimientos se aprovecharon durante la Colonia para construir la iglesia de San Juan Bautista.",
+      "Ubicado a 3490 m s. n. m. y a unas dos horas y media de Huamanga, Vilcas Huamán fue uno de los principales centros administrativos del Imperio inca gracias a su conexión con el Qhapaq Ñan. Su nombre proviene del quechua *Willka Waman*, que significa «halcón sagrado».\n\nDentro del complejo destacan el Ushnu y el Templo del Sol. El Ushnu es una pirámide ceremonial de piedra con cuatro plataformas y entrada de doble jamba, coronada por el Asiento del Inca. Por su parte los cimientos del Templo del Sol, originalmente dedicado a Inti fueron aprovechados durante la Colonia para levantar encima la iglesia de San Juan Bautista.",
     consejo:
       "Lleva ropa abrigadora para las mañanas y las tardes frías, calzado cómodo y bloqueador solar. Si no estás acostumbrado a la altura, evita los esfuerzos intensos al llegar. Recorre los monumentos con respeto y sigue las indicaciones del personal para conservar las estructuras incas.",
     seccionImagen: {
@@ -448,13 +453,13 @@ export const lugares: Lugar[] = [
         imagen: "/imagenes-reales/vilcas-huaman/puyas-de-raimondi-de-titankayocc.webp",
         titulo: "Puyas de Raimondi de Titankayocc",
         descripcion:
-          "Es un bosque de puyas de Raimondi, Área de Conservación Regional desde 2010, cuyas enormes plantas destacan entre los pajonales de la puna. Queda en el camino a Vilcas Huamán, en el distrito de Vischongo, a unas dos horas en vehículo de Huamanga.",
+          "Declarado Área de Conservación Regional en 2010, este bosque protege extensas agrupaciones de puyas cuyas enormes plantas sobresalen entre los pajonales de la puna. Se encuentra en el distrito de Vischongo, en la ruta hacia Vilcas Huamán, a unas dos horas en vehículo desde Huamanga.",
       },
       {
         imagen: "/imagenes-reales/vilcas-huaman/ruinas-de-intihuatana.webp",
         titulo: "Ruinas de Intihuatana",
         descripcion:
-          "Es un complejo inca de piedra con un reloj solar, junto a la laguna Pumacocha, en el distrito de Vischongo. Queda en el camino a Vilcas Huamán. Es Patrimonio Cultural de la Nación desde 2001, y su nombre quechua se traduce como «amarrar al Sol».",
+          "Ubicado junto a la laguna Pumacocha, en el distrito de Vischongo, este complejo inca de piedra alberga un antiguo reloj solar. Declarado Patrimonio Cultural de la Nación en 2001, se encuentra en la ruta hacia Vilcas Huamán y su nombre quechua se traduce como «amarrar al Sol»",
       },
     ],
     escenasCards: [
@@ -490,6 +495,7 @@ export const lugares: Lugar[] = [
     numeral: "VI",
     nombre: "Nevado de Ritipata",
     categoria: "Alta Montaña",
+    tituloPresentacion: "Donde las estaciones transforman el paisaje",
     resumen: "Un nevado de unos 5000 m s. n. m. en la cordillera Chonta, a unas tres horas de Huamanga.",
     provincia: "Cangallo",
     provinciaSombreada: "/imagenes-reales/mapas/provincia-cangallo.webp",
@@ -499,7 +505,7 @@ export const lugares: Lugar[] = [
     imagen: "/videos/hero/ritipata-poster.webp",
     imagenSecundaria: "/imagenes-reales/ritipata/laguna-nevado.webp",
     descripcion:
-      "Ritipata es un nevado de unos 5000 m s. n. m. en la cordillera Chonta, en el distrito de Paras (provincia de Cangallo), a unas tres horas en auto de Huamanga. En la cosmovisión andina es un apu sagrado. Su nombre viene del quechua *riti* (nieve) y *pata* (lugar elevado).\n\nEntre diciembre y abril suelen producirse nevadas. De junio a septiembre, el cielo está más despejado para recorrer las lagunas, como la Ñawi, y las cataratas cercanas. Desde el abra, a más de 4900 m s. n. m., una caminata de media hora permite acercarse al nevado. En la zona también habitan alpacas, vicuñas y vizcachas silvestres.",
+      "Ritipata es un nevado de unos 5 000 m s. n. m. situado en la cordillera Chonta, en el distrito de Paras, provincia de Cangallo. A unas tres horas en auto de Huamanga. En la cosmovisión andina es un apu sagrado. Su nombre viene del quechua «*riti»* nieve y «*pata»* lugar elevado.\n\nEntre diciembre y abril suelen producirse nevadas. De junio a septiembre, el cielo está más despejado para recorrer las lagunas, como la Ñawi y las cataratas cercanas. Una caminata de media hora permite acercarse al nevado. En la zona también habitan alpacas, vicuñas y vizcachas silvestres.",
     consejo:
       "Para ver nieve, visita entre diciembre y abril, porque su presencia depende del clima. Lleva ropa térmica, chaqueta impermeable, gorro y guantes, además de agua y comida porque no hay restaurantes en el lugar. Aclimátate antes de subir a esta altitud.",
     escenasTitulo: "Detalles de Ritipata",
@@ -527,13 +533,13 @@ export const lugares: Lugar[] = [
         imagen: "/imagenes-reales/ritipata/pumapaqcha.webp",
         titulo: "Catarata de Pumapaqcha",
         descripcion:
-          "Es una catarata de unos diez metros que cae hasta una laguna natural, junto a la carretera Ayacucho–Cangallo, en el distrito de Cangallo. Queda a unas dos horas y media en vehículo de Huamanga, y se llega tras una caminata de unos veinte minutos.",
+          "Junto a la carretera Ayacucho–Cangallo, en el distrito de Cangallo, esta catarata de diez metros desemboca en una laguna natural. Se encuentra a dos horas y media en vehículo desde Huamanga, seguidas de una caminata de veinte minutos.",
       },
       {
         imagen: "/imagenes-reales/ritipata/ruqruqa.webp",
         titulo: "Cascada de Ruqruqa",
         descripcion:
-          "La cascada forma pozas turquesas escalonadas, en la comunidad de Quispillaccta (distrito de Chuschi). Queda a unas tres horas y media en vehículo de Huamanga, y desde donde llega el vehículo se camina unos veinte minutos. Para recorrer los senderos o entrar al agua, lleva ropa de baño y calzado antideslizante.",
+          "Ubicada en la comunidad de Quispillaccta, distrito Chuschi. Esta cascada destaca por sus pozas turquesas escalonadas. Para llegar desde Huamanga se requieren unas tres horas y media en vehículo y una caminata final de veinte minutos. Si planeas recorrer los senderos o meterte al agua, lleva ropa de baño y calzado antideslizante.",
       },
     ],
     escenasCards: [
@@ -579,8 +585,9 @@ export const lugares: Lugar[] = [
     imagenTarjeta: "/imagenes-reales/aguas-turquesas/millpu-card.webp",
     posicionTarjeta: "54% 50%",
     imagenSecundaria: "/imagenes-reales/galeria/destino/Turquesa3.webp",
+    tituloPresentacion: "El origen de las aguas turquesas",
     descripcion:
-      "Millpu es una serie de unas 20 pozas turquesas que descienden por un cañón a unos 3600 m s. n. m. Queda en la comunidad de Circamarca, en el distrito de Huancaraylla (provincia de Víctor Fajardo). Desde Huamanga se llega en unas tres horas y media por carretera hasta Pataqocha, y de ahí se camina unos veinte minutos.\n\nEl color turquesa viene de los minerales de las rocas del río y de la luz del sol. Su nombre viene del quechua *millpuy* (tragar), porque el río desaparece en una grieta subterránea. En lluvias se forma una gran represa natural, a la que algunos llaman «garganta del diablo».",
+      "El característico color de Millpu surge cuando la luz del sol se refleja sobre los minerales del lecho rocoso. Este conjunto de unas 20 pozas escalonadas desciende por un estrecho cañón hasta que el río es absorbido por una grieta subterránea. De ahí nace su nombre, del quechua *millpuy* (tragar), un fenómeno que en temporada de lluvias da forma a una imponente represa natural llamada la «garganta del diablo».\n\nEl atractivo se encuentra a 3600 m s. n. m., en la comunidad de Circamarca, provincia de Víctor Fajardo. Para llegar desde Huamanga se viaja unas tres horas y media por carretera hasta Pataqocha, desde donde parte una caminata de veinte minutos.",
     consejo:
       "Visita Millpu entre mayo y septiembre para ver el agua más turquesa, ya que de enero a abril las lluvias la enturbian. Lleva calzado con buen agarre para los senderos y respeta la prohibición de bañarse en las pozas, vigente desde 2018 para conservar su color.",
     escenasTitulo: "Detalles de Millpu",
@@ -601,20 +608,20 @@ export const lugares: Lugar[] = [
       srcMobile: "/imagenes-reales/aguas-turquesas/aguas-turquesas-seccion-mobile.mp4",
       poster: "/imagenes-reales/aguas-turquesas/aguas-turquesas-seccion-poster.webp",
     },
-    galeriaTitulo: "¿Qué más visitar en Sarhua?",
+    galeriaTitulo: "¿Qué más visitar en Víctor Fajardo?",
     galeria: [
       {
         imagen: "/imagenes-reales/aguas-turquesas/tabla-sarhua.webp",
         posicion: "50% 15%",
         titulo: "Las Tablas de Sarhua",
         descripcion:
-          "Son tablas de madera pintadas que cuentan historias de familias y de la vida comunitaria. Tradicionalmente se regalan al terminar una casa nueva y se colocan entre las vigas del techo. Se pueden ver y comprar en Sarhua, a unas tres horas en vehículo de Huamanga, y están declaradas Patrimonio Cultural de la Nación desde 2018.",
+          "Estas tablas de madera pintadas narran historias familiares y escenas de la vida comunitaria. Tradicionalmente se regalan al terminar una casa nueva y se colocan entre las vigas del techo. Declaradas Patrimonio Cultural de la Nación en 2018, se pueden apreciar y adquirir en el distrito de Sarhua, a unas tres horas en vehículo desde Huamanga.",
       },
       {
         imagen: "/imagenes-reales/aguas-turquesas/cascadas-sarhua.webp",
         titulo: "Las Cascadas de Campanayuq",
         descripcion:
-          "Se suceden por el valle hasta unas aguas termales. Desde Huamanga se llega a Sarhua en unas tres horas en vehículo, y de ahí se camina cerca de una hora. Conviene ir a primera hora y llevar calzado antideslizante.",
+          "Ubicadas en el distrito de Sarhua, estas cascadas escalonadas recorren el valle hasta llegar a una zona de aguas termales. El viaje desde Huamanga toma unas tres horas en vehículo, más una caminata final de casi una hora. Para disfrutar el recorrido con seguridad, conviene ir a primera hora y llevar calzado antideslizante",
       },
     ],
     escenasCards: [
@@ -663,7 +670,7 @@ export const lugares: Lugar[] = [
     posicionTarjeta: "40% 50%",
     imagenSecundaria: "/imagenes-reales/volcan-pachapupum/cono-escalonado.webp",
     descripcion:
-      "Pachapupum se alza a 4022 m s. n. m. en el distrito de Sacsamarca de la provincia de Huanca Sancos, a unas cinco horas de Huamanga. Se le llama volcán por su forma, pero es un géiser inactivo que las aguas termales con sal y azufre fueron levantando capa por capa hasta formar un cono escalonado de roca caliza de unos treinta metros de alto. Su nombre en quechua significa ombligo de la tierra y también se le conoce como el volcán de agua.\n\nEn la cima se abre un cráter de unos diez metros de ancho. Se sube por gradas de roca y una escalera de madera, y alrededor hay pozas termales ricas en azufre para descansar después de la subida.",
+      "Conocido en quechua como el «ombligo de la tierra», Pachapupum se eleva a 4022 m s. n. m. en el distrito de Sacsamarca, provincia de Huanca Sancos. A pesar de su apariencia volcánica, este cono escalonado de roca caliza de treinta metros de altura es un géiser inactivo, moldeado capa por capa por aguas termales cargadas de sal y azufre. El viaje desde Huamanga toma unas cinco horas por carretera.\n\nPara llegar a la cima, donde se abre un cráter de diez metros de diámetro, se asciende por gradas de piedra y una escalera de madera. Al bajar, las pozas termales ricas en azufre que rodean el lugar ofrecen el espacio perfecto para relajarse.",
     consejo:
       "Lleva traje de baño, protector solar y ropa abrigadora. El viento frío suele empezar después de las tres de la tarde. Visita entre mayo y mediados de diciembre y deja el viaje para el segundo o tercer día en Ayacucho, así te aclimatas a la altura.",
     escenasTitulo: "Detalles de Pachapupum",
@@ -689,13 +696,13 @@ export const lugares: Lugar[] = [
         imagen: "/imagenes-reales/huanca-sancos/catarata-de-wisquiri.webp",
         titulo: "Catarata de Wisquiri",
         descripcion:
-          "Un lugar donde la naturaleza habla por sí sola. Entre montañas y caminos escondidos cae esta catarata de agua cristalina que pocos conocen. Se encuentra en el centro poblado de Porta Cruz, en el distrito de Carapo de la provincia de Huanca Sancos.",
+          "Escondida entre montañas y senderos poco transitados, esta caída de agua cristalina es uno de los secretos mejor guardados de la zona. Se ubica en el centro poblado de Porta Cruz, distrito de Carapo, en la provincia de Huanca Sancos.",
       },
       {
         imagen: "/imagenes-reales/huanca-sancos/ituni.webp",
         titulo: "Ituni",
         descripcion:
-          "Es un sitio arqueológico de la provincia de Huanca Sancos con unas doscientas chullpas, las construcciones funerarias de los antiguos pobladores andinos.",
+          "Este complejo arqueológico de la provincia de Huanca Sancos conserva alrededor de doscientas chullpas, edificaciones funerarias levantadas por los antiguos habitantes de los Andes.",
       },
     ],
     escenasCards: [

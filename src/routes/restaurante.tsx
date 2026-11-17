@@ -97,8 +97,9 @@ function GenerationsSection() {
         <h2 className="font-serif text-4xl md:text-5xl leading-[1.05] text-balance max-w-[24ch]">
           Tres generaciones al frente de Las Flores
         </h2>
-        <p className="text-base md:text-lg text-nogal/70 leading-[1.7] text-balance max-w-[36ch] md:text-right">
-          Hace 46 años nació Las Flores, y hoy sigue recibiendo a sus clientes con alma y amor.
+        <p className="text-base text-nogal/70 leading-[1.7] max-w-[36ch] md:w-[43%] md:max-w-[48ch] md:shrink-0 md:text-right">
+          Desde 1980 tres generaciones han dado continuidad a Las Flores. Cada una ha dejado su
+          huella en nuestra cocina y en la manera de recibir a quienes nos visitan.
         </p>
       </div>
 
@@ -258,14 +259,14 @@ function RestaurantePage() {
           </div>
           <div className="md:col-span-4">
             <span className="text-chilca font-medium uppercase tracking-[0.3em] text-xs mb-6 block">
-              Nuestra gente
+              NUESTRO EQUIPO
             </span>
             <h2 className="font-serif text-4xl md:text-4xl lg:text-5xl leading-[1.1] text-balance mb-6">
               Familia Las Flores
             </h2>
             <p className="text-base leading-[1.7] text-piedra/75 mb-8">
-              Detrás de cada plato sabroso y cada sonrisa en la mesa hay hombres y mujeres
-              ayacuchanos que trabajan con dignidad, pasión y profundo amor por nuestras raíces.
+              Detrás de cada plato hay personas que forman parte de nuestra historia. Cada día su
+              trabajo y dedicación mantienen viva la hospitalidad que nos caracteriza desde 1980.
             </p>
             <Link
               to="/familia-las-flores"
@@ -291,8 +292,8 @@ function RestaurantePage() {
               ¿Dónde nos encuentras?
             </h2>
             <p className="mt-5 text-base leading-[1.7] text-nogal/80">
-              Estamos en Huamanga, Ayacucho. Nuestra dirección es el Jr. José Olaya 106, a siete minutos
-              de la Plaza Mayor y a seis del aeropuerto Alfredo Mendívil Duarte.
+              Estamos en el Jr. José Olaya 106, en Huamanga, Ayacucho, a solo siete minutos de la
+              Plaza Mayor y seis minutos del aeropuerto Alfredo Mendívil Duarte.
             </p>
             <p className="mt-4 text-base leading-[1.7] text-nogal/80">
               Atendemos de lunes a viernes de 7:00&nbsp;a.&nbsp;m. a 5:30&nbsp;p.&nbsp;m., y los sábados
