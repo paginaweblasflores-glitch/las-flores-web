@@ -37,7 +37,17 @@ describe("acceso de Marketing", () => {
     expect(marketingMigration).toContain("profiles.role IN ('marketing', 'admin')");
     expect(marketingMigration).toContain("marketing_flyers_public_read");
     expect(marketingMigration).toContain("marketing_flyers_staff_storage_insert");
+    expect(marketingMigration).toContain("marketing_flyers_staff_delete");
+    expect(marketingMigration).toContain("marketing_flyers_staff_storage_delete");
+    expect(marketingMigration).toContain(
+      "GRANT DELETE ON public.marketing_flyers TO authenticated",
+    );
     expect(marketingMigration).toContain("'marketing@gmail.com'");
+  });
+
+  it("permite eliminar el flyer desde el panel de Marketing", () => {
+    expect(marketingRoute).toContain("handleDeleteFlyer");
+    expect(marketingRoute).toContain("Eliminar flyer");
   });
 
   it("monta el popup de flyers en la portada", () => {

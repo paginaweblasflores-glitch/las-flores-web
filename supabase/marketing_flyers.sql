@@ -48,9 +48,22 @@ CREATE POLICY marketing_flyers_staff_insert
     )
   );
 
+DROP POLICY IF EXISTS marketing_flyers_staff_delete ON public.marketing_flyers;
+CREATE POLICY marketing_flyers_staff_delete
+  ON public.marketing_flyers FOR DELETE
+  TO authenticated
+  USING (
+    EXISTS (
+      SELECT 1 FROM public.profiles
+      WHERE profiles.id = auth.uid()
+        AND profiles.role IN ('marketing', 'admin')
+    )
+  );
+
 REVOKE INSERT, UPDATE, DELETE ON public.marketing_flyers FROM anon, authenticated;
 GRANT SELECT ON public.marketing_flyers TO anon, authenticated;
 GRANT INSERT ON public.marketing_flyers TO authenticated;
+GRANT DELETE ON public.marketing_flyers TO authenticated;
 
 INSERT INTO storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
 VALUES (
@@ -75,6 +88,19 @@ CREATE POLICY marketing_flyers_staff_storage_insert
   ON storage.objects FOR INSERT
   TO authenticated
   WITH CHECK (
+    bucket_id = 'marketing-flyers'
+    AND EXISTS (
+      SELECT 1 FROM public.profiles
+      WHERE profiles.id = auth.uid()
+        AND profiles.role IN ('marketing', 'admin')
+    )
+  );
+
+DROP POLICY IF EXISTS marketing_flyers_staff_storage_delete ON storage.objects;
+CREATE POLICY marketing_flyers_staff_storage_delete
+  ON storage.objects FOR DELETE
+  TO authenticated
+  USING (
     bucket_id = 'marketing-flyers'
     AND EXISTS (
       SELECT 1 FROM public.profiles

@@ -48,6 +48,40 @@ export async function getLatestMarketingFlyer(): Promise<MarketingFlyer | null> 
   return data;
 }
 
+export async function deleteMarketingFlyers(): Promise<{ cleanupError: unknown | null }> {
+  const { error: deleteError } = await supabase
+    .from("marketing_flyers")
+    .delete()
+    .not("id", "is", null);
+
+  if (deleteError) throw deleteError;
+
+  try {
+    const storage = supabase.storage.from(MARKETING_FLYERS_BUCKET);
+    const filePaths: string[] = [];
+    const pageSize = 1000;
+    let offset = 0;
+
+    while (true) {
+      const { data, error } = await storage.list("", { limit: pageSize, offset });
+      if (error) return { cleanupError: error };
+
+      filePaths.push(...data.filter((file) => file.id !== null).map((file) => file.name));
+      if (data.length < pageSize) break;
+      offset += data.length;
+    }
+
+    for (let index = 0; index < filePaths.length; index += 100) {
+      const { error } = await storage.remove(filePaths.slice(index, index + 100));
+      if (error) return { cleanupError: error };
+    }
+
+    return { cleanupError: null };
+  } catch (cleanupError) {
+    return { cleanupError };
+  }
+}
+
 export async function uploadMarketingFlyer(file: File): Promise<MarketingFlyer> {
   const validationError = getMarketingFlyerValidationError(file);
   if (validationError) throw new Error(validationError);

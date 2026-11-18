@@ -1,7 +1,8 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { ArrowLeft, ImagePlus, Loader2, LogOut, Upload } from "lucide-react";
+import { ArrowLeft, ImagePlus, Loader2, LogOut, Trash2, Upload } from "lucide-react";
 import {
+  deleteMarketingFlyers,
   getLatestMarketingFlyer,
   getMarketingFlyerPublicUrl,
   getMarketingFlyerValidationError,
@@ -34,6 +35,7 @@ function MarketingPage() {
   const [authorized, setAuthorized] = useState(false);
   const [checkingAccess, setCheckingAccess] = useState(true);
   const [uploading, setUploading] = useState(false);
+  const [deleting, setDeleting] = useState(false);
   const [flyer, setFlyer] = useState<MarketingFlyer | null>(null);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
@@ -125,6 +127,34 @@ function MarketingPage() {
     await navigate({ to: "/staff-login" });
   };
 
+  const handleDeleteFlyer = async () => {
+    if (
+      !flyer ||
+      !window.confirm("¿Eliminar el flyer y dejar de mostrar promociones en la portada?")
+    ) {
+      return;
+    }
+
+    setError("");
+    setSuccess("");
+    setDeleting(true);
+    try {
+      const { cleanupError } = await deleteMarketingFlyers();
+      setFlyer(null);
+      if (cleanupError) {
+        setError(
+          `El flyer ya no se mostrará, pero no se pudo eliminar su archivo: ${errorMessage(cleanupError, "Error de almacenamiento.")}`,
+        );
+        return;
+      }
+      setSuccess("El flyer fue eliminado y ya no se mostrará en la portada.");
+    } catch (deleteError) {
+      setError(errorMessage(deleteError, "No se pudo eliminar el flyer."));
+    } finally {
+      setDeleting(false);
+    }
+  };
+
   if (checkingAccess) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-[#1b2a24]">
@@ -199,11 +229,23 @@ function MarketingPage() {
               <input
                 type="file"
                 accept="image/jpeg,image/png,image/webp"
-                disabled={uploading}
+                disabled={uploading || deleting}
                 onChange={(event) => void handleUpload(event)}
                 className="sr-only"
               />
             </label>
+
+            {flyer && (
+              <button
+                type="button"
+                onClick={() => void handleDeleteFlyer()}
+                disabled={uploading || deleting}
+                className="mt-4 inline-flex items-center gap-2 rounded-lg border border-red-300 px-4 py-2 text-sm font-semibold text-red-800 transition-colors hover:bg-red-50 disabled:cursor-not-allowed disabled:opacity-60"
+              >
+                {deleting ? <Loader2 size={16} className="animate-spin" /> : <Trash2 size={16} />}
+                {deleting ? "Eliminando flyer..." : "Eliminar flyer"}
+              </button>
+            )}
 
             {error && (
               <p

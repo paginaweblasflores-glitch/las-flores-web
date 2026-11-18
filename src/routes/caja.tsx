@@ -4,7 +4,7 @@ import { supabase, signOut } from "../lib/supabase";
 import { registerPageRestoreAuthCheck } from "../lib/staffSessionRestore";
 import { sendReviewRequestEmail } from "../lib/emailService";
 import { playOrderChime } from "../utils/audioAlert";
-import { shouldNotifyCashierOrder } from "../lib/cashierNotifications";
+import { isCashierOrderReady, shouldNotifyCashierOrder } from "../lib/cashierNotifications";
 import { AdminOrderDetailModal } from "../components/AdminOrderDetailModal";
 import {
   CashierTopBar,
@@ -56,6 +56,14 @@ function CashierDashboardRoute() {
   // Orders state
   const [orders, setOrders] = useState<any[]>([]);
   const [orderItems, setOrderItems] = useState<any[]>([]);
+  const [ordersLoadError, setOrdersLoadError] = useState<string | null>(null);
+  const notifiedOrderRef = useRef<{
+    id: string;
+    order_number: string | null;
+    created_at: string | null;
+    payment_method: string | null;
+    payment_status: string | null;
+  } | null>(null);
 
   const [soundEnabled, setSoundEnabled] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
@@ -172,33 +180,49 @@ function CashierDashboardRoute() {
         .from("orders")
         .select("*")
         .gte("created_at", dateFilter)
-        .or("payment_status.eq.paid,and(payment_status.is.null,payment_method.not.in.(card,culqi))")
         .order("created_at", { ascending: false })
         .limit(200);
 
-      if (!ordErr && ordData) {
-        if (ordData.length > 0) {
-          const orderIds = ordData.map((o: any) => o.id);
-          const [{ data: itemsData }, { data: pinsData }] = await Promise.all([
-            supabase
-              .from("order_items")
-              .select("*, products(name, image_url)")
-              .in("order_id", orderIds),
-            supabase.from("driver_pins").select("order_id, pin_code").in("order_id", orderIds),
-          ]);
+      if (ordErr) {
+        console.error("Error fetching cashier orders:", ordErr);
+        setOrdersLoadError(
+          `Error al consultar pedidos${ordErr.code ? ` (${ordErr.code})` : ""}: ${ordErr.message}`,
+        );
+        return;
+      }
 
-          if (itemsData) setOrderItems(itemsData);
+      if (ordData) {
+        const cashierOrders = ordData.filter(isCashierOrderReady);
+        const notifiedOrder = notifiedOrderRef.current;
+        const notifiedOrderId = notifiedOrder?.id;
+        if (notifiedOrderId && !cashierOrders.some((order: any) => order.id === notifiedOrderId)) {
+          console.error("Realtime cashier order missing from orders query", {
+            orderId: notifiedOrderId,
+            orderNumber: notifiedOrder.order_number,
+            createdAt: notifiedOrder.created_at,
+            paymentMethod: notifiedOrder.payment_method,
+            paymentStatus: notifiedOrder.payment_status,
+            resultCount: ordData.length,
+          });
+          setOrdersLoadError(
+            `El pedido #${notifiedOrder.order_number || notifiedOrder.id} llegó por Realtime, pero no aparece en la consulta. Método: ${notifiedOrder.payment_method || "sin dato"}; pago: ${notifiedOrder.payment_status || "sin dato"}; fecha: ${notifiedOrder.created_at || "sin dato"}.`,
+          );
+        } else {
+          if (notifiedOrderId) notifiedOrderRef.current = null;
+          setOrdersLoadError(null);
+        }
 
-          const pinMap = new Map((pinsData || []).map((p: any) => [p.order_id, p.pin_code]));
-          const enrichedOrders = ordData.map((o: any) => ({
-            ...o,
-            driver_pin: pinMap.get(o.id) || (o as any).driver_pin || "",
+        if (cashierOrders.length > 0) {
+          const orderIds = cashierOrders.map((order: any) => order.id);
+          const ordersForDisplay = cashierOrders.map((order: any) => ({
+            ...order,
+            driver_pin: order.driver_pin || "",
           }));
 
           setOrders((prev) => {
-            if (prev.length > 0 && enrichedOrders.length > prev.length) {
-              const prevIds = new Set(prev.map((o: any) => o.id));
-              const newOrders = enrichedOrders.filter((o: any) => !prevIds.has(o.id));
+            if (prev.length > 0 && ordersForDisplay.length > prev.length) {
+              const prevIds = new Set(prev.map((order: any) => order.id));
+              const newOrders = ordersForDisplay.filter((order: any) => !prevIds.has(order.id));
               newOrders.forEach((newest: any) => {
                 addNotification({
                   entityId: newest.id || newest.order_number,
@@ -210,15 +234,63 @@ function CashierDashboardRoute() {
                 });
               });
             }
-            return enrichedOrders;
+            return ordersForDisplay;
           });
+
+          const [itemsResult, pinsResult] = await Promise.allSettled([
+            supabase
+              .from("order_items")
+              .select("*, products(name, image_url)")
+              .in("order_id", orderIds),
+            supabase.from("driver_pins").select("order_id, pin_code").in("order_id", orderIds),
+          ]);
+
+          let pinsData: any[] = [];
+          if (itemsResult.status === "fulfilled") {
+            const { data: itemsData, error: itemsError } = itemsResult.value;
+            if (itemsError) {
+              console.error("Error fetching cashier order items:", itemsError);
+              setOrdersLoadError(`Pedidos cargados, pero no se pudieron cargar sus productos: ${itemsError.message}`);
+              setOrderItems([]);
+            } else {
+              setOrderItems(itemsData || []);
+            }
+          } else {
+            console.error("Error fetching cashier order items:", itemsResult.reason);
+            setOrdersLoadError(
+              `Pedidos cargados, pero no se pudieron cargar sus productos: ${itemsResult.reason instanceof Error ? itemsResult.reason.message : "error inesperado"}`,
+            );
+            setOrderItems([]);
+          }
+
+          if (pinsResult.status === "fulfilled") {
+            const { data, error } = pinsResult.value;
+            if (error) {
+              console.error("Error fetching cashier driver pins:", error);
+            } else {
+              pinsData = data || [];
+            }
+          } else {
+            console.error("Error fetching cashier driver pins:", pinsResult.reason);
+          }
+
+          const pinMap = new Map(pinsData.map((pin: any) => [pin.order_id, pin.pin_code]));
+          setOrders((prev) =>
+            prev.map((order: any) => ({
+              ...order,
+              driver_pin: pinMap.get(order.id) || order.driver_pin || "",
+            })),
+          );
         } else {
-          setOrders(ordData);
+          setOrders(cashierOrders);
           setOrderItems([]);
         }
       }
     } catch (err) {
       console.error("Error fetching cashier data:", err);
+      setOrdersLoadError(
+        `No se pudieron cargar los pedidos: ${err instanceof Error ? err.message : "error inesperado"}`,
+      );
     } finally {
       setLoading(false);
       if (!isSilent) setRefreshing(false);
@@ -248,6 +320,16 @@ function CashierDashboardRoute() {
       .on("postgres_changes", { event: "*", schema: "public", table: "orders" }, (payload) => {
         if (shouldNotifyCashierOrder(payload as Parameters<typeof shouldNotifyCashierOrder>[0])) {
           const n = payload.new as any;
+          notifiedOrderRef.current =
+            typeof n.id === "string"
+              ? {
+                  id: n.id,
+                  order_number: typeof n.order_number === "string" ? n.order_number : null,
+                  created_at: typeof n.created_at === "string" ? n.created_at : null,
+                  payment_method: typeof n.payment_method === "string" ? n.payment_method : null,
+                  payment_status: typeof n.payment_status === "string" ? n.payment_status : null,
+                }
+              : null;
           addNotification({
             entityId: n.id || n.order_number,
             type: "order",
@@ -477,6 +559,15 @@ function CashierDashboardRoute() {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 space-y-6">
         {activeTab === "seguimiento" && (
           <>
+            {ordersLoadError && (
+              <div
+                role="alert"
+                className="rounded-xl border border-red-300 bg-red-50 px-4 py-3 text-sm font-semibold text-red-800"
+              >
+                {ordersLoadError}
+              </div>
+            )}
+
             {/* View Mode Switcher Header Bar */}
             <div className="flex flex-col sm:flex-row items-center justify-between gap-4 bg-white p-2 rounded-2xl border border-gray-200 shadow-2xs">
               {/* Main Module Bar (Comandas / Arqueo / Stock / Yape) */}

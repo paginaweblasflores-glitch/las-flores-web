@@ -535,10 +535,8 @@ describe("secure order pricing SQL", () => {
       /paymentMethod\s*===\s*"culqi"[\s\S]*?:\s*await createOrder\(orderData\)/,
     );
     expectMatch(supabaseClientSource, /payment_method\.toLowerCase\(\)[\s\S]*?servicio de pagos/i);
-    expectMatch(
-      cashierRouteSource,
-      /\.or\("payment_status\.eq\.paid,and\(payment_status\.is\.null,payment_method\.not\.in\.\(card,culqi\)\)"\)/,
-    );
+    expect(cashierRouteSource).not.toMatch(/\.or\("payment_status/);
+    expectMatch(cashierRouteSource, /\.filter\(isCashierOrderReady\)/);
   });
 });
 

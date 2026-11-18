@@ -1,17 +1,49 @@
-import { afterEach, describe, expect, it, vi } from "vitest";
-import { getMarketingFlyerValidationError } from "../features/marketing/api";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { deleteMarketingFlyers, getMarketingFlyerValidationError } from "../features/marketing/api";
 import { compressImageToWebP } from "../lib/webp-compressor";
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
+
+const supabaseMocks = vi.hoisted(() => ({
+  databaseDeleteFilter: vi.fn(),
+  from: vi.fn(),
+  listStorageObjects: vi.fn(),
+  removeStorageObjects: vi.fn(),
+  storageFrom: vi.fn(),
+}));
+
+vi.mock("../lib/supabase", () => ({
+  supabase: {
+    from: supabaseMocks.from,
+    storage: { from: supabaseMocks.storageFrom },
+  },
+}));
 
 const marketingMigration = readFileSync(
   resolve(process.cwd(), "supabase/marketing_flyers.sql"),
   "utf8",
 );
 
+beforeEach(() => {
+  supabaseMocks.databaseDeleteFilter.mockResolvedValue({ error: null });
+  supabaseMocks.from.mockReturnValue({
+    delete: () => ({ not: supabaseMocks.databaseDeleteFilter }),
+  });
+  supabaseMocks.listStorageObjects.mockResolvedValue({
+    data: [{ id: "stored-flyer", name: "flyer.webp" }],
+    error: null,
+  });
+  supabaseMocks.removeStorageObjects.mockResolvedValue({ error: null });
+  supabaseMocks.storageFrom.mockReturnValue({
+    list: supabaseMocks.listStorageObjects,
+    remove: supabaseMocks.removeStorageObjects,
+  });
+});
+
 afterEach(() => {
   vi.restoreAllMocks();
   vi.unstubAllGlobals();
+  vi.clearAllMocks();
 });
 
 describe("validación de flyers de Marketing", () => {
@@ -36,6 +68,23 @@ describe("validación de flyers de Marketing", () => {
   it("configura el bucket de flyers sin límite propio de tamaño", () => {
     expect(marketingMigration).toMatch(/'marketing-flyers'[\s\S]*?NULL\s*,/i);
     expect(marketingMigration).toMatch(/file_size_limit\s*=\s*EXCLUDED\.file_size_limit/i);
+  });
+
+  it("elimina todos los flyers publicados y sus archivos almacenados", async () => {
+    await expect(deleteMarketingFlyers()).resolves.toEqual({ cleanupError: null });
+
+    expect(supabaseMocks.from).toHaveBeenCalledWith("marketing_flyers");
+    expect(supabaseMocks.databaseDeleteFilter).toHaveBeenCalledWith("id", "is", null);
+    expect(supabaseMocks.storageFrom).toHaveBeenCalledWith("marketing-flyers");
+    expect(supabaseMocks.removeStorageObjects).toHaveBeenCalledWith(["flyer.webp"]);
+  });
+
+  it("informa si falla la limpieza del archivo tras borrar los registros", async () => {
+    const cleanupError = new Error("No se pudo borrar el archivo");
+    supabaseMocks.removeStorageObjects.mockResolvedValue({ error: cleanupError });
+
+    await expect(deleteMarketingFlyers()).resolves.toEqual({ cleanupError });
+    expect(supabaseMocks.databaseDeleteFilter).toHaveBeenCalled();
   });
 
   it("falla explícitamente si el navegador no genera una imagen WebP", async () => {

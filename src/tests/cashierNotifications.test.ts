@@ -6,6 +6,22 @@ import { shouldNotifyCashierOrder } from "../lib/cashierNotifications";
 const cashierSource = readFileSync(resolve(process.cwd(), "src/routes/caja.tsx"), "utf8");
 
 describe("cashier order notifications", () => {
+  it("surfaces order-loading failures instead of leaving the board silently stale", () => {
+    expect(cashierSource).toMatch(/setOrdersLoadError/);
+    expect(cashierSource).toMatch(/role="alert"/);
+    expect(cashierSource).toMatch(/notifiedOrderId/);
+  });
+
+  it("reports the payment fields of a realtime order omitted by the query", () => {
+    expect(cashierSource).toMatch(/notifiedOrder\.payment_method/);
+    expect(cashierSource).toMatch(/notifiedOrder\.payment_status/);
+  });
+
+  it("surfaces the underlying order query error", () => {
+    expect(cashierSource).toMatch(/ordErr\.message/);
+    expect(cashierSource).toMatch(/err instanceof Error/);
+  });
+
   it("handles the pending-card to paid transition without unrelated update notifications", () => {
     expect(cashierSource).toMatch(/shouldNotifyCashierOrder\(payload as/);
     expect(
@@ -49,5 +65,31 @@ describe("cashier order notifications", () => {
         new: { payment_method: "cash", payment_status: null },
       }),
     ).toBe(true);
+  });
+
+  it("keeps non-card orders visible when their payment status is pending", () => {
+    expect(
+      shouldNotifyCashierOrder({
+        eventType: "INSERT",
+        new: { payment_method: "cash", payment_status: "pending" },
+      }),
+    ).toBe(true);
+    expect(
+      shouldNotifyCashierOrder({
+        eventType: "INSERT",
+        new: { payment_method: "yape", payment_status: "pending" },
+      }),
+    ).toBe(true);
+    expect(
+      shouldNotifyCashierOrder({
+        eventType: "INSERT",
+        new: { payment_method: "card", payment_status: "pending" },
+      }),
+    ).toBe(false);
+  });
+
+  it("filters paid-card eligibility after loading recent orders", () => {
+    expect(cashierSource).not.toMatch(/\.or\("payment_status\.eq\.paid/);
+    expect(cashierSource).toMatch(/filter\(isCashierOrderReady\)/);
   });
 });
