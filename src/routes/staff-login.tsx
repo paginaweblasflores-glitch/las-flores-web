@@ -8,9 +8,9 @@ import { getStaffLoginDestination } from "../features/staff/operations";
 // elige su "Usuario"; el correo nunca se muestra ni se escribe (es la
 // credencial de doble validación puertas adentro).
 const STAFF_USERS = [
-  { username: "Administrador Las Flores", email: "restaurantelasfloresperu@gmail.com" },
-  { username: "Caja Las Flores", email: "paginaweblasflores@gmail.com" },
-  { username: "Ventas Las Flores", email: "convencioneslyfayacucho@gamil.com" },
+  { username: "Administrador Las Flores", email: "ADMINISTRADOR1980@gmail.com" },
+  { username: "Caja Las Flores", email: "CAJA1980@gmail.com" },
+  { username: "Ventas Las Flores", email: "VENTAS1980@gmail.com" },
   { username: "Marketing", email: "marketing@gmail.com" },
 ];
 
