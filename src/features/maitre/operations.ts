@@ -13,6 +13,8 @@ export function getStaffLoginDestination(role: string): string | null {
       return "/salon";
     case "ventas":
       return "/panel-reservas";
+    case "marketing":
+      return "/marketing";
     default:
       return null;
   }

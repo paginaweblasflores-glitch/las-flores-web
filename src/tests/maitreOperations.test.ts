@@ -15,6 +15,7 @@ describe("MAITRE waiter credentials", () => {
     expect(getStaffLoginDestination("staff")).toBe("/salon");
     expect(getStaffLoginDestination("cashier")).toBe("/caja");
     expect(getStaffLoginDestination("admin")).toBe("/admin");
+    expect(getStaffLoginDestination("marketing")).toBe("/marketing");
     expect(getStaffLoginDestination("unknown")).toBeNull();
   });
 });

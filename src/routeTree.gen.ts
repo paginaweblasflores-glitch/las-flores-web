@@ -19,6 +19,7 @@ import { Route as FamiliaLasFloresRouteImport } from './routes/familia-las-flore
 import { Route as GaleriaRouteImport } from './routes/galeria'
 import { Route as LibroDeReclamacionesRouteImport } from './routes/libro-de-reclamaciones'
 import { Route as MaitreRouteImport } from './routes/maitre'
+import { Route as MarketingRouteImport } from './routes/marketing'
 import { Route as PanelReservasRouteImport } from './routes/panel-reservas'
 import { Route as PoliticaDePrivacidadRouteImport } from './routes/politica-de-privacidad'
 import { Route as ReservasRouteImport } from './routes/reservas'
@@ -81,6 +82,11 @@ const LibroDeReclamacionesRoute = LibroDeReclamacionesRouteImport.update({
 const MaitreRoute = MaitreRouteImport.update({
   id: '/maitre',
   path: '/maitre',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MarketingRoute = MarketingRouteImport.update({
+  id: '/marketing',
+  path: '/marketing',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PanelReservasRoute = PanelReservasRouteImport.update({
@@ -160,6 +166,7 @@ export interface FileRoutesByFullPath {
   '/galeria': typeof GaleriaRoute
   '/libro-de-reclamaciones': typeof LibroDeReclamacionesRoute
   '/maitre': typeof MaitreRoute
+  '/marketing': typeof MarketingRoute
   '/panel-reservas': typeof PanelReservasRoute
   '/politica-de-privacidad': typeof PoliticaDePrivacidadRoute
   '/reservas': typeof ReservasRoute
@@ -185,6 +192,7 @@ export interface FileRoutesByTo {
   '/galeria': typeof GaleriaRoute
   '/libro-de-reclamaciones': typeof LibroDeReclamacionesRoute
   '/maitre': typeof MaitreRoute
+  '/marketing': typeof MarketingRoute
   '/panel-reservas': typeof PanelReservasRoute
   '/politica-de-privacidad': typeof PoliticaDePrivacidadRoute
   '/reservas': typeof ReservasRoute
@@ -211,6 +219,7 @@ export interface FileRoutesById {
   '/galeria': typeof GaleriaRoute
   '/libro-de-reclamaciones': typeof LibroDeReclamacionesRoute
   '/maitre': typeof MaitreRoute
+  '/marketing': typeof MarketingRoute
   '/panel-reservas': typeof PanelReservasRoute
   '/politica-de-privacidad': typeof PoliticaDePrivacidadRoute
   '/reservas': typeof ReservasRoute
@@ -238,6 +247,7 @@ export interface FileRouteTypes {
     | '/galeria'
     | '/libro-de-reclamaciones'
     | '/maitre'
+    | '/marketing'
     | '/panel-reservas'
     | '/politica-de-privacidad'
     | '/reservas'
@@ -263,6 +273,7 @@ export interface FileRouteTypes {
     | '/galeria'
     | '/libro-de-reclamaciones'
     | '/maitre'
+    | '/marketing'
     | '/panel-reservas'
     | '/politica-de-privacidad'
     | '/reservas'
@@ -288,6 +299,7 @@ export interface FileRouteTypes {
     | '/galeria'
     | '/libro-de-reclamaciones'
     | '/maitre'
+    | '/marketing'
     | '/panel-reservas'
     | '/politica-de-privacidad'
     | '/reservas'
@@ -314,6 +326,7 @@ export interface RootRouteChildren {
   GaleriaRoute: typeof GaleriaRoute
   LibroDeReclamacionesRoute: typeof LibroDeReclamacionesRoute
   MaitreRoute: typeof MaitreRoute
+  MarketingRoute: typeof MarketingRoute
   PanelReservasRoute: typeof PanelReservasRoute
   PoliticaDePrivacidadRoute: typeof PoliticaDePrivacidadRoute
   ReservasRoute: typeof ReservasRoute
@@ -399,6 +412,13 @@ declare module '@tanstack/react-router' {
       path: '/maitre'
       fullPath: '/maitre'
       preLoaderRoute: typeof MaitreRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/marketing': {
+      id: '/marketing'
+      path: '/marketing'
+      fullPath: '/marketing'
+      preLoaderRoute: typeof MarketingRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/panel-reservas': {
@@ -506,6 +526,7 @@ const rootRouteChildren: RootRouteChildren = {
   GaleriaRoute: GaleriaRoute,
   LibroDeReclamacionesRoute: LibroDeReclamacionesRoute,
   MaitreRoute: MaitreRoute,
+  MarketingRoute: MarketingRoute,
   PanelReservasRoute: PanelReservasRoute,
   PoliticaDePrivacidadRoute: PoliticaDePrivacidadRoute,
   ReservasRoute: ReservasRoute,

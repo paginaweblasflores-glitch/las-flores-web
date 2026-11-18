@@ -12,6 +12,7 @@ const STAFF_USERS = [
   { username: "Administrador Las Flores", email: "restaurantelasfloresperu@gmail.com" },
   { username: "Caja Las Flores", email: "paginaweblasflores@gmail.com" },
   { username: "Ventas Las Flores", email: "convencioneslyfayacucho@gamil.com" },
+  { username: "Marketing", email: "marketing@gmail.com" },
   { username: "MAITRE", email: "" },
 ];
 
@@ -135,7 +136,7 @@ function StaffLoginPage() {
           </div>
           <h1 className="font-serif font-bold text-2xl text-white">Ingreso del personal</h1>
           <p className="text-sm text-[#FAF6ED]/75 mt-1.5">
-            Ingresa con tus credenciales de Caja o MAITRE.
+            Ingresa con tus credenciales de usuario.
           </p>
         </div>
 

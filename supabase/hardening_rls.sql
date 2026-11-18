@@ -762,7 +762,7 @@ $$;
 ALTER TABLE public.profiles DROP CONSTRAINT IF EXISTS profiles_role_check;
 ALTER TABLE public.profiles
   ADD CONSTRAINT profiles_role_check
-  CHECK (role IN ('client', 'staff', 'cashier', 'admin', 'ventas', 'delivery'));
+  CHECK (role IN ('client', 'staff', 'cashier', 'admin', 'ventas', 'delivery', 'marketing'));
 
 CREATE OR REPLACE FUNCTION public.is_staff()
 RETURNS BOOLEAN

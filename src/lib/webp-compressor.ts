@@ -1,68 +1,68 @@
 /**
- * WebP Image Compressor Utility for Las Flores CMS
- * Converts JPG/PNG/heavy images into optimized WebP Blobs and Data URLs in-browser.
+ * Converts browser-decodable images into optimized WebP blobs in-browser.
  */
 export async function compressImageToWebP(
   file: File,
   maxWidth = 1200,
   maxHeight = 1200,
-  quality = 0.85
-): Promise<{ dataUrl: string; blob: Blob; originalSizeKb: number; compressedSizeKb: number }> {
+  quality = 0.72,
+): Promise<{ blob: Blob; originalSizeKb: number; compressedSizeKb: number }> {
   return new Promise((resolve, reject) => {
     const originalSizeKb = Math.round(file.size / 1024);
-    const reader = new FileReader();
+    const imageUrl = URL.createObjectURL(file);
+    const image = new Image();
+    const releaseImageUrl = () => URL.revokeObjectURL(imageUrl);
 
-    reader.onload = (event) => {
-      const img = new Image();
-      img.onload = () => {
+    image.onload = () => {
+      releaseImageUrl();
+      try {
         const canvas = document.createElement("canvas");
-        let { width, height } = img;
-
-        // Resize proportionally if dimensions exceed max
-        if (width > maxWidth || height > maxHeight) {
-          if (width > height) {
-            height = Math.round((height * maxWidth) / width);
-            width = maxWidth;
-          } else {
-            width = Math.round((width * maxHeight) / height);
-            height = maxHeight;
-          }
+        const sourceWidth = image.naturalWidth || image.width;
+        const sourceHeight = image.naturalHeight || image.height;
+        if (sourceWidth <= 0 || sourceHeight <= 0) {
+          reject(new Error("La imagen no tiene dimensiones válidas."));
+          return;
         }
 
+        const scale = Math.min(1, maxWidth / sourceWidth, maxHeight / sourceHeight);
+        const width = Math.max(1, Math.round(sourceWidth * scale));
+        const height = Math.max(1, Math.round(sourceHeight * scale));
         canvas.width = width;
         canvas.height = height;
 
         const ctx = canvas.getContext("2d");
         if (!ctx) {
-          reject(new Error("No se pudo obtener el contexto 2D del Canvas"));
+          reject(new Error("No se pudo preparar la imagen para comprimirla."));
           return;
         }
 
-        ctx.drawImage(img, 0, 0, width, height);
-
-        const dataUrl = canvas.toDataURL("image/webp", quality);
-
+        ctx.drawImage(image, 0, 0, width, height);
         canvas.toBlob(
           (blob) => {
-            const finalBlob = blob || new Blob();
-            const compressedSizeKb = Math.round(finalBlob.size / 1024);
+            if (!blob || blob.type !== "image/webp" || blob.size === 0) {
+              reject(new Error("El navegador no pudo convertir la imagen a WebP."));
+              return;
+            }
+
             resolve({
-              dataUrl,
-              blob: finalBlob,
+              blob,
               originalSizeKb,
-              compressedSizeKb,
+              compressedSizeKb: Math.round(blob.size / 1024),
             });
           },
           "image/webp",
-          quality
+          quality,
         );
-      };
-
-      img.onerror = (err) => reject(err);
-      img.src = event.target?.result as string;
+      } catch (error) {
+        reject(error);
+      }
     };
 
-    reader.onerror = (err) => reject(err);
-    reader.readAsDataURL(file);
+    image.onerror = () => {
+      releaseImageUrl();
+      reject(new Error("No se pudo abrir la imagen seleccionada."));
+    };
+
+    image.src = imageUrl;
   });
 }

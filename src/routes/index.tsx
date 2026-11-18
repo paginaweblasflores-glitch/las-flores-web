@@ -27,6 +27,7 @@ import { FamiliaLasFloresSection } from "../components/FamiliaLasFloresSection";
 import { getFestividadesDestacadas } from "../lib/festividadesLayout";
 import { FaunaAndina } from "@/components/FaunaAndina";
 import { FestividadVideo } from "@/components/FestividadVideo";
+import { MarketingFlyerPopup } from "@/components/MarketingFlyerPopup";
 import { HeroVideo } from "@/components/HeroVideo";
 import { lugares } from "@/data/lugares";
 import { festividades } from "@/data/festividades";
@@ -340,14 +341,18 @@ function LugaresSlider() {
                 <div className="aspect-[413/502] overflow-hidden bg-nogal/10">
                   <img
                     src={lugar.imagenTarjeta ?? lugar.imagen}
-                    style={lugar.posicionTarjeta ? { objectPosition: lugar.posicionTarjeta } : undefined}
+                    style={
+                      lugar.posicionTarjeta ? { objectPosition: lugar.posicionTarjeta } : undefined
+                    }
                     alt={titulo}
                     loading="lazy"
                     decoding="async"
                     className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
                 </div>
-                <h3 className="mt-[1.875rem] font-serif text-[1.625rem] leading-tight text-balance">{titulo}</h3>
+                <h3 className="mt-[1.875rem] font-serif text-[1.625rem] leading-tight text-balance">
+                  {titulo}
+                </h3>
                 <p className="mt-2 text-[0.6875rem] font-semibold uppercase tracking-[0.04em] text-nogal/70">
                   {lugar.categoria}
                 </p>
@@ -402,6 +407,7 @@ function Index() {
     <div className="bg-piedra text-nogal font-sans selection:bg-chilca/30">
       {/* ── HEADER UNIFICADO ── */}
       <SiteHeader />
+      <MarketingFlyerPopup />
 
       {/* HERO — Recorrido cinemático en Video por Ayacucho */}
       <header className="relative h-screen w-full overflow-hidden bg-eucalipto">
@@ -419,7 +425,8 @@ function Index() {
             Guardianes de la cultura ayacuchana
           </h1>
           <p className="mt-4 max-w-[52ch] text-base leading-relaxed text-balance text-piedra drop-shadow-md sm:text-lg">
-            Una historia familiar que mantiene vivas las tradiciones y los sabores de nuestra tierra.
+            Una historia familiar que mantiene vivas las tradiciones y los sabores de nuestra
+            tierra.
           </p>
         </div>
       </header>
@@ -555,8 +562,8 @@ function Index() {
                   }}
                 >
                   En Ayacucho la tradición toma muchas formas. Vive en las manos de nuestros
-                  artesanos, en las celebraciones de nuestros pueblos y en las recetas que
-                  pasan de generación en generación.
+                  artesanos, en las celebraciones de nuestros pueblos y en las recetas que pasan de
+                  generación en generación.
                 </p>
               </div>
 

@@ -16,7 +16,7 @@ describe("política de disponibilidad de productos", () => {
   it("autoriza al personal de caja a cambiar solo is_available", () => {
     expect(hardeningRls).toMatch(/role\s+IN\s*\([^)]*'cashier'[^)]*\)/i);
     expect(hardeningRls).toMatch(
-      /CHECK \(role IN \('client', 'staff', 'cashier', 'admin', 'ventas', 'delivery'\)\)/i,
+      /CHECK \(role IN \('client', 'staff', 'cashier', 'admin', 'ventas', 'delivery', 'marketing'\)\)/i,
     );
     expect(hardeningRls).toMatch(
       /CREATE POLICY "products_availability_staff_update"[\s\S]*?FOR UPDATE[\s\S]*?public\.is_staff\(\)/i,
@@ -57,7 +57,13 @@ describe("política de disponibilidad de productos", () => {
 
   it("retira del carrito los productos deshabilitados por su id real", () => {
     const items = [
-      { id: "product-1__opcion", productId: "product-1", name: "Plato oculto", price: 10, quantity: 1 },
+      {
+        id: "product-1__opcion",
+        productId: "product-1",
+        name: "Plato oculto",
+        price: 10,
+        quantity: 1,
+      },
       { id: "product-2", name: "Plato disponible", price: 12, quantity: 1 },
     ];
 
