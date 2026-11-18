@@ -33,12 +33,17 @@ export function buildDeliveryWhatsAppMessage(order: any, items: any[] = []): str
     ? `💵 *COBRAR EN EFECTIVO:* S/ ${total} (PAGO CONTRA ENTREGA)`
     : `✅ *MONTO YA PAGADO (NO COBRAR):* S/ ${total} (PAGADO CON ${paymentMethod})`;
 
+  const currentOrigin = typeof window !== "undefined" ? window.location.origin : "";
+  const isLocalOrigin = /^https?:\/\/(?:localhost|127(?:\.\d{1,3}){3}|\[::1\])(?::\d+)?$/i.test(
+    currentOrigin
+  );
   const baseUrl =
-    typeof window !== "undefined" && window.location.origin
-      ? window.location.origin
+    currentOrigin && !isLocalOrigin
+      ? currentOrigin
       : "https://www.restaurantelasflores.com";
 
   const driverPin = order.driver_pin || "----";
+  const orderId = order.id || order.order_id;
 
   return `🛵 *DESPACHO DE DELIVERY — LAS FLORES*
 ==============================
@@ -48,9 +53,9 @@ export function buildDeliveryWhatsAppMessage(order: any, items: any[] = []): str
 ${paymentLabel}
 
 👉 *INICIA EL DESPACHO AQUÍ (Ver Dirección y Navegar):*
-${baseUrl}/d/${order.id || order.order_id}
+${baseUrl}/d/${orderId}
 ==============================
-*Instrucción:* Abre el enlace, ingresa el PIN *${driverPin}* para ver la dirección, llamar al cliente y marcar "En camino" y "Entregado". ¡Gracias!`;
+*Instrucción:* Abre el enlace e ingresa el PIN *${driverPin}*. En la página, completa los pasos existentes: "Voy a recoger el pedido", "Pedido recogido (en camino al cliente)" y "Confirmar entrega al cliente". Estos pasos actualizan el seguimiento del pedido. ¡Gracias!`;
 }
 
 /**
