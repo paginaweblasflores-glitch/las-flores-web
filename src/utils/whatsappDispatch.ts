@@ -21,6 +21,28 @@ export function generateDeliveryGoogleMapsUrl(
   return `https://www.google.com/maps?q=-13.1588,-74.2239`;
 }
 
+export function generateDeliveryDirectionsUrl(
+  latitude?: number | null,
+  longitude?: number | null,
+  address?: string | null
+): string | null {
+  const hasCoordinates =
+    latitude != null &&
+    longitude != null &&
+    Number.isFinite(latitude) &&
+    Number.isFinite(longitude);
+  const trimmedAddress = address?.trim();
+  const destination = hasCoordinates
+    ? `${latitude},${longitude}`
+    : trimmedAddress
+      ? `${trimmedAddress}, Huamanga, Ayacucho`
+      : null;
+
+  if (!destination) return null;
+
+  return `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(destination)}&travelmode=driving`;
+}
+
 export function buildDeliveryWhatsAppMessage(order: any, items: any[] = []): string {
   const orderNum = order.order_number || order.id?.slice(0, 8) || "S/N";
   const clientName = order.client_name || order.customer_name || "Cliente General";

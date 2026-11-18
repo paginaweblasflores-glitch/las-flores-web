@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useState, useEffect, useRef } from "react";
 import { CheckCircle2, Navigation2, Package, MapPin, ExternalLink, Loader2, AlertTriangle, ShieldCheck, Phone, Clock, ArrowRight, Banknote, Check } from "lucide-react";
 import { supabase } from "@/lib/supabase";
+import { generateDeliveryDirectionsUrl } from "@/utils/whatsappDispatch";
 
 export const Route = createFileRoute("/d/$orderId")({
   component: DriverMagicLink,
@@ -105,6 +106,11 @@ function DriverMagicLink() {
   const customerLocation = orderData?.latitude && orderData?.longitude 
     ? { lat: orderData.latitude, lng: orderData.longitude }
     : null;
+  const googleMapsDirectionsUrl = generateDeliveryDirectionsUrl(
+    orderData?.latitude,
+    orderData?.longitude,
+    orderData?.address,
+  );
 
   // Todas las actualizaciones de estado pasan por update_order_status_driver,
   // que vuelve a verificar el PIN en el servidor (ver
@@ -477,17 +483,24 @@ function DriverMagicLink() {
 
               {/* Botones de Navegación GPS Externa */}
               <div className="flex gap-2.5">
-                <a 
-                  href={customerLocation 
-                    ? `https://www.google.com/maps/dir/?api=1&destination=${customerLocation.lat},${customerLocation.lng}`
-                    : `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(orderData.address + ", Ayacucho")}`
-                  }
-                  target="_blank" rel="noreferrer"
-                  className="flex-1 py-3 bg-white border border-nogal/15 hover:bg-piedra text-nogal rounded-xl font-bold text-[0.625rem] uppercase tracking-widest transition-all shadow-sm flex flex-col items-center justify-center gap-1"
-                >
-                  <ExternalLink size={15} />
-                  Google Maps
-                </a>
+                {googleMapsDirectionsUrl ? (
+                  <a
+                    href={googleMapsDirectionsUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="flex-1 py-3 bg-white border border-nogal/15 hover:bg-piedra text-nogal rounded-xl font-bold text-[0.625rem] uppercase tracking-widest transition-all shadow-sm flex flex-col items-center justify-center gap-1"
+                  >
+                    <ExternalLink size={15} />
+                    Google Maps
+                  </a>
+                ) : (
+                  <div
+                    role="alert"
+                    className="flex-1 py-3 bg-gray-50 border border-gray-200 text-gray-500 rounded-xl font-bold text-[0.625rem] uppercase tracking-widest flex flex-col items-center justify-center gap-1 text-center"
+                  >
+                    Google Maps no disponible: falta la dirección
+                  </div>
+                )}
                 <a 
                   href={customerLocation 
                     ? `https://waze.com/ul?ll=${customerLocation.lat},${customerLocation.lng}&navigate=yes`
