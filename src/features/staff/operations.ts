@@ -1,16 +1,10 @@
-export function isValidMaitreAccessCode(value: string): boolean {
-  return /^\d{4,6}$/.test(value);
-}
-
 export function getStaffLoginDestination(role: string): string | null {
-  const normalizedRole = role.toLowerCase();
-  switch (normalizedRole) {
+  switch (role.toLowerCase()) {
     case "admin":
       return "/admin";
     case "cashier":
-      return "/caja";
     case "staff":
-      return "/salon";
+      return "/caja";
     case "ventas":
       return "/panel-reservas";
     case "marketing":

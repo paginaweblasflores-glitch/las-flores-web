@@ -2,8 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
 import { UserCircle2, Lock, Loader2, LogIn, ArrowLeft, Eye, EyeOff } from "lucide-react";
 import { supabase } from "../lib/supabase";
-import { loginMaitreWaiter } from "../features/maitre/api";
-import { getStaffLoginDestination, isValidMaitreAccessCode } from "../features/maitre/operations";
+import { getStaffLoginDestination } from "../features/staff/operations";
 
 // Mapa interno usuario → correo real de Supabase Auth. El personal solo ve y
 // elige su "Usuario"; el correo nunca se muestra ni se escribe (es la
@@ -13,7 +12,6 @@ const STAFF_USERS = [
   { username: "Caja Las Flores", email: "paginaweblasflores@gmail.com" },
   { username: "Ventas Las Flores", email: "convencioneslyfayacucho@gamil.com" },
   { username: "Marketing", email: "marketing@gmail.com" },
-  { username: "MAITRE", email: "" },
 ];
 
 export const Route = createFileRoute("/staff-login")({
@@ -28,7 +26,6 @@ export const Route = createFileRoute("/staff-login")({
 
 function StaffLoginPage() {
   const [username, setUsername] = useState("");
-  const [accessCode, setAccessCode] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -71,25 +68,6 @@ function StaffLoginPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMsg("");
-
-    if (username === "MAITRE") {
-      if (!isValidMaitreAccessCode(accessCode)) {
-        setErrorMsg("El código del mozo debe tener entre 4 y 6 números.");
-        return;
-      }
-
-      setLoading(true);
-      try {
-        await loginMaitreWaiter(accessCode);
-        window.location.href = "/salon";
-      } catch (error) {
-        setErrorMsg(
-          error instanceof Error ? error.message : "No se pudo iniciar sesión como mozo.",
-        );
-        setLoading(false);
-      }
-      return;
-    }
 
     const staffUser = STAFF_USERS.find((u) => u.username === username);
     if (!staffUser) {
@@ -153,7 +131,6 @@ function StaffLoginPage() {
               value={username}
               onChange={(e) => {
                 setUsername(e.target.value);
-                setAccessCode("");
                 setErrorMsg("");
               }}
               className="w-full px-4 py-3 rounded-xl border border-[#2C4A3E]/20 bg-white text-base md:text-sm font-medium text-[#1b2a24] focus:outline-none focus:ring-2 focus:ring-[#2C4A3E] transition-all shadow-xs cursor-pointer"
@@ -167,54 +144,31 @@ function StaffLoginPage() {
             </select>
           </div>
 
-          {username === "MAITRE" ? (
-            <div>
-              <label className="block text-xs font-bold text-[#2C4A3E] uppercase tracking-[0.14em] mb-1.5 flex items-center gap-1.5">
-                <UserCircle2 size={13} className="text-[#2C4A3E]/70" /> Código numérico del mozo
-              </label>
+          <div>
+            <label className="block text-xs font-bold text-[#2C4A3E] uppercase tracking-[0.14em] mb-1.5 flex items-center gap-1.5">
+              <Lock size={13} className="text-[#2C4A3E]/70" /> Contraseña
+            </label>
+            <div className="relative">
               <input
+                type={showPassword ? "text" : "password"}
                 required
-                autoComplete="one-time-code"
-                type="text"
-                inputMode="numeric"
-                pattern="[0-9]{4,6}"
-                maxLength={6}
-                value={accessCode}
-                onChange={(e) => setAccessCode(e.target.value.replace(/\D/g, "").slice(0, 6))}
-                placeholder="Ej. 0042"
-                className="w-full rounded-xl border border-[#2C4A3E]/20 bg-white px-4 py-3 text-base font-medium text-[#1b2a24] shadow-xs transition-all focus:outline-none focus:ring-2 focus:ring-[#2C4A3E] md:text-sm"
+                autoComplete="current-password"
+                placeholder="••••••••"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="w-full px-4 py-3 pr-11 rounded-xl border border-[#2C4A3E]/20 bg-white text-base md:text-sm font-medium text-[#1b2a24] focus:outline-none focus:ring-2 focus:ring-[#2C4A3E] transition-all shadow-xs"
               />
-              <p className="mt-1.5 text-xs text-[#2C4A3E]/65">
-                Ingresa el código asignado por Caja.
-              </p>
+              <button
+                type="button"
+                onClick={() => setShowPassword((v) => !v)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-[#2C4A3E]/50 hover:text-[#2C4A3E] transition-colors cursor-pointer"
+                aria-label={showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
+                tabIndex={-1}
+              >
+                {showPassword ? <EyeOff size={17} /> : <Eye size={17} />}
+              </button>
             </div>
-          ) : (
-            <div>
-              <label className="block text-xs font-bold text-[#2C4A3E] uppercase tracking-[0.14em] mb-1.5 flex items-center gap-1.5">
-                <Lock size={13} className="text-[#2C4A3E]/70" /> Contraseña
-              </label>
-              <div className="relative">
-                <input
-                  type={showPassword ? "text" : "password"}
-                  required
-                  autoComplete="current-password"
-                  placeholder="••••••••"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="w-full px-4 py-3 pr-11 rounded-xl border border-[#2C4A3E]/20 bg-white text-base md:text-sm font-medium text-[#1b2a24] focus:outline-none focus:ring-2 focus:ring-[#2C4A3E] transition-all shadow-xs"
-                />
-                <button
-                  type="button"
-                  onClick={() => setShowPassword((v) => !v)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-[#2C4A3E]/50 hover:text-[#2C4A3E] transition-colors cursor-pointer"
-                  aria-label={showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
-                  tabIndex={-1}
-                >
-                  {showPassword ? <EyeOff size={17} /> : <Eye size={17} />}
-                </button>
-              </div>
-            </div>
-          )}
+          </div>
 
           {errorMsg && (
             <p className="text-xs font-bold text-red-700 bg-red-50 p-3 rounded-xl border border-red-200 text-center">

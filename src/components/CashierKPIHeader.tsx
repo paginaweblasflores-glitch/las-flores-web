@@ -11,7 +11,6 @@ import {
   LineChart,
   ShoppingBag,
   Users,
-  UtensilsCrossed,
 } from "lucide-react";
 import { Link } from "@tanstack/react-router";
 import { StatCard } from "./StatCard";
@@ -22,7 +21,6 @@ interface CashierTopBarProps {
   soundEnabled: boolean;
   onToggleSound: () => void;
   isAdmin: boolean;
-  canManageMaitre: boolean;
   onSignOut: () => void;
   activeTab: CashierModule;
   onSelectTab: (tab: CashierModule) => void;
@@ -32,7 +30,6 @@ export function CashierTopBar({
   soundEnabled,
   onToggleSound,
   isAdmin,
-  canManageMaitre,
   onSignOut,
   activeTab,
   onSelectTab,
@@ -70,22 +67,6 @@ export function CashierTopBar({
 
             {/* Module Tabs */}
             <div className="flex items-center gap-1">
-              <Link
-                to="/salon"
-                className="px-3 py-2 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 whitespace-nowrap border-b-2 border-transparent text-emerald-100/80 hover:text-white hover:bg-white/5"
-              >
-                <UtensilsCrossed size={15} className="text-emerald-300" />
-                <span>Salón</span>
-              </Link>
-              {canManageMaitre && (
-                <Link
-                  to="/maitre"
-                  className="px-3 py-2 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 whitespace-nowrap border-b-2 border-transparent text-emerald-100/80 hover:text-white hover:bg-white/5"
-                >
-                  <Users size={15} className="text-emerald-300" />
-                  <span>MAITRE</span>
-                </Link>
-              )}
               <button
                 onClick={() => onSelectTab("analitica")}
                 className={`px-3 py-2 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 whitespace-nowrap border-b-2 ${

@@ -18,13 +18,11 @@ import { Route as EventosRouteImport } from './routes/eventos'
 import { Route as FamiliaLasFloresRouteImport } from './routes/familia-las-flores'
 import { Route as GaleriaRouteImport } from './routes/galeria'
 import { Route as LibroDeReclamacionesRouteImport } from './routes/libro-de-reclamaciones'
-import { Route as MaitreRouteImport } from './routes/maitre'
 import { Route as MarketingRouteImport } from './routes/marketing'
 import { Route as PanelReservasRouteImport } from './routes/panel-reservas'
 import { Route as PoliticaDePrivacidadRouteImport } from './routes/politica-de-privacidad'
 import { Route as ReservasRouteImport } from './routes/reservas'
 import { Route as RestauranteRouteImport } from './routes/restaurante'
-import { Route as SalonRouteImport } from './routes/salon'
 import { Route as StaffLoginRouteImport } from './routes/staff-login'
 import { Route as TerminosYCondicionesRouteImport } from './routes/terminos-y-condiciones'
 import { Route as TesorosAyacuchoRouteImport } from './routes/tesoros-ayacucho'
@@ -79,11 +77,6 @@ const LibroDeReclamacionesRoute = LibroDeReclamacionesRouteImport.update({
   path: '/libro-de-reclamaciones',
   getParentRoute: () => rootRouteImport,
 } as any)
-const MaitreRoute = MaitreRouteImport.update({
-  id: '/maitre',
-  path: '/maitre',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const MarketingRoute = MarketingRouteImport.update({
   id: '/marketing',
   path: '/marketing',
@@ -107,11 +100,6 @@ const ReservasRoute = ReservasRouteImport.update({
 const RestauranteRoute = RestauranteRouteImport.update({
   id: '/restaurante',
   path: '/restaurante',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const SalonRoute = SalonRouteImport.update({
-  id: '/salon',
-  path: '/salon',
   getParentRoute: () => rootRouteImport,
 } as any)
 const StaffLoginRoute = StaffLoginRouteImport.update({
@@ -165,13 +153,11 @@ export interface FileRoutesByFullPath {
   '/familia-las-flores': typeof FamiliaLasFloresRoute
   '/galeria': typeof GaleriaRoute
   '/libro-de-reclamaciones': typeof LibroDeReclamacionesRoute
-  '/maitre': typeof MaitreRoute
   '/marketing': typeof MarketingRoute
   '/panel-reservas': typeof PanelReservasRoute
   '/politica-de-privacidad': typeof PoliticaDePrivacidadRoute
   '/reservas': typeof ReservasRoute
   '/restaurante': typeof RestauranteRoute
-  '/salon': typeof SalonRoute
   '/staff-login': typeof StaffLoginRoute
   '/terminos-y-condiciones': typeof TerminosYCondicionesRoute
   '/tesoros-ayacucho': typeof TesorosAyacuchoRoute
@@ -191,13 +177,11 @@ export interface FileRoutesByTo {
   '/familia-las-flores': typeof FamiliaLasFloresRoute
   '/galeria': typeof GaleriaRoute
   '/libro-de-reclamaciones': typeof LibroDeReclamacionesRoute
-  '/maitre': typeof MaitreRoute
   '/marketing': typeof MarketingRoute
   '/panel-reservas': typeof PanelReservasRoute
   '/politica-de-privacidad': typeof PoliticaDePrivacidadRoute
   '/reservas': typeof ReservasRoute
   '/restaurante': typeof RestauranteRoute
-  '/salon': typeof SalonRoute
   '/staff-login': typeof StaffLoginRoute
   '/terminos-y-condiciones': typeof TerminosYCondicionesRoute
   '/tesoros-ayacucho': typeof TesorosAyacuchoRoute
@@ -218,13 +202,11 @@ export interface FileRoutesById {
   '/familia-las-flores': typeof FamiliaLasFloresRoute
   '/galeria': typeof GaleriaRoute
   '/libro-de-reclamaciones': typeof LibroDeReclamacionesRoute
-  '/maitre': typeof MaitreRoute
   '/marketing': typeof MarketingRoute
   '/panel-reservas': typeof PanelReservasRoute
   '/politica-de-privacidad': typeof PoliticaDePrivacidadRoute
   '/reservas': typeof ReservasRoute
   '/restaurante': typeof RestauranteRoute
-  '/salon': typeof SalonRoute
   '/staff-login': typeof StaffLoginRoute
   '/terminos-y-condiciones': typeof TerminosYCondicionesRoute
   '/tesoros-ayacucho': typeof TesorosAyacuchoRoute
@@ -246,13 +228,11 @@ export interface FileRouteTypes {
     | '/familia-las-flores'
     | '/galeria'
     | '/libro-de-reclamaciones'
-    | '/maitre'
     | '/marketing'
     | '/panel-reservas'
     | '/politica-de-privacidad'
     | '/reservas'
     | '/restaurante'
-    | '/salon'
     | '/staff-login'
     | '/terminos-y-condiciones'
     | '/tesoros-ayacucho'
@@ -272,13 +252,11 @@ export interface FileRouteTypes {
     | '/familia-las-flores'
     | '/galeria'
     | '/libro-de-reclamaciones'
-    | '/maitre'
     | '/marketing'
     | '/panel-reservas'
     | '/politica-de-privacidad'
     | '/reservas'
     | '/restaurante'
-    | '/salon'
     | '/staff-login'
     | '/terminos-y-condiciones'
     | '/tesoros-ayacucho'
@@ -298,13 +276,11 @@ export interface FileRouteTypes {
     | '/familia-las-flores'
     | '/galeria'
     | '/libro-de-reclamaciones'
-    | '/maitre'
     | '/marketing'
     | '/panel-reservas'
     | '/politica-de-privacidad'
     | '/reservas'
     | '/restaurante'
-    | '/salon'
     | '/staff-login'
     | '/terminos-y-condiciones'
     | '/tesoros-ayacucho'
@@ -325,13 +301,11 @@ export interface RootRouteChildren {
   FamiliaLasFloresRoute: typeof FamiliaLasFloresRoute
   GaleriaRoute: typeof GaleriaRoute
   LibroDeReclamacionesRoute: typeof LibroDeReclamacionesRoute
-  MaitreRoute: typeof MaitreRoute
   MarketingRoute: typeof MarketingRoute
   PanelReservasRoute: typeof PanelReservasRoute
   PoliticaDePrivacidadRoute: typeof PoliticaDePrivacidadRoute
   ReservasRoute: typeof ReservasRoute
   RestauranteRoute: typeof RestauranteRoute
-  SalonRoute: typeof SalonRoute
   StaffLoginRoute: typeof StaffLoginRoute
   TerminosYCondicionesRoute: typeof TerminosYCondicionesRoute
   TesorosAyacuchoRoute: typeof TesorosAyacuchoRoute
@@ -407,13 +381,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LibroDeReclamacionesRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/maitre': {
-      id: '/maitre'
-      path: '/maitre'
-      fullPath: '/maitre'
-      preLoaderRoute: typeof MaitreRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/marketing': {
       id: '/marketing'
       path: '/marketing'
@@ -447,13 +414,6 @@ declare module '@tanstack/react-router' {
       path: '/restaurante'
       fullPath: '/restaurante'
       preLoaderRoute: typeof RestauranteRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/salon': {
-      id: '/salon'
-      path: '/salon'
-      fullPath: '/salon'
-      preLoaderRoute: typeof SalonRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/staff-login': {
@@ -525,13 +485,11 @@ const rootRouteChildren: RootRouteChildren = {
   FamiliaLasFloresRoute: FamiliaLasFloresRoute,
   GaleriaRoute: GaleriaRoute,
   LibroDeReclamacionesRoute: LibroDeReclamacionesRoute,
-  MaitreRoute: MaitreRoute,
   MarketingRoute: MarketingRoute,
   PanelReservasRoute: PanelReservasRoute,
   PoliticaDePrivacidadRoute: PoliticaDePrivacidadRoute,
   ReservasRoute: ReservasRoute,
   RestauranteRoute: RestauranteRoute,
-  SalonRoute: SalonRoute,
   StaffLoginRoute: StaffLoginRoute,
   TerminosYCondicionesRoute: TerminosYCondicionesRoute,
   TesorosAyacuchoRoute: TesorosAyacuchoRoute,
