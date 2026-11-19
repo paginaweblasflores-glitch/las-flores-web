@@ -28,7 +28,7 @@ import {
   normalizeYapeConfig,
   getActiveYapeAccount,
 } from "../lib/yapeService";
-import { compressImageToWebP } from "../lib/webp-compressor";
+import { blobToDataUrl, compressImageToWebP } from "../lib/webp-compressor";
 import { supabase } from "../lib/supabase";
 
 interface YapeConfigModalProps {
@@ -94,7 +94,7 @@ export function YapeConfigModal({
     try {
       // Optimización a 800x800px WebP con calidad 0.90
       const compressed = await compressImageToWebP(file, 800, 800, 0.90);
-      let finalUrl = compressed.dataUrl;
+      let finalUrl: string | null = null;
 
       try {
         const cleanFileName = `qr_yape_${Date.now()}_${Math.random().toString(36).substring(7)}.webp`;
@@ -116,6 +116,9 @@ export function YapeConfigModal({
       } catch (storageErr) {
         console.warn("Storage upload fallback to Data URL:", storageErr);
       }
+
+      // Respaldo: si no se pudo subir a Storage, se usa la imagen comprimida como URL de datos
+      if (!finalUrl) finalUrl = await blobToDataUrl(compressed.blob);
 
       setFormQrUrl(finalUrl);
       setUploadSuccessMsg(

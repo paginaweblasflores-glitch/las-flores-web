@@ -48,20 +48,20 @@ afterEach(() => {
 
 describe("validación de flyers de Marketing", () => {
   it("acepta imágenes JPG, PNG y WebP dentro del límite", () => {
-    expect(getMarketingFlyerValidationError({ type: "image/jpeg", size: 1024 })).toBeNull();
-    expect(getMarketingFlyerValidationError({ type: "image/png", size: 1024 })).toBeNull();
-    expect(getMarketingFlyerValidationError({ type: "image/webp", size: 1024 })).toBeNull();
+    expect(getMarketingFlyerValidationError({ type: "image/jpeg", size: 1024 } as File)).toBeNull();
+    expect(getMarketingFlyerValidationError({ type: "image/png", size: 1024 } as File)).toBeNull();
+    expect(getMarketingFlyerValidationError({ type: "image/webp", size: 1024 } as File)).toBeNull();
   });
 
   it("rechaza archivos que no sean imágenes admitidas", () => {
-    expect(getMarketingFlyerValidationError({ type: "application/pdf", size: 1024 })).toMatch(
+    expect(getMarketingFlyerValidationError({ type: "application/pdf", size: 1024 } as File)).toMatch(
       /JPG, PNG o WebP/,
     );
   });
 
   it("acepta imágenes grandes para comprimirlas antes de subirlas", () => {
     expect(
-      getMarketingFlyerValidationError({ type: "image/png", size: 500 * 1024 * 1024 }),
+      getMarketingFlyerValidationError({ type: "image/png", size: 500 * 1024 * 1024 } as File),
     ).toBeNull();
   });
 

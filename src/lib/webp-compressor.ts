@@ -66,3 +66,16 @@ export async function compressImageToWebP(
     image.src = imageUrl;
   });
 }
+
+/**
+ * Convierte una imagen ya comprimida en una URL de datos. Solo se usa como respaldo cuando no se puede
+ * subir el archivo a Supabase Storage, para que la pantalla siga funcionando como antes.
+ */
+export function blobToDataUrl(blob: Blob): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(String(reader.result));
+    reader.onerror = () => reject(reader.error ?? new Error("No se pudo leer la imagen."));
+    reader.readAsDataURL(blob);
+  });
+}

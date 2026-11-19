@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { X, Loader2, Utensils, DollarSign, FileText, Image as ImageIcon, Tag, Upload, Trash2, CheckCircle2, RefreshCw, Sparkles, AlertCircle, Plus, Wand2, Layers } from "lucide-react";
 import { supabase } from "../lib/supabase";
-import { compressImageToWebP } from "../lib/webp-compressor";
+import { blobToDataUrl, compressImageToWebP } from "../lib/webp-compressor";
 
 export interface CustomOption {
   id: string;
@@ -201,7 +201,7 @@ export function AdminProductModal({
       } else {
         // Fallback: If bucket is not public/ready, use compressed Data URL directly
         console.warn("Storage upload fallback to compressed Data URL:", uploadErr);
-        setImageUrl(compressed.dataUrl);
+        setImageUrl(await blobToDataUrl(compressed.blob));
         setUploadSuccessMsg(`¡Foto optimizada a WebP (${compressed.compressedSizeKb} KB) y lista para guardar!`);
       }
     } catch (err: any) {
