@@ -27,20 +27,20 @@ const ESPECIES: EspecieFauna[] = [
     nombre: "Cóndor andino",
     imagen: "/imagenes-reales/fauna/condor.webp",
     descripcion:
-      "Para la cosmovisión andina es el mensajero de los Apus. Con casi tres metros de punta a punta, recorre las alturas de Lucanas (sobre todo el Valle de Sondondo) y de Sucre casi sin aletear, y al alimentarse de animales muertos mantiene sano el ecosistema.",
+      "Para la cosmovisión andina es el mensajero de los Apus. Con casi tres metros de punta a punta, recorre las alturas de Lucanas (sobre todo el Valle de Sondondo) y de Sucre casi sin aletear y al alimentarse de animales muertos mantiene sano el ecosistema.",
   },
   {
     nombre: "Halcón peregrino",
     quechua: "waman",
     imagen: "/imagenes-reales/fauna/halcon.webp",
     descripcion:
-      "Su caída en picada llega a los 320 kilómetros por hora y es la más veloz que se conoce en el mundo animal. Desde los altos riscos y cañones de Ayacucho caza otras aves en pleno vuelo, y así mantiene el equilibrio del ecosistema andino.",
+      "Su caída en picada llega a los 320 kilómetros por hora y es la más veloz que se conoce en el mundo animal. Desde los altos riscos y cañones de Ayacucho caza otras aves en pleno vuelo y así mantiene el equilibrio del ecosistema andino.",
   },
   {
     nombre: "Vicuña",
     imagen: "/imagenes-reales/fauna/vicuna.webp",
     descripcion:
-      "Ayacucho es la región del Perú que más fibra de vicuña produce, y el Perú es el primer productor del mundo. Esa fibra sale de los chaccus, la esquila que se hace varias veces al año en la Reserva Nacional Pampa Galeras.",
+      "Ayacucho es la región del Perú que más fibra de vicuña produce y el Perú es el primer productor del mundo. Esa fibra sale de los chaccus, la esquila que se hace varias veces al año en la Reserva Nacional Pampa Galeras.",
   },
 ];
 
