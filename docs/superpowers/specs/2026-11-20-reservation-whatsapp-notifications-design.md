@@ -40,8 +40,9 @@ Los siguientes datos deben almacenarse como secretos de Supabase, nunca en el co
 - Identificador del numero telefonico comercial.
 - Identificador de la plantilla aprobada por WhatsApp.
 - Lista o numero del equipo que recibira las alertas.
+- Numero receptor proporcionado por separado; no debe incluirse en archivos versionados.
 
-El destinatario inicial sera Mariaanella, Area de Ventas. Su numero quedara pendiente hasta que se proporcione con codigo de pais.
+El destinatario inicial sera Mariaanella, Area de Ventas. El numero receptor sera proporcionado al configurar los secretos de Supabase y no se incluira en archivos versionados.
 
 El template aprobado debe reservar una variable por cada dato enviado. Una plantilla simple puede usar variables para nombre, fecha, hora, personas y codigo.
 
