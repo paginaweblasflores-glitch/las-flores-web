@@ -71,12 +71,12 @@ const chefRecommendations = [
     alt: "Preparación y emplatado del Cuy Las Flores",
   },
   {
-    name: "Chancho asado Las Flores",
+    name: "Ceviche de trucha",
     description:
-      "Carne de cerdo macerada en distintas especias, acompañada de pastel de papa, crema de pimentón, chips de camote y ensalada hawaiana.",
-    video: `${VIDEOS_PLATOS}/chancho-asado.mp4`,
-    poster: `${VIDEOS_PLATOS}/chancho-asado-poster.webp`,
-    alt: "Preparación y emplatado del Chancho asado Las Flores",
+      "Trucha salmonada en trozos, marinada en jugo de tumbo y limón fresco, acompañada de cebolla morada, cilantro y ají limo.",
+    video: `${VIDEOS_PLATOS}/ceviche-de-trucha.mp4`,
+    poster: `${VIDEOS_PLATOS}/ceviche-de-trucha-poster.webp`,
+    alt: "Ceviche de trucha servido en el plato",
   },
 ];
 
