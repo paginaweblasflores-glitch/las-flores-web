@@ -14,6 +14,7 @@ import {
 import { isCancelledStatus } from "../lib/orderStatus";
 import { supabase } from "../lib/supabase";
 import { getEligibleClosureMonths, formatMonthLabel, getMonthDateRange } from "../lib/monthUtils";
+import { calculateCashierAudit } from "../lib/cashierAudit";
 import { openBlankWindow, writeTicketAndPrint } from "../utils/ticketPrint";
 
 interface CashierAuditModalProps {
@@ -68,37 +69,16 @@ export function CashierAuditModal({ isOpen, onClose, orders }: CashierAuditModal
     return orderDate === selectedDate && !isCancelledStatus(o.status);
   });
 
-  // Cálculos de montos
-  let totalCash = 0;
-  let totalOnline = 0;
-  let totalDeliveryFees = 0;
-  let totalDiscounts = 0;
-  let countDelivery = 0;
-  let countPickup = 0;
-
-  filteredOrders.forEach((o) => {
-    const total = Number(o.total || 0);
-    const fee = Number(o.delivery_fee || 0);
-    const discount = Number(o.discount_amount || o.discount || 0);
-    const pm = (o.payment_method || "").toLowerCase().trim();
-    const isCash = pm.includes("efectivo") || pm.includes("cash");
-    const isCulqi = pm === "culqi";
-
-    if (isCash) {
-      totalCash += total;
-    } else {
-      totalOnline += total; // Incluye Yape, Plin, Culqi y otros pagos digitales
-    }
-
-    totalDeliveryFees += fee;
-    totalDiscounts += discount;
-
-    const isDelivery = (o.order_type || "delivery").toLowerCase().includes("delivery");
-    if (isDelivery) countDelivery++;
-    else countPickup++;
-  });
-
-  const totalSales = totalCash + totalOnline;
+  const audit = calculateCashierAudit(filteredOrders);
+  const {
+    dishSales,
+    deliveryFees: totalDeliveryFees,
+    totalCash,
+    totalOnline,
+    totalNet: totalSales,
+    countDelivery,
+    countPickup,
+  } = audit;
 
   // Busca el cierre mensual ya guardado; si no existe, lo calcula UNA VEZ desde
   // las órdenes reales de ese mes y lo graba. De ahí en adelante siempre se lee
@@ -202,8 +182,8 @@ export function CashierAuditModal({ isOpen, onClose, orders }: CashierAuditModal
     }
   };
 
-  // Función para imprimir el ticket del día
-  const handlePrint = () => {
+  // Función para imprimir el ticket del día: platos, delivery o completo
+  const handlePrint = (mode: "dishes" | "delivery" | "complete") => {
     const orderRows = filteredOrders
       .map((o) => {
         const t = new Date(o.created_at).toLocaleTimeString("es-PE", { hour: "2-digit", minute: "2-digit" });
@@ -211,15 +191,37 @@ export function CashierAuditModal({ isOpen, onClose, orders }: CashierAuditModal
       })
       .join("");
 
-    const html = `
+    const dishHtml = `
+      <p class="center">RESTAURANTE LAS FLORES</p>
+      <p class="center">Delivery de la Página Web</p>
+      <p class="center">Arqueo de platos</p>
+      <p class="center" style="margin-bottom:8px;">Fecha: ${selectedDate}</p>
+      <hr />
+      <div class="row"><span>Venta neta de platos</span><span>S/ ${dishSales.toFixed(2)}</span></div>
+      <hr />
+    `;
+
+    const deliveryHtml = `
+      <p class="center">RESTAURANTE LAS FLORES</p>
+      <p class="center">Delivery de la Página Web</p>
+      <p class="center">Arqueo de delivery</p>
+      <p class="center" style="margin-bottom:8px;">Fecha: ${selectedDate}</p>
+      <hr />
+      <div class="row"><span>Fletes delivery</span><span>S/ ${totalDeliveryFees.toFixed(2)}</span></div>
+      <p>${countDelivery} pedidos delivery</p>
+      <hr />
+    `;
+
+    const completeHtml = `
       <p class="center">RESTAURANTE LAS FLORES</p>
       <p class="center">Delivery de la Página Web</p>
       <p class="center">Arqueo y cierre de caja</p>
       <p class="center" style="margin-bottom:8px;">Fecha: ${selectedDate}</p>
       <hr />
+      <div class="row"><span>Venta de platos</span><span>S/ ${dishSales.toFixed(2)}</span></div>
+      <div class="row"><span>Fletes delivery</span><span>S/ ${totalDeliveryFees.toFixed(2)}</span></div>
       <div class="row"><span>Efectivo a rendir</span><span>S/ ${totalCash.toFixed(2)}</span></div>
       <div class="row"><span>Cobrado online</span><span>S/ ${totalOnline.toFixed(2)}</span></div>
-      <div class="row"><span>Fletes delivery</span><span>S/ ${totalDeliveryFees.toFixed(2)}</span></div>
       <hr />
       <div class="row"><span>VENTA TOTAL NETO</span><span>S/ ${totalSales.toFixed(2)}</span></div>
       <p>${countDelivery} delivery / ${countPickup} recojo</p>
@@ -228,6 +230,8 @@ export function CashierAuditModal({ isOpen, onClose, orders }: CashierAuditModal
       ${orderRows}
       <hr />
     `;
+
+    const html = mode === "dishes" ? dishHtml : mode === "delivery" ? deliveryHtml : completeHtml;
     const win = openBlankWindow();
     if (win) writeTicketAndPrint(win, html);
   };
@@ -285,7 +289,7 @@ export function CashierAuditModal({ isOpen, onClose, orders }: CashierAuditModal
         {/* Cierre / Arqueo — Contenido Imprimible */}
         <div className="flex-1 overflow-y-auto p-6 space-y-6">
           {/* Tarjetas de KPI (no se imprimen: la versión de ticketera de abajo ya resume esto) */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
             {/* Total Efectivo a Rendir */}
             <div className="bg-white p-5 rounded-2xl border border-black/10 shadow-xs flex flex-col justify-between space-y-3">
               <div className="flex items-center justify-between">
@@ -294,6 +298,26 @@ export function CashierAuditModal({ isOpen, onClose, orders }: CashierAuditModal
                 </span>
                 <div className="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center border border-emerald-200/60">
                   <Banknote size={18} />
+                </div>
+              </div>
+
+              {/* Venta de platos */}
+              <div className="bg-white p-5 rounded-2xl border border-black/10 shadow-xs flex flex-col justify-between space-y-3">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs uppercase font-extrabold text-black/50 tracking-wider">
+                    Venta de Platos
+                  </span>
+                  <div className="w-9 h-9 rounded-xl bg-amber-50 text-amber-700 flex items-center justify-center border border-amber-200/60">
+                    <ShoppingBag size={18} />
+                  </div>
+                </div>
+                <div>
+                  <span className="text-2xl font-serif font-extrabold text-amber-800 block">
+                    S/ {dishSales.toFixed(2)}
+                  </span>
+                  <span className="text-xs text-black/50 font-medium">
+                    Subtotal menos descuentos
+                  </span>
                 </div>
               </div>
               <div>
@@ -476,7 +500,7 @@ export function CashierAuditModal({ isOpen, onClose, orders }: CashierAuditModal
         {/* Acciones de Footer del Modal */}
         <div className="p-4 px-6 bg-white border-t border-black/10 flex items-center justify-between">
           <div className="text-xs text-black/60 font-medium">
-            Imprime el ticket del día o el cierre mensual (una sola vez, no editable).
+            Imprime los platos, el delivery o el arqueo completo.
           </div>
 
           <div className="flex items-center gap-3">
@@ -520,12 +544,30 @@ export function CashierAuditModal({ isOpen, onClose, orders }: CashierAuditModal
             </div>
 
             <button
-              onClick={handlePrint}
+              onClick={() => handlePrint("dishes")}
               disabled={filteredOrders.length === 0}
-              className="py-2.5 px-5 rounded-xl bg-[#2c4a3e] hover:bg-[#2c4a3e]/90 text-[#fbf5e6] font-bold text-xs flex items-center gap-2 transition-all shadow-md cursor-pointer disabled:opacity-50"
+              className="py-2.5 px-3 rounded-xl bg-amber-50 border border-amber-300 text-amber-900 hover:bg-amber-100 font-bold text-xs flex items-center gap-2 transition-all cursor-pointer disabled:opacity-50"
+            >
+              <Printer size={15} />
+              <span>Solo platos</span>
+            </button>
+
+            <button
+              onClick={() => handlePrint("delivery")}
+              disabled={countDelivery === 0}
+              className="py-2.5 px-3 rounded-xl bg-blue-50 border border-blue-300 text-blue-900 hover:bg-blue-100 font-bold text-xs flex items-center gap-2 transition-all cursor-pointer disabled:opacity-50"
+            >
+              <Printer size={15} />
+              <span>Solo delivery</span>
+            </button>
+
+            <button
+              onClick={() => handlePrint("complete")}
+              disabled={filteredOrders.length === 0}
+              className="py-2.5 px-4 rounded-xl bg-[#2c4a3e] hover:bg-[#2c4a3e]/90 text-[#fbf5e6] font-bold text-xs flex items-center gap-2 transition-all shadow-md cursor-pointer disabled:opacity-50"
             >
               <Printer size={16} className="text-[#d4af37]" />
-              <span>Imprimir Ticket de Cierre</span>
+              <span>Arqueo completo</span>
             </button>
           </div>
         </div>

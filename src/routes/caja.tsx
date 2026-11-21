@@ -3,7 +3,7 @@ import { useEffect, useState, useRef } from "react";
 import { supabase, signOut } from "../lib/supabase";
 import { registerPageRestoreAuthCheck } from "../lib/staffSessionRestore";
 import { sendReviewRequestEmail } from "../lib/emailService";
-import { playOrderChime } from "../utils/audioAlert";
+import { playNewOrderAlert, playOrderChime } from "../utils/audioAlert";
 import { isCashierOrderReady, shouldNotifyCashierOrder } from "../lib/cashierNotifications";
 import { AdminOrderDetailModal } from "../components/AdminOrderDetailModal";
 import {
@@ -106,7 +106,7 @@ function CashierDashboardRoute() {
     const item: NotificationItem = { ...notif, id };
 
     if (soundEnabledRef.current) {
-      playOrderChime();
+      playNewOrderAlert();
     }
 
     setNotifications((prev) => {

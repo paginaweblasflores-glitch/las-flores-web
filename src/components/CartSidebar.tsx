@@ -831,7 +831,7 @@ export function CartSidebar() {
   const handleOrderAgain = () => {
     setIsOpen(false);
     resetOrderState();
-    window.dispatchEvent(new Event("open_menu_modal"));
+    window.location.assign("/carta");
   };
 
   if (!isMounted || !portalRef.current || !visible) return null;

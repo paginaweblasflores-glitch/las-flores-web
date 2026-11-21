@@ -1,4 +1,6 @@
 import { describe, it, expect } from "vitest";
+import { readFileSync } from "node:fs";
+import { resolve } from "node:path";
 import { buildOrderItem } from "../lib/orderItems";
 
 export interface CartItem {
@@ -15,6 +17,16 @@ export function calculateCartTotals(items: CartItem[]) {
 }
 
 describe("Pruebas Unitarias de Lógica de Carrito de Compras", () => {
+  it("reproduce el sonido solo al pasar de carrito vacío al primer producto", () => {
+    const contextSource = readFileSync(
+      resolve(process.cwd(), "src/context/CartContext.tsx"),
+      "utf8",
+    );
+
+    expect(contextSource).toContain("playSuccessChime()");
+    expect(contextSource).toContain("if (cartWasEmptyRef.current)");
+  });
+
   it("debe calcular el total de ítems y precio de forma exacta", () => {
     const items: CartItem[] = [
       { id: "1", name: "Leche de Tigre", price: 25.0, quantity: 2 },

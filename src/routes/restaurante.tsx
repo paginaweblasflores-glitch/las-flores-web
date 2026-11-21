@@ -3,10 +3,9 @@ const equipoImg = "/imagenes-reales/EQUIPO/02042026-DSC04926.webp";
 const casaImg = "/imagenes-reales/EQUIPO/Gregoria.webp";
 const heroRestauranteImg = "/imagenes-reales/hero-paginas/hero-restaurante.webp";
 import { SiteFooter } from "@/components/site-footer";
-import { useState, useTransition, useEffect } from "react";
+import { useState } from "react";
 import { Calendar, CreditCard, ChevronRight, Check } from "lucide-react";
 import { SiteHeader } from "@/components/SiteHeader";
-import { MenuModal } from "@/components/MenuModal";
 import { MapaUbicacion } from "@/components/MapaUbicacion";
 import { FestividadVideo } from "@/components/FestividadVideo";
 import { FamiliaLasFloresSection } from "../components/FamiliaLasFloresSection";
@@ -199,21 +198,11 @@ function ClientVideosSection() {
 }
 
 function RestaurantePage() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isPending, startTransition] = useTransition();
-
-  useEffect(() => {
-    const handleOpenMenu = () => setIsMenuOpen(true);
-    window.addEventListener("open_menu_modal", handleOpenMenu);
-    return () => window.removeEventListener("open_menu_modal", handleOpenMenu);
-  }, []);
-
   return (
     <div className="bg-piedra text-nogal font-sans selection:bg-chilca/30">
       {/* ── HEADER UNIFICADO ── */}
       <SiteHeader
         showDelivery={true}
-        onDeliveryClick={() => startTransition(() => setIsMenuOpen(true))}
       />
 
       <header
@@ -305,7 +294,6 @@ function RestaurantePage() {
       </section>
 
       <SiteFooter />
-      {isMenuOpen && <MenuModal open={isMenuOpen} onClose={() => setIsMenuOpen(false)} />}
     </div>
   );
 }

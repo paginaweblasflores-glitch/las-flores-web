@@ -9,3 +9,15 @@ describe("acceso al control de stock en caja", () => {
     expect(cashierRoute).not.toMatch(/\{isAdmin\s*&&\s*\(\s*\n\s*<button[\s\S]*?Control de Stock/);
   });
 });
+
+describe("actualización inmediata del control de stock", () => {
+  it("aplica el estado confirmado del producto sin reemplazar la lista por loading", () => {
+    const stockSource = readFileSync(
+      resolve(process.cwd(), "src/components/CashierStockModal.tsx"),
+      "utf8",
+    );
+
+    expect(stockSource).toContain("const updated = await toggleProductAvailability");
+    expect(stockSource).toContain("p.id === productId ? { ...p, is_available: updated.is_available");
+  });
+});

@@ -1,14 +1,15 @@
 import { nombreEnCarta } from "../lib/menuLabels";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { SiteHeader } from "@/components/SiteHeader";
 import { categories as staticCategories } from "@/components/MenuModal";
-import { MenuModal } from "@/components/MenuModal";
 import { SiteFooter } from "@/components/site-footer";
 import { resolveDeliveryPrice, resolvePastaPriceOptions, useLiveMenuCategories, Dish } from "@/lib/liveProducts";
 import { CartSidebar } from "@/components/CartSidebar";
-import { useCart } from "@/context/CartContext";
 import { MobileCategoryFilter } from "@/components/MobileCategoryFilter";
+import { Plus } from "lucide-react";
+import { BreakfastCustomizationModal } from "@/components/BreakfastCustomizationModal";
+import { useCart } from "@/context/CartContext";
 
 export const Route = createFileRoute("/carta")({
   head: () => ({
@@ -80,14 +81,8 @@ export const Route = createFileRoute("/carta")({
 function CartaPage() {
   const { categories: liveCategories } = useLiveMenuCategories();
   const [activeId, setActiveId] = useState("desayuno");
-  const { totalItems, setIsOpen: setIsCartOpen } = useCart();
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-  useEffect(() => {
-    const handleOpenMenu = () => setIsMenuOpen(true);
-    window.addEventListener("open_menu_modal", handleOpenMenu);
-    return () => window.removeEventListener("open_menu_modal", handleOpenMenu);
-  }, []);
+  const { addItem } = useCart();
+  const [selectedBreakfastDish, setSelectedBreakfastDish] = useState<Dish | null>(null);
 
   const currentCategories = liveCategories.length > 0 ? liveCategories : staticCategories;
 
@@ -109,7 +104,6 @@ function CartaPage() {
         showDelivery={true}
         showDeliveryOnMobile={true}
         showReservar={false}
-        onDeliveryClick={() => setIsMenuOpen(true)}
       />
 
       {/* Page Title */}
@@ -184,6 +178,25 @@ function CartaPage() {
             {active.dishes.map((dish, i) => {
               const pastaPriceOptions = resolvePastaPriceOptions(dish.name);
               const displayPrice = resolveDeliveryPrice(dish.name, dish.price);
+              const isCustomizable =
+                dish.is_customizable === true ||
+                (dish.custom_options?.length || 0) > 0 ||
+                dish.name.toLowerCase().includes("desayuno ayacuchano") ||
+                dish.name.toLowerCase().includes("arma tu ronda");
+
+              const handleAdd = () => {
+                if (isCustomizable) {
+                  setSelectedBreakfastDish(dish);
+                  return;
+                }
+                addItem({
+                  id: `${activeId}-${dish.name}`,
+                  productId: dish.id,
+                  name: dish.name,
+                  price: parseFloat(displayPrice.replace("S/ ", "")),
+                  image: dish.image,
+                });
+              };
 
               return (
                 <div
@@ -198,6 +211,16 @@ function CartaPage() {
                         alt={nombreEnCarta(dish.name)}
                         className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                       />
+                      <div className="absolute inset-x-3 bottom-3 z-20 opacity-100 translate-y-0 md:opacity-0 md:translate-y-3 md:group-hover:opacity-100 md:group-hover:translate-y-0 transition-all duration-300">
+                        <button
+                          type="button"
+                          onClick={handleAdd}
+                          className="w-full py-2.5 rounded-xl flex items-center justify-center gap-2 bg-cochinilla text-piedra font-bold text-sm shadow-lg hover:bg-[#7a1c29] active:scale-[0.99] transition-all"
+                        >
+                          <Plus size={15} strokeWidth={2.5} />
+                          {isCustomizable ? "Personalizar y agregar" : "Agregar"}
+                        </button>
+                      </div>
                     </div>
                   ) : (
                     <div className="h-48 bg-nogal/5 flex items-center justify-center relative border-b border-pacay/30">
@@ -245,8 +268,11 @@ function CartaPage() {
       <SiteFooter />
 
       <CartSidebar />
-      
-      {isMenuOpen && <MenuModal open={isMenuOpen} onClose={() => setIsMenuOpen(false)} />}
+      <BreakfastCustomizationModal
+        dish={selectedBreakfastDish}
+        open={!!selectedBreakfastDish}
+        onClose={() => setSelectedBreakfastDish(null)}
+      />
     </div>
   );
 }

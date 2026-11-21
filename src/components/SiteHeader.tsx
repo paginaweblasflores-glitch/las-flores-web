@@ -11,7 +11,6 @@ const LOGO_COLOR = "/imagenes-reales/logo/logo-las-flores-black.webp";
 
 interface SiteHeaderProps {
   isAlwaysSolid?: boolean;
-  onDeliveryClick?: () => void;
   showReservar?: boolean;
   showDelivery?: boolean;
   showDeliveryOnMobile?: boolean;
@@ -19,7 +18,6 @@ interface SiteHeaderProps {
 
 export function SiteHeader({
   isAlwaysSolid = false,
-  onDeliveryClick,
   showReservar = true,
   showDelivery = false,
   showDeliveryOnMobile = false,
@@ -76,17 +74,6 @@ export function SiteHeader({
 
       {/* ── Derecha: Botones de Acción (Delivery, Reservar, Carrito) ── */}
       <div className="flex items-center gap-3 sm:gap-4 md:gap-6 text-[0.6875rem] md:text-sm uppercase tracking-[0.15em] font-semibold pointer-events-auto">
-        {(showDelivery || onDeliveryClick) && (
-          <button
-            onClick={onDeliveryClick}
-            className={`${getDeliveryButtonVisibilityClass(showDeliveryOnMobile)} transition-colors leading-none hover:text-chilca cursor-pointer ${
-              solid ? "text-nogal" : "text-piedra"
-            }`}
-          >
-            Delivery
-          </button>
-        )}
-
         {showReservar && (
           <Link
             to="/reservas"

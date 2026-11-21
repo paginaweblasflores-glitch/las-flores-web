@@ -69,4 +69,21 @@ describe("política de disponibilidad de productos", () => {
 
     expect(removeUnavailableCartItems(items, new Set(["product-1"]))).toEqual([items[1]]);
   });
+
+  it("ignora respuestas viejas del menú y sincroniza actualizaciones o eliminaciones por Realtime", () => {
+    const liveProductsSource = readFileSync(
+      resolve(process.cwd(), "src/lib/liveProducts.ts"),
+      "utf8",
+    );
+    const stockSource = readFileSync(
+      resolve(process.cwd(), "src/components/CashierStockModal.tsx"),
+      "utf8",
+    );
+
+    expect(liveProductsSource).toContain("const refreshRequestId = useRef(0)");
+    expect(liveProductsSource).toContain("if (requestId === refreshRequestId.current)");
+    expect(liveProductsSource).toContain("setInterval(refreshMenu, 5000)");
+    expect(stockSource).toContain("const changed = payload.new as any");
+    expect(stockSource).toContain("payload.old as any");
+  });
 });

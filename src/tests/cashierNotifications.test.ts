@@ -6,6 +6,20 @@ import { shouldNotifyCashierOrder } from "../lib/cashierNotifications";
 const cashierSource = readFileSync(resolve(process.cwd(), "src/routes/caja.tsx"), "utf8");
 
 describe("cashier order notifications", () => {
+  it("includes the spoken Las Flores new-order alert", () => {
+    const audioSource = readFileSync(
+      resolve(process.cwd(), "src/utils/audioAlert.ts"),
+      "utf8",
+    );
+    const cashierSource = readFileSync(
+      resolve(process.cwd(), "src/routes/caja.tsx"),
+      "utf8",
+    );
+
+    expect(audioSource).toContain("Tienes un nuevo pedido, Las Flores");
+    expect(cashierSource).toContain("playNewOrderAlert()");
+  });
+
   it("surfaces order-loading failures instead of leaving the board silently stale", () => {
     expect(cashierSource).toMatch(/setOrdersLoadError/);
     expect(cashierSource).toMatch(/role="alert"/);

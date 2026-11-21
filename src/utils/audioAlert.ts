@@ -55,3 +55,22 @@ export function playOrderChime() {
     console.warn("Could not play order chime:", err);
   }
 }
+
+export function playNewOrderAlert() {
+  try {
+    if (!("speechSynthesis" in window) || !("SpeechSynthesisUtterance" in window)) return;
+
+    window.speechSynthesis.cancel();
+    const utterance = new SpeechSynthesisUtterance(
+      "Tienes un nuevo pedido, Las Flores",
+    );
+    utterance.lang = "es-PE";
+    utterance.rate = 0.95;
+    utterance.pitch = 1;
+    utterance.volume = 1;
+
+    window.speechSynthesis.speak(utterance);
+  } catch (err) {
+    console.warn("Could not play spoken order alert:", err);
+  }
+}

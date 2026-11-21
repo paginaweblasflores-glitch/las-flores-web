@@ -36,7 +36,6 @@ import { useState, useTransition, useEffect } from 'react';
 import { FestividadVideo } from "@/components/FestividadVideo";
 import { MobileCategoryFilter } from "@/components/MobileCategoryFilter";
 
-import { MenuModal } from "@/components/MenuModal";
 
 export const Route = createFileRoute("/eventos")({
   head: () => ({
@@ -180,14 +179,6 @@ function EventoSeccion({ data, onCotizar }: { data: EventSectionData; onCotizar:
 }
 
 function EventosPage() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-  useEffect(() => {
-    const handleOpenMenu = () => setIsMenuOpen(true);
-    window.addEventListener("open_menu_modal", handleOpenMenu);
-    return () => window.removeEventListener("open_menu_modal", handleOpenMenu);
-  }, []);
-
   const [isContactOpen, setIsContactOpen] = useState(false);
   const [formStatus, setFormStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
   const [isPending, startTransition] = useTransition();
@@ -317,7 +308,6 @@ function EventosPage() {
       <EventoSeccion key={seccionActual.id} data={seccionActual} onCotizar={() => setIsContactOpen(true)} />
 
       <SiteFooter />
-      {isMenuOpen && <MenuModal open={isMenuOpen} onClose={() => setIsMenuOpen(false)} />}
 
       {/* Panel Lateral Emergente de Cotización */}
       {isContactOpen && (

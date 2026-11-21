@@ -1,6 +1,7 @@
-import { createContext, useContext, useState, useEffect, ReactNode } from "react";
+import { createContext, useContext, useState, useEffect, useRef, ReactNode } from "react";
 import { useRouter } from "@tanstack/react-router";
 import { supabase } from "../lib/supabase";
+import { playSuccessChime } from "../lib/soundUtils";
 
 export interface CartCustomizations {
   [key: string]: string | undefined;
@@ -44,6 +45,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const [items, setItems] = useState<CartItem[]>([]);
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
+  const cartWasEmptyRef = useRef(true);
 
   // Cerrar el carrito automáticamente al cambiar de ruta
   useEffect(() => {
@@ -102,6 +104,11 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
   const addItem = (newItem: Omit<CartItem, "quantity">) => {
     setItems((prev) => {
+      if (cartWasEmptyRef.current) {
+        cartWasEmptyRef.current = false;
+        playSuccessChime();
+      }
+
       // Generar clave única que incluye las personalizaciones
       const customKey = Object.values(
         newItem.customizationSelections || newItem.customizations || {},
@@ -125,6 +132,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const removeItem = (id: string) => {
     setItems((prev) => {
       const updated = prev.filter((i) => i.id !== id);
+      if (updated.length === 0) cartWasEmptyRef.current = true;
       try {
         localStorage.setItem("las_flores_cart", JSON.stringify(updated));
       } catch {}
@@ -147,6 +155,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
   };
 
   const clearCart = () => {
+    cartWasEmptyRef.current = true;
     saveItems([]);
   };
 

@@ -25,8 +25,8 @@ export function CashierStockModal({ isOpen, onClose }: CashierStockModalProps) {
   const [loading, setLoading] = useState(true);
   const [togglingId, setTogglingId] = useState<string | null>(null);
 
-  const fetchStockData = async () => {
-    setLoading(true);
+  const fetchStockData = async (showLoading = true) => {
+    if (showLoading) setLoading(true);
     try {
       const [prodRes, catRes] = await Promise.all([
         supabase.from("products").select("*, categories(id, name, slug)").order("sort_order", { ascending: true }),
@@ -45,6 +45,7 @@ export function CashierStockModal({ isOpen, onClose }: CashierStockModalProps) {
   useEffect(() => {
     if (isOpen) {
       fetchStockData();
+      const fallbackInterval = window.setInterval(() => fetchStockData(false), 5000);
 
       // Suscripción Realtime a cambios en la tabla 'products'
       const channel = supabase
@@ -52,13 +53,27 @@ export function CashierStockModal({ isOpen, onClose }: CashierStockModalProps) {
         .on(
           "postgres_changes",
           { event: "*", schema: "public", table: "products" },
-          () => {
-            fetchStockData();
+          (payload) => {
+            const changed = payload.new as any;
+            const removed = payload.old as any;
+            const productId = changed?.id || removed?.id;
+            if (productId) {
+              setProducts((prev) =>
+                prev.map((p) =>
+                  p.id === productId
+                    ? payload.eventType === "DELETE"
+                      ? { ...p, is_available: false }
+                      : { ...p, is_available: changed?.is_available }
+                    : p
+                )
+              );
+            }
           }
         )
         .subscribe();
 
       return () => {
+        window.clearInterval(fallbackInterval);
         supabase.removeChannel(channel);
       };
     }
@@ -68,14 +83,21 @@ export function CashierStockModal({ isOpen, onClose }: CashierStockModalProps) {
 
   const handleToggle = async (productId: string, currentStatus: boolean) => {
     setTogglingId(productId);
+    const newStatus = !currentStatus;
+    setProducts((prev) =>
+      prev.map((p) => (p.id === productId ? { ...p, is_available: newStatus } : p))
+    );
     try {
-      const newStatus = !currentStatus;
-      await toggleProductAvailability(productId, newStatus);
-
+      const updated = await toggleProductAvailability(productId, newStatus);
       setProducts((prev) =>
-        prev.map((p) => (p.id === productId ? { ...p, is_available: newStatus } : p))
+        prev.map((p) =>
+          p.id === productId ? { ...p, is_available: updated.is_available } : p
+        )
       );
     } catch (err) {
+      setProducts((prev) =>
+        prev.map((p) => (p.id === productId ? { ...p, is_available: currentStatus } : p))
+      );
       console.error("Error al cambiar estado de disponibilidad:", err);
       alert("No se pudo cambiar la disponibilidad del plato.");
     } finally {

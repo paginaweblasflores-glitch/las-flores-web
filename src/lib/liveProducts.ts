@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { supabase } from "./supabase";
 import { nombreEnCarta } from "./menuLabels";
 import { categories as staticCategories, Category, Dish } from "../components/MenuModal";
@@ -347,15 +347,20 @@ export async function getLiveCategories(): Promise<Category[]> {
 export function useLiveMenuCategories() {
   const [menuCategories, setMenuCategories] = useState<Category[]>(staticCategories);
   const [loading, setLoading] = useState(true);
+  const refreshRequestId = useRef(0);
 
   const refreshMenu = async () => {
+    const requestId = ++refreshRequestId.current;
     const liveData = await getLiveCategories();
-    setMenuCategories(liveData);
-    setLoading(false);
+    if (requestId === refreshRequestId.current) {
+      setMenuCategories(liveData);
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
     refreshMenu();
+    const fallbackInterval = window.setInterval(refreshMenu, 5000);
 
     // Suscripción Realtime a cambios en la tabla 'products' y 'categories'
     const channelName = `live-menu-updates-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
@@ -379,6 +384,7 @@ export function useLiveMenuCategories() {
       .subscribe();
 
     return () => {
+      window.clearInterval(fallbackInterval);
       supabase.removeChannel(channel);
     };
   }, []);

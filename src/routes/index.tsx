@@ -22,7 +22,6 @@ const platoMaizImg = "/imagenes-reales/seccion-gastronomia/chorizo-ayacuchano.we
 import { SiteFooter } from "@/components/site-footer";
 import { LocationSelector } from "../components/LocationSelector";
 import RetabloWrapper, { AyacuchoFlowerInline } from "../components/RetabloWrapper";
-import { MenuModal } from "@/components/MenuModal";
 import { FamiliaLasFloresSection } from "../components/FamiliaLasFloresSection";
 import { getFestividadesDestacadas } from "../lib/festividadesLayout";
 import { FaunaAndina } from "@/components/FaunaAndina";
@@ -395,14 +394,6 @@ function LugaresSlider() {
 // ─── PÁGINA PRINCIPAL ─────────────────────────────────────────────────────────
 
 function Index() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-  useEffect(() => {
-    const handleOpenMenu = () => setIsMenuOpen(true);
-    window.addEventListener("open_menu_modal", handleOpenMenu);
-    return () => window.removeEventListener("open_menu_modal", handleOpenMenu);
-  }, []);
-
   return (
     <div className="bg-piedra text-nogal font-sans selection:bg-chilca/30">
       {/* ── HEADER UNIFICADO ── */}
@@ -922,18 +913,15 @@ function Index() {
             >
               <span>Reserva tu mesa</span>
             </Link>
-            <button
-              type="button"
-              onClick={() => setIsMenuOpen(true)}
+            <Link
+              to="/carta"
               className="inline-flex items-center justify-center gap-3 px-8 py-4 border border-piedra/30 text-piedra text-[0.6875rem] uppercase tracking-[0.25em] font-bold hover:bg-piedra/10 transition-colors rounded-sm cursor-pointer"
             >
               Pide por delivery
-            </button>
+            </Link>
           </div>
         </div>
       </section>
-
-      <MenuModal open={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
 
       <SiteFooter />
     </div>
