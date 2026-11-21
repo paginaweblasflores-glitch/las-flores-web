@@ -340,10 +340,20 @@ CREATE POLICY "products_select_public" ON public.products FOR SELECT USING (true
 CREATE POLICY "products_admin_all" ON public.products FOR ALL USING (public.is_admin());
 
 CREATE POLICY "zones_select_public" ON public.restaurant_zones FOR SELECT USING (true);
-CREATE POLICY "zones_admin_all" ON public.restaurant_zones FOR ALL USING (public.is_admin());
+CREATE POLICY "zones_admin_all" ON public.restaurant_zones FOR ALL USING (
+  public.is_admin() OR EXISTS (
+    SELECT 1 FROM public.profiles
+    WHERE profiles.id = auth.uid() AND profiles.role = 'ventas'
+  )
+);
 
 CREATE POLICY "blackouts_select_public" ON public.zone_blackouts FOR SELECT USING (true);
-CREATE POLICY "blackouts_admin_all" ON public.zone_blackouts FOR ALL USING (public.is_admin());
+CREATE POLICY "blackouts_admin_all" ON public.zone_blackouts FOR ALL USING (
+  public.is_admin() OR EXISTS (
+    SELECT 1 FROM public.profiles
+    WHERE profiles.id = auth.uid() AND profiles.role = 'ventas'
+  )
+);
 
 -- Reservations:
 CREATE POLICY "reservations_select_own_or_staff" ON public.reservations FOR SELECT

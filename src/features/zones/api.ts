@@ -95,6 +95,27 @@ export const OFFICIAL_DEFAULT_ZONES: RestaurantZone[] = [
   },
 ];
 
+export function normalizeRestaurantZone(zone: RestaurantZone): RestaurantZone {
+  const fallback = OFFICIAL_DEFAULT_ZONES.find((official) => official.id === zone.id);
+  if (!fallback) return zone;
+
+  const imageUrl = zone.image_url?.trim();
+  const legacyImageUrl = [
+    "/imagenes-reales/Salones/Salonprincipal.webp",
+    "/imagenes-reales/Salones/entrada.webp",
+    "/imagenes-reales/Salones/Ventana.webp",
+    "/imagenes-reales/Salones/Estrado.webp",
+    "/imagenes-reales/Salones/pasillo.webp",
+    "/imagenes-reales/Salones/Terraza.webp",
+    "/imagenes-reales/Salones/jardin.webp",
+  ].includes(imageUrl);
+
+  return {
+    ...zone,
+    image_url: !imageUrl || legacyImageUrl ? fallback.image_url : imageUrl,
+  };
+}
+
 export async function listRestaurantZones(): Promise<RestaurantZone[]> {
   try {
     const { data, error } = await supabase
@@ -113,10 +134,10 @@ export async function listRestaurantZones(): Promise<RestaurantZone[]> {
       const combined = [...data, ...missingOfficialZones].sort(
         (a, b) => (a.sort_order || 0) - (b.sort_order || 0)
       );
-      return combined;
+      return combined.map(normalizeRestaurantZone);
     }
 
-    return data;
+    return data.map(normalizeRestaurantZone);
   } catch (err) {
     console.warn("Using default official zones fallback:", err);
     return OFFICIAL_DEFAULT_ZONES;

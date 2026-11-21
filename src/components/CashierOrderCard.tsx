@@ -92,6 +92,22 @@ export function CashierOrderCard({
     }
   };
 
+  const handleCancel = async () => {
+    const orderLabel = order.order_number
+      ? `#${order.order_number}`
+      : `#${order.id?.slice(0, 8) || "pedido"}`;
+    if (!window.confirm(`¿Cancelar el pedido ${orderLabel}? Esta acción cambiará el pedido a cancelado.`)) {
+      return;
+    }
+
+    setUpdating(true);
+    try {
+      await onStatusChange(order.id, "cancelled");
+    } finally {
+      setUpdating(false);
+    }
+  };
+
   const isCompleted = normalizedStatus === "entregado" || normalizedStatus === "cancelado";
 
   // Configuration by Status
@@ -335,6 +351,16 @@ export function CashierOrderCard({
                 <span>Motorizado</span>
               </button>
             )}
+
+          {normalizedStatus === "pendiente" && (
+            <button
+              onClick={handleCancel}
+              disabled={updating}
+              className="py-2.5 px-3 rounded-xl border border-red-300 bg-red-50 text-red-700 hover:bg-red-100 font-sans text-xs font-black shadow-2xs transition-all disabled:opacity-50"
+            >
+              {updating ? "Cancelando..." : "Cancelar pedido"}
+            </button>
+          )}
 
           {currentStatus.nextAction && (
             <button

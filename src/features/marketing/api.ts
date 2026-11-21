@@ -8,6 +8,8 @@ export interface MarketingFlyer {
   id: string;
   storage_path: string;
   created_at: string;
+  width_cm: number | null;
+  height_cm: number | null;
 }
 
 function isMarketingFlyer(value: unknown): value is MarketingFlyer {
@@ -17,13 +19,32 @@ function isMarketingFlyer(value: unknown): value is MarketingFlyer {
   return (
     typeof record.id === "string" &&
     typeof record.storage_path === "string" &&
-    typeof record.created_at === "string"
+    typeof record.created_at === "string" &&
+    (typeof record.width_cm === "number" || record.width_cm === null) &&
+    (typeof record.height_cm === "number" || record.height_cm === null)
   );
 }
 
 export function getMarketingFlyerValidationError(file: Pick<File, "type">): string | null {
   if (!ALLOWED_FLYER_TYPES.has(file.type)) {
     return "El flyer debe ser una imagen JPG, PNG o WebP.";
+  }
+  return null;
+}
+
+export function getMarketingFlyerSizeValidationError(
+  widthCm: number,
+  heightCm: number,
+): string | null {
+  if (
+    !Number.isFinite(widthCm) ||
+    !Number.isFinite(heightCm) ||
+    widthCm < 1 ||
+    widthCm > 200 ||
+    heightCm < 1 ||
+    heightCm > 200
+  ) {
+    return "El ancho y alto deben ser números entre 1 y 200 cm.";
   }
   return null;
 }
@@ -35,7 +56,7 @@ export function getMarketingFlyerPublicUrl(storagePath: string): string {
 export async function getLatestMarketingFlyer(): Promise<MarketingFlyer | null> {
   const { data, error } = await supabase
     .from("marketing_flyers")
-    .select("id, storage_path, created_at")
+    .select("id, storage_path, created_at, width_cm, height_cm")
     .order("created_at", { ascending: false })
     .limit(1)
     .maybeSingle();
@@ -44,6 +65,28 @@ export async function getLatestMarketingFlyer(): Promise<MarketingFlyer | null> 
   if (data === null) return null;
   if (!isMarketingFlyer(data)) {
     throw new Error("La respuesta del flyer no tiene el formato esperado.");
+  }
+  return data;
+}
+
+export async function updateMarketingFlyerSize(
+  flyerId: string,
+  widthCm: number,
+  heightCm: number,
+): Promise<MarketingFlyer> {
+  const sizeValidationError = getMarketingFlyerSizeValidationError(widthCm, heightCm);
+  if (sizeValidationError) throw new Error(sizeValidationError);
+
+  const { data, error } = await supabase
+    .from("marketing_flyers")
+    .update({ width_cm: widthCm, height_cm: heightCm })
+    .eq("id", flyerId)
+    .select("id, storage_path, created_at, width_cm, height_cm")
+    .single();
+
+  if (error) throw error;
+  if (!isMarketingFlyer(data)) {
+    throw new Error("No se pudieron aplicar las medidas del flyer.");
   }
   return data;
 }
@@ -82,9 +125,15 @@ export async function deleteMarketingFlyers(): Promise<{ cleanupError: unknown |
   }
 }
 
-export async function uploadMarketingFlyer(file: File): Promise<MarketingFlyer> {
+export async function uploadMarketingFlyer(
+  file: File,
+  widthCm: number,
+  heightCm: number,
+): Promise<MarketingFlyer> {
   const validationError = getMarketingFlyerValidationError(file);
   if (validationError) throw new Error(validationError);
+  const sizeValidationError = getMarketingFlyerSizeValidationError(widthCm, heightCm);
+  if (sizeValidationError) throw new Error(sizeValidationError);
 
   const compressed = await compressImageToWebP(file, 1440, 1800, 0.72);
   const storagePath = `${crypto.randomUUID()}.webp`;
@@ -100,8 +149,12 @@ export async function uploadMarketingFlyer(file: File): Promise<MarketingFlyer> 
   try {
     const { data, error } = await supabase
       .from("marketing_flyers")
-      .insert({ storage_path: uploadedFile.path })
-      .select("id, storage_path, created_at")
+      .insert({
+        storage_path: uploadedFile.path,
+        width_cm: widthCm,
+        height_cm: heightCm,
+      })
+      .select("id, storage_path, created_at, width_cm, height_cm")
       .single();
 
     if (error) throw error;

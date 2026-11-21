@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import type { RestaurantZone, ZoneBlackout } from "../features/zones/types";
-import { listRestaurantZones, listZoneBlackouts, toggleBlackoutStatus, deleteZoneBlackout } from "../features/zones/api";
+import { OFFICIAL_DEFAULT_ZONES, listRestaurantZones, listZoneBlackouts, toggleBlackoutStatus, deleteZoneBlackout } from "../features/zones/api";
 import { AdminZoneModal } from "./AdminZoneModal";
 import { AdminBlackoutModal } from "./AdminBlackoutModal";
 import { TablePagination } from "./TablePagination";
@@ -180,6 +180,12 @@ export function AdminZonesSection() {
                     <img
                       src={zone.image_url}
                       alt={zone.name}
+                      onError={(event) => {
+                        const fallback = OFFICIAL_DEFAULT_ZONES.find((official) => official.id === zone.id);
+                        if (fallback && event.currentTarget.src !== new URL(fallback.image_url, window.location.origin).href) {
+                          event.currentTarget.src = fallback.image_url;
+                        }
+                      }}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     />
                   ) : (

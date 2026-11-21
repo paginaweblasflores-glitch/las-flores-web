@@ -123,14 +123,14 @@ function ChefVideosSection() {
   const [mostrarIndicacion, setMostrarIndicacion] = useState(true);
 
   return (
-    <section className="bg-piedra py-16 md:py-20 px-6">
+    <section className="bg-eucalipto text-piedra py-16 md:py-20 px-6">
       <div className="container-flores mx-auto">
         <h2 className="font-serif text-4xl md:text-5xl leading-[1.05] text-balance">
           Recomendaciones del chef
         </h2>
 
         {mostrarIndicacion && (
-          <p className="mt-4 inline-flex items-center gap-1 text-sm text-nogal/65 md:hidden">
+          <p className="mt-4 inline-flex items-center gap-1 text-sm text-piedra/75 md:hidden">
             Desliza para ver más <ChevronRight size={16} aria-hidden="true" />
           </p>
         )}
@@ -151,7 +151,7 @@ function ChefVideosSection() {
               </div>
               <div className="pt-4">
                 <h3 className="font-serif text-lg md:text-xl leading-tight">{plate.name}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-nogal/70">{plate.description}</p>
+                <p className="mt-2 text-sm leading-relaxed text-piedra/75">{plate.description}</p>
               </div>
             </article>
           ))}
@@ -165,14 +165,14 @@ function ClientVideosSection() {
   const [mostrarIndicacion, setMostrarIndicacion] = useState(true);
 
   return (
-    <section className="bg-eucalipto text-piedra py-16 md:py-20 px-6">
+    <section className="bg-piedra text-nogal py-16 md:py-20 px-6">
       <div className="container-flores mx-auto">
         <h2 className="font-serif text-4xl md:text-5xl leading-[1.05] text-balance">
           Recomendado por quienes nos visitan
         </h2>
 
         {mostrarIndicacion && (
-          <p className="mt-4 inline-flex items-center gap-1 text-sm text-piedra/75 md:hidden">
+          <p className="mt-4 inline-flex items-center gap-1 text-sm text-nogal/65 md:hidden">
             Desliza para ver más <ChevronRight size={16} aria-hidden="true" />
           </p>
         )}
@@ -241,12 +241,14 @@ function RestaurantePage() {
 
       <GenerationsSection />
 
+      <ChefVideosSection />
+
+      <ClientVideosSection />
+
       {/* Familia Las Flores */}
       <section id="familia" className="bg-eucalipto text-piedra py-16 md:py-28 px-6">
-        {/* Foto grande a la izquierda y el texto a la derecha, centrado en vertical */}
         <div className="container-flores mx-auto grid grid-cols-1 items-center gap-8 md:grid-cols-12 md:gap-x-10">
           <div className="md:col-span-8">
-            {/* Formato 2:1 para que entren completas las cinco personas del equipo */}
             <div className="aspect-[2/1] overflow-hidden">
               <img
                 src="/inicio/Equipolasflores.webp"
@@ -278,10 +280,6 @@ function RestaurantePage() {
           </div>
         </div>
       </section>
-
-      <ChefVideosSection />
-
-      <ClientVideosSection />
 
       {/* CTA Reservas y Delivery */}
       <section id="reservas" className="bg-piedra text-nogal py-16 md:py-28 px-6">

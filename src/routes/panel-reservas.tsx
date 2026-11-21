@@ -5,6 +5,7 @@ import { registerPageRestoreAuthCheck } from "../lib/staffSessionRestore";
 import { playOrderChime } from "../utils/audioAlert";
 import { CashierReservationCard } from "../components/CashierReservationCard";
 import { ReservasClientsSection } from "../components/ReservasClientsSection";
+import { AdminZonesSection } from "../components/AdminZonesSection";
 import { StatCard } from "../components/StatCard";
 import { SimpleTrendChart } from "../components/SimpleTrendChart";
 import { getMonthDateRange } from "../lib/monthUtils";
@@ -25,9 +26,10 @@ import {
   ListChecks,
   LineChart,
   Users,
+  Store,
 } from "lucide-react";
 
-type ReservasModule = "seguimiento" | "analitica" | "clientes";
+type ReservasModule = "seguimiento" | "analitica" | "clientes" | "salones";
 
 const getLocalYYYYMMDD = (d?: Date | string) => {
   if (!d) return "";
@@ -454,6 +456,17 @@ function PanelReservasRoute() {
                   <Users size={15} className={activeTab === "clientes" ? "text-[#D4AF37]" : "text-emerald-300"} />
                   <span>Clientes</span>
                 </button>
+                <button
+                  onClick={() => setActiveTab("salones")}
+                  className={`px-3 py-2 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 whitespace-nowrap border-b-2 ${
+                    activeTab === "salones"
+                      ? "border-[#D4AF37] text-white bg-white/5"
+                      : "border-transparent text-emerald-100/80 hover:text-white hover:bg-white/5"
+                  }`}
+                >
+                  <Store size={15} className={activeTab === "salones" ? "text-[#D4AF37]" : "text-emerald-300"} />
+                  <span>Salones</span>
+                </button>
               </div>
             </div>
 
@@ -675,6 +688,10 @@ function PanelReservasRoute() {
 
       {activeTab === "clientes" && (
         <ReservasClientsSection reservations={reservations} onStatusChange={handleUpdateReservationStatus} />
+      )}
+
+      {activeTab === "salones" && (
+        <AdminZonesSection />
       )}
 
       {activeTab === "analitica" && (

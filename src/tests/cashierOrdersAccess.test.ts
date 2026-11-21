@@ -24,3 +24,14 @@ describe("cashier order access", () => {
     );
   });
 });
+
+describe("cashier pending order cancellation", () => {
+  it("shows cancellation only for pending cards and updates cancelled status after confirmation", () => {
+    const cardPath = resolve(process.cwd(), "src/components/CashierOrderCard.tsx");
+    const card = readFileSync(cardPath, "utf8");
+
+    expect(card).toContain('normalizedStatus === "pendiente"');
+    expect(card).toContain("window.confirm");
+    expect(card).toContain('onStatusChange(order.id, "cancelled")');
+  });
+});

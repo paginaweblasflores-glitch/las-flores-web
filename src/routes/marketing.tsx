@@ -5,8 +5,10 @@ import {
   deleteMarketingFlyers,
   getLatestMarketingFlyer,
   getMarketingFlyerPublicUrl,
+  getMarketingFlyerSizeValidationError,
   getMarketingFlyerValidationError,
   uploadMarketingFlyer,
+  updateMarketingFlyerSize,
   type MarketingFlyer,
 } from "../features/marketing/api";
 import { supabase } from "../lib/supabase";
@@ -30,6 +32,11 @@ function errorMessage(error: unknown, fallback: string): string {
   return fallback;
 }
 
+function getValidPreviewSize(value: string, fallback: number): number {
+  const parsed = Number(value);
+  return Number.isFinite(parsed) && parsed >= 1 && parsed <= 200 ? parsed : fallback;
+}
+
 function MarketingPage() {
   const navigate = useNavigate();
   const [authorized, setAuthorized] = useState(false);
@@ -39,6 +46,15 @@ function MarketingPage() {
   const [flyer, setFlyer] = useState<MarketingFlyer | null>(null);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const [widthCm, setWidthCm] = useState("15");
+  const [heightCm, setHeightCm] = useState("15");
+  const [applyingSize, setApplyingSize] = useState(false);
+
+  useEffect(() => {
+    if (!flyer) return;
+    setWidthCm(String(flyer.width_cm ?? 15));
+    setHeightCm(String(flyer.height_cm ?? 15));
+  }, [flyer]);
 
   useEffect(() => {
     let active = true;
@@ -104,10 +120,18 @@ function MarketingPage() {
       input.value = "";
       return;
     }
+    const parsedWidth = Number(widthCm);
+    const parsedHeight = Number(heightCm);
+    const sizeValidationError = getMarketingFlyerSizeValidationError(parsedWidth, parsedHeight);
+    if (sizeValidationError) {
+      setError(sizeValidationError);
+      input.value = "";
+      return;
+    }
 
     setUploading(true);
     try {
-      const newFlyer = await uploadMarketingFlyer(file);
+      const newFlyer = await uploadMarketingFlyer(file, parsedWidth, parsedHeight);
       setFlyer(newFlyer);
       setSuccess("El flyer quedó publicado en la portada.");
     } catch (uploadError) {
@@ -115,6 +139,35 @@ function MarketingPage() {
     } finally {
       setUploading(false);
       input.value = "";
+    }
+  };
+
+  const handleApplySize = async () => {
+    if (!flyer) return;
+
+    setError("");
+    setSuccess("");
+    const parsedWidth = Number(widthCm);
+    const parsedHeight = Number(heightCm);
+    const sizeValidationError = getMarketingFlyerSizeValidationError(parsedWidth, parsedHeight);
+    if (sizeValidationError) {
+      setError(sizeValidationError);
+      return;
+    }
+
+    setApplyingSize(true);
+    try {
+      const updatedFlyer = await updateMarketingFlyerSize(
+        flyer.id,
+        parsedWidth,
+        parsedHeight,
+      );
+      setFlyer(updatedFlyer);
+      setSuccess("Las medidas del flyer fueron aplicadas.");
+    } catch (sizeError) {
+      setError(errorMessage(sizeError, "No se pudieron aplicar las medidas."));
+    } finally {
+      setApplyingSize(false);
     }
   };
 
@@ -214,6 +267,49 @@ function MarketingPage() {
               </div>
             </div>
 
+            <div className="mb-5 grid grid-cols-2 gap-4">
+              <label className="text-sm font-semibold text-[#1b2a24]">
+                Ancho (cm)
+                <input
+                  type="number"
+                  min="1"
+                  max="200"
+                  step="0.1"
+                  value={widthCm}
+                  onChange={(event) => setWidthCm(event.target.value)}
+                  disabled={uploading || deleting}
+                  className="mt-2 w-full rounded-lg border border-[#2C4A3E]/25 px-3 py-2.5 font-normal outline-none focus:border-[#2C4A3E] focus:ring-2 focus:ring-[#2C4A3E]/10"
+                />
+              </label>
+              <label className="text-sm font-semibold text-[#1b2a24]">
+                Alto (cm)
+                <input
+                  type="number"
+                  min="1"
+                  max="200"
+                  step="0.1"
+                  value={heightCm}
+                  onChange={(event) => setHeightCm(event.target.value)}
+                  disabled={uploading || deleting}
+                  className="mt-2 w-full rounded-lg border border-[#2C4A3E]/25 px-3 py-2.5 font-normal outline-none focus:border-[#2C4A3E] focus:ring-2 focus:ring-[#2C4A3E]/10"
+                />
+              </label>
+            </div>
+
+            {flyer && (
+              <button
+                type="button"
+                onClick={() => void handleApplySize()}
+                disabled={uploading || deleting || applyingSize}
+                className="mb-5 inline-flex items-center gap-2 rounded-lg bg-[#2C4A3E] px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[#1b2a24] disabled:cursor-not-allowed disabled:opacity-60"
+              >
+                {applyingSize ? (
+                  <Loader2 size={16} className="animate-spin" />
+                ) : null}
+                {applyingSize ? "Aplicando cambios..." : "Aplicar cambios"}
+              </button>
+            )}
+
             <label className="flex min-h-44 cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed border-[#2C4A3E]/30 bg-[#FAF6ED] px-5 py-8 text-center transition-colors hover:border-[#2C4A3E] hover:bg-[#2C4A3E]/5">
               {uploading ? (
                 <Loader2 size={28} className="mb-3 animate-spin text-[#2C4A3E]" />
@@ -268,11 +364,19 @@ function MarketingPage() {
           <section className="rounded-2xl border border-[#2C4A3E]/15 bg-white p-6 shadow-sm sm:p-8">
             <h2 className="font-serif text-xl font-bold">Vista previa actual</h2>
             {flyer ? (
-              <img
-                src={getMarketingFlyerPublicUrl(flyer.storage_path)}
-                alt="Flyer actualmente publicado"
-                className="mt-5 max-h-[32rem] w-full rounded-xl bg-[#FAF6ED] object-contain"
-              />
+              <div className="mt-5 flex min-h-80 items-center justify-center overflow-hidden rounded-xl bg-[#FAF6ED] p-4">
+                <img
+                  src={getMarketingFlyerPublicUrl(flyer.storage_path)}
+                  alt="Flyer actualmente publicado"
+                  style={{
+                    width: `${getValidPreviewSize(widthCm, 15)}cm`,
+                    height: `${getValidPreviewSize(heightCm, 15)}cm`,
+                    maxWidth: "100%",
+                    maxHeight: "32rem",
+                  }}
+                  className="rounded-lg object-cover"
+                />
+              </div>
             ) : (
               <p className="mt-5 rounded-xl bg-[#FAF6ED] p-6 text-sm text-[#1b2a24]/70">
                 Todavía no hay un flyer publicado en la portada.

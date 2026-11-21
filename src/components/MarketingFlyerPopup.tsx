@@ -60,7 +60,13 @@ export function MarketingFlyerPopup() {
         role="dialog"
         aria-modal="true"
         aria-label="Promoción de Restaurante Las Flores"
-        className="relative max-h-[90vh] w-full max-w-3xl overflow-hidden rounded-2xl bg-[#FAF6ED] shadow-2xl"
+        className="relative flex items-center justify-center overflow-hidden rounded-2xl bg-[#FAF6ED] shadow-2xl"
+        style={{
+          width: `${flyer.width_cm ?? 15}cm`,
+          height: `${flyer.height_cm ?? 15}cm`,
+          maxWidth: "90vw",
+          maxHeight: "90vh",
+        }}
       >
         <button
           ref={closeButtonRef}
@@ -74,7 +80,7 @@ export function MarketingFlyerPopup() {
         <img
           src={getMarketingFlyerPublicUrl(flyer.storage_path)}
           alt="Flyer promocional de Restaurante Las Flores"
-          className="max-h-[90vh] w-full object-contain"
+          className="h-full w-full object-cover"
         />
       </section>
     </div>

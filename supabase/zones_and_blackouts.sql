@@ -38,13 +38,13 @@ CREATE TABLE IF NOT EXISTS public.zone_blackouts (
 INSERT INTO public.restaurant_zones (
   id, name, short_name, description, image_url, color, color_light, max_capacity_persons, max_tables_count, sort_order
 ) VALUES
-('salon-principal', 'Salón Principal', 'S. Principal', 'El corazón de Las Flores. Vista a los retablos andinos en pan de oro.', '/imagenes-reales/Salones/Salonprincipal.webp', '#5F8575', '#B0CBBD', 40, 8, 1),
-('salon-entrada', 'Salón Entrada', 'S. Entrada', 'Espacio acogedor a la entrada del local con iluminación cálida y vista al patio principal.', '/imagenes-reales/Salones/entrada.webp', '#C8966A', '#EDD9C0', 34, 7, 2),
-('salon-ventana', 'Salón Ventana', 'S. Ventana', 'Área amplia iluminada por grandes ventanales coloniales con vista panorámica exterior.', '/imagenes-reales/Salones/Ventana.webp', '#5A8C8C', '#B8D4D4', 38, 6, 3),
-('estrado', 'Estrado Principal', 'Estrado', 'Zona elevada distinguida, ideal para celebraciones especiales y cenas grupales.', '/imagenes-reales/Salones/Estrado.webp', '#B8735A', '#DDBB9E', 32, 6, 4),
-('pasillo', 'Pasillo Central', 'Pasillo', 'Paso colonial decorado con arte ayacuchano, retablos y detalles en madera.', '/imagenes-reales/Salones/pasillo.webp', '#8A7355', '#D6C8B4', 18, 4, 5),
-('terraza', 'Terraza Colonial', 'Terraza', 'Ambiente al aire libre bajo el cielo ayacuchano con vegetación autóctona y brisa fresca.', '/imagenes-reales/Salones/Terraza.webp', '#6B8E55', '#C5DBB9', 26, 5, 6),
-('jardin', 'Jardín Andino', 'Jardín', 'Espacio natural rodeado de flora regional y cantos de aves, perfecto para el almuerzo.', '/imagenes-reales/Salones/jardin.webp', '#4E7C59', '#B5D1BC', 30, 5, 6)
+('salon-principal', 'Salón Principal', 'S. Principal', 'El corazón de Las Flores. Vista a los retablos andinos en pan de oro.', '/imagenes-reales/Salones/salon-principal.webp', '#5F8575', '#B0CBBD', 40, 8, 1),
+('salon-entrada', 'Salón Entrada', 'S. Entrada', 'Espacio acogedor a la entrada del local con iluminación cálida y vista al patio principal.', '/imagenes-reales/Salones/salon-entrada.webp', '#C8966A', '#EDD9C0', 34, 7, 2),
+('salon-ventana', 'Salón Ventana', 'S. Ventana', 'Área amplia iluminada por grandes ventanales coloniales con vista panorámica exterior.', '/imagenes-reales/Salones/salon-ventana.webp', '#5A8C8C', '#B8D4D4', 38, 6, 3),
+('estrado', 'Estrado Principal', 'Estrado', 'Zona elevada distinguida, ideal para celebraciones especiales y cenas grupales.', '/imagenes-reales/Salones/estrado-principal.webp', '#B8735A', '#DDBB9E', 32, 6, 4),
+('pasillo', 'Pasillo Central', 'Pasillo', 'Paso colonial decorado con arte ayacuchano, retablos y detalles en madera.', '/imagenes-reales/Salones/pasillo-central.webp', '#8A7355', '#D6C8B4', 18, 4, 5),
+('terraza', 'Terraza Colonial', 'Terraza', 'Ambiente al aire libre bajo el cielo ayacuchano con vegetación autóctona y brisa fresca.', '/imagenes-reales/Salones/terraza-colonial.webp', '#6B8E55', '#C5DBB9', 26, 5, 6),
+('jardin', 'Jardín Andino', 'Jardín', 'Espacio natural rodeado de flora regional y cantos de aves, perfecto para el almuerzo.', '/imagenes-reales/Salones/jardin-andino.webp', '#4E7C59', '#B5D1BC', 30, 5, 6)
 ON CONFLICT (id) DO UPDATE SET
   name = EXCLUDED.name,
   short_name = EXCLUDED.short_name,
@@ -64,7 +64,7 @@ DROP POLICY IF EXISTS "Admin zones all" ON public.restaurant_zones;
 CREATE POLICY "Admin zones all" ON public.restaurant_zones FOR ALL USING (
   EXISTS (
     SELECT 1 FROM public.profiles
-    WHERE profiles.id = auth.uid() AND profiles.role = 'admin'
+    WHERE profiles.id = auth.uid() AND profiles.role IN ('admin', 'ventas')
   )
 );
 
@@ -76,6 +76,6 @@ DROP POLICY IF EXISTS "Admin blackouts all" ON public.zone_blackouts;
 CREATE POLICY "Admin blackouts all" ON public.zone_blackouts FOR ALL USING (
   EXISTS (
     SELECT 1 FROM public.profiles
-    WHERE profiles.id = auth.uid() AND profiles.role = 'admin'
+    WHERE profiles.id = auth.uid() AND profiles.role IN ('admin', 'ventas')
   )
 );
